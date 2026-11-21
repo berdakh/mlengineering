@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-11-21, end of the first authoring session.
+Last updated: 2026-11-21, after Weeks 1-2 were completed.
 Labels are defined in [docs/AUTHORING.md](docs/AUTHORING.md). Nothing here records a learner
 result: **no diagnostic submission has been received**, so no personalisation has been applied.
 
@@ -9,53 +9,45 @@ result: **no diagnostic submission has been received**, so no personalisation ha
 | | Count |
 |---|---|
 | Sessions scheduled | 56 (48 core, 8 light) |
-| Sessions with complete material | 5 (diagnostic sessions w1d1-w1d2; lessons w1d3, w1d4, w1d5) |
-| Sessions planned (objective, deliverable, prerequisites only) | 51 |
-| Handbook sections written | 3 of about 45 (H2.1, H2.2, H9.1) |
+| Sessions with complete material | 14: all of Week 1 and Week 2 |
+| Sessions planned (objective, deliverable, prerequisites only) | 42: Weeks 3-8 (Week 3 is being written) |
+| Handbook sections written | 14: H1.1, H1.2, H2.1-H2.3, H3.1-H3.4, H4.1, H5.1, H5.2, H6.2, H7.1, H9.1 |
 
-The course is **not** complete. Roughly one week of eight has full material.
+The course is **not** complete. The per-session state is in [roadmap/SCHEDULE.md](roadmap/SCHEDULE.md).
 
 ## Authored and execution verified
 
 Verified on Python 3.13.18 with the versions in [docs/TESTED_VERSIONS.md](docs/TESTED_VERSIONS.md).
-"Checks verified" means `python tools/verify_checks.py --all` was run on the final tree: each
-reference solution passes its checks and each plausible wrong submission is rejected (full run: 5 min 6 s).
+`python tools/verify_checks.py --all` was run on the full Week 1-2 tree on 2026-11-21: every reference
+solution passes its checks and all 115 plausible wrong submissions are rejected.
 
-| Unit | Material | Checks verified | Also executed |
-|---|---|---|---|
-| Diagnostic `a1_python` | task, starter, solution, notes | solution passes; 3 wrong submissions rejected | starter fails as intended |
-| Diagnostic `a2_sql` | task, SQLite db, solution, notes | passes; 4 rejected | starter fails |
-| Diagnostic `a3_cleaning` | task, dirty table, solution, notes | passes; 4 rejected | starter fails |
-| Diagnostic `b1_baseline` | task, data, solution, notes | passes; 3 rejected | starter fails |
-| Diagnostic `b2_leakage` | task, data, solution, notes | passes; 4 rejected | starter fails |
-| Diagnostic `b3_testing_api` | task, solution, notes | passes; 4 rejected | learner tests graded by running them against broken implementations |
-| Diagnostic `b4_explain` | written task, rubric | none (rubric only) | - |
-| Lesson `w1d3_package_structure` | all 8 sections, example, lab, challenge, 3 hints, assessment | lab: passes, 5 rejected; challenge: passes, 4 rejected | fresh venv + `pip install -e` + `pumpwatch train` from another directory reproduced the reference metrics; worked example installed and run |
-| Lesson `w1d4_config_logging` | all 8 sections, example, lab, challenge, 3 hints, assessment | lab: passes, 6 rejected; challenge: passes, 3 rejected | two runs with the same config gave identical metrics; changing the split seed changed the held-out units |
-| Lesson `w1d5_testing_ml_code` | all 8 sections, example, lab, challenge, 3 hints, assessment | lab: passes, 5 weak test suites rejected; challenge: passes, 3 rejected | reference suite kills all 14 injected defects; shipped starter kills none |
-| Diagnostic data generator | `diagnostic/data/make_data.py` | - | two runs byte-identical |
-| Pump data generator | `data/make_pump_data.py` | - | regeneration byte-identical to the committed file |
-| Project data access | `project/get_skab.py` | - | 35 files downloaded and re-verified against the manifest; dataset facts in `project/README.md` computed from them |
-| Tooling | `wb.py`, `tools/` | - | `status`, `next`, `check` exercised |
+| Unit | Checks verified | Also executed |
+|---|---|---|
+| Diagnostic (6 checked sections + written b4) | 22 wrong submissions rejected | starters fail as intended; data generator byte-reproducible |
+| w1d3 package structure | lab 5, challenge 4 rejected | real `pip install -e` in a fresh venv; metrics reproduced from another directory |
+| w1d4 config, logging, runs | lab 6, challenge 3 | identical metrics across two identical runs |
+| w1d5 testing ML code | lab 5, challenge 3 weak suites rejected | reference suite kills all 14 injected defects |
+| w1d6 notebook to package | lab 7, challenge 4 | reference `flowguard summary` on real SKAB: 35 experiments, 46,806 rows |
+| w1d7, w2d7 review days; interview sets 1-2 | reference answers pass their tests; 10 wrong answers rejected | - |
+| w2d1 SQL I | lab 5, challenge 4 | graded on the shipped and on a re-seeded database; identical results on DuckDB 2.0.1 |
+| w2d2 SQL II | lab 7, challenge 3 | SQL and pandas agree with an independent oracle on two databases |
+| w2d3 ingestion and quality | lab 4, challenge 4 | reference ingest on real SKAB: 46,806 rows, 0 errors, 1 warning; two runs byte-identical |
+| w2d4 framing and splits | lab 6, challenge 5 | real split: 9 test, 25 development experiments; row-level vs experiment-level ROC-AUC 0.986 vs 0.849 |
+| w2d5 feature pipeline | lab 5, challenge 4 | real data: 46,806 rows x 156 columns; 9.1 s cold, 0.46 s cached |
+| w2d6 baselines and metrics | lab 5, challenge 4 | real baseline table (test PR-AUC 0.373 constant, 0.805 burn-in z-score, 0.827 logistic regression) |
 
-Continuous integration: `.github/workflows/ci.yml` repeats the checks verification on Python 3.11,
-3.12 and 3.13. First-run result: see "CI result" at the end of this file.
+Continuous integration repeats the checks verification on Python 3.11, 3.12 and 3.13 (see "CI result").
 
 ## Reviewed (prose)
 
-| Section | Review state |
-|---|---|
-| H2.1 Project structure, environments, packaging | Checked against the source files of the Python Packaging User Guide, setuptools docs, CPython `venv`/`sys.path` docs and uv docs (read from their GitHub repositories), plus `uv --help` 0.11.32 |
-| H2.2 Configuration, logging, reproducible runs | Checked against CPython logging/tomllib/dataclasses doc sources, NumPy random compatibility policy, scikit-learn glossary, PyTorch randomness notes, 12-factor config (GitHub sources) |
-| H9.1 Unit-testing ML code | Checked against pytest doc sources (fixtures, parametrize, tmp_path, good practices) and installed docstrings of `pytest.approx`, `pytest.raises`, `numpy.testing.assert_allclose` |
-
-Each section lists the pages opened and flags what was written from memory.
+Each handbook section ends with "sources and verification status": the pages its author opened and
+what was written from memory. Rendered documentation sites were blocked, so official documentation
+was read from source repositories on GitHub (CPython, packaging, setuptools, uv, pytest, pandas,
+scikit-learn, PostgreSQL, Git, ruff). Paper and book citations are mostly from memory and labelled so.
 
 ## Planned (not written)
 
-Every unit marked Planned in [roadmap/SCHEDULE.md](roadmap/SCHEDULE.md): w1d6, w1d7 and all of
-Weeks 2-8. Handbook chapters 1, 3-8, 10-16 and sections H2.3, H9.2. The interview prompt bank
-beyond the three reps inside the authored lessons. The transfer exercise on a public business dataset.
+Weeks 3-8 (42 sessions) and their handbook sections; interview sets 3 onward. Week 3 is in progress.
 
 ## Known limitations
 
@@ -80,7 +72,13 @@ beyond the three reps inside the authored lessons. The transfer exercise on a pu
 8. **Diagnostic visibility.** Solutions, scoring guidance and the broken implementations used to grade
    your tests (`diagnostic/b3_testing_api/checks/impls/`) are in the repository. The diagnostic is
    only informative if you do not open them first.
-9. **The w1d5 lab tests package v0.1.0** (the w1d3 result), not the v0.2.0 package from w1d4. The
+9. **Project snapshots differ slightly between lessons.** Each project lesson ships its own snapshot of
+   upstream `flowguard` modules written to `docs/FLOWGUARD_SPEC.md`; small differences exist (for example
+   whether `load_raw` sorts). Your own project repository is the single real implementation.
+   Also: the w2d4 split manifest (v1) does not keep experiments with duplicated rows together; w3d1 fixes this.
+   The transfer exercise uses SYNTHETIC business data because UCI Bank Marketing could not be reached
+   to verify access and licence.
+   **The w1d5 lab tests package v0.1.0** (the w1d3 result), not the v0.2.0 package from w1d4. The
    lesson says your own package can be substituted.
 10. **Not yet verified for later weeks:** the AWS route and its costs, FastAPI and Docker specifics,
     and the licence of the candidate transfer dataset (UCI Bank Marketing). Nothing depends on them yet.
@@ -90,13 +88,11 @@ beyond the three reps inside the authored lessons. The transfer exercise on a pu
 ## Next exact continuation step
 
 1. **Learner:** sit the diagnostic (w1d1, w1d2) and push `diagnostic/*/lab/` plus `diagnostic/SUBMISSION.md`.
-2. **Author, on receiving it:** review against `solutions/diagnostic/SCORING.md`; record outcomes in
-   `progress/SKILLS_LEDGER.md` (evidence log and "Demonstrated" section); apply the adaptation rules to
-   w1d3-w1d6 and Weeks 2-3 by editing `tools/build_course.py`.
-3. **Author, independent of the submission:** write `w1d6_notebook_to_package` (exploratory notebook on
-   SKAB, `flowguard` skeleton, Git workflow) with handbook H2.3, then `w1d7_review` (Week 1 retrieval
-   sheet and interview set 1), then Week 2 starting at `w2d1_sql_joins_grain` with H3.1. Follow
-   `docs/AUTHORING.md`; run `python tools/verify_checks.py --all` before changing any status.
+2. **Author:** finish Week 3 (`w3d1_leakage` ... `w3d7_review`), run `python tools/verify_checks.py --all`,
+   update `tools/build_course.py`, the handbook index and this file, then continue with Week 4 from
+   `w4d1_timeseries_fundamentals`. Follow `docs/AUTHORING.md`, `docs/FORK_BRIEF.md`, `docs/FLOWGUARD_SPEC.md`.
+3. **Author, on receiving the diagnostic:** review against `solutions/diagnostic/SCORING.md`, record outcomes
+   in `progress/SKILLS_LEDGER.md`, and apply the adaptation rules.
 
 ## CI result
 
