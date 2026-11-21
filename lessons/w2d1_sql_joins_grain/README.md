@@ -438,7 +438,7 @@ tables. You join both and sum one measure from each child. By what factor is eac
 given parent row, and what is the general fix? Then: why does `x NOT IN (SELECT y …)` return nothing
 when one `y` is NULL?*
 
-**Next:** [W2D2 — SQL II: CTEs, window functions and time-series queries](../../roadmap/SCHEDULE.md)
+**Next:** [W2D2 — SQL II: CTEs, window functions and time-series queries](../w2d2_sql_windows_timeseries/README.md)
 builds on this. Window functions keep the grain of their input, which is exactly why they are
 the right tool for running statistics and as-of features and the wrong tool for fixing a fan-out.
 

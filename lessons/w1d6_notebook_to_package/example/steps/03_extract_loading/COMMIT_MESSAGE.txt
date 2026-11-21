@@ -1,0 +1,1 @@
+Extract load_readings and daily_totals (no behaviour change)

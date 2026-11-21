@@ -24,3 +24,4 @@ credentials*
 runs_example/
 data/interim/
 data/processed/
+data/features/

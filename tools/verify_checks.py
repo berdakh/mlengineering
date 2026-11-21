@@ -17,6 +17,7 @@ A file named DELETE.txt in a mutant lists solution-relative paths to remove.
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import shutil
 import subprocess
@@ -73,8 +74,11 @@ def main() -> int:
     ap.add_argument("--all", action="store_true", help="verify every diagnostic section and lesson that has checks")
     args = ap.parse_args()
     if args.all:
+        # Units still marked Planned in course.json may be half-written; they are not verified.
+        planned = {u["path"] for u in json.loads((ROOT / "course.json").read_text())["units"]
+                   if u["status"] == "Planned" and u.get("path")}
         units = sorted({str(c.parent.relative_to(ROOT)) for base in ("diagnostic", "lessons")
-                        for c in (ROOT / base).glob("*/checks*") if c.is_dir()})
+                        for c in (ROOT / base).glob("*/checks*") if c.is_dir()} - planned)
     elif args.unit:
         units = [args.unit.rstrip("/")]
     else:

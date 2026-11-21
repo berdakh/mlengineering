@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+
+# generated artifacts
+runs/
+
+# notebooks' debris
+.ipynb_checkpoints/
+
+# secrets
+.env
+.env.*
+!.env.example

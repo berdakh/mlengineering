@@ -74,9 +74,9 @@
       "deliverable": "Project repository skeleton: package, config, tests, README stub, clean commit history.",
       "prerequisites": "w1d3-w1d5.",
       "handbook": "H2.3 (Git workflow, linting), H2.1, H9.1",
-      "path": null,
-      "status": "Planned",
-      "has_checks": false
+      "path": "lessons/w1d6_notebook_to_package",
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w1d7_review",
@@ -87,8 +87,8 @@
       "deliverable": "Week 1 retrieval sheet answered; interview set 1 (Python + project structure).",
       "prerequisites": "Week 1 units.",
       "handbook": "-",
-      "path": null,
-      "status": "Planned",
+      "path": "lessons/w1d7_review",
+      "status": "Execution verified",
       "has_checks": false
     },
     {
@@ -100,9 +100,9 @@
       "deliverable": "Solved query set with a stated grain for every result; fan-out bug report on a broken query.",
       "prerequisites": "Diagnostic a2 reviewed.",
       "handbook": "H3.1",
-      "path": null,
-      "status": "Planned",
-      "has_checks": false
+      "path": "lessons/w2d1_sql_joins_grain",
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w2d2_sql_windows_timeseries",
@@ -113,9 +113,9 @@
       "deliverable": "Query set + pandas equivalence tests; a point-in-time-correct feature query.",
       "prerequisites": "w2d1.",
       "handbook": "H3.2",
-      "path": null,
-      "status": "Planned",
-      "has_checks": false
+      "path": "lessons/w2d2_sql_windows_timeseries",
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w2d3_data_quality_ingestion",
@@ -126,9 +126,9 @@
       "deliverable": "`flowguard ingest` command, data dictionary, data-quality report, provenance record (source, licence, hashes).",
       "prerequisites": "w1d6; diagnostic a3 reviewed.",
       "handbook": "H3.3, H4.1",
-      "path": null,
-      "status": "Planned",
-      "has_checks": false
+      "path": "lessons/w2d3_data_quality_ingestion",
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w2d4_problem_framing_splits",
@@ -139,9 +139,9 @@
       "deliverable": "Problem statement, label definition, `splits/v1.json` manifest with a leakage-safety test.",
       "prerequisites": "w2d3.",
       "handbook": "H1.1, H1.2, H6.1",
-      "path": null,
-      "status": "Planned",
-      "has_checks": false
+      "path": "lessons/w2d4_problem_framing_splits",
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w2d5_feature_pipeline",
@@ -152,9 +152,9 @@
       "deliverable": "Feature pipeline with no-look-ahead tests and content-addressed outputs.",
       "prerequisites": "w2d4, w1d5.",
       "handbook": "H3.4, H7.1",
-      "path": null,
-      "status": "Planned",
-      "has_checks": false
+      "path": "lessons/w2d5_feature_pipeline",
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w2d6_baselines_metrics",
@@ -165,9 +165,9 @@
       "deliverable": "Baseline table for the project (trivial, threshold, linear); transfer exercise part 1 baseline.",
       "prerequisites": "w2d5; diagnostic b1 reviewed.",
       "handbook": "H5.1, H5.2, H6.2",
-      "path": null,
-      "status": "Planned",
-      "has_checks": false
+      "path": "lessons/w2d6_baselines_metrics",
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w2d7_review",
@@ -178,8 +178,8 @@
       "deliverable": "Week 2 retrieval sheet; interview set 2 (SQL + pandas, timed).",
       "prerequisites": "Week 2 units.",
       "handbook": "-",
-      "path": null,
-      "status": "Planned",
+      "path": "lessons/w2d7_review",
+      "status": "Execution verified",
       "has_checks": false
     },
     {

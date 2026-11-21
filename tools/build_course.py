@@ -60,37 +60,37 @@ unit("w1d5_testing_ml_code", "Testing ML code with pytest: what a unit test can 
 unit("w1d6_notebook_to_package", "Independent refactor: a real exploratory notebook becomes the project skeleton",
      "Without step-by-step guidance, refactor an exploratory notebook on the project dataset into the `flowguard` package skeleton using small reviewed Git commits (branch, commit hygiene, .gitignore, lint).",
      "Project repository skeleton: package, config, tests, README stub, clean commit history.",
-     "w1d3-w1d5.", "H2.3 (Git workflow, linting), H2.1, H9.1")
+     "w1d3-w1d5.", "H2.3 (Git workflow, linting), H2.1, H9.1", path="lessons/w1d6_notebook_to_package", status="Execution verified", has_checks=True)
 unit("w1d7_review", "Review and catch-up (light)", REVIEW,
-     "Week 1 retrieval sheet answered; interview set 1 (Python + project structure).", "Week 1 units.", "-")
+     "Week 1 retrieval sheet answered; interview set 1 (Python + project structure).", "Week 1 units.", "-", path="lessons/w1d7_review", status="Execution verified")
 
 # ---------------------------------------------------------------- Week 2
 unit("w2d1_sql_joins_grain", "SQL I: grain, joins, aggregation and NULL semantics",
      "Write correct multi-table queries by reasoning about table grain first; recognise fan-out, NULL and anti-join traps.",
      "Solved query set with a stated grain for every result; fan-out bug report on a broken query.",
-     "Diagnostic a2 reviewed.", "H3.1")
+     "Diagnostic a2 reviewed.", "H3.1", path="lessons/w2d1_sql_joins_grain", status="Execution verified", has_checks=True)
 unit("w2d2_sql_windows_timeseries", "SQL II: CTEs, window functions and time-series queries",
      "Use window functions for ranking, running statistics, gaps-and-islands and as-of joins on event and sensor tables; reproduce each result in pandas.",
      "Query set + pandas equivalence tests; a point-in-time-correct feature query.",
-     "w2d1.", "H3.2")
+     "w2d1.", "H3.2", path="lessons/w2d2_sql_windows_timeseries", status="Execution verified", has_checks=True)
 unit("w2d3_data_quality_ingestion", "pandas ingestion, schemas and data-quality checks (project data arrives)",
      "Ingest the project dataset through a documented, re-runnable step with explicit schema and quality checks expressed as code that fails loudly.",
      "`flowguard ingest` command, data dictionary, data-quality report, provenance record (source, licence, hashes).",
-     "w1d6; diagnostic a3 reviewed.", "H3.3, H4.1")
+     "w1d6; diagnostic a3 reviewed.", "H3.3, H4.1", path="lessons/w2d3_data_quality_ingestion", status="Execution verified", has_checks=True)
 unit("w2d4_problem_framing_splits", "Problem framing and versioned split definitions",
      "Translate the stakeholder problem into an ML task: unit of prediction, label definition (point vs event), costs of errors, constraints; freeze splits by experiment and time in a versioned manifest.",
      "Problem statement, label definition, `splits/v1.json` manifest with a leakage-safety test.",
-     "w2d3.", "H1.1, H1.2, H6.1")
+     "w2d3.", "H1.1, H1.2, H6.1", path="lessons/w2d4_problem_framing_splits", status="Execution verified", has_checks=True)
 unit("w2d5_feature_pipeline", "Reproducible feature generation without look-ahead",
      "Build causal rolling-window features and train-only statistics as a deterministic, cached, tested pipeline step.",
      "Feature pipeline with no-look-ahead tests and content-addressed outputs.",
-     "w2d4, w1d5.", "H3.4, H7.1")
+     "w2d4, w1d5.", "H3.4, H7.1", path="lessons/w2d5_feature_pipeline", status="Execution verified", has_checks=True)
 unit("w2d6_baselines_metrics", "Strong simple baselines and metrics that match the decision",
      "Establish trivial and classical baselines and choose metrics from the decision (imbalance, PR vs ROC, thresholds, calibration basics) on the project data and on an unfamiliar business table.",
      "Baseline table for the project (trivial, threshold, linear); transfer exercise part 1 baseline.",
-     "w2d5; diagnostic b1 reviewed.", "H5.1, H5.2, H6.2")
+     "w2d5; diagnostic b1 reviewed.", "H5.1, H5.2, H6.2", path="lessons/w2d6_baselines_metrics", status="Execution verified", has_checks=True)
 unit("w2d7_review", "Review and catch-up (light)", REVIEW,
-     "Week 2 retrieval sheet; interview set 2 (SQL + pandas, timed).", "Week 2 units.", "-")
+     "Week 2 retrieval sheet; interview set 2 (SQL + pandas, timed).", "Week 2 units.", "-", path="lessons/w2d7_review", status="Execution verified")
 
 # ---------------------------------------------------------------- Week 3
 unit("w3d1_leakage", "Leakage: a taxonomy and prevention by construction",

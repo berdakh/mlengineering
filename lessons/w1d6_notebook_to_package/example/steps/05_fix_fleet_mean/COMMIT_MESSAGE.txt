@@ -1,0 +1,1 @@
+Fix fleet mean: it used M2 rows only (BEHAVIOUR CHANGE)

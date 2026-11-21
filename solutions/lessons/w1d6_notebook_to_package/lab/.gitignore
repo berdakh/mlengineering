@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+
+# data and generated artifacts stay out of Git: they are reproduced by commands
+data/
+runs/
+*.sqlite
+
+# notebooks' debris
+.ipynb_checkpoints/
+
+# secrets
+.env
+.env.*
+!.env.example

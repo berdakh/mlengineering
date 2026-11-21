@@ -1,7 +1,8 @@
 # Interview practice: short, recurring, with fading assistance
 
-Status: **plan and structure written; prompt sets are authored week by week** (the three authored
-lessons each contain one "interview rep" in their `assessment.md`).
+Status: sets 1 and 2 are written and their reference answers executed
+([set 1: Python and project structure](set1_python_structure.md), [set 2: SQL and pandas](set2_sql_pandas.md));
+later sets are authored week by week. Every authored lesson also contains one "interview rep" in its `assessment.md`.
 
 ## Cadence
 

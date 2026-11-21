@@ -1,0 +1,1 @@
+Extract mean_kwh and peak_days, replace cells with main() (no behaviour change)

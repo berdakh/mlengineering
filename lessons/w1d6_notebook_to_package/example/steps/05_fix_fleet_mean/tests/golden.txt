@@ -1,0 +1,13 @@
+count    12.000
+mean      3.603
+std       0.345
+min       3.190
+25%       3.348
+50%       3.505
+75%       3.808
+max       4.160
+fleet mean kwh per reading: 1.949
+meter_id        day   kwh
+      M1 2026-03-03  6.07
+      M2 2026-03-03 14.72
+      M3 2026-03-03  3.65

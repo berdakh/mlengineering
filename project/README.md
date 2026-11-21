@@ -64,9 +64,28 @@ Files are semicolon-separated. One row per timestamp.
 * Mean per-file fraction of anomalous samples is about 0.35 (range 0.25-0.49). The positive class is
   therefore *not* rare at the sample level, unlike most production anomaly problems.
 * 129 `changepoint` marks in total (2-4 per file).
-* Median sampling interval 1 s. Seven files contain a gap longer than 5 s (largest 247 s in `other/2.csv`).
+* Median sampling interval 1 s. Six files contain a gap longer than 5 s, nine gaps in all (largest 247 s in
+  `other/2.csv`). An earlier version of this page said seven files; `other/12` has a gap of exactly 5 s.
 * No missing values in any column.
 * Note: the upstream folder listing numbers files from 1, the actual files from 0 (`valve1/0.csv` ... `valve1/15.csv`).
+
+### Findings from the Week 1-2 lessons (verified on the files, 2026-11-21)
+
+* **Rows are duplicated across files.** 1,290 rows are identical in all eight sensors and timestamp in two
+  files, in five pairs: `anomaly-free`/`other/5` (572), `other/12`/`other/13` (349), `other/3`/`other/4`
+  (228), `other/2`/`other/3` (120), `other/10`/`other/11` (21). In 235 of them the two files give
+  **contradictory `anomaly` labels**. Consequences: experiments that share rows must stay on the same
+  side of any split, and the fault-free reference overlaps a labelled experiment. The split manifest
+  written in w2d4 does **not** yet enforce this; it is the first task of w3d1.
+* **Elapsed time predicts the label.** In 31 of 34 experiments the anomaly starts at row 550-600, so a
+  "detector" that scores by elapsed time reaches test F1 0.835 (w2d6), above every sensor baseline tried.
+  Any feature that encodes position in the recording is a leak of the experimental protocol.
+* **The fault-free recording is not a clean reference.** Its sensor levels sit far from the normal part of
+  most labelled experiments (median max-|z| about 57 for normal and 59 for anomalous samples), so
+  detectors normalised against it alone separate classes poorly; per-experiment burn-in normalisation
+  works much better (w2d5, w2d6).
+* First baseline numbers (w2d6, 9 test experiments, no intervals yet): point-level PR-AUC 0.373 for a
+  constant score, 0.805 for a burn-in z-score on flow rate, 0.827 for supervised logistic regression.
 
 These facts drive design decisions. With 34 events, any event-level metric has wide uncertainty:
 this project must report intervals (w3d5) and must not claim small differences between models.
