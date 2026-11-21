@@ -44,3 +44,28 @@ Split manifest (`splits/v1.json`):
 "reference_normal": ["anomaly-free/anomaly-free"], "protocol_b": {"holdout_family": "other"}}`
 
 Config and run directories follow lesson w1d4 (`configs/*.toml`, `runs/<run_id>/`).
+
+## Amendments after Week 2 (binding for Week 3 onward)
+
+Facts found on the real files (see `project/README.md`, "Findings from the Week 1-2 lessons"):
+
+* Five pairs of files share identical rows (1,290 rows, 235 with contradictory labels). Overlap groups
+  (connected components): `{anomaly-free/anomaly-free, other/5}`, `{other/12, other/13}`,
+  `{other/2, other/3, other/4}`, `{other/10, other/11}`.
+* Elapsed time / row index `t` predicts the label (anomaly starts at row 550-600 in 31 of 34 files).
+  `t`, `datetime` and anything monotone in them are **forbidden as model features**.
+* The fault-free recording is far from the normal regime of the labelled experiments; per-experiment
+  burn-in normalisation (statistics from the first rows of each experiment, e.g. the first 300, all
+  normal in every file) is the working reference.
+
+API additions:
+
+| Module | Addition | Introduced |
+|---|---|---|
+| `flowguard.splits` | `find_overlap_groups(tidy) -> list[set[str]]`; `make_splits(..., keep_together=None)` keeps each group on one side; manifest `"version": "v2"` adds `"overlap_groups"`; `validate_splits` rejects a manifest that separates a group | w3d1 |
+| `flowguard.quality` | `CheckResult` has a 4th field `severity` (`"error"`/`"warning"`) | w2d3 |
+| `flowguard.splits` | `save_splits(..., overwrite=False)` raises `FileExistsError` | w2d4 |
+| `flowguard.features` | `burn_in_normalise(tidy, n_burn_in=300)` | w2d5/w2d6 |
+| `flowguard.benchmark` | `evaluate_scores(...)` point-level table per family | w2d6 |
+
+Week 3+ units that need a manifest build a v2 one with their snapshot and state that it supersedes v1.
