@@ -22,3 +22,5 @@ data/raw/
 .aws/
 credentials*
 runs_example/
+data/interim/
+data/processed/
