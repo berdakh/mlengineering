@@ -1,0 +1,8 @@
+# Weeks 1-3 (everything authored so far). Later weeks add: torch (optional), fastapi, uvicorn, httpx.
+# Lower bounds only; the exact versions the material was executed on are in docs/TESTED_VERSIONS.md.
+numpy>=1.26
+pandas>=2.1
+scikit-learn>=1.4
+scipy>=1.11
+pydantic>=2.6
+pytest>=8

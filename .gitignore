@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+build/
+dist/
+
+# learner run outputs and downloaded data (never commit raw third-party data)
+runs/
+data/raw/
+*.sqlite-journal
+
+# secrets and cloud credentials: keep them out of the repository
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.aws/
+credentials*
