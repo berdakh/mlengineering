@@ -40,23 +40,23 @@ REVIEW = ("Retrieve, do not re-read: answer the week's retrieval questions from 
 unit("w1d1_diagnostic_a", "Diagnostic A: Python, SQL, data cleaning",
      "Produce time-boxed, unassisted evidence of current skill in Python refactoring/debugging, SQL joins and aggregation, and pandas data cleaning.",
      "Completed labs for a1/a2/a3 plus the Session A part of diagnostic/SUBMISSION.md.",
-     "Working Python >= 3.11 environment (README, 'Set up').", "-", path="diagnostic", status="Draft")
+     "Working Python >= 3.11 environment (README, 'Set up').", "-", path="diagnostic", status="Execution verified")
 unit("w1d2_diagnostic_b", "Diagnostic B: baselines, leakage, testing/API, explaining a decision",
      "Produce time-boxed, unassisted evidence in baseline modelling on an unfamiliar business table, leakage detection, test writing, API concepts and written justification.",
      "Completed labs for b1/b2/b3, the written b4 answer, and the finished diagnostic/SUBMISSION.md.",
-     "w1d1.", "-", path="diagnostic", status="Draft")
+     "w1d1.", "-", path="diagnostic", status="Execution verified")
 unit("w1d3_package_structure", "From script to installable package: project structure and environments",
      "Turn a notebook-export script into a src-layout package with pyproject.toml, an isolated environment, an editable install and a console entry point, proving behaviour is preserved.",
      "Installable `pumpwatch` package + refactoring log with before/after metrics.",
-     "Diagnostic submitted (or explicitly deferred).", "H2.1", path="lessons/w1d3_package_structure", status="Draft", has_checks=True)
+     "Diagnostic submitted (or explicitly deferred).", "H2.1", path="lessons/w1d3_package_structure", status="Execution verified", has_checks=True)
 unit("w1d4_config_logging", "Configuration, logging and reproducible runs",
      "Make a training run reproducible and inspectable: typed validated config with overrides, logging configured once, explicit seeds, and a run directory with config snapshot, metrics and provenance.",
      "`pumpwatch` v0.2 producing self-describing run directories; two identical runs shown to match.",
-     "w1d3.", "H2.2", path="lessons/w1d4_config_logging", status="Draft", has_checks=True)
+     "w1d3.", "H2.2", path="lessons/w1d4_config_logging", status="Execution verified", has_checks=True)
 unit("w1d5_testing_ml_code", "Testing ML code with pytest: what a unit test can and cannot tell you",
      "Write a pytest suite that catches realistic defects in signal-feature and splitting code, and separate deterministic unit tests from statistical performance checks.",
      "A test suite that kills the seeded bugs (mutation-graded) and a one-paragraph note on what it does not establish.",
-     "w1d3 (w1d4 helpful).", "H9.1", path="lessons/w1d5_testing_ml_code", status="Draft", has_checks=True)
+     "w1d3 (w1d4 helpful).", "H9.1", path="lessons/w1d5_testing_ml_code", status="Execution verified", has_checks=True)
 unit("w1d6_notebook_to_package", "Independent refactor: a real exploratory notebook becomes the project skeleton",
      "Without step-by-step guidance, refactor an exploratory notebook on the project dataset into the `flowguard` package skeleton using small reviewed Git commits (branch, commit hygiene, .gitignore, lint).",
      "Project repository skeleton: package, config, tests, README stub, clean commit history.",

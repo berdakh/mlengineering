@@ -1,0 +1,1 @@
+Correct features and a temporal split, but imputation/scaling/encoding are still fitted on all rows outside the model. build_model() therefore cannot accept the raw feature frame, and the fitted preprocessing could not be shipped with the model.

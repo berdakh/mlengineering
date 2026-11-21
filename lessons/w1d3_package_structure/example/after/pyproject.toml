@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tempstats"
+version = "0.1.0"
+description = "Per-room temperature summary (worked example for lesson w1d3)."
+requires-python = ">=3.11"
+dependencies = ["pandas>=2.1"]
+
+[project.scripts]
+tempstats = "tempstats.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

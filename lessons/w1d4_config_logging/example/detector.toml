@@ -1,0 +1,14 @@
+# Configuration for the worked example (a rolling z-score spike detector on SIMULATED data).
+
+[signal]
+n_samples = 5000
+n_spikes = 25
+spike_size = 6.0      # in units of the noise standard deviation
+seed = 0
+
+[detector]
+window = 50           # trailing samples used for the baseline mean / std
+threshold = 4.0       # flag |z| above this
+
+[logging]
+level = "INFO"

@@ -1,0 +1,57 @@
+# b1 - Problem framing and baselines on an unfamiliar tabular task
+
+**Time box: 35 minutes.** Session B, section 1 of 4. No hints; scikit-learn documentation is fine.
+
+## Situation
+
+StreamBox (a **synthetic** subscription video service) wants to reduce churn. On the 1st of every
+month a retention team can phone **10% of active customers**. They ask for a monthly risk ranking.
+
+The data team hands you two files, described in [`../data/README.md`](../data/README.md):
+`churn_train.csv` and `churn_test.csv`. Each row is one customer on one monthly snapshot date, with
+features known on that date and the label `churned_30d` (1 if the customer cancelled within the
+following 30 days). Use the split exactly as given in this section.
+
+## Task
+
+Implement the functions in `lab/baseline.py`:
+
+1. `precision_recall_at_fraction(y_true, scores, fraction)` - precision and recall when the
+   `k = ceil(fraction * n)` highest-scored rows are flagged.
+2. `trivial_scores(train, test)` - the no-skill baseline: every row gets the training churn rate.
+3. `heuristic_scores(train, test)` - a rule an analyst could apply without ML. Your choice.
+4. `model_scores(train, test)` - one simple, defensible first model. Your choice of model and features.
+5. `run()` - evaluate all three on the test set (average precision, precision and recall at the 10%
+   contact budget) and return the dictionary described in the docstring.
+
+Then answer the four questions in `lab/ANSWERS.md`.
+
+Requirements that hold for any reasonable solution:
+
+* Scores are one finite number per test row; higher means riskier.
+* Nothing may depend on test labels: the functions must work when `test` has no `churned_30d` column.
+* Two identical runs give identical scores.
+* The data contains missing values and text categories; handle them.
+
+## Check your work
+
+```bash
+python diagnostic/b1_baseline/lab/baseline.py    # prints your report
+python wb.py check diagnostic/b1_baseline        # or:
+python -m pytest diagnostic/b1_baseline/checks -q
+```
+
+The starter raises `NotImplementedError`; all checks fail until you implement it.
+
+## Acceptance criteria
+
+* All checks pass.
+* `ANSWERS.md` states the task precisely, justifies the metric with your own numbers, and translates
+  the result into the retention team's terms.
+
+The checks do not grade whether your model is *good*, only that it is a valid baseline that beats
+no-skill. Model quality on synthetic data is not the point of this section.
+
+## Submit
+
+`lab/baseline.py`, `lab/ANSWERS.md`, the printed report, time used.

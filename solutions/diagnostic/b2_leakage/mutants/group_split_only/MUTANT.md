@@ -1,0 +1,1 @@
+Applies a customer-grouped split (the cross-subject reflex). No customer is on both sides, but train and test cover the same calendar months, so the evaluation does not answer the forward-in-time deployment question.

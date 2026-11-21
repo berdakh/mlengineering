@@ -1,0 +1,17 @@
+# Base configuration for `pumpwatch train`.
+# Paths are resolved relative to the directory you run the command from.
+# Every key is optional except data.path; omitted keys take the defaults in pumpwatch/config.py.
+
+[data]
+path = "data/synthetic/pump_vibration.csv"   # SYNTHETIC data, see data/README.md
+fs = 256.0                                    # sampling rate, Hz
+
+[split]
+test_fraction = 0.3
+seed = 7
+
+[model]
+C = 1.0                                       # inverse L2 regularisation strength
+
+[logging]
+level = "INFO"                                # DEBUG | INFO | WARNING | ERROR

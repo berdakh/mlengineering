@@ -12,14 +12,14 @@ Status values: Planned, Draft, Reviewed, Execution verified (defined in `docs/AU
 | Chapter | Sections | Status |
 |---|---|---|
 | 1. Practical ML problem formulation | H1.1 From stakeholder need to prediction target - H1.2 Units, labels, costs and constraints | Planned (w2d4) |
-| 2. Maintainable Python for ML | **[H2.1 Project structure, environments, packaging](ch02_maintainable_python/h2_1_project_structure_environments.md)** - **[H2.2 Configuration, logging, reproducible runs](ch02_maintainable_python/h2_2_configuration_logging_runs.md)** - H2.3 Git workflow, linting and refactoring discipline | H2.1, H2.2 written (see STATUS.md); H2.3 planned (w1d6) |
+| 2. Maintainable Python for ML | **[H2.1 Project structure, environments, packaging](ch02_maintainable_python/h2_1_project_structure_environments.md)** - **[H2.2 Configuration, logging, reproducible runs](ch02_maintainable_python/h2_2_configuration_logging_runs.md)** - H2.3 Git workflow, linting and refactoring discipline | H2.1, H2.2: Reviewed against sources listed in each section; H2.3 planned (w1d6) |
 | 3. SQL and data pipelines | H3.1 Grain, joins, aggregation, NULLs - H3.2 Window functions and time-series SQL - H3.3 Ingestion and schemas - H3.4 Deterministic feature pipelines | Planned (Week 2) |
 | 4. Data quality and exploratory analysis | H4.1 Quality checks as code; exploratory analysis that changes decisions | Planned (w2d3) |
 | 5. Classical ML and strong baselines | H5.1 Trivial and linear baselines - H5.2 Metrics from decisions - H5.3 Trees, ensembles, isolation forest, PCA detectors - H5.4 Complexity versus evidence | Planned (w2d6, Week 4) |
 | 6. Evaluation, leakage and uncertainty | H6.1 Leakage taxonomy - H6.2 Thresholds, imbalance, calibration - H6.3 Group and temporal validation - H6.4 Selection and nested validation - H6.5 Point versus event evaluation - H6.6 Bootstrap and paired comparisons - H6.7 Error analysis | Planned (Week 3) |
 | 7. Time-series and grouped-data modelling | H7.1 Windowing and causality - H7.2 Purging and embargo - H7.3 Event matching - H7.4 Forecast-residual detection - H7.5 Multivariate detectors - H7.6 Neural sequence models, fairly compared | Planned (Weeks 2-4) |
 | 8. Reproducible experiments | H8.1 Run registries and sweeps - H8.2 Seeds and variance - H8.3 Clean-clone reproduction | Planned (Week 4, w8d1) |
-| 9. Testing ML systems | **[H9.1 Unit-testing ML code](ch09_testing_ml_systems/h9_1_unit_testing_ml_code.md)** - H9.2 API, integration and contract tests | H9.1 written (see STATUS.md); H9.2 planned (w5d5) |
+| 9. Testing ML systems | **[H9.1 Unit-testing ML code](ch09_testing_ml_systems/h9_1_unit_testing_ml_code.md)** - H9.2 API, integration and contract tests | H9.1: Reviewed against sources listed in the section; H9.2 planned (w5d5) |
 | 10. Batch and online inference | H10.1 One pipeline for training and serving - H10.2 Artifacts and versioning - H10.3 Stateful online inference - H10.4 Latency and throughput | Planned (Week 5, w6d4) |
 | 11. FastAPI and input validation | H11.1 HTTP for ML engineers - H11.2 Schemas and validation - H11.3 Lifecycle and concurrency | Planned (Week 5) |
 | 12. Docker and reproducible environments | H12.1 Images, layers, Dockerfiles - H12.2 Pinning, multi-stage builds, smoke tests | Planned (Week 6) |

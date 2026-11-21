@@ -1,0 +1,1 @@
+Computes precision/recall at a 0.5 probability threshold instead of at the contact budget (top 10% by rank). With ~8% prevalence almost nobody is above 0.5, so the 'metric' says nothing about the retention team's capacity.

@@ -10,7 +10,7 @@
       "prerequisites": "Working Python >= 3.11 environment (README, 'Set up').",
       "handbook": "-",
       "path": "diagnostic",
-      "status": "Draft",
+      "status": "Execution verified",
       "has_checks": false
     },
     {
@@ -23,7 +23,7 @@
       "prerequisites": "w1d1.",
       "handbook": "-",
       "path": "diagnostic",
-      "status": "Draft",
+      "status": "Execution verified",
       "has_checks": false
     },
     {
@@ -36,7 +36,7 @@
       "prerequisites": "Diagnostic submitted (or explicitly deferred).",
       "handbook": "H2.1",
       "path": "lessons/w1d3_package_structure",
-      "status": "Draft",
+      "status": "Execution verified",
       "has_checks": true
     },
     {
@@ -49,7 +49,7 @@
       "prerequisites": "w1d3.",
       "handbook": "H2.2",
       "path": "lessons/w1d4_config_logging",
-      "status": "Draft",
+      "status": "Execution verified",
       "has_checks": true
     },
     {
@@ -62,7 +62,7 @@
       "prerequisites": "w1d3 (w1d4 helpful).",
       "handbook": "H9.1",
       "path": "lessons/w1d5_testing_ml_code",
-      "status": "Draft",
+      "status": "Execution verified",
       "has_checks": true
     },
     {

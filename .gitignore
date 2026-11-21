@@ -21,3 +21,4 @@ data/raw/
 *.key
 .aws/
 credentials*
+runs_example/
