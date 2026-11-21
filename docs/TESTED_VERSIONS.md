@@ -20,8 +20,7 @@ Lower bounds in `requirements.txt` are intentions, not test results, unless a CI
 ## Continuous integration
 
 `.github/workflows/ci.yml` runs `python tools/verify_checks.py --all` on Python 3.11, 3.12 and 3.13
-with the newest package versions that satisfy `requirements.txt`. The result of the first run is
-recorded in `STATUS.md`; check the repository's Actions tab for the current state.
+with the newest package versions that satisfy `requirements.txt`. The run on commit `c87b6ff` passed on all three (recorded in `STATUS.md`); check the repository's Actions tab for the current state.
 
 ## Not tested
 

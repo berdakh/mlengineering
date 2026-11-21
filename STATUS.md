@@ -62,7 +62,8 @@ beyond the three reps inside the authored lessons. The transfer exercise on a pu
 1. **Single authoring pass.** Lesson and handbook prose was written and checked by its author against
    sources, but has not had an independent second read. Treat explanations as carefully drafted, and
    report anything that looks wrong.
-2. **One Python version executed locally** (3.13). 3.11 and 3.12 are covered only by CI.
+2. **One Python version executed locally** (3.13). 3.11 and 3.12 are covered by CI for the checks
+   verification only; worked examples and the real `pip install -e` test ran on 3.13 alone.
 3. **Not run on Pop!_OS.** Statements about Pop!_OS 22.04 (system Python 3.10, `python3-venv`,
    the deadsnakes PPA) and `uv python install` are from memory, flagged as unverified in H2.1.
 4. **Rendered documentation sites were unreachable** from the authoring environment
@@ -99,4 +100,6 @@ beyond the three reps inside the authored lessons. The transfer exercise on a pu
 
 ## CI result
 
-Pending at the time of writing; updated below once the first run finishes.
+Run 44946762192 on commit `c87b6ff` (2026-11-21): **passed on Python 3.11, 3.12 and 3.13**. Each job
+ran `python tools/verify_checks.py --all` (5-8 minutes) with the newest packages satisfying
+`requirements.txt`. Exact package versions resolved in CI were not recorded.
