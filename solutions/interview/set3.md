@@ -62,7 +62,7 @@ must contain for that scenario.
   configuration's performance; the test set was used for selection.
 * **Must:** selection on validation data (or inner CV); the test set is used once for the chosen
   configuration; with no data to spare, nested cross-validation over experiments.
-* **Should:** quantifies: with 9 test experiments one event is 0.11 of recall; 0.91 versus 0.90 is
+* **Should:** quantifies: with 9 test experiments one event is 0.11 of recall (on the project's 7, 0.14); 0.91 versus 0.90 is
   far inside the noise; the top configurations are indistinguishable, so prefer the simplest.
 * **Not enough:** "apply a multiple-comparison correction" with no change to the procedure.
 
@@ -196,8 +196,13 @@ slowly warming temperature, or cumulative energy, is a monotone function of elap
 can score well by learning "it is late in the recording". On a real plant, faults do not arrive on
 schedule and the model is worth nothing.
 
-Test in under an hour: add a baseline whose score is the row index `t`. In the project it reaches
-test F1 0.835, above every sensor baseline (`w2d6`). Then: remove clock-like features and refit;
+Test in under an hour: add a baseline whose score is the row index `t`. In the project it reached
+test F1 0.835 on the Week 2 split, above every sensor baseline (`w2d6`); the rule "row >= 570 is
+anomalous" has point F1 0.808 over all labelled experiments (`w3d1`), and under any-overlap event
+matching the clock "detects" all 7 test events of the frozen split (3 of 7 under the course's
+start-inside rule, `w3d4`). The `w3d1` tools make this routine: `clock_probe` for the baseline,
+`time_monotone_columns` to find features that are clocks in disguise (Spearman correlation with `t`
+within each experiment), `audit_features` to refuse them by name. Then: remove clock-like features and refit;
 plot the model's score against `t` on normal-only data, such as the fault-free recording, where an
 honest detector should stay flat; evaluate on recordings truncated or shifted so that onset time
 varies.

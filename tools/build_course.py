@@ -118,7 +118,7 @@ unit("w3d6_error_analysis_transfer", "Error analysis and timed transfer exercise
      "Project error-analysis note; transfer exercise part 2 submission.",
      "w3d1-w3d5.", "H6.7", path="lessons/w3d6_error_analysis_transfer", status="Execution verified", has_checks=True)
 unit("w3d7_review", "Review and catch-up (light)", REVIEW,
-     "Week 3 retrieval sheet; interview set 3 (validation, leakage, ML fundamentals, spoken answers).", "Week 3 units.", "-", path="lessons/w3d7_review")
+     "Week 3 retrieval sheet; interview set 3 (validation, leakage, ML fundamentals, spoken answers).", "Week 3 units.", "-", path="lessons/w3d7_review", status="Execution verified")
 
 # ---------------------------------------------------------------- Week 4
 unit("w4d1_timeseries_fundamentals", "Time-series fundamentals and forecast-residual detectors",

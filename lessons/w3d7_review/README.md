@@ -29,12 +29,25 @@ and the timed transfer exercise; the amendments at the end of
 [`docs/FLOWGUARD_SPEC.md`](../../docs/FLOWGUARD_SPEC.md) and the findings in
 [`project/README.md`](../../project/README.md).
 
-**Alignment note.** The Week 3 lessons were being written at the same time as this review unit. The
-questions are based on each lesson's stated objective, on the project specification and findings,
-and on standard correct content; they will be re-aligned with the final lesson texts (wording,
-emphasis, lesson-specific numbers and the exact event-matching convention of `w3d4`). If a question
-refers to something your version of a lesson did not cover, answer from first principles and note it
-with `python wb.py note w3d7 "..."`.
+**Alignment.** The questions and the key were checked against the final Week 3 lessons and handbook
+sections H6.1, H6.3-H6.7, H7.2 and H7.3 on 2026-11-22. Every project number quoted comes from those
+lessons, which all evaluate on the frozen split manifest `v2` of `w3d1` (7 test, 27 development
+experiments).
+
+```mermaid
+flowchart LR
+    L["w3d1 leakage<br/>what must not reach the model"] --> V["w3d2 validation design<br/>which estimand, which split"]
+    V --> S["w3d3 selection<br/>choices fitted on dev only"]
+    S --> E["w3d4 point vs event<br/>what is counted"]
+    E --> U["w3d5 uncertainty<br/>how sure, per experiment"]
+    U --> A["w3d6 error analysis<br/>what to fix next"]
+    A -. "new hypotheses, tested on dev" .-> S
+    L -. "frozen manifest v2" .-> U
+```
+
+*How the week fits together: each step protects the number produced by the next one. The dashed
+arrows are the two loops that most often go wrong in practice: error analysis feeding back into
+selection (allowed only on development data) and the test set fixed once in w3d1.*
 
 ## 1. Spaced-review items due today (5-10 minutes)
 
@@ -49,21 +62,24 @@ cannot answer, write what you would check; open the key only when all twelve hav
 
 **Leakage (w3d1)**
 
-1. Name five distinct kinds of leakage and give a one-line example of each. Which of them does an
-   experiment-wise (grouped) split prevent, and which does it leave untouched?
+1. The w3d1 taxonomy has eight kinds of leakage. Name at least five, with a one-line example and a
+   detection probe for each. Which does an experiment-wise (grouped) split prevent, and which does it
+   leave untouched?
 2. "Prevention by construction": what does putting preprocessing inside a scikit-learn `Pipeline`
    guarantee, and which steps must be inside it? Name one leak a pipeline cannot prevent.
 3. In SKAB, 1,290 rows appear in two files each and 235 of them carry contradictory labels. State
    two separate consequences: one for how splits must be built, one for what any model can achieve.
-   Why was the answer a manifest `v2` and not an edit of `v1`?
+   Why was the answer a manifest `v2` and not an edit of `v1`, and why did the repair move experiments
+   instead of drawing a new test set?
 
 **Validation design (w3d2)**
 
 4. Grouped validation, temporal (forward-chaining) validation, and the combination: say what
    deployment question each one answers. Which matches "a detector trained on past experiments is
    run on a new experiment", and which matches "the same machine next month"?
-5. What are *purging* and an *embargo*, when are they needed, and how large must the gap be? Why
-   does the experiment-wise protocol of this project mostly not need them, and when would it?
+5. What are *purging* and an *embargo*, when are they needed, and how many rows does each remove for
+   a feature window of `w` rows and a label horizon of `h` rows? Why does the experiment-wise protocol
+   of this project mostly not need them, and when would it?
 
 **Selection (w3d3)**
 
@@ -71,12 +87,15 @@ cannot answer, write what you would check; open the key only when all twelve hav
    and which model do you ship? Why is the best inner score not a performance estimate?
 7. A decision threshold is described in this course as "a fitted parameter". Explain, and say
    roughly how the optimism from selecting among `K` candidates on the same data grows with `K`.
+   On SKAB the best trial scored 0.891 in development cross-validation and the nested estimate was
+   0.850: which number goes in the report, and why?
 
 **Point versus event evaluation (w3d4)**
 
-8. Define event recall, detection delay and false alarms per hour. Give one detector that scores
-   well at point level and badly at event level, and one with the opposite profile. Why must delay
-   be measured in seconds and not rows on this dataset?
+8. Under this course's matching rule, when does an alarm count as a detection, and what happens to an
+   alarm that starts before the labelled onset? Define event recall, detection delay and false alarms
+   per hour, and say how missed events enter the delay summary. Give one detector that scores well at
+   point level and badly at event level. Why must delay and hours be computed from timestamps?
 
 **Uncertainty (w3d5)**
 
@@ -89,8 +108,9 @@ cannot answer, write what you would check; open the key only when all twelve hav
 
 **Error analysis (w3d6)**
 
-11. What turns a list of errors into an error *analysis*? Describe the steps from raw misses and
-    false alarms to a ranked failure taxonomy, and name the way error analysis itself can leak.
+11. What turns a list of errors into an error *analysis*? Describe the steps from wrong rows to a
+    ranked list of failure modes (including the error kinds a detector's runs of wrong rows fall
+    into and how modes are ranked), and name two ways error analysis itself misleads.
 
 **Delayed question from Week 2 (w2d1)**
 
@@ -161,7 +181,7 @@ leaves the list after two consecutive solid answers.
 
 ```
 ## Spaced review
-- w3d7 Q9 (cluster bootstrap, 9 clusters) - due w4d7
+- w3d7 Q9 (cluster bootstrap, 7 clusters) - due w4d7
 - w2d7 Q4 (default window frame, ties)    - due w5d7   (second miss)
 ```
 
@@ -188,12 +208,14 @@ Checklist
       contains the elapsed-time baseline, and every reported metric names its unit of resampling
 
 Next: Week 4 starts with `w4d1` (time-series fundamentals and forecast-residual detectors); see
-[roadmap/SCHEDULE.md](../../roadmap/SCHEDULE.md).
+[roadmap/SCHEDULE.md](../../roadmap/SCHEDULE.md). Bring the frozen `v2` manifest, the elapsed-time
+baseline and the cluster bootstrap: every Week 4 comparison uses all three.
 
 ---
 
 *Content status and verification: see `STATUS.md`. Interview set 3's coding reference was executed
 against its tests and deliberately wrong answers were rejected; the numbers in its worked answers
 were simulated or computed (details in `solutions/interview/set3.md`). The retrieval answers are
-prose; the SQL behaviour in answer 12 and the numerical facts in answers 7 and 9 were confirmed by
-execution. Statements about the Week 3 lessons await re-alignment as noted above.*
+prose checked against the final lesson texts; the SQL behaviour in answer 12 was confirmed on the
+`w2d1` database and the numerical facts in answers 7 and 9 by execution or from the lessons' recorded
+runs.*

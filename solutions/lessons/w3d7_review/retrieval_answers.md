@@ -3,33 +3,40 @@
 Open only after all twelve questions have a written attempt. Each answer states what a "solid"
 answer must contain, then common wrong answers and why they fail.
 
-**Alignment note.** These answers were written from the Week 3 lesson objectives, the project
-specification and findings, and standard correct content, while the lessons themselves were still
-being written. They will be re-aligned with the final lesson texts. Where a statement was confirmed
-by running code, that is said explicitly; everything else is reasoning, not a measurement. Project
-facts are from `project/README.md` (runs on the real SKAB files).
+**Alignment.** Checked against the final Week 3 lessons and handbook sections H6.1, H6.3-H6.7, H7.2
+and H7.3 on 2026-11-22. Project numbers are quoted from those lessons' recorded runs on the real SKAB
+files, all on the frozen split manifest `v2` (7 test, 27 development experiments). Where a statement
+was confirmed by running code here, that is said explicitly; everything else is reasoning.
 
-## 1. Five kinds of leakage
+## 1. Kinds of leakage
 
-| Kind | What leaks | One-line example |
+The w3d1 taxonomy sorts leaks by *where* the unavailable information sits: in a feature, in which rows
+are on which side, in a fitted step, or in a choice. Eight kinds:
+
+| Kind | One-line example | Detection probe |
 |---|---|---|
-| **Target leakage** | A feature is a consequence or a restatement of the label | `days_since_last_login` measured after the customer cancelled; call `duration` for "will the client subscribe" |
-| **Preprocessing leakage** | Statistics fitted on rows later used for evaluation | Scaler, imputer, PCA or feature selection fitted on all rows before the split |
-| **Temporal leakage** | Information from after the prediction time | Centred rolling window; a feature table joined on the latest value rather than as of the prediction time; training on later periods than the test period |
-| **Group leakage** | Dependent rows on both sides | Windows of the same experiment, patient or machine in train and test; duplicated rows across SKAB files |
-| **Selection leakage** | The evaluation data chose something | Hyperparameters, threshold, features, early-stopping epoch or "best seed" chosen on the test set |
+| **Target / proxy** | `reminders_sent` on an invoice, written after the payment was late | single-feature AP/AUC near 1; ask *when is this column written?* |
+| **Temporal aggregate** | a customer's late-payment rate computed over the whole export, including later invoices | recompute point-in-time; old rows change when new data arrives |
+| **Shortcut / protocol** | elapsed time in SKAB (onset near row 570); ledger-number range; EEG session or site | single-feature probe; **clock probe**; `time_monotone_columns` |
+| **Group** | windows of one experiment, machine or patient on both sides | grouped versus random split gap |
+| **Duplicate / near-duplicate** | the 1,290 SKAB rows that appear in two files | row hashing across sides; nearest-neighbour distance test-to-train |
+| **Temporal** | training rows later than test rows; windows crossing the boundary | forward versus random split; purge test (w3d2) |
+| **Preprocessing** | scaler, imputer, selector or PCA fitted on all rows | change evaluation rows and see whether anything else moves |
+| **Selection** | threshold, hyperparameters or best seed chosen on test | count test looks; best-of-N against a fresh hold-out |
 
-A grouped split prevents **group leakage only**. It leaves target leakage (the leaky column is in
-every group), temporal leakage inside a group, preprocessing fitted before the split, and selection
-on the test set all in place. It also does nothing about *shortcuts shared by every group*, such as
-the fixed fault-onset time in SKAB, which is not leakage between train and test but has the same
-effect on the usefulness of the number.
+A grouped split prevents **group leakage only**, and duplicate leakage only if duplicated units are
+grouped together (which is why v2 keeps overlap groups on one side). It leaves target, temporal
+aggregate and shortcut features in every group, preprocessing fitted before the split, and selection
+on the test set in place. The clock shortcut is the clearest SKAB case: it is shared by every
+experiment, so no split removes it; it must be forbidden by name (`audit_features`) and checked for in
+disguise.
 
 | Common wrong answer | Why it fails |
 |---|---|
-| "Leakage means the label is among the features" | That is one kind of five; the others involve no label column at all |
+| "Leakage means the label is among the features" | One kind of eight |
 | "We split by patient/experiment, so there is no leakage" | Addresses one mechanism |
-| "Leakage always inflates the metric" | Usually, not necessarily visibly: the scaler leak of `w1d3` changed no printed metric. The procedure is wrong regardless |
+| "Leakage always inflates the metric visibly" | The w1d3 scaler leak changed no printed metric, and w3d1's v1/v2 comparison on the shared test experiments moved 0.899 to 0.900. The procedure is wrong regardless |
+| "No probe fired, so there is no leak" | Probes find known kinds; the feature-availability audit is the real defence |
 
 ## 2. Prevention by construction
 
@@ -55,29 +62,36 @@ time), **temporal leakage created upstream** when the feature table was built, a
 
 ## 3. Duplicated rows with contradictory labels
 
-*Splits.* Files that share rows are not independent. If `other/12` is in training and `other/13` in
-test, 349 test rows have been seen in training, with their labels. Experiments connected by shared
-rows form **overlap groups** (`{anomaly-free, other/5}`, `{other/12, other/13}`,
-`{other/2, other/3, other/4}`, `{other/10, other/11}`) and each group must stay on one side of every
-split and inside one fold. The fault-free "reference" overlapping a labelled experiment also means
-reference statistics are not independent of that experiment.
+*Splits.* Files that share rows are not independent. Experiments connected by shared rows form
+**overlap groups** (`{anomaly-free, other/5}`, `{other/12, other/13}`, `{other/2, other/3, other/4}`,
+`{other/10, other/11}`), and each group must stay on one side of every split and inside one fold. The
+v1 manifest of w2d4 broke this: 370 test rows were also in development, 178 of them with the opposite
+label.
 
-*Achievable performance.* For the 235 rows with contradictory labels, identical inputs carry both
-labels: no function of the sensors can be right on both copies. Labels are noisy at the boundaries
-of anomalous segments, so point-level metrics have a ceiling below 1 and small differences near
-segment edges are not meaningful. It is also a warning about what the labels are: markings by the
-experimenters, not ground truth.
+*Achievable performance.* Where identical inputs carry both labels, no function of the sensors is
+right on both copies. Labels near segment boundaries are noisy, so point-level metrics have a ceiling
+below 1 and small differences near segment edges are not meaningful. The labels are the experimenters'
+markings, not ground truth (w3d6 reports such units separately).
 
-*Why `v2`.* Results already computed refer to `v1`. Editing `v1` in place would make old and new
-numbers silently incomparable while carrying the same name. A new version makes the change an
-explicit, reviewable event, and `validate_splits` can then reject any manifest that separates a
-group.
+*Why `v2`, and why move rather than redraw.* Results already computed refer to `v1`; editing it in place
+would make old and new numbers silently incomparable under one name. The repair moved only what had to
+move (`other/11` and `other/12` left the test set; `other/4` changed development fold) and kept every
+other test experiment, so the test set was not re-chosen after results had been seen. Redrawing would
+have been a fresh look at a new test set, chosen by someone who already knew how models behave: a form
+of selection. `validate_splits` now rejects any manifest that separates a group.
+
+What the comparison showed (w3d1): v2 test PR-AUC is higher than v1 (logistic regression 0.900 vs
+0.827), but on the seven experiments that are in test under both manifests the difference is 0.899
+vs 0.900. The headline change comes from the test set changing, not from removing the leak; v1 was
+wrong by construction, and the size and sign of its error depend on the model.
 
 | Common wrong answer | Why it fails |
 |---|---|
-| "Drop the duplicated rows" | Removes the symptom in the table and leaves two recordings of the same physical period on both sides; also breaks the time series |
-| "1,290 of 46,806 rows is under 3 %, ignore it" | The unit is the experiment, not the row: 8 of the 14 `other` experiments and the fault-free reference are involved |
+| "Drop the duplicated rows" | Breaks the time series and leaves the same physical period on both sides |
+| "1,290 of 46,806 rows is under 3 %, ignore it" | The unit is the experiment: 8 of the 14 `other` experiments and the fault-free reference are involved |
 | "Fix v1, the old numbers were wrong anyway" | Then nobody can tell which numbers used which split |
+| "Draw a fresh v2 with the overlap constraint" | Re-chooses the test set after results were seen |
+| "The leak cost 0.07 PR-AUC" | Compares different test sets |
 
 ## 4. What each validation scheme asks
 
@@ -100,185 +114,202 @@ among rows I have already seen the neighbours of", which is rarely a deployment 
 
 ## 5. Purging and embargo
 
-When train and test rows come from the **same continuous series**, a feature computed over a window
-of `w` samples (or a label defined over a horizon `h`) makes rows near the boundary share raw data.
-**Purging** removes from training the rows whose windows or label horizons overlap the test period.
-An **embargo** additionally drops a stretch *after* the test period before training resumes, to
-cover serial correlation that outlasts the window. The gap must be at least the longest feature
-window plus the label horizon, in *time* (here seconds, because of the sampling gaps).
+When train and validation rows come from the **same continuous series**, a feature over a window of
+`w` rows and a label over a horizon of `h` rows make rows near the boundary share raw samples. For a
+validation block `[a, b]` (w3d2, section 2.5):
 
-This project splits by whole experiment and computes features per experiment, so no window crosses
-a split boundary and purging is not needed between experiments. It becomes necessary if (a) a single
-experiment's timeline is split (for example, burn-in rows for fitting and later rows for scoring
-with a rolling feature spanning the boundary), (b) features are computed across concatenated
-experiments, or (c) the same physical period appears in two files, which is the overlap-group
-problem under another name.
+* **purge** the training rows in `[a - (w-1+h), a-1]`: their features and labels reach into the block;
+* **embargo** the training rows in `[b+1, b + (w-1+h)]`: their feature windows reach back into it.
+
+So each side removes `w - 1 + h` rows (`required_purge(30) == 29`, `required_purge(40, 30) == 69`), in
+rows of a regular series or the equivalent *time* where sampling has gaps. In forward chaining there is
+nothing after the block to embargo, and the purge is the `gap` argument. In the w3d2 demonstration on
+unpredictable labels, a one-sided buffer still left an AUC of 0.518; both sides at `w-1+h` gave about
+0.50: the embargo is not optional in blocked K-fold.
+
+This project splits by whole experiment and computes features per experiment, so no window crosses a
+split boundary and no purge is needed between experiments. It becomes necessary when one experiment's
+timeline is split (blocked folds within an experiment, as in w3d2's within-experiment scheme with purge
+= embargo = 29), when features are computed across concatenated experiments, or when the same physical
+period appears in two files (the overlap groups again).
 
 | Common wrong answer | Why it fails |
 |---|---|
-| "Purging is only for finance" | It is needed wherever windows overlap a boundary |
-| "A gap of one sample is enough" | The gap must cover the longest window and horizon |
-| "Shuffle after windowing to decorrelate" | Shuffling distributes the overlap to both sides; it is the cause |
+| "Purging is only for finance" | Needed wherever windows or labels cross a boundary |
+| "A gap of one sample is enough" | The gap must cover `w - 1 + h` |
+| "Purging removes temporal leakage" | It removes shared raw samples; slow drift and protocol shortcuts remain |
+| "Shuffle after windowing to decorrelate" | Shuffling spreads the overlap to both sides; it is the cause |
 
 ## 6. Nested cross-validation
 
-The **inner loop** runs the whole selection procedure (hyperparameter search, threshold choice,
-feature selection) on an outer training set only. The **outer score** is computed on the outer test
-fold, which took no part in selection, so the average outer score estimates the performance of *the
-procedure* "search, then fit" on new data. Different outer folds may select different
-configurations; that is information about the stability of the choice, not a bug.
+The **inner loop** runs the whole selection procedure (search, one-SE choice, refit, threshold) on the
+outer training folds only. The **outer score** is computed on the outer fold, which never fitted a
+model, scored a candidate or moved a threshold, so the mean outer score estimates the performance of
+*the procedure*. Different outer folds may select different configurations (on SKAB: boosting in
+three folds, logistic regression in one); that is information about stability, not a bug.
 
-You **ship** the result of running the same selection procedure once on all development data. No
-single outer-fold model is special.
+You **ship** the result of running the same procedure once on all development data, then look at the
+test set once with its threshold frozen. No outer-fold model is special.
 
-The best inner score is the maximum over candidates of noisy estimates, so it is biased upward as an
-estimate of the selected candidate's performance (question 7).
+The best inner score is a maximum over noisy estimates, so it is biased upward (question 7).
 
 | Common wrong answer | Why it fails |
 |---|---|
 | "Report the best cross-validated score from the grid search" | Selection optimism |
-| "Ship the model from the best outer fold" | Chosen by its test score, and trained on less data |
-| "Nested CV picks the best hyperparameters" | It estimates performance of the selection procedure; picking is a separate, final run |
+| "Ship the model from the best outer fold" | Chosen by its own test score, trained on less data |
+| "Nested CV gives the performance of the final model" | It estimates the procedure; the final model is one draw from it |
 | "Outer folds chose different settings, so the method is broken" | Often the candidates are indistinguishable; say so and prefer the simplest |
 
 ## 7. Thresholds are fitted; optimism grows with K
 
-A threshold is a number chosen by looking at scores **and labels** to optimise a criterion, exactly
-as a weight is. It therefore has to be chosen on training/validation data, frozen, and carried to
-the test set unchanged; maximising F1 over thresholds on the test set reports the best of many
-candidates.
+A threshold is chosen by looking at scores **and labels** to optimise a criterion; it is a
+one-parameter model. It is chosen on development (out-of-fold) scores, frozen, and the test result is
+reported at that frozen threshold, never at the test-optimal one.
 
-For `K` candidates of equal true quality whose scores have noise standard deviation `s`, the
-expected best score exceeds the truth by `s` times the expected maximum of `K` standard normals:
-about 1.5 `s` for `K = 10`, 2.2 `s` for 40, 2.5 `s` for 100 (simulated in the authoring session);
-the growth is logarithmic, roughly `s·sqrt(2 ln K)` as an upper bound. Correlated candidates (the
-usual case) inflate less. With few independent test units `s` is large, so on 7 test experiments even a
-modest search can manufacture several points.
+For `K` equally good candidates with independent errors `N(0, σ²)`, the optimism of the best is `σ`
+times the expected maximum of `K` standard normals: 0.56σ for K = 2, 1.54σ for K = 10, 2.25σ for
+K = 50, growing like `σ√(2 ln K)` (w3d3, section 2.2). With correlation `ρ` between candidates the
+shared part does not change the winner, and the optimism shrinks by about `√(1−ρ)`. With few test
+units `σ` is large, so even a modest search manufactures several points.
 
-| Common wrong answer | Why it fails |
-|---|---|
-| "The threshold is not a parameter, it is a post-processing choice" | It is chosen using labels; that is fitting |
-| "AP/ROC AUC are threshold-free, so no problem" | The deployed system uses one threshold; and model selection by AP on test data is still selection |
-| "Optimism grows linearly with the number of trials" | Logarithmically; the first few trials cost most |
-
-## 8. Point-level versus event-level
-
-Using the project's convention (one event = one contiguous anomalous segment; a prediction is a
-thresholded score):
-
-* **Event recall:** fraction of true events for which at least one alert falls inside the matching
-  window of the event.
-* **Detection delay:** time from event onset to the first alert that matches it, in seconds;
-  reported for detected events only, alongside the recall, since missed events have no delay.
-* **False alarms per hour:** number of alert *episodes* that match no event, divided by the hours of
-  normal operation scored. Episodes, not rows: a false alert lasting 30 s is one interruption.
-
-*Good at point level, bad at event level:* a detector that flags the late, obvious part of every
-long segment has high sample recall and precision but a long delay; or one that flags the three
-longest events completely and misses six short ones. *Opposite:* a change detector that fires for
-a few samples at each onset has event recall near 1 and short delay but point-level recall near
-zero, since it is silent for the rest of each segment.
-
-Delay in **seconds**: six SKAB files have gaps of up to 247 s, so a row count across a gap is not a
-duration; and an operator's requirement is stated in time.
-
-The exact matching rule (how early an alert may be, whether alerts just after the segment count, how
-adjacent alerts merge) changes the numbers and must be stated next to them.
+On SKAB (w3d3): best development CV PR-AUC 0.891, one-SE choice 0.878, **nested estimate 0.850 ±
+0.032**. The nested estimate is the number for the procedure; the 0.891 is the best of 24 noisy
+estimates. The single test look gave 0.922, above the nested estimate: with 7 test experiments that is
+within noise, and it does not mean the nested estimate was pessimistic.
 
 | Common wrong answer | Why it fails |
 |---|---|
-| "Event metrics are point metrics averaged per event" | They ask different questions and can rank models oppositely |
-| "Report mean delay over all events, counting misses as zero" | Rewards missing events; report recall and delay together |
-| "False alarm rate = FP rows / normal rows" | That is the point-level FPR; an operator counts interruptions per unit time |
-| "Point-adjust: if any sample in a segment is hit, count the whole segment as detected" | Inflates point metrics so far that a random scorer looks good on long segments; if used it must be labelled as such |
+| "The threshold is post-processing, not a parameter" | It is chosen using labels; that is fitting |
+| "AP/ROC AUC are threshold-free, so no problem" | The deployed system uses one threshold, and choosing a model by AP on test is still selection |
+| "Optimism grows linearly with the number of trials" | Slowly, like `√ln K`; the first trials cost most |
+| "The one-SE rule removes the optimism" | It changes the choice, not the bias of the number attached to it |
+| "Test came out higher, so report test" | One look at 7 experiments; report it as the test result next to the nested estimate |
+
+## 8. Matching, event metrics, and why point metrics mislead
+
+*The course's default matching rule (w3d4, section 2.4).* An alarm is judged by its **start**. It
+detects an event if it starts inside the event (or at most `early_tolerance` rows before it; default
+0). The earliest such alarm is the **hit**; later alarms in the same event are **redundant** (neither
+true nor false). An alarm that starts during normal operation is a **false alarm**, even if it runs on
+into the event: it carried no news when the fault began. An alarm starting before the labelled onset is
+therefore a false alarm unless a stated tolerance covers it.
+
+* **Event recall** = detected events / true events.
+* **Event precision** = hits / (hits + false alarms); redundant alarms excluded.
+* **Detection delay** per event: from the true onset to the moment the hit is raised (including the
+  confirmation time of a minimum-duration rule), and **infinite for a missed event**. Report the
+  median and a high percentile over *all* events, misses included; averaging over detected events
+  only rewards missing hard cases.
+* **False alarms per hour of normal operation** = false alarms / hours outside true events, with the
+  count and hours reported, and an upper bound: zero false alarms in the 1.22 test hours is still
+  compatible with 2.46 per hour.
+
+*Point and event disagree.* In w3d4's synthetic example, "long event only" has the best point F1
+(0.899) and finds 1 of 10 events; "onset only" has point F1 0.066 and finds 10 of 10 at zero delay. On
+SKAB the flow-rate z-score finds all 7 test events but as 469 separate alarms, 290 of them false. With
+a minimum duration and gap merging it drops to 17 alarms and finds only 3 of 7, because at its low
+threshold the merged alarm often starts before the onset and becomes a false alarm; Mahalanobis, worst
+on point F1, is the best post-processed detector (5 of 7 events). Post-processing and threshold must be
+chosen together.
+
+*Timestamps.* Six SKAB files have gaps up to 247 s, so row counts are not durations: hours from rows
+come out too small by about a factor 1.1 on SKAB, and an operator's requirement is stated in time.
+
+| Common wrong answer | Why it fails |
+|---|---|
+| "Any overlap counts as detection" | Credits an alarm that started before the fault with a zero-delay detection |
+| "Report mean delay over detected events" | Censoring error: missing hard events lowers the delay |
+| "False alarm rate = FP rows / normal rows" | Point-level FPR; an operator counts interruptions per hour |
+| "Point-adjust is the standard protocol" | It credits a whole segment for one hit; a random scorer looks strong on long segments (w3d4, 3.2) |
+| "Event metrics fix leakage" | The elapsed-time clock finds 3 of 7 test events (7 of 7 under any-overlap) |
 
 ## 9. Cluster bootstrap with seven experiments
 
-Procedure: compute the per-experiment ingredients once (scores and labels, or per-experiment
-counts). Repeat `B` times (say 2,000): draw 7 experiments **with replacement** from the 7 test
-experiments; recompute the metric on the drawn set as a whole (pool the rows of the drawn
-experiments, a repeated experiment counting twice); store it. Report the point estimate on the
-original test set with a percentile interval of the bootstrap values, and state "resampling unit:
-experiment, n = 7".
+Procedure (w3d5): keep per-experiment scores and labels. Repeat `B` times (say 2,000): draw 7
+experiment ids **with replacement** from the 7 test experiments; build the pseudo-test set from all
+rows of the drawn experiments (an experiment drawn twice appears twice); recompute the metric on it;
+store it. Report the estimate on the real test set with the percentile interval, and state "unit of
+resampling: experiment, 7 clusters". If an overlap group were in the test set, the group would be the
+cluster; the frozen v2 test set has none, so 7 experiments are 7 clusters.
 
-Resampling rows is wrong because rows within an experiment are strongly autocorrelated: a
-row bootstrap treats about 10,000 rows as 10,000 independent observations and returns an interval
-several times too narrow. The variation that matters is *which experiments you happened to get*.
+Resampling rows is wrong because rows within an experiment are strongly correlated: the effective
+sample size is close to the number of clusters, not the number of rows. On SKAB the row bootstrap gave
+intervals about 3-7 times too narrow.
 
-What remains doubtful with 7 clusters: the bootstrap approximates the population by the sample, and
-7 units describe it coarsely. Percentile intervals from so few clusters tend to be too narrow; any
-one experiment is absent from about 34 % of resamples (`(6/7)^7 = 0.340`, computed), so a single
-unusual experiment makes the distribution lumpy; metrics such as event recall take few distinct
-values; some resamples of a family-stratified question contain no experiment of a family. The
-interval is a lower bound on honest uncertainty, to be reported as such. Stratifying the resampling
-by family keeps the family mix fixed, which answers a slightly different question; say which you did.
+What remains doubtful: with `G = 7` there are only `C(13, 7) = 1,716` distinct resamples, any one
+experiment is missing from about 34 % of them (`(6/7)^7 = 0.340`), and in w3d5's simulation a nominal
+95 % percentile interval covered the truth only about 87-88 % of the time with 7 or 9 clusters. BCa
+helps a little (it moved the lower limit by about 0.025 for the flow-rate baseline) and cannot rescue 7
+clusters. The interval is a lower bound on the honest uncertainty, and the report says so.
 
 | Common wrong answer | Why it fails |
 |---|---|
-| "Bootstrap the 10,000 test rows" | Ignores dependence; interval far too narrow |
-| "Average the per-experiment metric and use a t-interval over rows" | Unit confusion again |
-| "With 2,000 resamples the interval is precise" | More resamples reduce Monte Carlo error, not the error from having 9 units |
-| "Report mean ± std over folds" | Folds share training data; the spread is not a standard error and is not an interval for the test estimate |
+| "Bootstrap the test rows" | Ignores dependence; far too narrow |
+| "With 2,000 resamples the interval is precise" | More resamples reduce Monte Carlo error, not the error from having 7 units |
+| "Report mean ± std over CV folds" | Folds share training data; not an interval for the test estimate |
+| "A resample with no positives is an error; drop it" | It is a property of having few clusters; handle and document it (w3d5 lab) |
 
 ## 10. Paired comparison
 
 Both models are scored on the same experiments, and experiments differ in difficulty: an easy one is
-easy for both. Their scores are therefore positively correlated, and the variance of the
-*difference* is much smaller than the two separate intervals suggest. Overlapping individual
-intervals do not imply "no difference", and non-overlap is far stricter than needed.
+easy for both. The scores are correlated, so the variance of the *difference* is much smaller than the
+two separate intervals suggest (w3d5's synthetic example: unpaired interval for the difference
+[−0.063, +0.090], paired [+0.0155, +0.0191]).
 
-Report the interval for **Δ = metric(A) − metric(B)**: on each bootstrap resample of experiments,
-compute both models' metric on the *same* resample and store the difference; take the percentile
-interval of the differences (and, if you like, the fraction of resamples with Δ > 0).
+Report the interval for **Δ = metric(A) − metric(B)**: in each bootstrap replicate draw one set of
+cluster ids and apply it to both models; store the difference; take the percentile interval. A
+sign-flip permutation test on per-cluster differences is an exact alternative for small `G` (with 7
+clusters its smallest possible p-value is 2/128 = 0.016).
 
-If the interval contains zero: "A and B are not distinguishable on these n experiments (Δ = x,
-95 % interval [l, u])", then decide on other grounds (simplicity, latency, cost) and say so. Do not
-write "B is slightly better" or "no difference exists": the data are compatible with both signs.
+If the interval contains zero: "A and B are not distinguishable on these 7 experiments (Δ = x, 95 %
+interval [l, u])", then decide on other grounds and say so. If methods disagree, report both. On SKAB
+the Mahalanobis versus flow-rate comparison had a bootstrap interval excluding zero (−0.125
+[−0.278, −0.013]) while the sign test (p = 0.45) and permutation test did not reject; w3d5 reports it as **not established**. The minimum detectable
+difference with 7 clusters is about 0.25 PR-AUC; with 30 about 0.10.
 
 | Common wrong answer | Why it fails |
 |---|---|
-| "The two intervals overlap, so there is no difference" | Ignores the pairing; too conservative |
+| "The two intervals overlap, so there is no difference" | Ignores the pairing |
 | "A t-test on per-row errors" | Rows are not independent |
-| "A won on 5 of 9 experiments, so A is better" | A sign count on 9 units has almost no power; report it only as description |
-| "Not significant, therefore equal" | Absence of evidence with 9 units is weak evidence of equality |
+| "A won on 5 of 7 experiments, so A is better" | A sign count on 7 units has almost no power |
+| "Not significant, therefore equal" | With 7 clusters almost nothing is significant; absence of evidence is weak evidence |
 
 ## 11. From errors to an error analysis
 
-A list of misclassified samples is raw material. Analysis needs:
+An error analysis produces a short **ranked list of failure modes**, each with a size, a cost and a
+hypothesis about its cause (w3d6). Steps:
 
-1. **The right unit:** group errors into missed events, late detections and false-alarm episodes,
-   not rows.
-2. **Slices:** break the metric down by variables known before looking (fault family, experiment,
-   position relative to onset, presence of sampling gaps, sensor regime) and look for slices that
-   are much worse than the aggregate, with their sizes.
-3. **Reading examples:** plot the worst cases per slice, raw signals and scores together, and write
-   one line per case about the apparent cause.
-4. **A taxonomy:** a small set of failure categories with definitions that a second person could
-   apply (for example: slow-onset faults flagged late; normal transients after a gap flagged;
-   label-boundary disagreements; unseen fault mechanism).
-5. **Ranking by impact:** count and cost per category, so the list says what to fix first, and which
-   categories are *label or data* problems that no model change will fix.
-6. **A hypothesis and a check per top category**, to be tested on development data.
+1. **Work on development data** (out-of-fold predictions). Reading test errors and then changing the
+   model turns the test set into a second development set.
+2. **A unit table:** one row per experiment with its metrics; every later step is a group-by on it,
+   and an undefined metric is missing, not zero.
+3. **Slices written before looking** (family, regime, time since start, gaps, label conflicts),
+   with sizes and cluster-aware intervals or counts.
+4. **Error kinds** from runs of wrong rows: miss, late, boundary, fragment (alarm dropped out),
+   pre-onset, post-event, false alarm. Each points to a different fix.
+5. **Separate label noise from model error:** report units with contradictory labels separately.
+6. **Rank by frequency × cost × fixability**, stating the assumptions; frequency caps the gain.
+7. **A hypothesis and a test per top mode**, on other development units.
 
-The leak: error analysis done on the **test set**, followed by changes motivated by what was seen,
-turns the test set into training data by way of the analyst. Do the analysis on development
-experiments (out-of-fold predictions); look at test errors once, at the end, to describe, not to
-iterate.
+Two ways it misleads. *Slice hunting is multiple testing:* in w3d6's simulation, 24 machines with
+identical recall 0.80 and 80 slices produced a "worst slice" averaging 0.729, and 45 % of searches found
+one at least that bad. *Simpson's paradox:* a detector can be better in every regime and worse pooled.
+(And the leak: error analysis on the test set.)
 
 | Common wrong answer | Why it fails |
 |---|---|
-| "Plot the confusion matrix" | One aggregate; no slices, no causes, no ranking |
-| "Look at the 20 highest-loss samples" | Dominated by one or two experiments and by label noise; not representative |
+| "Plot the confusion matrix" | One aggregate; no slices, causes or ranking |
+| "Look at the 20 highest-loss samples" | Dominated by one or two experiments and by label noise |
+| "We found a slice at 0.73, fix it" | Expected by chance after 80 slices; test it on other units first |
 | "We fixed every error we found on the test set" | The reported test number is now optimistic |
-| "Feature importance explains the errors" | It describes the model, not where and why it fails |
 
 ## 12. `NOT IN` with a NULL (delayed question from w2d1)
 
 `technicians.site_id` is NULL for external contractors. `x NOT IN (a, b, NULL)` means
 `x <> a AND x <> b AND x <> NULL`. The last comparison is UNKNOWN, so the conjunction is never TRUE
 (it is FALSE if `x` equals a listed value, UNKNOWN otherwise), and `WHERE` keeps only TRUE rows.
-One NULL in the subquery empties the result. *(Confirmed in SQLite 3.53.1 on a three-row example:
-`NOT IN` returned no rows; each rewrite below returned the two unmatched rows.)*
+One NULL in the subquery empties the result. *(Confirmed on the `w2d1` database `maintenance.db`, SQLite 3.53.1: 2 of 12
+technicians have a NULL `site_id`; `NOT IN` returns 0 rows, `NOT EXISTS` returns 2.)*
 
 Rewrites:
 

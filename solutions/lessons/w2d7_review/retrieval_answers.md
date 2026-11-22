@@ -17,7 +17,7 @@ wrong aggregates.
 Joining `customers` to `invoices` (many per customer) and to `tickets` (many per customer) produces
 one row per *(invoice, ticket) pair* for each customer: a customer with `m` invoices and `k` tickets
 contributes `m × k` rows, so `SUM(invoices.amount)` is multiplied by `k`. Executed on the diagnostic
-database: for the customer with the most tickets (6), the three-table join sums to 2758.62 where the
+database: for customer `C00679`, one of two customers with the most tickets (6), the three-table join sums to 2758.62 where the
 true invoice total is 459.77, exactly six times too large. Customers with no ticket vanish entirely
 under an inner join, which is the opposite error in the same query.
 

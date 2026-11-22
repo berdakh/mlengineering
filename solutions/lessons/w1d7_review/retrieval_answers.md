@@ -234,6 +234,8 @@ never mixed in one commit. It is **replaced** as functions acquire real contract
 tests with independent oracles (known answers, invariances), the corresponding pin can go. It must be
 **updated deliberately**, in its own commit with the reason recorded, whenever you intentionally
 change behaviour (such as removing the scaling leak): the pin never justifies keeping a bug.
+Its limit (`w1d6`): it covers only the inputs it was run on, so a path those inputs never exercise is
+unprotected; state which inputs the golden output covers.
 
 **Why not mix the two kinds of change in one commit** (the `w1d6` rule): a structural change is
 verified by an *unchanged* characterisation output; a behaviour change is verified by a *changed*
