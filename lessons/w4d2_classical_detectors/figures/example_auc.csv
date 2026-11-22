@@ -1,0 +1,7 @@
+detector,fault,auc
+PCA T2,A: extreme but consistent,0.945
+PCA T2,B: broken relationship,0.52
+PCA Q,A: extreme but consistent,0.671
+PCA Q,B: broken relationship,0.999
+isolation forest,A: extreme but consistent,0.947
+isolation forest,B: broken relationship,0.699
