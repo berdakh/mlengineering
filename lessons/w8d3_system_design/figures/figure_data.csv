@@ -1,0 +1,56 @@
+figure,series,x,y
+labels_vs_window,delay_1,0,0.0
+labels_vs_window,delay_1,15,700.0
+labels_vs_window,delay_1,30,1450.0
+labels_vs_window,delay_1,45,2200.0
+labels_vs_window,delay_1,60,2950.0
+labels_vs_window,delay_1,75,3700.0
+labels_vs_window,delay_1,90,4450.0
+labels_vs_window,delay_7,0,0.0
+labels_vs_window,delay_7,15,400.0
+labels_vs_window,delay_7,30,1150.0
+labels_vs_window,delay_7,45,1900.0
+labels_vs_window,delay_7,60,2650.0
+labels_vs_window,delay_7,75,3400.0
+labels_vs_window,delay_7,90,4150.0
+labels_vs_window,delay_14,0,0.0
+labels_vs_window,delay_14,15,50.0
+labels_vs_window,delay_14,30,800.0
+labels_vs_window,delay_14,45,1550.0
+labels_vs_window,delay_14,60,2300.0
+labels_vs_window,delay_14,75,3050.0
+labels_vs_window,delay_14,90,3800.0
+labels_vs_window,delay_28,0,0.0
+labels_vs_window,delay_28,15,0.0
+labels_vs_window,delay_28,30,100.0
+labels_vs_window,delay_28,45,850.0
+labels_vs_window,delay_28,60,1600.0
+labels_vs_window,delay_28,75,2350.0
+labels_vs_window,delay_28,90,3100.0
+half_width_vs_n,p_0.5,100,9.8
+half_width_vs_n,p_0.5,316,5.5129
+half_width_vs_n,p_0.5,1000,3.099
+half_width_vs_n,p_0.5,3162,1.7428
+half_width_vs_n,p_0.5,10000,0.98
+half_width_vs_n,p_0.5,31623,0.5511
+half_width_vs_n,p_0.5,100000,0.3099
+half_width_vs_n,p_0.1,100,5.88
+half_width_vs_n,p_0.1,316,3.3078
+half_width_vs_n,p_0.1,1000,1.8594
+half_width_vs_n,p_0.1,3162,1.0457
+half_width_vs_n,p_0.1,10000,0.588
+half_width_vs_n,p_0.1,31623,0.3307
+half_width_vs_n,p_0.1,100000,0.1859
+half_width_vs_n,p_0.01,100,1.9502
+half_width_vs_n,p_0.01,316,1.0971
+half_width_vs_n,p_0.01,1000,0.6167
+half_width_vs_n,p_0.01,3162,0.3468
+half_width_vs_n,p_0.01,10000,0.195
+half_width_vs_n,p_0.01,31623,0.1097
+half_width_vs_n,p_0.01,100000,0.0617
+latency_budget,image fetch from object store,,120
+latency_budget,image embedding (GPU service),,90
+latency_budget,api gateway + auth,,30
+latency_budget,feature lookup,,25
+latency_budget,text features,,15
+latency_budget,model,,12

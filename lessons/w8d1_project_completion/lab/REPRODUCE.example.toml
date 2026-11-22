@@ -1,0 +1,33 @@
+# Copy to the root of YOUR flowguard repository as REPRODUCE.toml and adapt.
+# The audit tool reads it from the clean clone, so it must be committed.
+
+[environment]
+requirements = "requirements.lock"   # every line name==version, direct AND transitive (pip freeze)
+
+[[step]]
+name = "download data (pinned commit, SHA-256 per file)"
+run = ["python", "scripts/get_skab.py"]
+timeout_s = 600
+
+[[step]]
+name = "verify data hashes"
+run = ["python", "scripts/get_skab.py", "--verify"]
+timeout_s = 120
+
+[[step]]
+name = "evaluate"
+run = ["make", "evaluate"]           # "python" and "make" run with the audit's venv first on PATH
+timeout_s = 1800
+
+[headline]
+produced = "results/results.json"    # written by the steps
+expected = "expected/results.json"   # committed copy of the results your report was generated from
+repeat = 1                            # 2 = run twice and require identical headline numbers
+
+[[headline.value]]
+key = "test.0.pr_auc"                 # dotted path; integers index lists
+abs_tol = 1e-9
+
+[[headline.value]]
+key = "test.0.events_detected"
+abs_tol = 0
