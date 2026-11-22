@@ -582,8 +582,8 @@
       "prerequisites": "w7d2.",
       "handbook": "H15.4",
       "path": "lessons/w7d3_drift_vs_degradation",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w7d4_model_updates_rollback",
@@ -595,8 +595,8 @@
       "prerequisites": "w5d2, w7d3.",
       "handbook": "H15.5",
       "path": "lessons/w7d4_model_updates_rollback",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w7d5_reliability",

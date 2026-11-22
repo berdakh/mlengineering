@@ -354,7 +354,7 @@ have raised across your normal sessions?
 its own 99th percentile of stable daily values, alerts on about one day in five although nothing
 changes. Explain the rate and two ways to fix it.
 
-**Next.** [w7d3](../../roadmap/SCHEDULE.md): drift is not degradation — delayed labels and measured
+**Next.** [w7d3](../w7d3_drift_vs_degradation/README.md): drift is not degradation — delayed labels and measured
 performance.
 
 ## Verification record

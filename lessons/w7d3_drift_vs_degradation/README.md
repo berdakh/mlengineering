@@ -2,7 +2,7 @@
 
 **Status:** Execution verified (see the verification record at the end).
 **Handbook:** [H15.4 Drift versus degradation, delayed labels](../../handbook/ch15_logging_monitoring_updates/h15_4_drift_vs_degradation_delayed_labels.md)
-**Prerequisites:** [w7d2](../../roadmap/SCHEDULE.md) (input monitoring and drift statistics; this lab ships its
+**Prerequisites:** [w7d2](../w7d2_input_monitoring_drift/README.md) (input monitoring and drift statistics; this lab ships its
 own `flowguard.drift`), [w3d4](../w3d4_point_vs_event_evaluation/README.md) (event metrics),
 [w3d5](../w3d5_uncertainty/README.md) (intervals), [w5d2](../w5d2_artifacts_versioning/README.md) (the shipped model).
 
@@ -69,12 +69,12 @@ sequenceDiagram
     participant M as Maintenance
     participant I as Inspection
     participant E as Delayed evaluation
-    S->>L: score, alarm (alarm_id, model_version)
+    S->>L: score and alarm with alarm_id and model_version
     Note over S,L: drift monitor reads the inputs now
-    M-->>L: verdict for alarm_id (2-10 days later; may be corrected)
-    I-->>L: missed fault report, fault_id (14-60 days later, only some faults)
-    E->>L: join by id, keep labels with label_time <= as_of
-    E->>E: precision, recall with intervals, or "insufficient data"
+    M-->>L: verdict for alarm_id, 2-10 days later, may be corrected
+    I-->>L: missed fault report with fault_id, 14-60 days later, only some faults
+    E->>L: join by id, keep labels known by as_of
+    E->>E: precision and recall with intervals, or insufficient data
 ```
 
 ### 2.2 Precise terms

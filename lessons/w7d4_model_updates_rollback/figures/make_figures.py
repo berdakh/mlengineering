@@ -51,15 +51,17 @@ def fig_gate(out: dict) -> None:
     for y, (label, (est, lo, hi)) in enumerate(items):
         ax.plot([lo, hi], [y, y], color=SERIES[y], linewidth=3, solid_capstyle="round")
         ax.plot([est], [y], "o", color=SERIES[y], markersize=8)
-        ax.annotate(f"{est:+.3f} [{lo:+.3f}, {hi:+.3f}]", (hi, y), xytext=(8, 0), textcoords="offset points",
-                    va="center", fontsize=8, color=INK["secondary"])
+        right = hi > 0
+        ax.annotate(f"{est:+.3f} [{lo:+.3f}, {hi:+.3f}]", (hi if right else lo, y), xytext=(8 if right else -8, 0),
+                    textcoords="offset points", va="center", ha="left" if right else "right", fontsize=8,
+                    color=INK["secondary"])
         ROWS.append({"figure": "gate_intervals", "x": label, "series": "estimate,low,high", "value": f"{est:.4f},{lo:.4f},{hi:.4f}"})
     ax.axvline(0, color=INK["primary"], linewidth=1)
     ax.axvline(-0.05, color=INK["muted"], linewidth=1, linestyle="--")
     ax.text(-0.05, 1.45, "non-inferiority margin -0.05", ha="right", fontsize=8, color=INK["secondary"])
     ax.set_yticks([0, 1], [i[0] for i in items])
     ax.set_ylim(-0.6, 1.7)
-    ax.set_xlim(-1.0, 0.75)
+    ax.set_xlim(-1.45, 0.8)
     ax.set_xlabel("event recall: candidate minus current (paired bootstrap, 95 %)")
     ax.set_title("Gate on 7 test experiments: 1.1.0 is non-inferior but not shown better")
     save(fig, HERE / "gate_intervals.svg")
@@ -84,7 +86,7 @@ def fig_probe(raw: Path, bundles: Path) -> None:
     ax.set_xlabel("sample (1 s each), valve1/8")
     ax.set_ylabel("score")
     ax.set_ylim(0, max(12, np.nanmax(s) * 1.05))
-    ax.set_title("valve1/8: the fault peaks between the two thresholds; only 1.1.0 alarms")
+    ax.set_title("valve1/8: the fault holds the score between the thresholds; only 1.1.0 alarms")
     ax.legend(loc="upper left", fontsize=8)
     save(fig, HERE / "probe_valve1_8.svg")
 
@@ -126,9 +128,10 @@ def fig_canary() -> None:
     ax.plot(hours, highs, color=SERIES[0], linewidth=1)
     ax.axhline(1.0, color=SERIES[1], linestyle="--", label="budget: 1 alert per machine-hour")
     first = next(h for h, lo in zip(hours, lows) if lo > 1.0)
+    ax.plot([first], [lows[first]], "o", color=SERIES[1], markersize=7)
     ax.annotate(f"hour {first}: lower bound > budget,\nthe hourly rule stops here", (first, lows[first]),
                 xytext=(30, 40), textcoords="offset points", fontsize=8, color=INK["secondary"],
-                arrowprops={"arrowstyle": "-", "color": INK["muted"]})
+                arrowprops={"arrowstyle": "->", "color": INK["secondary"]})
     ax.set_yscale("log")
     ax.set_xlabel("hours of canary (cumulative data)")
     ax.set_ylabel("alerts per machine-hour (log)")

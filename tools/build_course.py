@@ -216,11 +216,11 @@ unit("w7d2_input_monitoring_drift", "Input monitoring and drift statistics",
 unit("w7d3_drift_vs_degradation", "Drift is not degradation: delayed labels and measured performance",
      "Separate input change from measured performance loss; design label backfill, proxy metrics and delayed evaluation.",
      "Replay experiment showing drift without degradation and degradation without flagged drift.",
-     "w7d2.", "H15.4", path="lessons/w7d3_drift_vs_degradation")
+     "w7d2.", "H15.4", path="lessons/w7d3_drift_vs_degradation", status="Execution verified", has_checks=True)
 unit("w7d4_model_updates_rollback", "Model updates: retraining triggers, shadow and canary, rollback",
      "Define when and how a model is replaced: triggers, offline gate, shadow/canary comparison, versioned rollback.",
      "Update and rollback procedure exercised locally with two model versions.",
-     "w5d2, w7d3.", "H15.5", path="lessons/w7d4_model_updates_rollback")
+     "w5d2, w7d3.", "H15.5", path="lessons/w7d4_model_updates_rollback", status="Execution verified", has_checks=True)
 unit("w7d5_reliability", "Reliability and failure handling",
      "Handle bad input, timeouts, missing models and dependency failures deliberately: guards, fallbacks, degradation, failure-injection drills.",
      "Failure-injection test suite and a short incident note.",
