@@ -88,24 +88,26 @@ def main() -> int:
             print(f"after flipping one bit in weights.npz: refused ({exc})")
 
     blob = pickle.dumps(model, protocol=5)
-    globals_used = sorted({arg for op, arg, _ in pickletools.genops(blob)
-                           if op.name in ("GLOBAL", "STACK_GLOBAL") and arg} |
-                          {a for a in (str(x) for x in pickle_module_names(blob))})
-    print(f"pickle of the Ridge object: {len(blob)} B; it names these importables, which are imported "
-          f"and called when it is loaded: {globals_used}")
+    print(f"pickle of the Ridge object: {len(blob)} B. Loading it imports and calls: {imported_callables(blob)}")
     return 0
 
 
-def pickle_module_names(blob: bytes):
-    """Module and attribute names that a STACK_GLOBAL pickle pushes as strings before importing them."""
-    strings = [arg for op, arg, _ in pickletools.genops(blob) if op.name in ("SHORT_BINUNICODE", "BINUNICODE")]
-    ops = [op.name for op, _, _ in pickletools.genops(blob)]
-    out, i = [], 0
+def imported_callables(blob: bytes) -> list[str]:
+    """``module.name`` for every STACK_GLOBAL in a pickle: what pickle.load will import and call.
+
+    Protocol 4+ pushes the module and the attribute name as two strings, then STACK_GLOBAL imports
+    ``module.name``. Memoised strings are re-used via BINGET, so this simple scan can miss repeats;
+    it is enough to show what kind of thing a pickle is.
+    """
+    strings, found = [], []
     for op, arg, _ in pickletools.genops(blob):
-        if op.name in ("SHORT_BINUNICODE", "BINUNICODE"):
-            out.append(arg)
-    # keep the dotted ones: module paths are what get imported
-    return [s for s in out if "." in s and s.startswith(("sklearn", "numpy", "_codecs", "copyreg", "builtins"))]
+        if op.name in ("SHORT_BINUNICODE", "BINUNICODE", "UNICODE"):
+            strings.append(arg)
+        elif op.name == "STACK_GLOBAL" and len(strings) >= 2:
+            found.append(f"{strings[-2]}.{strings[-1]}")
+        elif op.name == "GLOBAL":
+            found.append(arg.replace(" ", "."))
+    return sorted(set(found))
 
 
 if __name__ == "__main__":
