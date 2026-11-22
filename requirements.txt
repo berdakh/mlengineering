@@ -6,6 +6,7 @@ scikit-learn>=1.4
 scipy>=1.11
 pydantic>=2.6
 pytest>=8
+pyyaml>=6        # lesson w6d3 checks read workflow files
 fastapi>=0.110   # Week 5 onward: prediction API
 uvicorn>=0.29
 httpx>=0.27      # FastAPI TestClient

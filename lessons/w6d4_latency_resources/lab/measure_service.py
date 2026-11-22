@@ -22,11 +22,11 @@ import socket
 import subprocess
 import sys
 import time
-import tomllib
 from datetime import datetime, timedelta
 from pathlib import Path
 
 import httpx
+import tomllib
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -78,10 +78,15 @@ def group_rss_mb(pgid: int) -> float:
     return total_kb / 1024
 
 
-def start_server(port: int, workers: int, extra_env: dict) -> subprocess.Popen:
+def start_server(port: int, workers: int, extra_env: dict, server_args: list[str] = (),
+                 launcher: str = "uvicorn") -> subprocess.Popen:
     env = dict(os.environ, PYTHONPATH=str(HERE / "src"), FLOWGUARD_MODEL_DIR=str(MODEL_DIR), **extra_env)
-    cmd = [sys.executable, "-m", "uvicorn", "--factory", "flowguard.api:create_app_from_env",
-           "--host", "127.0.0.1", "--port", str(port), "--workers", str(workers), "--log-level", "warning"]
+    if launcher == "serve":   # serve.py: same app, listening socket created with IPPROTO_TCP (TCP_NODELAY)
+        cmd = [sys.executable, str(HERE / "serve.py"), "--host", "127.0.0.1", "--port", str(port),
+               "--workers", str(workers), *server_args]
+    else:
+        cmd = [sys.executable, "-m", "uvicorn", "--factory", "flowguard.api:create_app_from_env", "--host",
+               "127.0.0.1", "--port", str(port), "--workers", str(workers), "--log-level", "warning", *server_args]
     return subprocess.Popen(cmd, env=env, start_new_session=True,
                             stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True)
 
@@ -138,6 +143,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--timeout", type=float, default=10.0)
     ap.add_argument("--budget", default=str(HERE / "budget.toml"))
     ap.add_argument("--env", nargs="*", default=[], help="extra server env vars, e.g. OMP_NUM_THREADS=1")
+    ap.add_argument("--launcher", choices=["uvicorn", "serve"], default="uvicorn",
+                    help="uvicorn: the uvicorn command line; serve: serve.py (sets TCP_NODELAY with N workers)")
+    ap.add_argument("--server-arg", action="append", default=[],
+                    help="extra uvicorn argument, repeatable, e.g. --server-arg=--http=h11")
     ap.add_argument("--keep-latencies", action="store_true", help="store every successful request's latency")
     ap.add_argument("--out", required=True)
     args = ap.parse_args(argv)
@@ -146,7 +155,7 @@ def main(argv: list[str] | None = None) -> int:
     extra_env = dict(kv.split("=", 1) for kv in args.env)
     port = free_port()
     base = f"http://127.0.0.1:{port}"
-    proc = start_server(port, args.workers, extra_env)
+    proc = start_server(port, args.workers, extra_env, args.server_arg, args.launcher)
     runs = []
     try:
         wait_ready(base, proc)
@@ -162,7 +171,7 @@ def main(argv: list[str] | None = None) -> int:
                 run["latencies_ms"] = [round(1000 * r["latency"], 3) for r in records
                                        if r["intended"] >= first + args.warmup and r["status"] == 200]
             runs.append(run)
-            print(f"workers={args.workers} rate={rate:>5.0f}/s  sent={summary['n_sent']:>5}  "
+            print(f"{args.launcher:<7} workers={args.workers} rate={rate:>5.0f}/s  sent={summary['n_sent']:>5}  "
                   f"p50={summary['p50_ms']:7.1f}  p95={summary['p95_ms']:7.1f}  p99={summary['p99_ms']:7.1f} ms  "
                   f"errors={summary['error_rate']:.3f}  thr={summary['throughput_rps']:6.1f}/s  "
                   f"late={summary['late_starts']}  budget={'OK' if check['ok'] else 'MISSED'}", flush=True)
@@ -171,8 +180,10 @@ def main(argv: list[str] | None = None) -> int:
     meta = {"workers": args.workers, "body": source, "body_bytes": len(body), "batch": args.batch,
             "warmup_s": args.warmup, "server_rss_mb_idle": round(rss_idle, 1),
             "server_rss_mb_after": round(rss_after, 1), "cpus": os.cpu_count(), "env": extra_env,
+            "server_args": args.server_arg, "launcher": args.launcher,
             "load_average_at_end": os.getloadavg(), "budget": budget}
-    print(f"server RSS {rss_idle:.0f} MB idle, {rss_after:.0f} MB after load ({args.workers} worker(s)); {source}")
+    print(f"server RSS {rss_idle:.0f} MB idle, {rss_after:.0f} MB after load ({args.workers} worker(s)); "
+          f"{source}")
     write_report(args.out, runs, meta)
     return 0
 

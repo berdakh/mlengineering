@@ -27,7 +27,6 @@ sys.path.insert(0, str(HERE / "src"))
 
 import pandas as pd  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
-
 from flowguard.api import create_app  # noqa: E402
 from flowguard.bundle import load_bundle  # noqa: E402
 from flowguard.data import SENSOR_COLUMNS  # noqa: E402
@@ -52,7 +51,7 @@ def spans(body: bytes, detector) -> dict[str, float]:
     resp.model_dump_json()
     t.append(time.perf_counter())
     names = ["parse + validate request", "build frame + score", "build response objects", "serialise response"]
-    return {n: 1000 * (b - a) for n, a, b in zip(names, t, t[1:], strict=True)}
+    return {n: 1000 * (b - a) for n, a, b in zip(names, t[:-1], t[1:], strict=True)}
 
 
 def main(argv: list[str] | None = None) -> int:

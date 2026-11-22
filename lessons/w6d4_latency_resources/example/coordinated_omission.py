@@ -59,7 +59,8 @@ def pct(values: list[float], q: float) -> float:
 def report(name: str, lat: list[float]) -> dict:
     ms = [1000 * x for x in lat]
     row = {"method": name, "n": len(ms), "rate": len(ms) / DURATION, "p50": pct(ms, 50), "p95": pct(ms, 95),
-           "p99": pct(ms, 99), "p99.9": pct(ms, 99.9), "max": max(ms), "share_over_100ms": sum(m > 100 for m in ms) / len(ms)}
+           "p99": pct(ms, 99), "p99.9": pct(ms, 99.9), "max": max(ms),
+           "share_over_100ms": sum(m > 100 for m in ms) / len(ms)}
     print(f"{name:<12} n={row['n']:5d} ({row['rate']:4.1f}/s)  p50={row['p50']:6.1f}  p95={row['p95']:6.1f}  "
           f"p99={row['p99']:7.1f}  p99.9={row['p99.9']:7.1f}  max={row['max']:7.1f} ms  "
           f">100 ms: {100 * row['share_over_100ms']:.2f}%")

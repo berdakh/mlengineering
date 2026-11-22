@@ -6,8 +6,19 @@ import shutil
 import subprocess
 
 import pytest
-from wfutil import (PER_RUN, PINNED, all_runs, builds_image, job_running, jobs, needs, permission_values,
-                    steps, triggers, uses)
+from wfutil import (
+    PER_RUN,
+    PINNED,
+    all_runs,
+    builds_image,
+    job_running,
+    jobs,
+    needs,
+    permission_values,
+    steps,
+    triggers,
+    uses,
+)
 
 # ---------------------------------------------------------------- the per-push workflow (ci.yml)
 

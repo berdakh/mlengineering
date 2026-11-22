@@ -27,7 +27,6 @@ sys.path.insert(0, str(HERE / "src"))
 
 import pandas as pd  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
-
 from flowguard.api import create_app  # noqa: E402
 from flowguard.bundle import load_bundle  # noqa: E402
 from flowguard.data import SENSOR_COLUMNS  # noqa: E402

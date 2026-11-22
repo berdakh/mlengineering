@@ -12,9 +12,9 @@ Vocabulary (lesson section 2):
 """
 from __future__ import annotations
 
-import asyncio
+import asyncio  # noqa: F401  (you will need it)
 import json
-import math
+import math  # noqa: F401  (you will need it)
 import time
 from collections.abc import Awaitable, Callable, Sequence
 from pathlib import Path

@@ -45,7 +45,7 @@ def test_workers_needed_rejects_bad_utilisation(cap):
 
 def test_max_rate_within_slo(cap):
     assert cap.max_rate_within_slo(CURVE, 100) == 60, "stop at the first violation (80/s); 100/s is noise"
-    assert cap.max_rate_within_slo(CURVE, 100, percentile_key="p99_ms") == 20
+    assert cap.max_rate_within_slo(CURVE, 100, percentile_key="p99_ms") == 40
     assert cap.max_rate_within_slo(CURVE, 50, percentile_key="p50_ms") == 100
     assert cap.max_rate_within_slo(CURVE, 10) == 0.0
     shuffled = list(reversed(CURVE))

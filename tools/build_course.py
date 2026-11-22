@@ -188,11 +188,11 @@ unit("w6d2_docker_reproducibility", "Docker II: pinned dependencies, multi-stage
 unit("w6d3_ci", "Continuous integration with GitHub Actions",
      "Automate lint, tests and image build on every push; decide what belongs in CI versus scheduled evaluation jobs.",
      "Green CI workflow on the project repository with caching.",
-     "w6d2, w1d6.", "H14.1", path="lessons/w6d3_ci")
+     "w6d2, w1d6.", "H14.1", path="lessons/w6d3_ci", status="Execution verified", has_checks=True)
 unit("w6d4_latency_resources", "Latency, throughput and resource use",
      "Measure p50/p95/p99 latency and memory under load, find the bottleneck, and tune workers/batching against a stated budget.",
      "Load-test report with method, percentiles and one evidence-based optimisation.",
-     "w6d1.", "H10.4, H15.1", path="lessons/w6d4_latency_resources")
+     "w6d1.", "H10.4, H15.1", path="lessons/w6d4_latency_resources", status="Execution verified", has_checks=True)
 unit("w6d5_cloud_deployment", "One small cloud deployment on AWS (authorisation-gated)",
      "Understand IAM, credentials, registries and cost; deploy the container by one route, or complete the fully local equivalent if cloud use is not authorised.",
      "Deployment runbook; either a deployed endpoint (with explicit authorisation and teardown) or a local dry-run with the same configuration.",

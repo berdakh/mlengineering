@@ -5,7 +5,8 @@
 
 Uses the REFERENCE solution's measure_service.py (open-loop load on 127.0.0.1) for 1, 2 and 4 uvicorn
 workers at four request rates, twice each in interleaved order, plus one detailed run that keeps every
-request's latency for the distribution figure. `--only-serve` re-runs just the serve.py (TCP_NODELAY) configuration. Results are JSON files in figures/data/.
+request's latency for the distribution figure.
+`--only-serve` re-runs just the serve.py (TCP_NODELAY) configuration. Results are JSON files in figures/data/.
 """
 from __future__ import annotations
 

@@ -22,11 +22,11 @@ import socket
 import subprocess
 import sys
 import time
-import tomllib
 from datetime import datetime, timedelta
 from pathlib import Path
 
 import httpx
+import tomllib
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -179,9 +179,11 @@ def main(argv: list[str] | None = None) -> int:
         stop_server(proc)
     meta = {"workers": args.workers, "body": source, "body_bytes": len(body), "batch": args.batch,
             "warmup_s": args.warmup, "server_rss_mb_idle": round(rss_idle, 1),
-            "server_rss_mb_after": round(rss_after, 1), "cpus": os.cpu_count(), "env": extra_env, "server_args": args.server_arg, "launcher": args.launcher,
+            "server_rss_mb_after": round(rss_after, 1), "cpus": os.cpu_count(), "env": extra_env,
+            "server_args": args.server_arg, "launcher": args.launcher,
             "load_average_at_end": os.getloadavg(), "budget": budget}
-    print(f"server RSS {rss_idle:.0f} MB idle, {rss_after:.0f} MB after load ({args.workers} worker(s)); {source}")
+    print(f"server RSS {rss_idle:.0f} MB idle, {rss_after:.0f} MB after load ({args.workers} worker(s)); "
+          f"{source}")
     write_report(args.out, runs, meta)
     return 0
 

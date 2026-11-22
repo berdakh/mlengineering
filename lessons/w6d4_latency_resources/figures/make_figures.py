@@ -69,7 +69,8 @@ def fig_throughput(runs) -> Path:
         rows = runs[(launcher, workers)]
         ax.plot([r["rate"] for r in rows], [r["throughput_rps"] for r in rows], "o", color=colour, label=label)
         rates = sorted({r["rate"] for r in rows})
-        ax.plot(rates, [np.mean([r["throughput_rps"] for r in rows if r["rate"] == x]) for x in rates], "-", color=colour)
+        mean_thr = [np.mean([r["throughput_rps"] for r in rows if r["rate"] == x]) for x in rates]
+        ax.plot(rates, mean_thr, "-", color=colour)
     ax.set_xlabel("offered load (requests per second)")
     ax.set_ylabel("successful responses per second")
     ax.set_xlim(0, 125)
@@ -146,9 +147,11 @@ def main() -> None:
         rows = runs[(launcher, workers)]
         for rate in sorted({r["rate"] for r in rows}):
             sel = [r for r in rows if r["rate"] == rate]
-            f = lambda k: np.mean([r[k] for r in sel])  # noqa: E731
-            print(f"  {label:<24} {rate:>4.0f}/s  p50 {f('p50_ms'):8.1f}  p95 {f('p95_ms'):8.1f}  p99 {f('p99_ms'):8.1f} ms"
-                  f"  err {f('error_rate'):.3f}  thr {f('throughput_rps'):6.1f}/s  RSS after {f('rss_after'):6.0f} MB")
+            m = {k: np.mean([r[k] for r in sel]) for k in ("p50_ms", "p95_ms", "p99_ms", "error_rate",
+                                                            "throughput_rps", "rss_after")}
+            print(f"  {label:<24} {rate:>4.0f}/s  p50 {m['p50_ms']:8.1f}  p95 {m['p95_ms']:8.1f}  "
+                  f"p99 {m['p99_ms']:8.1f} ms  err {m['error_rate']:.3f}  thr {m['throughput_rps']:6.1f}/s  "
+                  f"RSS after run {m['rss_after']:6.0f} MB")
 
 
 if __name__ == "__main__":

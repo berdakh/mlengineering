@@ -10,7 +10,6 @@ import time
 import numpy as np
 import pytest
 
-
 # ------------------------------------------------------------------ task 1: percentile
 
 @pytest.mark.parametrize("n", [1, 2, 3, 10, 101, 1000])
@@ -42,7 +41,7 @@ def test_percentile_rejects_bad_input(lt):
 def test_schedule(lt):
     s = lt.intended_schedule(10, 1.0)
     assert len(s) == 10 and s[0] == 0.0 and s[-1] == pytest.approx(0.9)
-    assert all(b > a for a, b in zip(s, s[1:]))
+    assert all(b > a for a, b in zip(s, s[1:], strict=False))
     assert len(lt.intended_schedule(50, 0.4)) == 20
     with pytest.raises(ValueError):
         lt.intended_schedule(0, 1.0)

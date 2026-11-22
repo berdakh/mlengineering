@@ -9,7 +9,7 @@ average number of requests in the system to arrival rate and time in system: L =
 from __future__ import annotations
 
 import csv
-import math
+import math  # noqa: F401  (you will need it)
 from pathlib import Path
 
 

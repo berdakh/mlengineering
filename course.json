@@ -491,8 +491,8 @@
       "prerequisites": "w6d2, w1d6.",
       "handbook": "H14.1",
       "path": "lessons/w6d3_ci",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w6d4_latency_resources",
@@ -504,8 +504,8 @@
       "prerequisites": "w6d1.",
       "handbook": "H10.4, H15.1",
       "path": "lessons/w6d4_latency_resources",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w6d5_cloud_deployment",
