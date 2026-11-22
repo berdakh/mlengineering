@@ -224,11 +224,11 @@ unit("w7d4_model_updates_rollback", "Model updates: retraining triggers, shadow 
 unit("w7d5_reliability", "Reliability and failure handling",
      "Handle bad input, timeouts, missing models and dependency failures deliberately: guards, fallbacks, degradation, failure-injection drills.",
      "Failure-injection test suite and a short incident note.",
-     "w5d5, w7d1.", "H15.6", path="lessons/w7d5_reliability")
+     "w5d5, w7d1.", "H15.6", path="lessons/w7d5_reliability", status="Execution verified", has_checks=True)
 unit("w7d6_project_milestone_4", "Project milestone 4: monitoring demonstration and runbook",
      "Demonstrate monitoring on a replay of held-out experiments and document operating procedures.",
      "Monitoring demo + runbook; submit for review.",
-     "w7d1-w7d5.", "-", path="lessons/w7d6_project_milestone_4")
+     "w7d1-w7d5.", "-", path="lessons/w7d6_project_milestone_4", status="Execution verified", has_checks=True)
 unit("w7d7_review", "Review and catch-up (light)", REVIEW,
      "Week 7 retrieval sheet; ML system design rep 2 (45 min, spoken).", "Week 7 units.", "-", path="lessons/w7d7_review")
 

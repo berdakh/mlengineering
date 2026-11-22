@@ -608,8 +608,8 @@
       "prerequisites": "w5d5, w7d1.",
       "handbook": "H15.6",
       "path": "lessons/w7d5_reliability",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w7d6_project_milestone_4",
@@ -621,8 +621,8 @@
       "prerequisites": "w7d1-w7d5.",
       "handbook": "-",
       "path": "lessons/w7d6_project_milestone_4",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w7d7_review",
