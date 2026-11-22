@@ -1,0 +1,3 @@
+# Only for lesson w4d3 (neural comparison). CPU build is enough; GPU is optional.
+# Recommended on Linux:  pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch>=2.2

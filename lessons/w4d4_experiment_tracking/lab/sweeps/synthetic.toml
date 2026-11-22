@@ -1,0 +1,13 @@
+# SYNTHETIC ridge regression; milliseconds per run. Use it to try the commands before SKAB.
+[sweep]
+name = "synthetic_ridge"
+task = "synthetic"
+mode = "grid"
+seeds = [0, 1, 2, 3]
+
+[base.data]
+n_rows = 200
+noise = 1.0
+
+[grid.model]
+alpha = [0.1, 10.0, 100.0]

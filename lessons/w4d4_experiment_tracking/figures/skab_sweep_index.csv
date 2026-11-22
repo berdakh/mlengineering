@@ -1,0 +1,13 @@
+run_id,status,seed,task,sweep,param.detector.burn_in,param.detector.kind,param.detector.n_estimators,metric.dev_mean_experiment_pr_auc,metric.dev_pooled_pr_auc,metric.n_rows_scored,param.detector.shrinkage
+0668c9c60359,complete,2,skab_detector,iforest,200,iforest,200.0,0.6348545858811597,0.6457234864905871,24642,
+0bdd26a3c3b5,complete,0,skab_detector,mahalanobis,100,mahalanobis,,0.7043289547296785,0.7096186469170671,24642,0.3
+179fe9d0fd5d,complete,1,skab_detector,iforest,200,iforest,50.0,0.6339433772019674,0.6316977547878175,24642,
+244d7ae66c17,complete,0,skab_detector,mahalanobis,100,mahalanobis,,0.6934433753942256,0.704956657646289,24642,0.0
+25df3f0e4a04,complete,0,skab_detector,mahalanobis,100,mahalanobis,,0.7008235536831072,0.7070929875309688,24642,0.1
+3843ab77fecf,complete,0,skab_detector,mahalanobis,200,mahalanobis,,0.6989325079295582,0.7300637950418795,24642,0.0
+46b0dc08d714,complete,0,skab_detector,iforest,200,iforest,50.0,0.6472780932650316,0.6452510505668618,24642,
+8d54ab6d463b,complete,0,skab_detector,mahalanobis,200,mahalanobis,,0.7060398994782091,0.7320745912082639,24642,0.1
+a8753a4ca6b9,complete,0,skab_detector,mahalanobis,200,mahalanobis,,0.7157422122278407,0.7348838059621579,24642,0.3
+c1ec31bc4e03,complete,0,skab_detector,iforest,200,iforest,200.0,0.6361918871304525,0.6401181856084304,24642,
+c723d895f451,complete,2,skab_detector,iforest,200,iforest,50.0,0.6175582282667427,0.6272016511123765,24642,
+f57ffce99363,complete,1,skab_detector,iforest,200,iforest,200.0,0.6551134661846363,0.657508104635485,24642,

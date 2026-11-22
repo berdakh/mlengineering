@@ -1,0 +1,4 @@
+name,mape,size_bytes
+seasonal-naive,12.441,4.0
+ridge,9.247,696.0
+boosted trees,10.219,1076968.0

@@ -309,8 +309,8 @@
       "prerequisites": "w4d2; PyTorch (demonstrated in research).",
       "handbook": "H7.6",
       "path": "lessons/w4d3_neural_comparison",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w4d4_experiment_tracking",
@@ -322,8 +322,8 @@
       "prerequisites": "w1d4, w4d2.",
       "handbook": "H8.1, H8.2",
       "path": "lessons/w4d4_experiment_tracking",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w4d5_model_choice",
