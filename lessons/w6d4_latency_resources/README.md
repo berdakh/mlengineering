@@ -350,8 +350,8 @@ open loop?
 50 ms at 100 requests/s, while one request's server-side processing takes 10 ms. List three hypotheses
 and the measurement that separates them.
 
-**Next.** w6d5 deploys the container to one cloud route, behind an authorisation gate. See the
-[schedule](../../roadmap/SCHEDULE.md).
+**Next.** [w6d5](../w6d5_cloud_deployment/README.md) deploys the container to one cloud route, behind an
+authorisation gate.
 
 ## Verification record
 
