@@ -1,0 +1,38 @@
+# Slow lane: data-dependent evaluation and wall-clock checks. Never a per-push gate. REFERENCE SOLUTION (w6d3).
+name: scheduled-evaluation
+
+on:
+  schedule:
+    - cron: "17 3 * * 1"      # Mondays 03:17 UTC (off the hour: top-of-hour schedules queue longer)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: evaluation
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: python -m pip install -e ".[dev]"
+      - run: python scripts/fetch_skab.py
+      - name: Evaluate the shipped bundle on the frozen test set
+        run: python scripts/evaluate.py --out reports/evaluation.json --min-events 4
+      - name: Wall-clock checks (perf lane)
+        run: python -m pytest -m perf -q
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: evaluation-report
+          path: reports/
+          retention-days: 30

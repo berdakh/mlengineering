@@ -1,0 +1,40 @@
+{
+  "format_version": 1,
+  "input_schema": {
+    "required": [
+      "flow_rate"
+    ],
+    "sensor_columns": [
+      "accelerometer1_rms",
+      "accelerometer2_rms",
+      "current",
+      "pressure",
+      "temperature",
+      "thermocouple",
+      "voltage",
+      "flow_rate"
+    ],
+    "time_column": "datetime"
+  },
+  "model_type": "flowguard.burn_in_z",
+  "model_version": "flowguard-z-1.0.0",
+  "params": {
+    "merge_gap": 10,
+    "min_duration": 30,
+    "n_burn": 100,
+    "sensor": "flow_rate",
+    "threshold": 7.244130714098134,
+    "version": "flowguard-z-1.0.0"
+  },
+  "provenance": {
+    "alert_budget_per_hour": 0.125,
+    "budget_met_on_dev": true,
+    "built_by": "lessons/w5d3_online_inference/lab/build_bundle.py",
+    "chosen_in": "w4d5_model_choice",
+    "dev_event_recall": 0.4074074074074074,
+    "dev_events": "11/27",
+    "dev_false_alarms_per_hour": 0.0,
+    "split_manifest": "splits/v2.json",
+    "split_manifest_sha256": "a9f4e2438e666e04bb89b9364f938ffa01554969298c16b9e9eb2082bd005314"
+  }
+}
