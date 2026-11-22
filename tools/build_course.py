@@ -174,7 +174,7 @@ unit("w5d6_project_milestone_2", "Project milestone 2: packaged inference + API"
      "Tagged project release candidate; submit for review.",
      "w5d1-w5d5.", "-", path="lessons/w5d6_project_milestone_2", status="Execution verified", has_checks=True)
 unit("w5d7_review", "Review and catch-up (light)", REVIEW,
-     "Week 5 retrieval sheet; ML system design rep 1 (45 min, rubric after).", "Week 5 units.", "-", path="lessons/w5d7_review")
+     "Week 5 retrieval sheet; ML system design rep 1 (45 min, rubric after).", "Week 5 units.", "-", path="lessons/w5d7_review", status="Execution verified")
 
 # ---------------------------------------------------------------- Week 6
 unit("w6d1_docker_basics", "Docker I: images, layers and a correct Dockerfile",
