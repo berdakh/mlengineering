@@ -1,0 +1,5 @@
+# Development and training-side tools. NOT installed in the serving image.
+-r requirements.txt
+scipy>=1.11      # scripts/build_bundle.py (operating-point choice)
+pytest>=8
+httpx>=0.27      # FastAPI TestClient and scripts/smoke_test.py

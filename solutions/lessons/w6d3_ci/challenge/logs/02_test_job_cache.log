@@ -1,0 +1,23 @@
+test (3.11)  Run actions/cache@v6
+2026-11-21T09:40:02.1183920Z ##[group]Run actions/cache@v6
+2026-11-21T09:40:02.1184511Z with:
+2026-11-21T09:40:02.1184840Z   path: ~/.cache/pip
+2026-11-21T09:40:02.1185202Z   key: pip-Linux-3.11-6f1c2a9e0d4b7c35a8e2f19d0b6c4e7a91d3f5b2
+2026-11-21T09:40:02.1185598Z   enableCrossOsArchive: false
+2026-11-21T09:40:02.1185933Z   fail-on-cache-miss: false
+2026-11-21T09:40:02.1186251Z   lookup-only: false
+2026-11-21T09:40:02.1186583Z ##[endgroup]
+2026-11-21T09:40:02.6031874Z Cache not found for input keys: pip-Linux-3.11-6f1c2a9e0d4b7c35a8e2f19d0b6c4e7a91d3f5b2
+...
+test (3.11)  Run python -m pip install -e ".[dev]"
+2026-11-21T09:40:03.0102345Z Collecting numpy>=1.26 (from flowguard==0.6.0)
+2026-11-21T09:40:03.2019883Z   Downloading numpy-...-cp311-cp311-manylinux_2_27_x86_64.whl (16.9 MB)
+...
+2026-11-21T09:41:12.4417710Z Successfully installed ... (dependency installation: 69 s)
+...
+test (3.11)  Post Run actions/cache@v6
+2026-11-21T09:41:30.8802211Z Cache saved with key: pip-Linux-3.11-6f1c2a9e0d4b7c35a8e2f19d0b6c4e7a91d3f5b2
+
+The job did not fail. It is in this folder because the team's complaint is "CI takes 3 minutes per
+push and the cache does nothing": every run of the last month printed "Cache not found" and then
+"Cache saved", each with a different key, and the repository's cache storage is near its limit.

@@ -1,0 +1,6 @@
+# The stated latency budget for /predict (lesson w6d4, section 2.1). Every key is an upper limit on the
+# summary value of the same name. Requests: 600 samples each (10 minutes of one machine at 1 Hz).
+[budget]
+p95_ms = 100.0
+p99_ms = 250.0
+error_rate = 0.001

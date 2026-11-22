@@ -1,0 +1,51 @@
+# REFERENCE SOLUTION (w6d3 challenge): the three fixes are marked FIX.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v7
+      # FIX 2: setup-python's own pip cache, keyed on a hash of pyproject.toml. The old actions/cache
+      # key ended in github.sha, which is new on every commit, so it could never be found again.
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: python -m pip install -e ".[dev]"
+      - run: ruff check .
+      - run: python -m pytest -q          # FIX 1: perf tests are deselected by pyproject's addopts
+
+  image:
+    needs: [test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - run: docker build -t flowguard:ci .
+      - run: docker run -d --name app -p 127.0.0.1:8000:8000 flowguard:ci
+      # FIX 3: check from the runner with the standard-library smoke script. The slim image has no
+      # curl, and adding one to the image only to test it would grow the attack surface.
+      - name: Smoke test
+        run: python3 scripts/smoke_test.py --url http://127.0.0.1:8000 --timeout 60
+      - name: Container logs
+        if: failure()
+        run: docker logs app

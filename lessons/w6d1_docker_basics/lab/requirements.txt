@@ -1,0 +1,7 @@
+# Serving dependencies: what the container installs. Top-level packages, pinned exactly.
+# (Week 6 day 2 replaces this with a hash-locked file that also pins every transitive dependency.)
+fastapi==0.165.0
+uvicorn==0.54.0
+pydantic==2.13.5
+numpy==2.5.3
+pandas==3.0.5

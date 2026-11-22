@@ -1,0 +1,79 @@
+{
+  "_provenance": "Measured on 2026-11-22 in the course authoring container: Docker Engine 29.10.0 (BuildKit), python:3.12-slim (index digest sha256:5e2bdb1b0d54...), x86_64, a shared and busy host. Builds used a copy of python:3.12-slim with the sandbox proxy's CA certificate added (one extra 201 kB layer and three ENV lines) so pip could reach PyPI; without that environment quirk your image is about 0.2 MB smaller. Timings depend on the machine and its load; the RATIOS are the lesson.",
+  "stop_seconds": {
+    "exec form: uvicorn is PID 1": [
+      0.57,
+      0.59,
+      0.48
+    ],
+    "sh -c \"... && exec uvicorn\"": [
+      0.5,
+      0.59,
+      0.47
+    ],
+    "shell form: sh -c uvicorn": [
+      10.24,
+      10.25,
+      10.28
+    ],
+    "shell form with &&": [
+      10.36,
+      10.26,
+      10.23
+    ]
+  },
+  "stop_exit_codes": {
+    "exec form": 0,
+    "shell form": 137
+  },
+  "rebuild_after_code_edit_seconds": {
+    "requirements.txt copied first": [
+      1.7,
+      1.8,
+      2.0
+    ],
+    "COPY . . before pip install": [
+      21.4,
+      21.0,
+      20.2
+    ]
+  },
+  "cold_build_seconds": 21.6,
+  "image_layers_mb": {
+    "python:3.12-slim base": 178.0,
+    "RUN pip install -r requirements.txt": 171.0,
+    "COPY src/": 0.0696,
+    "COPY models/": 0.0287,
+    "RUN useradd": 0.0696,
+    "COPY requirements.txt": 0.0123
+  },
+  "image_disk_mb": 395,
+  "image_compressed_mb": 90,
+  "context_experiment": {
+    "_note": "A copy of the lab with 300 MB of data/raw, 40 MB of runs/, 20 MB of .git and a .venv added (344 MB on disk). Dockerfile with COPY . . before pip install.",
+    "context_sent_mb": {
+      "no .dockerignore": 360.21,
+      "lab .dockerignore": 0.00326
+    },
+    "image_disk_mb": {
+      "no .dockerignore": 1120,
+      "lab .dockerignore": 395
+    },
+    "build_seconds": {
+      "no .dockerignore": 29.7,
+      "lab .dockerignore": 2.0
+    },
+    "targeted_copies_context_sent_mb": {
+      "no .dockerignore": 0.07217,
+      "lab .dockerignore": 0.04134
+    },
+    "image_content_mb": {
+      "no .dockerignore": 450,
+      "lab .dockerignore": 90
+    },
+    "_sizes_note": "image_disk_mb is the DISK USAGE column of `docker image ls` (Docker 29, containerd image store); image_content_mb is CONTENT SIZE: the compressed layers that are pushed and pulled. The 360 MB of junk is random bytes, which do not compress."
+  },
+  "loopback_bind": "curl: (56) Recv failure: Connection reset by peer  (HEALTHCHECK inside the container: healthy)",
+  "wrong_model_dir": "readyz 503 not_ready; log: model not loaded: /app/models: checksums.json missing",
+  "exit_immediately": "ModuleNotFoundError: No module named 'flowguard'; exit=1 (run with -e PYTHONPATH=)"
+}

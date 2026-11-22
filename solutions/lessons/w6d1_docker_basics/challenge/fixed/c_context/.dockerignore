@@ -1,0 +1,10 @@
+# REFERENCE SOLUTION (w6d1 challenge C). Allow-list: exclude everything, then re-include only what
+# the image needs. New directories (next month's experiments/, a new dataset) stay out by default.
+*
+!requirements.txt
+!src
+!models
+# ...but never bytecode caches inside the re-included directories (patterns are root-anchored,
+# so **/ is needed to reach src/flowguard/__pycache__).
+**/__pycache__
+**/*.py[cod]

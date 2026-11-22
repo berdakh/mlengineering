@@ -1,0 +1,9 @@
+# Serving dependencies: what the image needs, with the RANGES the code supports.
+# Compile into requirements.lock (exact versions + hashes for every transitive dependency):
+#   uv pip compile requirements.in --generate-hashes --python-version 3.12 --python-platform linux -o requirements.lock
+# or, with pip-tools:  pip-compile --generate-hashes --output-file requirements.lock requirements.in
+fastapi>=0.115
+uvicorn>=0.30
+pydantic>=2.6
+numpy>=1.26
+pandas>=2.1

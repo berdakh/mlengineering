@@ -1,0 +1,69 @@
+# Per-push gate: fast, deterministic, no downloaded data, no secrets. REFERENCE SOLUTION (w6d3).
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Least privilege: the workflow only reads the repository. Jobs that need more ask for it themselves.
+permissions:
+  contents: read
+
+# A newer push to the same branch or pull request cancels the run in progress.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: python -m pip install ruff
+      - run: ruff check .
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.10, 3.11, 3.12]   # quoted: unquoted 3.10 would be read as the number 3.1
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m pytest -q        # pyproject's addopts deselect the `perf` tests
+
+  image:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
+        with:
+          context: .
+          load: true                    # keep the image in the runner's Docker for the smoke test
+          tags: flowguard:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Start the container
+        run: docker run -d --name app -p 127.0.0.1:8000:8000 flowguard:ci
+      - name: Smoke test (standard-library script, runs on the runner, not in the image)
+        run: python3 scripts/smoke_test.py --url http://127.0.0.1:8000 --timeout 60
+      - name: Container logs
+        if: failure()
+        run: docker logs app

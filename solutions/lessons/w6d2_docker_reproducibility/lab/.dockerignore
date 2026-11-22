@@ -1,0 +1,26 @@
+# Patterns are anchored at the build-context root (unlike .gitignore): use **/ to match at any depth.
+# Version control, environments and caches
+.git
+.venv
+venv
+**/__pycache__
+**/*.py[cod]
+**/.pytest_cache
+**/*.egg-info
+# Data, run outputs and local results: never part of the image
+data
+runs
+results
+smoke
+notebooks
+# Secrets and local configuration
+.env
+.env.*
+**/*.pem
+# Development-only files
+tests
+scripts
+requirements-dev.txt
+requirements.in
+Dockerfile*
+.dockerignore

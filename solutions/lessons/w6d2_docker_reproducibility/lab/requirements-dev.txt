@@ -1,0 +1,8 @@
+# Development and training-side tools. NOT installed in the serving image.
+# Uses the ranges in requirements.in, not the lock: pip enters hash-checking mode for a whole
+# install as soon as one requirement carries a hash, so the hashed lock cannot be mixed with
+# unhashed dev tools. (To lock the dev environment too, compile a requirements-dev.lock.)
+-r requirements.in
+scipy>=1.11      # scripts/build_bundle.py (operating-point choice)
+pytest>=8
+httpx>=0.27      # FastAPI TestClient and scripts/smoke_test.py

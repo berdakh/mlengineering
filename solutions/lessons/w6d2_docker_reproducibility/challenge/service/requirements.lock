@@ -1,0 +1,7 @@
+# Locked 2026-11-22 from service/requirements.in, resolving against wheelhouse/ only.
+# Reproduce:  python -m pip download --no-index --find-links wheelhouse --no-deps "zscorelib==1.0.0" -d /tmp/w
+#             python -m pip hash /tmp/w/zscorelib-1.0.0-py3-none-any.whl
+# (uv: uv pip compile service/requirements.in --no-index --find-links wheelhouse --generate-hashes,
+#  then edit the version back to the one that was validated, as explained in DRIFT_REPORT.md.)
+zscorelib==1.0.0 \
+    --hash=sha256:693cc8c6056a8babec4d20c39ec7daa4ca401f4a0608fa1293407aff45f9e60c

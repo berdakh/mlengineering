@@ -1,0 +1,9 @@
+measure,condition,rep,value
+install_s,cold,0,7.02
+install_s,cold,1,7.3
+install_s,warm,0,4.77
+install_s,warm,1,4.31
+flaky_failures_of_40,0,0,0
+flaky_failures_of_40,2,0,0
+flaky_failures_of_40,4,0,2
+flaky_failures_of_40,6,0,3

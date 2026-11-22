@@ -1,0 +1,30 @@
+test (3.12)  Run python -m pytest -q
+2026-11-20T14:02:11.4410931Z ##[group]Run python -m pytest -q
+2026-11-20T14:02:11.4411622Z python -m pytest -q
+2026-11-20T14:02:11.4469530Z shell: /usr/bin/bash -e {0}
+2026-11-20T14:02:11.4470188Z ##[endgroup]
+2026-11-20T14:02:13.0291402Z .....F                                                                   [100%]
+2026-11-20T14:02:13.0292050Z =================================== FAILURES ===================================
+2026-11-20T14:02:13.0292671Z _____________________________ test_predict_is_fast _____________________________
+2026-11-20T14:02:13.0293210Z
+2026-11-20T14:02:13.0293730Z client = <starlette.testclient.TestClient object at 0x7f758df442f0>
+2026-11-20T14:02:13.0294222Z
+2026-11-20T14:02:13.0294701Z     def test_predict_is_fast(client):
+2026-11-20T14:02:13.0295180Z         body = {"machine_id": "m1", "samples": make_samples(n=600)}
+2026-11-20T14:02:13.0295668Z         start = time.perf_counter()
+2026-11-20T14:02:13.0296142Z         response = client.post("/predict", json=body)
+2026-11-20T14:02:13.0296620Z         elapsed = time.perf_counter() - start
+2026-11-20T14:02:13.0297101Z         assert response.status_code == 200
+2026-11-20T14:02:13.0297597Z >       assert elapsed < 0.05, f"/predict took {elapsed * 1000:.0f} ms"
+2026-11-20T14:02:13.0298083Z E       AssertionError: /predict took 79 ms
+2026-11-20T14:02:13.0298572Z E       assert 0.07927147300142678 < 0.05
+2026-11-20T14:02:13.0299051Z
+2026-11-20T14:02:13.0299529Z tests/test_latency.py:15: AssertionError
+2026-11-20T14:02:13.0300012Z =========================== short test summary info ============================
+2026-11-20T14:02:13.0300494Z FAILED tests/test_latency.py::test_predict_is_fast - AssertionError: /predict...
+2026-11-20T14:02:13.0300987Z 1 failed, 5 passed in 1.13s
+2026-11-20T14:02:13.0475113Z ##[error]Process completed with exit code 1.
+
+Note from the team chat: "re-ran it and it went green, merging". The same commit passed on 3.11 and
+on the re-run of 3.12. Three of the last twenty main-branch runs failed this way, each time on a
+different matrix entry.

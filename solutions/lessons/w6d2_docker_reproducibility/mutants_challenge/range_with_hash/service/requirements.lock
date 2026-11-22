@@ -1,0 +1,2 @@
+zscorelib>=1.0,<1.1 \
+    --hash=sha256:693cc8c6056a8babec4d20c39ec7daa4ca401f4a0608fa1293407aff45f9e60c

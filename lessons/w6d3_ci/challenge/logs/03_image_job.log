@@ -1,0 +1,13 @@
+image  Run docker run -d --name app -p 127.0.0.1:8000:8000 flowguard:ci
+2026-11-21T10:12:44.3301025Z 82d51b94243853f179ee1ad569ccdb6451def84bb6f59cb26618a5a6230aab39
+image  Health check
+2026-11-21T10:12:44.6120933Z ##[group]Run sleep 5
+2026-11-21T10:12:44.6121491Z sleep 5
+2026-11-21T10:12:44.6121882Z docker exec app curl -fsS http://localhost:8000/healthz
+2026-11-21T10:12:44.6182301Z shell: /usr/bin/bash -e {0}
+2026-11-21T10:12:44.6182811Z ##[endgroup]
+2026-11-21T10:12:49.7493520Z sh: 1: curl: not found
+2026-11-21T10:12:49.7612044Z ##[error]Process completed with exit code 127.
+
+The service log (`docker logs app`, run by hand afterwards) shows the API started normally and
+answered nothing, because nothing reached it.
