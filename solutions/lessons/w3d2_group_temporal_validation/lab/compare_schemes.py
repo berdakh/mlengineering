@@ -3,7 +3,7 @@
     python project/get_skab.py                                              # once, from the repo root
     python lessons/w3d2_group_temporal_validation/lab/compare_schemes.py    # prints the table
 
-Only the DEVELOPMENT experiments of the v2 manifest are used; the test set is not opened.
+Only the DEVELOPMENT experiments of the v2 manifest (splits/v2.json, from w3d1) are used; the test set is not opened.
 Rows with t < BURN_IN are used for per-experiment calibration and are never trained on or scored.
 
 This file is complete. It works once you have implemented flowguard.validation.
@@ -27,7 +27,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE / "src"))
 
 from flowguard.data import SENSOR_COLUMNS, load_raw  # noqa: E402
-from flowguard.splits import dev_experiments, find_overlap_groups, make_splits, validate_splits  # noqa: E402
+from flowguard.splits import dev_experiments, find_overlap_groups, load_splits, validate_splits  # noqa: E402
 from flowguard.validation import (forward_chaining_split, grouped_folds, leave_one_family_out,  # noqa: E402
                                   purged_time_split, required_purge, rows_for)
 
@@ -35,6 +35,7 @@ BURN_IN = 100        # rows at the start of each experiment used for calibration
 WINDOW = 30          # causal rolling-mean window, in rows (about 30 s)
 REPO_ROOT = next((p for p in HERE.parents if (p / "project" / "get_skab.py").is_file()), HERE)
 DEFAULT_RAW = REPO_ROOT / "data" / "raw" / "skab"
+MANIFEST = HERE / "splits" / "v2.json"    # copy of the manifest written by w3d1's v1_vs_v2.py --write
 
 
 def burn_in_features(dev: pd.DataFrame) -> np.ndarray:
@@ -116,7 +117,7 @@ def run(raw_dir: str | Path = DEFAULT_RAW) -> tuple[str, list[dict]]:
     """(description of the development pool, one result dict per model x scheme)."""
     tidy = load_raw(raw_dir)
     groups = find_overlap_groups(tidy)
-    manifest = make_splits(tidy, seed=0, keep_together=groups)
+    manifest = load_splits(MANIFEST)            # the repaired v2 manifest frozen in w3d1
     validate_splits(manifest, tidy)
     dev = tidy[tidy["experiment_id"].isin(dev_experiments(manifest))].reset_index(drop=True)
     y = dev["anomaly"].to_numpy()

@@ -192,8 +192,8 @@
       "prerequisites": "w2d6; diagnostic b2 reviewed.",
       "handbook": "H6.1",
       "path": "lessons/w3d1_leakage",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w3d2_group_temporal_validation",
@@ -205,8 +205,8 @@
       "prerequisites": "w3d1.",
       "handbook": "H6.3, H7.2",
       "path": "lessons/w3d2_group_temporal_validation",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w3d3_hyperparameter_selection",

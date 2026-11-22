@@ -15,7 +15,7 @@ embargo where windows overlap a split boundary.
 wider and nobody states it for you: will the model meet new machines, the future of known machines, a
 fault type it never saw, or all three? Each has its own validation scheme and each gives a different
 number for the same model. On the project data, in this session, the same random forest scores a
-pooled ROC-AUC of 0.983, 0.829, 0.704 or 0.483 depending only on how the rows were split. Shipping
+pooled ROC-AUC of 0.985, 0.818, 0.689 or 0.487 depending only on how the rows were split. Shipping
 decisions are made on whichever of those numbers ends up in the slide, so choosing the scheme is the
 modelling decision with the largest effect on what you believe.
 
@@ -63,9 +63,23 @@ and the combination that most industrial systems actually face: **new units, lat
 holds out less than deployment will withhold is optimistic; one that holds out more is pessimistic.
 Neither is "wrong" as arithmetic. It answers a different question from the one you were asked.
 
+```mermaid
+flowchart TD
+    Q["Deployment sentence:<br/>WHO is scored, WHEN, under WHICH regime?"] --> U{"Unseen units?"}
+    U -- yes --> T1{"Also later in time?"}
+    U -- no --> T2{"Later in time?"}
+    T1 -- yes --> C1["Grouped AND forward<br/>(challenge)"]
+    T1 -- no --> C2["Grouped K-fold,<br/>leave-one-group-out"]
+    T2 -- yes --> C3["Forward chaining<br/>with a gap"]
+    T2 -- no --> C4["Blocked K-fold with<br/>purge and embargo"]
+    C1 --> R{"Unseen regime possible?"}
+    C2 --> R
+    R -- yes --> S["Add leave-one-category-out<br/>as a stress test"]
+```
+
 A second axis is easy to miss. The estimand "performance of *the model I will ship*" differs from
 "performance of *this training procedure* at this sample size". K-fold estimates the second: each fold
-trains on (K-1)/K of the groups. With 25 experiments and 4 folds that is 19 experiments instead of 25,
+trains on (K-1)/K of the groups. With 27 experiments and 4 folds that is about 20 experiments instead of 27,
 so the estimate is slightly pessimistic for the final model, and its variance is dominated by which
 few experiments landed in which fold.
 
@@ -118,7 +132,7 @@ sessions has an exact counterpart, the recording day, and the project data has i
 
 **Few groups mean a noisy estimate, whatever the scheme.** With $G$ validated groups and a
 between-group standard deviation $s$ of the per-group metric, the standard error of the mean is about
-$s/\sqrt{G}$. For the project: 25 development experiments, per-fold ROC-AUC between 0.75 and 0.91 in
+$s/\sqrt{G}$. For the project: 27 development experiments, per-fold ROC-AUC between 0.63 and 0.94 in
 the table below. Differences of 0.02 between two models are not resolvable, and no scheme fixes that.
 
 **Frozen folds versus fresh folds.** The manifest from w2d4 fixes which experiment is in which fold.
@@ -144,6 +158,27 @@ set. Two shapes:
 Shuffling destroys both. With `shuffle=True` every validation row has training neighbours one step
 away in time.
 
+Forward chaining with four blocks and a gap, drawn as a timeline (each bar is one fold; "gap" rows are
+in neither set):
+
+```mermaid
+gantt
+    dateFormat X
+    axisFormat %s
+    section fold 1
+    train       : 0, 200
+    gap         : crit, 200, 230
+    validate    : active, 230, 400
+    section fold 2
+    train       : 0, 370
+    gap         : crit, 370, 400
+    validate    : active, 400, 600
+    section fold 3
+    train       : 0, 570
+    gap         : crit, 570, 600
+    validate    : active, 600, 800
+```
+
 ### 2.5 Purging and embargo: how many rows to drop
 
 Contiguous blocks are not enough when rows are built from windows. Let row $i$ have features computed
@@ -160,6 +195,13 @@ So for a validation block $[a, b]$:
 
 * **purge** the training rows in $[a - (w-1+h),\; a-1]$: their labels and features reach into the block;
 * **embargo** the training rows in $[b+1,\; b + (w-1+h)]$: their feature windows reach back into it.
+
+```text
+row index  ......|<- purge w-1+h ->|<====== validation block [a, b] ======>|<- embargo w-1+h ->|......
+training   ######|      dropped    |                                       |      dropped      |######
+           a training row here has a label        a training row here has a feature window
+           window reaching into the block         reaching back into the block
+```
 
 Dropping $w - 1 + h$ rows on each side guarantees that no raw sample is shared, without any argument
 about what the model could exploit. It is a sufficient condition for independence *if the raw samples
@@ -197,8 +239,8 @@ months of labels before it, and grouped by customer reported 0.73 beforehand.
 ### 2.8 Limits and misconceptions
 
 * **"Grouped CV is conservative, so it is safe."** It is unbiased for *new groups from the same
-  population*. If deployment brings a new regime it is still optimistic (table below: 0.829 against
-  0.704 with a family held out).
+  population*. If deployment brings a new regime it is still optimistic (table below: 0.818 against
+  0.689 with a family held out).
 * **"TimeSeriesSplit handles time series."** It orders the folds. It does not purge unless you set
   `gap`, it knows nothing about groups, and it assumes equally spaced rows of one series.
 * **"More folds give a better estimate."** More folds give more training data per fit and more
@@ -234,6 +276,11 @@ Part A - optimism of row-wise K-fold as within-machine correlation grows (mean o
 | 0.5 | 0.887 | 0.692 | 0.669 | +0.218 |
 | 0.8 | 0.921 | 0.536 | 0.574 | +0.347 |
 ```
+
+![Row-wise K-fold accuracy rises with the intraclass correlation while accuracy on new machines falls; machine-wise K-fold follows the truth](figures/optimism_vs_icc.svg)
+
+*SYNTHETIC. The gap between the orange line and the dashed truth is what a row split would have
+promised and not delivered.*
 
 **Reading it.** With no group effect the two schemes agree and both are right. As $\rho$ grows the
 row-wise number goes *up* while the truth goes *down*: the group effect that makes new machines hard
@@ -282,6 +329,10 @@ true ROC-AUC = 0.500. W = 40, H = 30, n = 6000; mean and s.d. over 10 seeds
 | blocked, 300 blocks, purge = embargo = 69 (W - 1 + H) | 0.503 +- 0.014 |
 ```
 
+![Dot plot of pooled ROC-AUC per scheme on unpredictable labels: shuffled 0.66, short blocks without buffer 0.53, one-sided purge 0.52, two-sided buffers about 0.50](figures/purge_demo.svg)
+
+*SYNTHETIC; the truth is 0.5, so every orange point is leakage. Whiskers: one s.d. over 10 seeds.*
+
 **Reading it, including what it does not show.**
 
 * Shuffling manufactures an AUC of 0.66 from nothing.
@@ -303,7 +354,8 @@ This is lab task 7; the table is in section 4 so that you produce it yourself fi
 
 Work in `lessons/w3d2_group_temporal_validation/lab/`. Given: `flowguard.data`, `flowguard.splits`
 (v2: `find_overlap_groups`, `make_splits(..., keep_together=...)`), `flowguard.baselines`,
-`flowguard.metrics`, and the complete script `compare_schemes.py`. You write
+`flowguard.metrics`, the complete script `compare_schemes.py`, and `splits/v2.json`, the manifest
+repaired and frozen in w3d1 (7 test, 27 development experiments; replace it with your own if you wrote one). You write
 `src/flowguard/validation.py`. You may use scikit-learn splitters inside your functions or write them
 by hand; the checks look only at what the functions return.
 
@@ -332,11 +384,10 @@ silently "fixes" a manifest hides the fact that the frozen file is wrong. *Check
 
 ```python
 from flowguard.data import load_raw
-from flowguard.splits import find_overlap_groups, make_splits
+from flowguard.splits import load_splits
 from flowguard.validation import grouped_folds
-tidy = load_raw("../../../data/raw/skab")            # from the lab directory
-m = make_splits(tidy, seed=0, keep_together=find_overlap_groups(tidy))
-print([(len(tr), len(va)) for tr, va in grouped_folds(m)])      # [(18, 7), (19, 6), (19, 6), (19, 6)]
+m = load_splits("splits/v2.json")                     # from the lab directory: the w3d1 manifest
+print([(len(tr), len(va)) for tr, va in grouped_folds(m)])      # [(20, 7), (19, 8), (21, 6), (21, 6)]
 ```
 
 **Task 4 - `leave_one_family_out(tidy, keep_together=None)`.** One fold per labelled family. An
@@ -363,37 +414,44 @@ python lessons/w3d2_group_temporal_validation/lab/compare_schemes.py        # ab
 Expected output (reference run; yours should match to the third decimal on the same library versions):
 
 ```
-development pool: 25 experiments, 25078 usable rows, positive fraction 0.378; test experiments not opened
+development pool: 27 experiments, 27342 usable rows, positive fraction 0.387; test experiments not opened
 
 ### random forest on raw sensor values
 
 | scheme | folds | pooled PR-AUC | pooled ROC-AUC | ROC-AUC per fold |
 |---|---|---|---|---|
-| 1 rows, shuffled 4-fold | 4 | 0.978 | 0.983 | 0: 0.983, 1: 0.983, 2: 0.981, 3: 0.986 |
-| 2 time blocks within experiment, no buffer | 4 | 0.900 | 0.909 | block 1: 0.835, block 2: 0.922, block 3: 0.868 |
-| 3 time blocks within experiment, purge = embargo = 29 | 4 | 0.862 | 0.863 | block 1: 0.826, block 2: 0.903, block 3: 0.813 |
-| 4 experiments held out (manifest folds) | 4 | 0.837 | 0.829 | fold 0: 0.746, fold 1: 0.912, fold 2: 0.860, fold 3: 0.800 |
-| 5 one family held out | 3 | 0.694 | 0.704 | other: 0.507, valve1: 0.872, valve2: 0.923 |
-| 6 forward by recording day | 2 | 0.357 | 0.483 | train 1 day(s) -> 2020-03-01: 0.529, train 2 day(s) -> 2020-03-09: 0.473 |
+| 1 rows, shuffled 4-fold | 4 | 0.981 | 0.985 | 0: 0.985, 1: 0.984, 2: 0.986, 3: 0.985 |
+| 2 time blocks within experiment, no buffer | 4 | 0.915 | 0.922 | block 0: 0.949, block 1: 0.862, block 2: 0.865, block 3: 0.886 |
+| 3 time blocks within experiment, purge = embargo = 29 | 4 | 0.890 | 0.896 | block 0: 0.951, block 1: 0.859, block 2: 0.821, block 3: 0.881 |
+| 4 experiments held out (manifest folds) | 4 | 0.820 | 0.818 | fold 0: 0.856, fold 1: 0.626, fold 2: 0.938, fold 3: 0.862 |
+| 5 one family held out | 3 | 0.685 | 0.689 | other: 0.529, valve1: 0.875, valve2: 0.910 |
+| 6 forward by recording day | 2 | 0.382 | 0.487 | train 1 day(s) -> 2020-03-01: 0.485, train 2 day(s) -> 2020-03-09: 0.497 |
 
 ### logistic regression on burn-in z + rolling mean
 
 | scheme | folds | pooled PR-AUC | pooled ROC-AUC | ROC-AUC per fold |
 |---|---|---|---|---|
-| 1 rows, shuffled 4-fold | 4 | 0.797 | 0.838 | 0: 0.835, 1: 0.838, 2: 0.834, 3: 0.846 |
-| 2 time blocks within experiment, no buffer | 4 | 0.622 | 0.655 | block 1: 0.662, block 2: 0.781, block 3: 0.771 |
-| 3 time blocks within experiment, purge = embargo = 29 | 4 | 0.555 | 0.577 | block 1: 0.655, block 2: 0.747, block 3: 0.769 |
-| 4 experiments held out (manifest folds) | 4 | 0.732 | 0.777 | fold 0: 0.638, fold 1: 0.875, fold 2: 0.826, fold 3: 0.822 |
-| 5 one family held out | 3 | 0.582 | 0.663 | other: 0.506, valve1: 0.767, valve2: 0.805 |
-| 6 forward by recording day | 2 | 0.527 | 0.690 | train 1 day(s) -> 2020-03-01: 0.042, train 2 day(s) -> 2020-03-09: 0.726 |
+| 1 rows, shuffled 4-fold | 4 | 0.837 | 0.867 | 0: 0.870, 1: 0.859, 2: 0.871, 3: 0.866 |
+| 2 time blocks within experiment, no buffer | 4 | 0.720 | 0.746 | block 0: 0.915, block 1: 0.725, block 2: 0.906, block 3: 0.849 |
+| 3 time blocks within experiment, purge = embargo = 29 | 4 | 0.687 | 0.704 | block 0: 0.913, block 1: 0.723, block 2: 0.894, block 3: 0.851 |
+| 4 experiments held out (manifest folds) | 4 | 0.787 | 0.814 | fold 0: 0.813, fold 1: 0.758, fold 2: 0.879, fold 3: 0.883 |
+| 5 one family held out | 3 | 0.689 | 0.743 | other: 0.653, valve1: 0.814, valve2: 0.902 |
+| 6 forward by recording day | 2 | 0.637 | 0.727 | train 1 day(s) -> 2020-03-01: 0.478, train 2 day(s) -> 2020-03-09: 0.789 |
 ```
+
+![Two panels, one per model: pooled ROC-AUC under six schemes with per-fold dots; the forest falls from 0.985 (rows shuffled) to 0.818 (experiments held out) and 0.689 (family held out)](figures/skab_schemes.svg)
+
+*Real SKAB development experiments. Small grey dots are folds; their spread is the honest size of the
+uncertainty you are working with.*
 
 Facts you need to read the table. The experiments were recorded on three days: 2020-02-08 (`other/5`
 to `other/14` and the fault-free run), 2020-03-01 (`other/1` to `other/4`), 2020-03-09 (all of
 `valve1` and `valve2`). So **family and recording day are confounded**: scheme 5 and scheme 6 both mix
-"new fault mechanism" with "another day". Block 0 of every experiment contains no anomalous rows,
-which is why schemes 2 and 3 list three per-fold values. In the development pool 2020-03-01 is a
-single experiment (`other/1`); a per-fold value on one experiment is an anecdote.
+"new fault mechanism" with "another day". Block 0 (the first quarter of each experiment) contains
+anomalous rows in one development experiment only, `other/2`, whose anomaly starts at row 104; block 0's
+per-fold value therefore rests on one experiment. In the development pool 2020-03-01 is three
+experiments, `other/2`, `other/3`, `other/4`, which form one overlap group: scheme 6's first fold
+validates on what is effectively one recording, and a per-fold value on one recording is an anecdote.
 
 Then fill in `lab/VALIDATION_DESIGN.md`. It asks for: the deployment question in one sentence, the
 estimand, the primary scheme and why the others are rejected or kept as stress tests, what each number
@@ -401,9 +459,10 @@ in your table does and does not support, the purge you would apply and its deriv
 weaknesses of the design. It is graded with the rubric at the end of the template. Things to work out
 yourself before reading the reference memo:
 
-* Why does the raw-sensor forest lose 0.15 between scheme 1 and scheme 4, and the burn-in logistic
-  regression only 0.06?
-* For the logistic regression the pooled ROC-AUC of schemes 2 and 3 is *below every per-fold value*.
+* Why does the raw-sensor forest lose 0.17 between scheme 1 and scheme 4, and the burn-in logistic
+  regression only 0.05?
+* For the logistic regression the pooled ROC-AUC of scheme 3 (0.704) is *below every per-fold value*,
+  and that of scheme 2 below all but one.
   What does that say about scores from different folds, and why would time blocks cause it here?
 * Which rows of the table can be compared with each other at all?
 
@@ -462,7 +521,8 @@ the folds built here become the inner loop, and the question is how much choosin
 ## Verification record
 
 Executed 2026-11-22 on Python 3.13.18, NumPy 2.5.3, pandas 3.0.5, scikit-learn 1.9.1: both example
-scripts; `compare_schemes.py` on the 35 downloaded SKAB files (development experiments only);
+scripts; `compare_schemes.py` on the 35 downloaded SKAB files with the repaired v2 manifest from w3d1
+(development experiments only); `figures/make_figures.py`;
 `python tools/verify_checks.py lessons/w3d2_group_temporal_validation` for both parts. Not verified:
 Python 3.11/3.12 (CI only), time boxes, and the explanations offered for the real-data table beyond
 the checks described in the reference memo.

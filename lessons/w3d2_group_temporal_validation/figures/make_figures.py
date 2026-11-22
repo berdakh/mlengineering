@@ -108,8 +108,9 @@ def fig_skab() -> None:
         ax.set_ylim(-0.6, len(schemes) - 0.3)
     axes[0].set_yticks(y)
     axes[0].set_yticklabels(schemes)
-    axes[1].legend(loc="lower left")
-    fig.suptitle("One model, six validation schemes: REAL SKAB data, 25 development experiments",
+    axes[1].legend(loc="upper center", bbox_to_anchor=(-0.05, -0.16), ncols=3)
+    n_dev = pool.split(" experiments")[0].split()[-1]
+    fig.suptitle(f"Two models, six validation schemes: REAL SKAB data, {n_dev} development experiments (manifest v2)",
                  x=0.01, ha="left", fontweight="bold", fontsize=11)
     save(fig, HERE / "skab_schemes.svg")
     print("skab_schemes:", pool)
@@ -118,6 +119,7 @@ def fig_skab() -> None:
 
 
 if __name__ == "__main__":
-    fig_optimism()
-    fig_purge()
-    fig_skab()
+    only = sys.argv[1] if len(sys.argv) > 1 else None          # optional: optimism | purge | skab
+    for name, fn in (("optimism", fig_optimism), ("purge", fig_purge), ("skab", fig_skab)):
+        if only in (None, name):
+            fn()

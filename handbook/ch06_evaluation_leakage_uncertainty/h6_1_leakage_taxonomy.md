@@ -24,7 +24,7 @@ its input and must produce a prediction. Draw it before anything else.
 timeline
     title One invoice, seen from the moment it is issued
     Before issue : customer history up to last month : terms, amount, segment
-    Issue (prediction moment) : model scores the invoice
+    Issue - the prediction moment : model scores the invoice
     Due date : outcome becomes knowable
     After due date : reminders sent : collections re-keys late invoices : export taken, aggregates computed
 ```

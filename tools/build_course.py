@@ -96,11 +96,11 @@ unit("w2d7_review", "Review and catch-up (light)", REVIEW,
 unit("w3d1_leakage", "Leakage: a taxonomy and prevention by construction",
      "Classify and remove target, preprocessing, temporal, group and selection leakage; use pipelines so the correct thing is the default.",
      "Leak hunt report on a seeded dataset with corrected estimates and the mechanism of each leak.",
-     "w2d6; diagnostic b2 reviewed.", "H6.1", path="lessons/w3d1_leakage")
+     "w2d6; diagnostic b2 reviewed.", "H6.1", path="lessons/w3d1_leakage", status="Execution verified", has_checks=True)
 unit("w3d2_group_temporal_validation", "Group-aware and temporal validation",
      "Design validation that matches deployment: grouped, temporal, and combined (experiment x time) schemes with purging/embargo where windows overlap.",
      "Validation design memo + implementation for the project; comparison against a naive random split.",
-     "w3d1.", "H6.3, H7.2", path="lessons/w3d2_group_temporal_validation")
+     "w3d1.", "H6.3, H7.2", path="lessons/w3d2_group_temporal_validation", status="Execution verified", has_checks=True)
 unit("w3d3_hyperparameter_selection", "Hyperparameter and threshold selection without fooling yourself",
      "Select hyperparameters and decision thresholds using only training/validation data; quantify selection optimism with nested validation.",
      "Tuned baseline with a nested estimate and a frozen-threshold test evaluation.",
