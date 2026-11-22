@@ -1,0 +1,13 @@
+figure,series,x,value
+api_traces,valve1/13,max_score,21.884
+api_traces,valve1/13,flagged_rows_after_burn_in,313
+api_traces,valve2/0,max_score,3.016
+api_traces,valve2/0,flagged_rows_after_burn_in,0
+api_traces,other/14,max_score,246.049
+api_traces,other/14,flagged_rows_after_burn_in,127
+skew,measured_ratio_n100,100,0.994987
+skew,measured_ratio_spread,100,0.0
+skew,formula_percent,2,-29.2893
+skew,formula_percent,10,-5.1317
+skew,formula_percent,30,-1.6808
+skew,formula_percent,100,-0.5013

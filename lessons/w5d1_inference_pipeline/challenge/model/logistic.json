@@ -1,0 +1,58 @@
+{
+  "name": "flowguard-logistic",
+  "version": "0.1.0",
+  "n_burn": 100,
+  "z_clip": 20.0,
+  "sensors": [
+    "accelerometer1_rms",
+    "accelerometer2_rms",
+    "current",
+    "pressure",
+    "temperature",
+    "thermocouple",
+    "voltage",
+    "flow_rate"
+  ],
+  "features": [
+    "z:accelerometer1_rms",
+    "z:accelerometer2_rms",
+    "z:current",
+    "z:pressure",
+    "z:temperature",
+    "z:thermocouple",
+    "z:voltage",
+    "z:flow_rate",
+    "abs_z:accelerometer1_rms",
+    "abs_z:accelerometer2_rms",
+    "abs_z:current",
+    "abs_z:pressure",
+    "abs_z:temperature",
+    "abs_z:thermocouple",
+    "abs_z:voltage",
+    "abs_z:flow_rate"
+  ],
+  "coef": [
+    -0.26787093811192947,
+    0.284757294440256,
+    0.004292984309904439,
+    -0.011313802698680932,
+    -0.04733416462573254,
+    0.015067048597755489,
+    -0.018054764465711953,
+    -0.3223135057687383,
+    0.24846387865165073,
+    -0.000519227234271669,
+    0.06941849507622046,
+    -0.007296996751762221,
+    0.030141677022526313,
+    0.08444171797860107,
+    -0.02582872483577965,
+    0.4162449871650799
+  ],
+  "intercept": -2.992995392212077,
+  "trained_with": {
+    "scikit-learn": "1.9.1",
+    "C": 1.0,
+    "manifest": "splits/v2.json"
+  }
+}

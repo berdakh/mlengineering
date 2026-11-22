@@ -168,11 +168,11 @@ unit("w5d4_fastapi_validation", "FastAPI I: endpoints, schemas and input validat
 unit("w5d5_api_testing", "FastAPI II: API tests, integration tests and model lifecycle",
      "Test the service at the HTTP boundary (happy path, invalid input, model missing), manage model loading at startup, reason about concurrency.",
      "API and integration test suite running without a network.",
-     "w5d4, w1d5.", "H9.2, H11.3", path="lessons/w5d5_api_testing")
+     "w5d4, w1d5.", "H9.2, H11.3", path="lessons/w5d5_api_testing", status="Execution verified", has_checks=True)
 unit("w5d6_project_milestone_2", "Project milestone 2: packaged inference + API",
      "Integrate artifact, inference pipeline and API in the project with tests and usage documentation.",
      "Tagged project release candidate; submit for review.",
-     "w5d1-w5d5.", "-", path="lessons/w5d6_project_milestone_2")
+     "w5d1-w5d5.", "-", path="lessons/w5d6_project_milestone_2", status="Execution verified", has_checks=True)
 unit("w5d7_review", "Review and catch-up (light)", REVIEW,
      "Week 5 retrieval sheet; ML system design rep 1 (45 min, rubric after).", "Week 5 units.", "-")
 

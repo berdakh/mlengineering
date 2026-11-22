@@ -1,0 +1,81 @@
+figure,series,x,value
+race_fraction,correct service,1,0.0
+race_fraction,correct service,2,0.0
+race_fraction,correct service,4,0.0
+race_fraction,correct service,8,0.0
+race_fraction,correct service,16,0.0
+race_fraction,buggy shared cache,1,0.0
+race_fraction,buggy shared cache,2,0.441
+race_fraction,buggy shared cache,4,0.632
+race_fraction,buggy shared cache,8,0.705
+race_fraction,buggy shared cache,16,0.816
+predict_latency,p50_ms,1,1.165
+predict_latency,p95_ms,1,1.744
+predict_latency,p50_ms,10,1.394
+predict_latency,p95_ms,10,2.473
+predict_latency,p50_ms,100,1.461
+predict_latency,p95_ms,100,2.093
+predict_latency,p50_ms,1000,2.46
+predict_latency,p95_ms,1000,4.387
+predict_latency,p50_ms,3600,5.032
+predict_latency,p95_ms,3600,8.739
+kill_matrix,starter (1 smoke test),predict_without_model_is_500,0
+kill_matrix,starter (1 smoke test),ready_before_model_load,0
+kill_matrix,starter (1 smoke test),checksum_not_verified,0
+kill_matrix,starter (1 smoke test),extra_fields_ignored,0
+kill_matrix,starter (1 smoke test),empty_values_accepted,0
+kill_matrix,starter (1 smoke test),nan_accepted,0
+kill_matrix,starter (1 smoke test),oversize_batch_accepted,0
+kill_matrix,starter (1 smoke test),model_version_missing,0
+kill_matrix,starter (1 smoke test),signed_score,0
+kill_matrix,starter (1 smoke test),strict_threshold,0
+kill_matrix,starter (1 smoke test),sample_std_skew,0
+kill_matrix,starter (1 smoke test),shared_state_race,0
+kill_matrix,happy path only,predict_without_model_is_500,0
+kill_matrix,happy path only,ready_before_model_load,0
+kill_matrix,happy path only,checksum_not_verified,0
+kill_matrix,happy path only,extra_fields_ignored,0
+kill_matrix,happy path only,empty_values_accepted,0
+kill_matrix,happy path only,nan_accepted,0
+kill_matrix,happy path only,oversize_batch_accepted,0
+kill_matrix,happy path only,model_version_missing,0
+kill_matrix,happy path only,signed_score,0
+kill_matrix,happy path only,strict_threshold,0
+kill_matrix,happy path only,sample_std_skew,0
+kill_matrix,happy path only,shared_state_race,0
+kill_matrix,status codes only,predict_without_model_is_500,1
+kill_matrix,status codes only,ready_before_model_load,1
+kill_matrix,status codes only,checksum_not_verified,1
+kill_matrix,status codes only,extra_fields_ignored,1
+kill_matrix,status codes only,empty_values_accepted,1
+kill_matrix,status codes only,nan_accepted,1
+kill_matrix,status codes only,oversize_batch_accepted,1
+kill_matrix,status codes only,model_version_missing,0
+kill_matrix,status codes only,signed_score,0
+kill_matrix,status codes only,strict_threshold,0
+kill_matrix,status codes only,sample_std_skew,0
+kill_matrix,status codes only,shared_state_race,0
+kill_matrix,sequential only,predict_without_model_is_500,1
+kill_matrix,sequential only,ready_before_model_load,1
+kill_matrix,sequential only,checksum_not_verified,1
+kill_matrix,sequential only,extra_fields_ignored,1
+kill_matrix,sequential only,empty_values_accepted,1
+kill_matrix,sequential only,nan_accepted,1
+kill_matrix,sequential only,oversize_batch_accepted,1
+kill_matrix,sequential only,model_version_missing,1
+kill_matrix,sequential only,signed_score,1
+kill_matrix,sequential only,strict_threshold,1
+kill_matrix,sequential only,sample_std_skew,1
+kill_matrix,sequential only,shared_state_race,0
+kill_matrix,reference suite,predict_without_model_is_500,1
+kill_matrix,reference suite,ready_before_model_load,1
+kill_matrix,reference suite,checksum_not_verified,1
+kill_matrix,reference suite,extra_fields_ignored,1
+kill_matrix,reference suite,empty_values_accepted,1
+kill_matrix,reference suite,nan_accepted,1
+kill_matrix,reference suite,oversize_batch_accepted,1
+kill_matrix,reference suite,model_version_missing,1
+kill_matrix,reference suite,signed_score,1
+kill_matrix,reference suite,strict_threshold,1
+kill_matrix,reference suite,sample_std_skew,1
+kill_matrix,reference suite,shared_state_race,1

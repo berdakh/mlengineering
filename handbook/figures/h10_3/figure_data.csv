@@ -1,0 +1,97 @@
+figure,n,method,abs_error,window,us_per_update
+drift,10.0,float32 running sum / n,1.8310546920474735e-05,,
+drift,10.0,float32 Welford mean,6.1035156022626325e-06,,
+drift,10.0,float64 running sum / n,1e-16,,
+drift,15.0,float32 running sum / n,2.4414062522737368e-05,,
+drift,15.0,float32 Welford mean,7.324218745452526e-05,,
+drift,15.0,float64 running sum / n,1e-16,,
+drift,25.0,float32 running sum / n,8.300781246362021e-05,,
+drift,25.0,float32 Welford mean,6.591796875454747e-05,,
+drift,25.0,float64 running sum / n,1e-16,,
+drift,39.0,float32 running sum / n,0.00011268028845279332,,
+drift,39.0,float32 Welford mean,0.00012520032055363117,,
+drift,39.0,float64 running sum / n,1e-16,,
+drift,63.0,float32 running sum / n,7.362971234670113e-05,,
+drift,63.0,float32 Welford mean,0.00019666883679292368,,
+drift,63.0,float64 running sum / n,1e-16,,
+drift,100.0,float32 running sum / n,0.0001330566406068101,,
+drift,100.0,float32 Welford mean,0.00029907226564773737,,
+drift,100.0,float64 running sum / n,1e-16,,
+drift,158.0,float32 running sum / n,6.4125543872251e-05,,
+drift,158.0,float32 Welford mean,9.657461430379044e-05,,
+drift,158.0,float64 running sum / n,1e-16,,
+drift,251.0,float32 running sum / n,4.8633590722602094e-05,,
+drift,251.0,float32 Welford mean,9.702401337108313e-05,,
+drift,251.0,float64 running sum / n,1e-16,,
+drift,398.0,float32 running sum / n,0.00023079876928022713,,
+drift,398.0,float32 Welford mean,0.0001501342160281638,,
+drift,398.0,float64 running sum / n,1e-16,,
+drift,630.0,float32 running sum / n,9.843129953424068e-05,,
+drift,630.0,float32 Welford mean,6.723555304688489e-05,,
+drift,630.0,float64 running sum / n,1e-16,,
+drift,1000.0,float32 running sum / n,8.300781246362021e-05,,
+drift,1000.0,float32 Welford mean,0.00015576171870179678,,
+drift,1000.0,float64 running sum / n,1e-16,,
+drift,1584.0,float32 running sum / n,0.0007753853845997583,,
+drift,1584.0,float32 Welford mean,0.00019709269201939605,,
+drift,1584.0,float64 running sum / n,1e-16,,
+drift,2511.0,float32 running sum / n,0.0011236205227760365,,
+drift,2511.0,float32 Welford mean,0.00044849050891571096,,
+drift,2511.0,float64 running sum / n,1e-16,,
+drift,3981.0,float32 running sum / n,0.00034261558323578356,,
+drift,3981.0,float32 Welford mean,0.0009703378646008787,,
+drift,3981.0,float64 running sum / n,1e-16,,
+drift,6309.0,float32 running sum / n,0.00048460501614044915,,
+drift,6309.0,float32 Welford mean,0.000712618583747826,,
+drift,6309.0,float64 running sum / n,1e-16,,
+drift,10000.0,float32 running sum / n,0.001024114990173075,,
+drift,10000.0,float32 Welford mean,0.0004513610839467219,,
+drift,10000.0,float64 running sum / n,1e-16,,
+drift,15848.0,float32 running sum / n,0.00044034046084107104,,
+drift,15848.0,float32 Welford mean,0.0013137809680756618,,
+drift,15848.0,float64 running sum / n,1e-16,,
+drift,25118.0,float32 running sum / n,0.0005356139918148983,,
+drift,25118.0,float32 Welford mean,3.913899445251445e-05,,
+drift,25118.0,float64 running sum / n,1e-16,,
+drift,39810.0,float32 running sum / n,0.001869345393970434,,
+drift,39810.0,float32 Welford mean,0.0018995578730027773,,
+drift,39810.0,float64 running sum / n,1e-16,,
+drift,63095.0,float32 running sum / n,0.004284701826122728,,
+drift,63095.0,float32 Welford mean,0.0031769826640584142,,
+drift,63095.0,float64 running sum / n,1e-16,,
+drift,100000.0,float32 running sum / n,0.00010286071778864425,,
+drift,100000.0,float32 Welford mean,0.0015154400634855847,,
+drift,100000.0,float64 running sum / n,1e-16,,
+drift,158489.0,float32 running sum / n,0.004429074539757494,,
+drift,158489.0,float32 Welford mean,0.0013942698889195526,,
+drift,158489.0,float64 running sum / n,1e-16,,
+drift,251188.0,float32 running sum / n,0.0021189364292695245,,
+drift,251188.0,float32 Welford mean,0.0019149025802107644,,
+drift,251188.0,float64 running sum / n,1e-16,,
+drift,398107.0,float32 running sum / n,2.6015294683113552,,
+drift,398107.0,float32 Welford mean,0.0009566495363060312,,
+drift,398107.0,float64 running sum / n,1e-16,,
+drift,630957.0,float32 running sum / n,0.0680048569124665,,
+drift,630957.0,float32 Welford mean,0.0012814864819574723,,
+drift,630957.0,float64 running sum / n,1e-16,,
+drift,1000000.0,float32 running sum / n,8.900105320251441,,
+drift,1000000.0,float32 Welford mean,0.0018747265014553705,,
+drift,1000000.0,float64 running sum / n,1e-16,,
+ring,,mean: ring buffer + running sum,,10.0,0.04661074999603443
+ring,,mean: ring buffer + running sum,,30.0,0.047753699982422404
+ring,,mean: ring buffer + running sum,,100.0,0.045792650007570046
+ring,,mean: ring buffer + running sum,,300.0,0.04993270003978978
+ring,,mean: ring buffer + running sum,,1000.0,0.049073450009018416
+ring,,mean: ring buffer + running sum,,3000.0,0.04823129997930664
+ring,,median: ring buffer + sorted list (bisect),,10.0,0.14614654996876197
+ring,,median: ring buffer + sorted list (bisect),,30.0,0.17572174997440015
+ring,,median: ring buffer + sorted list (bisect),,100.0,0.2195079999637528
+ring,,median: ring buffer + sorted list (bisect),,300.0,0.2930696000021271
+ring,,median: ring buffer + sorted list (bisect),,1000.0,0.43266729999231757
+ring,,median: ring buffer + sorted list (bisect),,3000.0,0.6872583000131272
+ring,,median: sorted(window) on every update,,10.0,0.3158080000048358
+ring,,median: sorted(window) on every update,,30.0,1.1621148999893194
+ring,,median: sorted(window) on every update,,100.0,4.6941348500240565
+ring,,median: sorted(window) on every update,,300.0,17.132549200005087
+ring,,median: sorted(window) on every update,,1000.0,61.81860766688866
+ring,,median: sorted(window) on every update,,3000.0,104.4396359999761

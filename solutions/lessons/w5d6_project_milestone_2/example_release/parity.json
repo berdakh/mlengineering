@@ -1,0 +1,12 @@
+{
+  "rows": 46806,
+  "experiments": 35,
+  "max_abs_diff_evaluation_vs_batch": 0.0,
+  "max_abs_diff_evaluation_vs_api": 0.0,
+  "versions": {
+    "package": "0.6.0",
+    "bundle": "0.6.0",
+    "api": "0.6.0",
+    "model": "flowrate-z-2026.11"
+  }
+}

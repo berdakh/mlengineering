@@ -5,7 +5,8 @@ Contract (the checks rely on it)
 ``predict_batch(model_dir, input_path, out_dir, *, chunk_runs=50, force=False) -> dict``
 
 1. Load ``<model_dir>/model.json`` with ``Detector.from_config``.
-2. Read the input CSV and pass it through ``validate_input``. A ``SchemaError`` propagates and
+2. Read the input CSV (``float_precision="round_trip"``: pandas' default parser can change the last
+   digit of a float) and pass it through ``validate_input``. A ``SchemaError`` propagates and
    NOTHING is written.
 3. Score the runs in chunks of ``chunk_runs`` runs (memory stays bounded by the chunk, not the
    file). The output does not depend on ``chunk_runs``.
@@ -67,7 +68,7 @@ def predict_batch(model_dir, input_path, out_dir, *, chunk_runs: int = 50, force
         raise ValueError("chunk_runs must be >= 1")
     detector = load_detector(model_dir)
     raw = Path(input_path).read_bytes()
-    data = validate_input(pd.read_csv(io.BytesIO(raw)))         # SchemaError: nothing written
+    data = validate_input(pd.read_csv(io.BytesIO(raw), float_precision="round_trip"))  # SchemaError: nothing written
     input_sha = _sha256(raw)
 
     out = Path(out_dir)

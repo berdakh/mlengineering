@@ -1,0 +1,347 @@
+# W5D6 — Project milestone 2: one model, three paths, one release candidate
+
+Unit id `w5d6_project_milestone_2` · Week 5, day 6 · Handbook:
+[H9.2 API, integration and contract tests](../../handbook/ch09_testing_ml_systems/h9_2_api_integration_contract_tests.md),
+[H11.3 Lifecycle and concurrency](../../handbook/ch11_fastapi_input_validation/h11_3_lifecycle_and_concurrency.md),
+H10.1 one pipeline for training and serving (planted with w5d1) · Content status: see [STATUS.md](../../STATUS.md)
+
+**This is an independent integration session.** Like [w1d6](../w1d6_notebook_to_package/README.md) and
+[w4d6](../w4d6_project_milestone_1/README.md), the lab is a checklist and a contract, not a walkthrough.
+You integrate what Week 5 built (inference pipeline, artifact bundle, API, API tests) into the project
+and cut a release candidate.
+
+## 1. Purpose
+
+**Objective.** Ship flowguard 0.6.0 as a release candidate in which evaluation, batch inference and the
+HTTP API compute identical scores from one packaged model, built by one command from the frozen split
+manifest, with tests at every layer and documentation a newcomer can run as written.
+
+**Why an applied ML engineer needs it.** In research, the model is the deliverable. In a product it is
+one component, and the most common serious bug is not a bad model but a *different* model in production
+than the one that was evaluated: a preprocessing step re-implemented in the service, a library default
+that differs between pandas and NumPy, a bundle built from the wrong config, a version number nobody
+updated. Each of these lets an offline report describe a system that does not exist. Today you make that
+impossible by construction and prove it with a parity test.
+
+**Deliverables (milestone 2).**
+* Your flowguard repository at tag `v0.6.0-rc1` (or similar): `make model`, `make test`, `make predict`,
+  `make serve` work; `README.md` Usage block runs as written; `CHANGELOG.md` has a 0.6.0 entry.
+* `challenge/SUBMISSION.md` filled in and pushed for review.
+
+**Completion criteria.**
+* `python wb.py check w5d6`: on a synthetic copy of your project, `make model` builds a bundle with
+  provenance, `make test` passes, evaluation, batch and API scores agree to within 1e-9 on every row,
+  versions agree everywhere, the CHANGELOG has the entry, and the README commands run.
+* The same commands work on the real data in your repository (`RAW=data/raw/skab`).
+* `python wb.py check w5d6 --challenge` passes and the submission is pushed.
+
+**Prerequisites.** w5d1 (one inference pipeline, `predict-batch`), w5d2 (bundles, checksums),
+w5d4 (FastAPI service), [w5d5](../w5d5_api_testing/README.md) (API tests), [w4d6](../w4d6_project_milestone_1/README.md)
+(Makefiles, milestone format). The lab ships a starter project with all modules, so you can work from
+it or port the checklist to your own repository.
+
+**Time budget (2 h essential).**
+
+| Activity | Minutes |
+|---|---|
+| Read section 2; run the worked example | 20 |
+| Lab: single-source inference, `build-model`, `predict-batch`, version, Makefile | 55 |
+| Lab: parity and API tests, README, CHANGELOG; checks green | 25 |
+| Real data: build, predict, parity, start and stop the server once | 10 |
+| Submission and self-review (the challenge) | 10 |
+| *Optional extension: OpenAPI baseline + contract test from w5d5; record the Git commit in the bundle; concurrency test* | *up to 60* |
+
+## 2. Conceptual explanation
+
+### 2.1 Three paths that must agree
+
+```mermaid
+flowchart LR
+    RAW["data/raw/skab<br/>(not committed)"] --> BM["make model<br/>flowguard build-model"]
+    CFG["configs/model.toml<br/>operating point from w4d5"] --> BM
+    SPL["splits/v2.json<br/>frozen in w3d1"] --> BM
+    BM --> BUN["models/current/<br/>model.json + MANIFEST.json"]
+    BUN --> EV["evaluation path<br/>experiment_scores()"]
+    BUN --> BA["batch path<br/>flowguard predict-batch"]
+    BUN --> AP["API path<br/>POST /predict"]
+    SC["ZScoreModel.score<br/>(the only formula)"] -.-> EV
+    SC -.-> BA
+    SC -.-> AP
+    EV --> PAR{"parity test<br/>max diff <= 1e-9"}
+    BA --> PAR
+    AP --> PAR
+```
+
+The numbers in the milestone-1 report came from the evaluation path. Operators will act on the API's
+numbers; analysts will rerun the batch path over history. If the three disagree, the report describes a
+model nobody runs. The fix is structural, not procedural: **one function computes the score, and every
+path calls it.** The parity test then guards the structure against future edits.
+
+Your research analogue: an offline decoder evaluated in MATLAB or Python and a real-time decoder
+reimplemented in C for the BCI loop. If the online filter is causal and the offline one zero-phase, or
+the online normalisation uses a different window, the published offline accuracy is not the accuracy
+of the system the participant used.
+
+### 2.2 Training/serving skew, and why parity must cover all three paths
+
+**Training/serving skew** is any difference between how features or scores are computed when a model
+is evaluated and when it is served. The usual causes: logic duplicated in two languages or two code
+bases; library defaults (pandas `Series.std()` uses ddof=1, `numpy.std()` uses ddof=0); different
+windows or time zones; different handling of missing values; a stale copy of a config.
+
+The relative error from the ddof difference is $\sqrt{(n-1)/n} - 1$ for a burn-in of $n$ rows: 29 % at
+$n = 2$, 5.1 % at $n = 10$, 0.50 % at $n = 100$ ([Figure 2](#figure-2)). Small at the project's
+$n = 100$, but not harmless: on the real data it flips 24 of the 10,012 flagged rows across all 35
+experiments (none on the 7 test experiments), and in a future model with a short burn-in it would
+silently make the detector much less sensitive.
+
+**Why three-way.** A two-way check misses defects shared by the pair it compares. If batch inference
+takes one burn-in for the whole table instead of one per experiment, and evaluation reuses the batch
+function, evaluation and batch agree perfectly and are both wrong; only the API, which receives a
+per-experiment burn-in, disagrees. Comparing all three catches it (the `batch_global_burn_in` mutant
+in the checks).
+
+**Exact comparison needs care at the boundaries.** While building this lesson we found that reading
+the batch CSV back with pandas' default float parser differs from the in-memory scores by up to
+5.7e-14 on 20,708 of 46,806 rows, even though the CSV holds 17 significant digits; with
+`pd.read_csv(..., float_precision="round_trip")` the difference is exactly 0. Either compare with a
+stated tolerance (the checks use 1e-9) or round-trip exactly; never compare floats from a file with `==`
+without knowing which.
+
+### 2.3 The artifact carries its provenance
+
+A bundle that loads is not enough; a reviewer must be able to tell *which* decision it implements.
+`build-model` records in `MANIFEST.json`:
+
+```
+models/current/
+├── model.json          sensor, n_burn_in, threshold, min_duration, merge_gap, model_version
+└── MANIFEST.json
+    ├── schema            "flowguard-bundle/1"
+    ├── package_version   "0.6.0"            (from flowguard.__version__)
+    ├── files             {"model.json": sha256}
+    └── provenance
+        ├── config, config_sha256           configs/model.toml as used
+        ├── splits_sha256                   a9f4e243...5314 = the manifest of the milestone-1 report
+        ├── dev_experiments                 27
+        └── dev_data_sha256                 hash of the development rows the threshold was chosen on
+```
+
+The split-manifest hash links the bundle to the evaluation report, which prints the same hash. A missing
+link is not caught by any functional test; it is caught by the `bundle_without_provenance` check.
+
+For this detector the "model" has no fitted parameters beyond the operating point chosen in w4d5, so
+`build-model` packages a reviewed configuration rather than refitting. A model with learned weights would
+train here, from the development experiments of the same manifest.
+
+### 2.4 One version number
+
+A release has one version, defined in one place. Here it is `flowguard.__version__`; `pyproject.toml`
+reads it (`dynamic = ["version"]` with `[tool.setuptools.dynamic] version = {attr = "flowguard.__version__"}`);
+the bundle records it; `/version` reports it; the CHANGELOG has a section for it. Semantic versioning:
+0.6.0 is a minor release (new commands and endpoints, a behaviour fix); `-rc1` marks a candidate for review.
+The API contract has its own name (`flowguard-api/1`, w5d5), and the model its own version
+(`flowrate-z-2026.11`): three versions that change for three different reasons.
+
+### 2.5 A request end to end
+
+```mermaid
+sequenceDiagram
+    participant C as Client (curl)
+    participant U as uvicorn (127.0.0.1:8000)
+    participant A as FastAPI app
+    participant V as pydantic validation
+    participant M as ZScoreModel (loaded at startup)
+    C->>U: POST /predict {burn_in, values}
+    U->>A: ASGI request
+    A->>V: PredictRequest
+    alt invalid body
+        V-->>A: errors
+        A-->>C: 422 {loc, msg, type}
+    else valid
+        A->>A: model loaded? values <= 3600?
+        A->>M: score(burn_in, values)
+        M-->>A: scores, flags (score >= threshold)
+        A-->>C: 200 {model_version, threshold, scores, above_threshold}
+    end
+```
+
+**Long recordings.** The API accepts at most 3,600 values per request (one hour at 1 Hz). The
+`anomaly-free` recording has 9,405 rows, so a client sends it in chunks, each with the same burn-in; the
+concatenated scores equal batch scoring exactly (`api_requests_for` in `inference.py`). This limit was
+discovered while building the parity report on real data: the first run failed with 413.
+
+### 2.6 What reviewers look for
+
+* Can I build and run it from the README alone, without asking you anything?
+* Is there exactly one implementation of the score, and a test proving the paths agree?
+* Does the artifact say where it came from, and does it match the report?
+* Are failures clean: a missing bundle gives a one-line error and a non-zero exit, not a traceback?
+* Is anything committed that should not be: model files, predictions, raw data, credentials?
+* Does the CHANGELOG tell a user what changed in behaviour, not only in code?
+
+### 2.7 An industry example
+
+A ride-hailing ETA model is evaluated offline on features computed in a Spark job, where "average speed
+in the last 15 minutes" uses event time. The online service computes the same feature from a stream
+keyed on processing time; during network delays the window holds fewer, older events. Offline error is
+2.1 minutes; online it is 3.4 minutes, and the gap is invisible until someone logs online features and
+replays them through the offline pipeline. The remedy adopted was the one in this lesson: one feature
+definition shared by both paths, and a parity job comparing them daily. (Illustrative composite, not a
+documented incident.)
+
+### 2.8 Limitations and misconceptions
+
+* **"Parity on synthetic data proves parity on real data."** It proves the code paths agree on those
+  inputs. Run the parity report on the real data too (section 4, step 8); it found the 413 limit here.
+* **"The parity test makes the model correct."** It makes the three paths agree. If the shared function
+  is wrong, all three are wrong identically; that is what unit tests with known answers are for (w5d5).
+* **"A release candidate is a deployment."** Nothing is deployed today; the server runs once on the
+  loopback interface and is stopped. Deployment is Week 6.
+* **"Provenance is paperwork."** It is the only way to answer "is the deployed model the one in the
+  report?" months later.
+
+## 3. Worked example: a library default that splits two paths
+
+`example/skew_demo.py` (SYNTHETIC orders data): a nightly pandas job and a NumPy endpoint both
+normalise by "the standard deviation of the first n days". They differ only in library defaults.
+
+```bash
+python lessons/w5d6_project_milestone_2/example/skew_demo.py
+```
+
+Output (authoring run, 2026-11-22):
+
+```
+baseline days n  max |batch - online|  online / batch  sqrt(n/(n-1))
+              5                0.2326          1.1180         1.1180
+             10                0.1330          1.0541         1.0541
+             30                0.0456          1.0171         1.0171
+            100                0.0128          1.0050         1.0050
+           1000                0.0019          1.0005         1.0005
+
+parity check (tolerance 1e-9): FAIL
+```
+
+**Interpretation.** The online z-scores are larger by exactly $\sqrt{n/(n-1)}$, the ratio of sample to
+population standard deviation, so the measured column and the formula column agree to four decimals.
+Neither implementation is "wrong" in isolation; each passes its own unit tests. Only a comparison of
+the two paths on the same data finds the difference, and the size of the difference tells you where to
+look. (In flowguard's starter the direction is reversed: the API uses ddof=1 and its scores are
+*smaller* than the evaluation's.)
+
+## 4. Lab: the release-candidate checklist
+
+The starter project in `lab/` has every module. Three things in it are deliberately not ready for
+release, as they were not in the real project: an endpoint written quickly for the w5d4 demo, version
+numbers that drifted, and two CLI commands left as stubs. Work in `lab/` (or apply the same checklist to
+your own repository and point the checks at it with `WB_TARGET_DIR=~/projects/flowguard`).
+
+```bash
+cd lessons/w5d6_project_milestone_2/lab
+PYTHONPATH=src python -m pytest tests -q          # 5 passed: what exists so far
+python ../../../wb.py check w5d6                  # from anywhere: the release-candidate checks
+```
+
+Checklist (in a sensible order; each line names the check that verifies it):
+
+1. **One formula.** Make `/predict` call `ZScoreModel.score` and `above_threshold`; delete its own
+   arithmetic. → `test_three_way_parity`
+2. **`build-model`** in `src/flowguard/cli.py`: validate config keys, load the manifest with
+   `load_splits`, save the bundle with provenance (config, `config_sha256`, `splits_sha256`, development
+   data identification). → `test_bundle_records_provenance`
+3. **`predict-batch`**: select experiments (`--split test|dev|all`), score with `score_experiments`, write
+   `experiment_id,t,score,above_threshold`; a missing bundle exits non-zero with a one-line error. →
+   `test_batch_output_contract`, `test_bad_model_dir_is_a_clean_error`
+4. **One version.** Define it in `flowguard/__init__.py`; make `pyproject.toml` read it; bump to 0.6.0. →
+   `test_versions_agree`
+5. **Makefile**: `model` (rebuilds only when config, manifest or code changed), `test`, `predict`, `serve`
+   on 127.0.0.1. → `test_make_model_builds_a_bundle`, `test_make_test_passes`
+6. **Tests at every layer** in `tests/`: add API tests (TestClient) and a parity test that compares
+   evaluation, batch and API on a small synthetic table, including a chunked API call. → `test_make_test_passes`
+7. **README Usage** (a fenced `bash` code block: build, test, batch predict, serve, one curl call) and a CHANGELOG
+   entry `## [0.6.0]` that mentions the skew fix. → `test_readme_usage_commands_run`, `test_changelog_has_entry`
+8. **Real data.** `make model RAW=<path>`; `make predict RAW=<path>`; three-way parity over all 35
+   experiments; start the server once on 127.0.0.1, `curl /readyz` and one `/predict`, stop it (Ctrl-C).
+   Record the outputs for your release notes.
+
+*Debugging.* `make: *** missing separator` means a recipe line starts with spaces instead of a TAB.
+A parity difference of exactly a factor $\sqrt{n/(n-1)}$ is a ddof mismatch; a difference that varies by
+experiment usually means the burn-in is taken from the wrong rows. If `/predict` returns 413 on real data,
+you are sending a whole long recording in one request; chunk it.
+
+![Scores from POST /predict for three test experiments: valve1/13 rises above the threshold during its labelled anomaly, valve2/0 never does, other/14 crosses it during most of its anomaly](figures/api_traces.svg)
+
+*Figure 1 (real data, reference project).* What the fixed API returns. `valve1/13`: scores near 20
+during the anomaly, 313 flagged rows. `valve2/0`: the anomaly barely moves flow rate (maximum score 3.0),
+so nothing is flagged: one of the two missed test events from milestone 1. `other/14`: 127 flagged rows;
+the final rows spike to 246 (clipped in the plot).
+
+<a id="figure-2"></a>
+![API score relative to batch by burn-in size: -29 % at n=2, -5 % at n=10, -0.5 % at n=100; the measured value on SKAB sits on the curve](figures/skew_vs_burn_in.svg)
+
+*Figure 2 (formula and real measurement).* The starter's API (ddof=1) against the fixed one on all 35
+SKAB experiments: median ratio 0.99499 at $n = 100$, identical across experiments, exactly
+$\sqrt{99/100}$.
+
+**Meaningful result.** On the real data, the reference project gives a maximum absolute difference of
+0.0 between evaluation and batch and between evaluation and API over 46,806 rows of 35 experiments, and
+reports version 0.6.0 everywhere
+([parity.json](../../solutions/lessons/w5d6_project_milestone_2/example_release/parity.json), open after
+finishing). On the 7 test experiments, after the burn-in, the raw threshold flags 686 rows, 671 of them
+labelled anomalous: the same detector as milestone 1, now packaged.
+
+## 5. Independent challenge: submit the release candidate
+
+Follow [challenge/README.md](challenge/README.md): tag your release-candidate commit, fill in
+[challenge/SUBMISSION.md](challenge/SUBMISSION.md) for your own repository with a scored self-review and
+evidence, and push both.
+
+**Acceptance criteria.** `python wb.py check w5d6 --challenge` passes (structure only); the reviewer
+scores quality with the rubric in [assessment.md](assessment.md).
+
+## 6. Progressive hints
+
+[hint 1 (concept)](hints/hint1_concept.md) · [hint 2 (approach)](hints/hint2_approach.md) ·
+[hint 3 (partial implementation)](hints/hint3_partial.md). The reference project, an example release
+(notes, a real server transcript, parity evidence) and a reference submission are in
+`solutions/lessons/w5d6_project_milestone_2/`.
+
+## 7. Assessment
+
+[assessment.md](assessment.md): the milestone rubric, reasoning questions, and an interview rep (walk a
+request through the system end to end, 10 minutes, spoken).
+
+## 8. Reflection and review
+
+**You should now be able to, without help:** find and remove a duplicated implementation of a model's
+computation; write a three-way parity test and choose its tolerance; build an artifact that records
+where it came from; single-source a version; write a README whose commands are tested.
+
+**Reflection prompt.** In your research code, where did the "offline" and "online" versions of a
+computation live, and what would a parity test between them have looked like? (`python wb.py note w5d6 "..."`)
+
+**Retrieval question (in a week).** Your API and your batch job disagree by a constant factor of 1.0541
+on every row. What is the burn-in size, what is the likely cause, and which of the two is consistent
+with the evaluation report?
+
+**Next.** Week 6 puts this release candidate in a container ([w6d1 Docker I](../../roadmap/SCHEDULE.md)),
+reproducibly, and then into CI and one cloud deployment.
+
+## Verification record
+
+Executed on 2026-11-22 (Python 3.13.18, FastAPI 0.165.0, uvicorn 0.54.0, numpy 2.5.3, pandas 3.0.5,
+GNU make):
+
+* `python tools/verify_checks.py lessons/w5d6_project_milestone_2`: reference project passes 9 lab checks;
+  mutants `api_ddof_skew`, `batch_global_burn_in`, `bundle_without_provenance`, `readme_usage_broken`,
+  `version_not_single_sourced` are each rejected by their intended check; the reference submission
+  passes 5 challenge checks and 4 submission mutants are rejected.
+* Shipped starter: 6 lab checks fail and 3 error; all 5 challenge checks fail. Lab checks take about 6 s.
+* Real data (reference project): `make model` 0.5 s; `make predict` 7,359 rows for 7 test experiments;
+  parity report 0.0/0.0 over 46,806 rows; `flowguard evaluate --split test` 686 flagged, 671 true
+  positives, 2,487 anomalous rows; a uvicorn server on 127.0.0.1:8765 answered healthz, readyz, version,
+  predict (200) and a bad request (422), then was stopped
+  ([transcript](../../solutions/lessons/w5d6_project_milestone_2/example_release/API_TRANSCRIPT.md)).
+* Worked example output copied from a run. Figures regenerated by `figures/make_figures.py`.
+* Not verified: Python 3.11/3.12; `pip install -e` of the project (checks use `PYTHONPATH=src`); time budget.

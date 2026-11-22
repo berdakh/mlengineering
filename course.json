@@ -426,8 +426,8 @@
       "prerequisites": "w5d4, w1d5.",
       "handbook": "H9.2, H11.3",
       "path": "lessons/w5d5_api_testing",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w5d6_project_milestone_2",
@@ -439,8 +439,8 @@
       "prerequisites": "w5d1-w5d5.",
       "handbook": "-",
       "path": "lessons/w5d6_project_milestone_2",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w5d7_review",
