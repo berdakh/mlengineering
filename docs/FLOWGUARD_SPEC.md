@@ -69,3 +69,18 @@ API additions:
 | `flowguard.benchmark` | `evaluate_scores(...)` point-level table per family | w2d6 |
 
 Week 3+ units that need a manifest build a v2 one with their snapshot and state that it supersedes v1.
+
+## Additions in Week 4 (as built in the lesson snapshots)
+
+| Module | Purpose | Introduced |
+|---|---|---|
+| `flowguard.forecast` | naive / AR one-step forecasters, residual scores, CUSUM | w4d1 |
+| `flowguard.detectors` | PCA (T2, Q), isolation forest, gradient-boosted trees, common fit/score interface | w4d2, w4d5 |
+| `flowguard.neural` | window dataset, small conv autoencoder, early stopping (PyTorch, CPU) | w4d3 |
+| `flowguard.tracking` / CLI `sweep`, `runs table`, `runs reproduce` | run registry and sweeps over w1d4 run directories | w4d4 |
+| `flowguard.decision` | latency percentiles, model size, Pareto front, interval-vs-MPID reading | w4d5 |
+| `flowguard.operating` | alert-budget threshold selection | w4d5 |
+| `flowguard.pipeline`, `flowguard.svgplot` | `make evaluate` report pipeline; dependency-free byte-reproducible SVG | w4d6 |
+
+All real-data results from Week 3 on use the frozen manifest
+`solutions/lessons/w3d1_leakage/lab/splits/v2.json` (7 test, 27 development experiments).

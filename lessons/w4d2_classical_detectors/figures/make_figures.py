@@ -95,7 +95,7 @@ def fig_example_auc():
     ax.set_xticklabels(dets)
     ax.set_ylim(0.4, 1.08)
     ax.set_ylabel("ROC AUC vs normal rows")
-    ax.set_title("SYNTHETIC: each detector is blind to one kind of fault")
+    ax.set_title("SYNTHETIC: T2 and Q each see one kind of fault; the forest sees both, partly")
     ax.legend(loc="upper center", ncol=2, fontsize=8, bbox_to_anchor=(0.5, -0.12))
     save(fig, HERE / "example_auc.svg")
 
@@ -124,7 +124,7 @@ def fig_protocols():
     ax.set_xlim(0.35, 1.0)
     ax.set_xlabel("point-level PR-AUC (95% cluster-bootstrap interval)")
     ax.set_title("REAL SKAB: the supervised model wins on known faults and drops on an unseen family")
-    ax.legend(loc="lower left", fontsize=8)
+    ax.legend(loc="upper center", fontsize=8, ncol=2, bbox_to_anchor=(0.45, -0.18))
     ax.grid(axis="y", visible=False)
     save(fig, HERE / "protocols.svg")
     return df
@@ -154,17 +154,18 @@ def fig_skab_scores(protocols: pd.DataFrame):
         thr, _ = best_f1_threshold(dev["anomaly"].to_numpy(), oof)
         s = cd.fit_score(makers[best], mode, dev, one, cols) / thr
         rows[name] = s
-        ax.plot(one["t"], s, color=c, lw=0.9)
+        ax.plot(one["t"], np.clip(s, 0, 3), color=c, lw=0.9)
         ax.axhline(1.0, color=INK["muted"], lw=0.8, ls="--")
         ax.set_ylabel(name.replace(" (w2d6 baseline)", ""), fontsize=8)
-        ax.set_yscale("symlog", linthresh=1.0)
+        ax.set_ylim(0, 3.1)
+        ax.set_yticks([0, 1, 2, 3])
         an = one["anomaly"].to_numpy()
         on = np.flatnonzero(np.diff(np.r_[0, an, 0]) == 1)
         off = np.flatnonzero(np.diff(np.r_[0, an, 0]) == -1)
         tt = one["t"].to_numpy()
         for s0, s1 in zip(on, off):
             ax.axvspan(tt[s0], tt[s1 - 1], color=SERIES[1], alpha=0.12, lw=0)
-    axes[0].set_title(f"REAL SKAB test experiment {e}: scores divided by each detector's threshold (dashed = 1)")
+    axes[0].set_title(f"REAL SKAB test experiment {e}: score / threshold (dashed = 1, capped at 3)")
     axes[-1].set_xlabel("row t (about 1 s)")
     pd.DataFrame(rows).to_csv(HERE / "skab_scores_valve1_5.csv", index=False)
     save(fig, HERE / "skab_scores.svg")

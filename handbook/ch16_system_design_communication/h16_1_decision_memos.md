@@ -95,7 +95,7 @@ sequenceDiagram
     P->>O: memo
     O->>R: does the decision follow from the table?
     R-->>O: yes, or the gaps
-    O->>P: decision recorded; change conditions owned
+    O->>P: decision recorded, change conditions owned
 ```
 
 Sending the rule to a reviewer *before* the results is the cheapest guard against fitting the rule

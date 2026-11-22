@@ -335,8 +335,8 @@
       "prerequisites": "w4d3, w4d4, w3d5.",
       "handbook": "H5.4, H16.1",
       "path": "lessons/w4d5_model_choice",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w4d6_project_milestone_1",
@@ -348,8 +348,8 @@
       "prerequisites": "w4d5.",
       "handbook": "-",
       "path": "lessons/w4d6_project_milestone_1",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w4d7_review",

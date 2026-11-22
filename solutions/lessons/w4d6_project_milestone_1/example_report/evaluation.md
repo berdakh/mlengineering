@@ -93,7 +93,7 @@ Rule fixed in advance: among the candidates, the simplest one shown practically 
 |---|---|
 | Split manifest sha256 | `a9f4e2438e666e04bb89b9364f938ffa01554969298c16b9e9eb2082bd005314` |
 | Tidy data sha256 | `437c2ff433aced23a5142d3f97ddc3ef8b4f78ead5908757b4e900754cdf4ef4` |
-| Code version | `41a95b50065d-dirty` |
+| Code version | `9c3274f813cb` |
 | Python | `3.13.18` |
 | numpy | `2.5.3` |
 | pandas | `3.0.5` |
