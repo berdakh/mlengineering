@@ -29,6 +29,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
 HERE = Path(__file__).resolve().parent
+MANIFEST = HERE / "splits" / "v2.json"  # frozen split manifest from w3d1
 sys.path.insert(0, str(HERE / "src"))
 
 from flowguard.data import load_raw  # noqa: E402
@@ -36,7 +37,7 @@ from flowguard.features import all_feature_columns, columns_for, selection_featu
 from flowguard.metrics import pr_auc  # noqa: E402
 from flowguard.selection import (frozen_threshold_evaluation, grouped_search, nested_estimate,  # noqa: E402
                                  sample_params, select_best)
-from flowguard.splits import dev_experiments, find_overlap_groups, make_splits, validate_splits  # noqa: E402
+from flowguard.splits import dev_experiments, load_splits, validate_splits  # noqa: E402
 
 BURN_IN = 100   # rows at the start of each experiment used for normalisation; never fitted or scored
 REPO_ROOT = next((p for p in HERE.parents if (p / "project" / "get_skab.py").is_file()), HERE)
@@ -110,7 +111,7 @@ def main(argv: list[str] | None = None) -> int:
     except FileNotFoundError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
-    manifest = make_splits(tidy, seed=0, keep_together=find_overlap_groups(tidy))
+    manifest = load_splits(MANIFEST)  # v2, frozen in w3d1; never redrawn (the test set is fixed once results have been seen)
     validate_splits(manifest, tidy)
     feats = selection_features(tidy, BURN_IN)
     feats = feats[feats["t"] >= BURN_IN].reset_index(drop=True)          # burn-in rows are never used

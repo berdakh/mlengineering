@@ -57,13 +57,15 @@ consequences:
 2. **Timing blindness.** Covering the last 80 % of every event (late) beats covering the first five rows
    of every event (early) on F1: 0.89 against 0.07 in the toy. For alarms the early detector is better.
 3. **Fragmentation blindness.** Flags on every other row of an event keep point precision at 1.0 and
-   produce hundreds of alarms. On real SKAB a single-sensor z-score has point precision 0.889 on the test
-   experiments and raises 403 alarms (156 false) for nine faults.
+   produce hundreds of alarms. On real SKAB a single-sensor z-score has point precision 0.840 on the test
+   experiments and raises 469 alarms (290 false) for seven faults.
 
-Ranking reversals follow. On the SKAB test experiments logistic regression beats a single-sensor
-z-score on point F1 (0.817 vs 0.785) but finds 8/9 events against 9/9 at a longer median delay (43 s vs
-34 s) (lesson w3d4, run 2026-11-22). With nine events neither ordering is established; the point is that
-point F1 does not predict the event ordering.
+Ranking reversals follow. On the seven SKAB test experiments of the frozen w3d1 manifest, elapsed time
+with no sensor input has the highest point F1 in the table (0.842) but finds 3/7 events, against 7/7 for
+the single-sensor z-score (0.826); and after the same post-processing, Mahalanobis, last of the sensor
+detectors on point F1 (0.729), finds the most events (5/7) with the fewest false alarms (lesson w3d4,
+run 2026-11-22). With seven events no close ordering is established; the point is that point F1 does
+not predict the event ordering.
 
 ## 6.5.4 Point-adjust
 
@@ -92,7 +94,7 @@ which for `n = 0` reduces to `−ln α / H ≈ 3/H` at 95 %. Consequences for sm
 
 | normal hours `H` | zero false alarms: 95 % upper bound per hour | budget it can certify |
 |---|---|---|
-| 1.63 (SKAB test) | 1.84 | none tighter than ~2 per hour |
+| 1.22 (SKAB test) | 2.46 | none tighter than ~2.5 per hour |
 | 4.59 (SKAB dev) | 0.65 | ~1 per 1.5 h |
 | 24 | 0.125 | 1 per 8 h |
 
@@ -123,8 +125,8 @@ operating point from the consumer.
 * Delay averaged over detected events only (censoring ignored).
 * False-alarm rate without its exposure, or exposure computed from row counts across logging gaps.
 * Post-processing or matching tolerance tuned after seeing test results.
-* Event recall used to argue "no leakage": the SKAB clock detector finds 4/9 test events within 8 s.
-* p90 delay quoted from nine events.
+* Event recall used to argue "no leakage": the SKAB clock detector finds 3/7 test events within 14 s (7/7 under any-overlap).
+* p90 delay quoted from seven events (it is the worst case).
 
 ## 6.5.8 Quick reference
 

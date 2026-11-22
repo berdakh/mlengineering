@@ -24,6 +24,7 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 
 HERE = Path(__file__).resolve().parent
+MANIFEST = HERE / "splits" / "v2.json"  # frozen split manifest from w3d1
 sys.path.insert(0, str(HERE / "src"))
 
 from flowguard.baselines import (MahalanobisScorer, MaxAbsZScorer, SingleSensorZScorer,  # noqa: E402
@@ -32,7 +33,7 @@ from flowguard.benchmark import evaluate_scores  # noqa: E402
 from flowguard.data import SENSOR_COLUMNS, load_raw  # noqa: E402
 from flowguard.evaluation import evaluate_experiments, extract_events, point_adjust  # noqa: E402
 from flowguard.metrics import f1_from, precision_recall_at_threshold  # noqa: E402
-from flowguard.splits import SKAB_OVERLAP_GROUPS, dev_experiments, make_splits, validate_splits  # noqa: E402
+from flowguard.splits import dev_experiments, load_splits, validate_splits  # noqa: E402
 
 BURN_IN = 100
 REPO_ROOT = next((p for p in HERE.parents if (p / "project" / "get_skab.py").is_file()), HERE)
@@ -96,7 +97,7 @@ def main(argv: list[str] | None = None) -> int:
     except FileNotFoundError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
-    manifest = make_splits(tidy, seed=0, keep_together=SKAB_OVERLAP_GROUPS)
+    manifest = load_splits(MANIFEST)  # v2, frozen in w3d1; never redrawn (the test set is fixed once results have been seen)
     validate_splits(manifest, tidy)
     in_test = (tidy["experiment_id"].isin(manifest["test"]) & (tidy["t"] >= BURN_IN)).to_numpy()
     test = tidy[in_test].reset_index(drop=True)

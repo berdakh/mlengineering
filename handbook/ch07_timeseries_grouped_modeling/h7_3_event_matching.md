@@ -57,17 +57,17 @@ case 5                 ▬▬▬                                            befo
 ```
 
 Case 2 is where rules disagree most, and it is common: a drifting signal crosses the threshold shortly
-before the labelled onset. On SKAB the elapsed-time "detector" (a single alarm from row 571 onward) is a
-case-2 alarm in several test experiments: start-based matching gives it 4/9 events, any-overlap 8/9
+before the labelled onset. On SKAB the elapsed-time "detector" (a single alarm from row 570 onward) is a
+case-2 alarm in four of the seven test experiments: start-based matching gives it 3/7 events, any-overlap 7/7
 (w3d4, run 2026-11-22). Which is right depends on whether the onset label is accurate. If the label is
 known to lag reality, case 2 is a genuine early detection and `τ_early` should be raised to the known lag;
 if the label is accurate, case 2 is an alarm that preceded the fault, and calling it a detection
 rewards alarms that are always on.
 
-![Flow rate, z-score and alarms for SKAB experiment valve1/3: 80 raw alarms inside one event, one hit and 79 redundant; one alarm after post-processing](../../lessons/w3d4_point_vs_event_evaluation/figures/alarms_on_signal.svg)
+![Flow rate, z-score and alarms for SKAB test experiment valve1/10: 28 raw alarms, one hit, 13 redundant inside the event and 14 false; two alarms after post-processing](../../lessons/w3d4_point_vs_event_evaluation/figures/alarms_on_signal.svg)
 
-*Real SKAB, `valve1/3`.* Case 3 in practice: raw flags give one hit and 79 redundant alarms inside a
-single fault. "Redundant" keeps them out of both TP and FA counts; their number is still the operator's
+*Real SKAB, `valve1/10`.* Case 3 in practice: raw flags give one hit and 13 redundant alarms inside a
+single fault (and 14 false alarms outside it). "Redundant" keeps them out of both TP and FA counts; their number is still the operator's
 load and is reported separately.
 
 ## 7.3.5 Adapting the rule to a domain

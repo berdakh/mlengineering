@@ -31,16 +31,19 @@ from flowguard.baselines import SingleSensorZScorer, burn_in_scores  # noqa: E40
 from flowguard.benchmark import evaluate_scores  # noqa: E402
 from flowguard.data import load_raw  # noqa: E402
 from flowguard.evaluation import evaluate_experiments, extract_events, match_events  # noqa: E402
-from flowguard.splits import SKAB_OVERLAP_GROUPS, dev_experiments, make_splits  # noqa: E402
+from flowguard.splits import dev_experiments, load_splits  # noqa: E402
 
 BURN_IN = 100
 C_SIGNAL, C_RAW, C_POST = SERIES[0], SERIES[1], SERIES[2]      # fixed roles across the lesson's figures
 LABEL_COLOUR = {"hit": SERIES[2], "redundant": SERIES[3], "false_alarm": SERIES[7]}
 
 
+ALARM_EXPERIMENT = "valve1/10"   # a test experiment of the frozen v2 manifest
+
+
 def fig_alarms(tidy, scores, threshold: float) -> None:
     """One REAL test experiment: signal, score, and the alarms before and after post-processing."""
-    g = tidy[tidy["experiment_id"] == "valve1/3"].sort_values("t")
+    g = tidy[tidy["experiment_id"] == ALARM_EXPERIMENT].sort_values("t")
     s = scores[g.index.to_numpy()]
     g = g.reset_index(drop=True)
     t = g["t"].to_numpy()
@@ -70,7 +73,7 @@ def fig_alarms(tidy, scores, threshold: float) -> None:
             axes[2].barh(y, t[b - 1] - t[a] + 1, left=t[a], height=0.6, color=LABEL_COLOUR[lab], zorder=3)
         print(f"fig alarms: {name.splitlines()[0]}: {len(alarms)} alarms "
               f"({labels.count('hit')} hit, {labels.count('redundant')} redundant, {labels.count('false_alarm')} false)")
-    axes[0].set_title(f"valve1/3 (real SKAB): one fault, {counts[0]} raw alarms, {counts[1]} after post-processing")
+    axes[0].set_title(f"{ALARM_EXPERIMENT} (real SKAB): one fault, {counts[0]} raw alarms, {counts[1]} after post-processing")
     axes[2].axvspan(ts, te, color=INK["grid"], alpha=0.9, lw=0, zorder=0)
     axes[2].set_yticks([0, 1], [r[0] for r in rows])
     axes[2].set_ylim(-0.6, 1.6)
@@ -119,6 +122,8 @@ def fig_tradeoff(tidy, scores, manifest) -> None:
     dev, dev_scores = tidy[is_dev].reset_index(drop=True), scores[is_dev]
     thresholds = (2.5, 3.0, 3.5, 4.0, 5.0, 6.0, 8.0, 10.0)
     fig, axes = plt.subplots(1, 2, figsize=(9, 3.9), sharex=True)
+    n_dev = len(dev_experiments(manifest))
+    best_in_budget = 0
     for (md, mg), colour, name in (((1, 0), C_RAW, "raw flags"), ((10, 30), C_POST, "min_duration 10, merge_gap 30")):
         rate, recall, delay = [], [], []
         for th in thresholds:
@@ -126,7 +131,9 @@ def fig_tradeoff(tidy, scores, manifest) -> None:
             rate.append(max(r["false_alarms_per_hour"], 0.1))           # 0 drawn at 0.1 on the log axis
             recall.append(r["event_recall"])
             delay.append(r["median_delay_s"])
-            print(f"fig tradeoff: {name}: threshold {th}: {r['n_detected']}/25 found, "
+            if r["false_alarms_per_hour"] <= 0.125:
+                best_in_budget = max(best_in_budget, r["n_detected"])
+            print(f"fig tradeoff: {name}: threshold {th}: {r['n_detected']}/{r['n_events']} found, "
                   f"{r['false_alarms_per_hour']:.1f} false alarms/h, median delay {r['median_delay_s']}")
         axes[0].plot(rate, recall, marker="o", color=colour, label=name)
         finite = [(x, d) for x, d in zip(rate, delay) if math.isfinite(d)]
@@ -139,14 +146,16 @@ def fig_tradeoff(tidy, scores, manifest) -> None:
         ax.set_xscale("log")
         ax.axvline(0.125, color=INK["muted"], lw=1.0, ls="--")
         ax.set_xlabel("false alarms per hour of normal operation (log scale)")
-    axes[1].text(0.14, 440, "budget:\n1 per 8 h", color=INK["secondary"], fontsize=9)
-    axes[0].set_ylabel("event recall (25 dev events)")
+    axes[1].text(0.14, 0.97, "budget:\n1 per 8 h", color=INK["secondary"], fontsize=9, va="top",
+                 transform=axes[1].get_xaxis_transform())
+    axes[0].set_ylabel(f"event recall ({n_dev} dev events)")
     axes[0].set_ylim(0, 1.05)
-    axes[0].set_title("Inside the budget: at most 6 of 25 faults found")
+    axes[0].set_title(f"Inside the budget: at most {best_in_budget} of {n_dev} faults found")
+    print(f"fig tradeoff: inside the budget at most {best_in_budget}/{n_dev} found")
     axes[1].set_ylabel("median detection delay (s)")
     axes[1].set_title("Median delay (drawn only where it is finite)")
     axes[0].legend(loc="upper left")
-    fig.suptitle("flow-rate |z| detector on the 25 development experiments (real SKAB)", x=0.01, y=1.04, ha="left", fontsize=10,
+    fig.suptitle(f"flow-rate |z| detector on the {n_dev} development experiments (real SKAB)", x=0.01, y=1.04, ha="left", fontsize=10,
                  color=INK["secondary"])
     save(fig, HERE / "tradeoff_dev.svg")
 
@@ -183,7 +192,7 @@ def main() -> None:
     fig_toy_ranking()
     fig_point_adjust()
     tidy = load_raw(ROOT / "data" / "raw" / "skab")
-    manifest = make_splits(tidy, seed=0, keep_together=SKAB_OVERLAP_GROUPS)
+    manifest = load_splits(HERE.parent / "lab" / "splits" / "v2.json")  # v2, frozen in w3d1; never redrawn (the test set is fixed once results have been seen)
     scores = burn_in_scores(lambda: SingleSensorZScorer("flow_rate"), tidy, BURN_IN)
     threshold = evaluate_scores(tidy, scores, manifest, burn_in=BURN_IN)["threshold"]
     print(f"threshold (best point F1 on dev): {threshold:.4f}")

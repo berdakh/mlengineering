@@ -3,19 +3,20 @@
 ## Reasoning questions
 
 **1.** (a) Metric: point F1 counts rows; it ranks by the share of anomalous rows covered and is blind
-to fragmentation and timing. The operator-relevant columns are events found (B 9/9 vs A 8/9), delay
-and false alarms per hour, and they do not agree with the F1 ordering. (b) Data: nine events; one
-event is 11 percentage points of event recall, and 88 vs 96 false alarms per hour come from 1.63 hours
-(144 vs 156 alarms). Neither difference is established without intervals (w3d5). Also both rates are
+to fragmentation and timing. The operator-relevant columns are events found (B 7/7 vs A 6/7), delay
+and false alarms per hour, and they do not agree with the F1 ordering. (b) Data: seven events; one
+event is 14 percentage points of event recall, and 239 vs 262 false alarms per hour come from 1.22
+hours (290 vs 319 alarms). Neither difference is established without intervals (w3d5). Also both rates are
 operationally unusable, so the comparison is moot until post-processing is tuned.
 *Common wrong answers:* "F1 balances precision and recall so it is fine" (it balances row counts);
-"8/9 vs 9/9 is a big difference" (it is one event).
+"6/7 vs 7/7 is a big difference" (it is one event).
 
-**2.** The start-based count (4/9). The clock's alarm for an experiment is a single run that starts at
-the frozen threshold (row 571) and lasts to the end. When the onset is a few rows after 571, the alarm
+**2.** The start-based count (3/7). The clock's alarm for an experiment is a single run that starts at
+the frozen threshold (row 570) and lasts to the end. When the onset is a few rows after 570 (four of
+the seven test experiments, onsets at rows 571-577), the alarm
 starts in normal operation and runs into the event: any-overlap credits it with a detection at delay 0;
 the start-based rule calls it a false alarm, because it told the operator nothing at onset. Both
-numbers are inflated by the protocol leak (onsets cluster at rows 550-600); neither is evidence about
+numbers are inflated by the protocol leak (test onsets lie between rows 557 and 577); neither is evidence about
 sensors.
 *Common wrong answer:* "any-overlap is more lenient so it is fairer to the detector" - fairness to the
 detector is not the goal; matching what the alarm communicated is.
@@ -30,14 +31,14 @@ test (w3d3). The confirmation wait is real latency: an alarm requiring 10 rows i
 its first flag. Omitting it understates delay by exactly that amount and makes long confirmation
 windows look free.
 
-**5.** Rate ≤ -ln(0.05)/1.63 ≈ 3.0/1.63 ≈ 1.84 per hour (one-sided 95 %, Poisson). To claim ≤ 0.125 per
+**5.** Rate ≤ -ln(0.05)/1.22 ≈ 3.0/1.22 ≈ 2.46 per hour (one-sided 95 %, Poisson). To claim ≤ 0.125 per
 hour with zero false alarms: 3.0/0.125 ≈ 24 hours of normal operation. Assumes a constant rate; with
 regime changes (the fault-free recording behaves differently) even that is optimistic.
 *Common wrong answer:* "0 false alarms per hour, so the budget is met".
 
-**6.** With nine delays, three of them infinite, the median is the 5th smallest value, which is a finite
-delay larger than the reported 40 s (the median of the six detected ones lies between their 3rd and 4th
-values; over all nine it is the 5th). Report the all-events median, with missed events counted as
+**6.** With seven delays, two of them infinite, the median is the 4th smallest value, which is a finite
+delay larger than the reported 40 s (the median of the five detected ones is their 3rd value; over all
+seven it is the 4th). Report the all-events median, with missed events counted as
 infinite, because dropping misses rewards a detector for failing on the hardest cases. If more than
 half are missed, the median is "missed".
 
@@ -73,7 +74,7 @@ for the challenge's written parts:
 
 | Element | Demonstrated when |
 |---|---|
-| Budget claim (A) | States counts and hours, the 95 % upper bound, and does not claim the budget is met from a zero count over ~1.6 h. |
+| Budget claim (A) | States counts and hours, the 95 % upper bound, and does not claim the budget is met from a zero count over ~1.2 h. |
 | Fault-free recording (A) | Notices that the same setting raises false alarms on a different regime and says the rate is not one number. |
 | Domain analysis (B) | Names label lag/jitter, event length vs detector latency, and event spacing as the reasons the SKAB rule fails. |
 | Parameter justification (B) | Each parameter tied to a domain property (lag, latency requirement, spacing), none chosen by score. |

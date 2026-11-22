@@ -14,8 +14,8 @@ experience rows. They experience *alarms*: a pager going off, a ticket opened, a
 inspection. Whether the detector is worth deploying depends on three numbers they can feel: how many
 faults it catches, how long after onset, and how often it cries wolf. Point-level precision and
 recall answer none of these directly, and on contiguous events they can rank detectors in the wrong
-order. In this session the same flags will score point F1 0.785 and produce 403 separate alarms for
-nine faults.
+order. In this session the same flags will score point F1 0.826 and produce 469 separate alarms for
+seven faults.
 
 **Deliverable.** `flowguard.evaluation` (tested), and `lab/EVENT_EVAL.md`: the point-versus-event
 table for the w2d6 baselines on real SKAB data, with the project's reporting decision.
@@ -140,8 +140,8 @@ For one protocol, pooled over the test experiments:
 Because false alarms are counts over an exposure, the honest report is the pair (count, hours) and
 an upper confidence bound, not just the rate. For zero false alarms in `T` hours the one-sided 95 %
 upper bound on a Poisson rate is `-ln(0.05) / T ≈ 3 / T` (the "rule of three"); in general it is
-`chi2.ppf(0.95, 2(n+1)) / (2T)`. With 1.63 hours of normal operation in the SKAB test experiments,
-zero false alarms is compatible with 1.84 per hour.
+`chi2.ppf(0.95, 2(n+1)) / (2T)`. With 1.22 hours of normal operation in the SKAB test experiments,
+zero false alarms is compatible with 2.46 per hour.
 
 ### 2.6 Point-adjust, and why it is not used here
 
@@ -183,12 +183,12 @@ documented incident.)
 
 ### 2.9 Limits and misconceptions
 
-* "Event metrics fix leakage." They do not. On SKAB the elapsed-time "detector" finds 4 of 9 test
-  events within 8 s under the strict rule and 8 of 9 under any-overlap, because onsets cluster near
+* "Event metrics fix leakage." They do not. On SKAB the elapsed-time "detector" finds 3 of 7 test
+  events within 14 s under the strict rule and 7 of 7 under any-overlap, because onsets cluster near
   row 570 (see the lab's clock row). Held-out conditions fix leakage; metrics do not.
 * "Higher event recall is better." Not without the false-alarm rate and delay next to it: flagging
   everything has event recall 1.0 under any-overlap.
-* "p90 delay is a robust statistic." With nine events it is the worst or second-worst case.
+* "p90 delay is a robust statistic." With seven events it is the worst case.
 * "A per-hour rate is a measurement." It is a count divided by an exposure; with few hours, the
   upper bound is the number to act on.
 * "Post-processing is evaluation." It is part of the detector and must be tuned on dev only.
@@ -323,35 +323,43 @@ python lessons/w3d4_point_vs_event_evaluation/lab/event_table.py --min-duration 
 python lessons/w3d4_point_vs_event_evaluation/lab/tradeoff_curve.py
 ```
 
-Expected with the reference implementation (yours must match exactly; the metrics are deterministic):
+Expected with the reference implementation (yours must match exactly; the metrics are deterministic).
+The scripts read the split from `lab/splits/v2.json`, the manifest repaired and frozen in
+[w3d1](../w3d1_leakage/README.md) (7 test, 27 development experiments): the test set is never redrawn
+once results have been seen, so every Week 3 lesson reports on the same seven experiments.
 
 ```
-experiments: dev 25, test 9 (other/2, other/3, other/4, other/6, valve1/10, valve1/12, valve1/14, valve1/3, valve2/3)
-test rows evaluated: 8923 (3577 anomalous, 9 events); burn-in 100 rows; min_duration=1, merge_gap=0
+experiments: dev 27, test 7 (other/1, other/14, valve1/10, valve1/13, valve1/5, valve1/8, valve2/0)
+test rows evaluated: 6659 (2487 anomalous, 7 events); burn-in 100 rows; min_duration=1, merge_gap=0
 
 | detector | point P | point R | point F1 | F1 after point-adjust | events found | alarms | false alarms | redundant | event P | false alarms / h | median delay s | p90 delay s |
-| random | 0.401 | 1.000 | 0.572 | 0.572 | 0/9 | 10 | 10 | 0 | 0.000 | 6.1 | missed | missed |
-| elapsed time t (no sensors) | 0.679 | 0.889 | 0.770 | 0.772 | 4/9 | 9 | 5 | 0 | 0.444 | 3.1 | missed | missed |
-| flow_rate abs z, burn-in | 0.889 | 0.703 | 0.785 | 0.958 | 9/9 | 403 | 156 | 238 | 0.055 | 95.8 | 34 | 58 |
-| max abs z, burn-in | 0.715 | 0.458 | 0.558 | 0.793 | 7/9 | 221 | 98 | 116 | 0.067 | 60.2 | 60 | missed |
-| Mahalanobis, burn-in | 0.721 | 0.509 | 0.596 | 0.851 | 8/9 | 238 | 127 | 103 | 0.059 | 78.0 | 60 | missed |
-| logistic regression (supervised) | 0.906 | 0.744 | 0.817 | 0.963 | 8/9 | 387 | 144 | 235 | 0.053 | 88.4 | 43 | missed |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| random | 0.373 | 1.000 | 0.544 | 0.544 | 1/7 | 9 | 8 | 0 | 0.111 | 6.6 | missed | missed |
+| elapsed time t (no sensors) | 0.732 | 0.992 | 0.842 | 0.846 | 3/7 | 7 | 4 | 0 | 0.429 | 3.3 | missed | missed |
+| flow_rate abs z, burn-in | 0.840 | 0.813 | 0.826 | 0.928 | 7/7 | 469 | 290 | 172 | 0.024 | 238.6 | 4 | 43 |
+| max abs z, burn-in | 0.591 | 0.897 | 0.713 | 0.763 | 6/7 | 275 | 217 | 52 | 0.027 | 178.5 | 5 | missed |
+| Mahalanobis, burn-in | 0.696 | 0.766 | 0.729 | 0.857 | 6/7 | 245 | 129 | 110 | 0.044 | 106.1 | 16 | missed |
+| logistic regression (supervised) | 0.825 | 0.846 | 0.835 | 0.918 | 7/7 | 462 | 319 | 136 | 0.021 | 262.4 | 4 | 31 |
 
-normal operation in the evaluated test rows: 1.63 h (wall clock, gaps included)
+normal operation in the evaluated test rows: 1.22 h (wall clock, gaps included)
 ```
 
-With `--min-duration 10 --merge-gap 30` the single-sensor detector drops to 15 alarms (7 false,
-4.3 per hour) and finds 8 of 9 events at a median delay of 52 s.
+With `--min-duration 10 --merge-gap 30` the single-sensor detector drops to 17 alarms (14 false,
+11.5 per hour) but finds only 3 of 7 events: at the low best-F1 threshold (2.40) the merged alarm
+often starts before the onset and becomes a false alarm. Mahalanobis, worst of the three sensor
+detectors on point F1, is the best post-processed one: 5 of 7 events, 5 false alarms (4.1 per hour),
+median delay 52 s. Post-processing parameters and the threshold have to be chosen together.
 
-![Three stacked panels for experiment valve1/3: flow rate with the labelled anomalous segment shaded, the burn-in z-score with the threshold, and the alarms before and after post-processing](figures/alarms_on_signal.svg)
+![Three stacked panels for test experiment valve1/10: flow rate with the labelled anomalous segment shaded, the burn-in z-score with the threshold, and the alarms before and after post-processing](figures/alarms_on_signal.svg)
 
-*Figure 3 (real SKAB, `valve1/3`).* One fault. The raw flags (orange, bottom row) are 80 separate
-alarms, all inside the event: one hit and 79 redundant. After merging gaps of up to 30 rows and
-requiring 10 rows of confirmation, one alarm remains.
+*Figure 3 (real SKAB, test experiment `valve1/10`).* One fault. The raw flags (bottom row) are 28
+separate alarms: one hit, 13 redundant, 14 false. After merging gaps of up to 30 rows and requiring 10
+rows of confirmation, two remain: the hit and one false alarm, which you can see coming from an
+isolated burst of high z-scores in normal operation.
 
 ![Two panels against false alarms per hour on a log scale: event recall rises with the false-alarm rate, and median delay falls; the post-processed curve reaches much higher recall at low false-alarm rates](figures/tradeoff_dev.svg)
 
-*Figure 4 (real SKAB, 25 development experiments).* The curve an operating point is chosen from. The
+*Figure 4 (real SKAB, 27 development experiments).* The curve an operating point is chosen from. The
 dashed line is a budget of one false alarm per 8 hours. Note that with post-processing recall is not
 monotone in the threshold: at low thresholds the merged alarm starts before the onset and becomes a
 false alarm. Missing delays in the right panel are where the median event was missed.
@@ -416,8 +424,8 @@ alarms in 2 hours of held-out normal operation. The requirement is at most one p
 you claim, and how many hours of clean operation would you need to claim the requirement is met at
 95 % confidence?
 
-**Next.** [w3d5 uncertainty](../w3d5_uncertainty/README.md) puts intervals on these counts: nine events
-and 1.63 hours are the reason every number in today's table needs one.
+**Next.** [w3d5 uncertainty](../w3d5_uncertainty/README.md) puts intervals on these counts: seven events
+and 1.22 hours are the reason every number in today's table needs one.
 
 ## Verification record
 
@@ -430,4 +438,6 @@ matplotlib 3.11.2 (figures only), SKAB at commit `b2c0d46`.
 * Both worked examples, `event_table.py` (two settings), `tradeoff_curve.py`, the challenge
   `budget_report.py` and `outages.py`, and `figures/make_figures.py` were run on the reference
   solution; outputs above are copied from those runs. Interview-rep reference: 5 tests pass.
+* 2026-11-22: real-data scripts switched to the frozen w3d1 manifest (`lab/splits/v2.json`) and
+  every real-SKAB number and figure in this unit regenerated from a fresh run.
 * Not verified: the Kim et al. citation (from memory); time budgets.

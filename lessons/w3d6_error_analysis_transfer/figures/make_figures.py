@@ -28,7 +28,7 @@ from flowguard.baselines import SingleSensorZScorer, burn_in_scores  # noqa: E40
 from flowguard.data import load_raw  # noqa: E402
 from flowguard.erroranalysis import error_segments, per_experiment_table, summarise_segments  # noqa: E402
 from flowguard.metrics import best_f1_threshold  # noqa: E402
-from flowguard.splits import dev_experiments, find_overlap_groups, make_splits  # noqa: E402
+from flowguard.splits import dev_experiments, load_splits  # noqa: E402
 
 BURN_IN = 100
 FAMILY_COLOUR = {"valve1": SERIES[0], "valve2": SERIES[1], "other": SERIES[2]}
@@ -37,7 +37,7 @@ KIND_ORDER = ["fragment", "pre_onset", "post_event", "late", "boundary", "miss",
 
 def skab():
     tidy = load_raw(ROOT / "data" / "raw" / "skab")
-    manifest = make_splits(tidy, seed=0, keep_together=find_overlap_groups(tidy))
+    manifest = load_splits(HERE.parent / "lab" / "splits" / "v2.json")  # v2, frozen in w3d1; never redrawn (the test set is fixed once results have been seen)
     dev = tidy[tidy["experiment_id"].isin(dev_experiments(manifest))].reset_index(drop=True)
     scores = burn_in_scores(lambda: SingleSensorZScorer("flow_rate"), dev, BURN_IN)
     labels = dev["anomaly"].to_numpy()

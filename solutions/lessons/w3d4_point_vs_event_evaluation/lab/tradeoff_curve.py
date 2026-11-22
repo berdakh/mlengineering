@@ -17,12 +17,13 @@ from pathlib import Path
 import numpy as np
 
 HERE = Path(__file__).resolve().parent
+MANIFEST = HERE / "splits" / "v2.json"  # frozen split manifest from w3d1
 sys.path.insert(0, str(HERE / "src"))
 
 from flowguard.baselines import SingleSensorZScorer, burn_in_scores  # noqa: E402
 from flowguard.data import load_raw  # noqa: E402
 from flowguard.evaluation import evaluate_experiments  # noqa: E402
-from flowguard.splits import SKAB_OVERLAP_GROUPS, dev_experiments, make_splits  # noqa: E402
+from flowguard.splits import dev_experiments, load_splits  # noqa: E402
 
 BURN_IN = 100
 REPO_ROOT = next((p for p in HERE.parents if (p / "project" / "get_skab.py").is_file()), HERE)
@@ -39,7 +40,7 @@ def main(argv: list[str] | None = None) -> int:
     except FileNotFoundError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
-    manifest = make_splits(tidy, seed=0, keep_together=SKAB_OVERLAP_GROUPS)
+    manifest = load_splits(MANIFEST)  # v2, frozen in w3d1; never redrawn (the test set is fixed once results have been seen)
     scores = burn_in_scores(lambda: SingleSensorZScorer("flow_rate"), tidy, BURN_IN)
     is_dev = tidy["experiment_id"].isin(dev_experiments(manifest)).to_numpy()
     dev, dev_scores = tidy[is_dev].reset_index(drop=True), scores[is_dev]

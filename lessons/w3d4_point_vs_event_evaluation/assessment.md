@@ -5,21 +5,21 @@ About 15 minutes for the questions; the interview rep is separate.
 
 ## Reasoning questions
 
-1. Two detectors on the same nine test events. A: point F1 0.82, 8/9 events, 88 false alarms per hour.
-   B: point F1 0.79, 9/9 events, 96 false alarms per hour. A colleague says "A is better, higher F1 and
+1. Two detectors on the same seven test events. A: point F1 0.84, 6/7 events, 239 false alarms per hour.
+   B: point F1 0.83, 7/7 events, 262 false alarms per hour. A colleague says "A is better, higher F1 and
    fewer false alarms". Give two reasons this conclusion is not supported, one about the metric and one
    about the data.
-2. Under any-overlap matching the elapsed-time detector "finds" 8 of 9 SKAB test events; under the
-   course's start-based rule it finds 4. Which number is closer to what an operator would experience,
+2. Under any-overlap matching the elapsed-time detector "finds" 7 of 7 SKAB test events; under the
+   course's start-based rule it finds 3. Which number is closer to what an operator would experience,
    and what property of the clock's alarms makes the two rules disagree?
 3. A paper reports point-adjusted F1 0.96 on SKAB. Without access to the code, what single additional
    number would let you judge whether 0.96 means anything? Explain.
 4. Why must `min_duration` and `merge_gap` be chosen on development experiments, and what goes wrong in
    the reported delay if the confirmation wait is not added to it?
-5. A detector raised zero false alarms in 1.63 hours of held-out normal operation. State the strongest
+5. A detector raised zero false alarms in 1.22 hours of held-out normal operation. State the strongest
    claim about its false-alarm rate that the data support at 95 % confidence, and the number of hours
    with zero false alarms needed to claim "at most one per 8 hours".
-6. Median detection delay is computed over the detected events only and reported as 40 s; three of nine
+6. Median detection delay is computed over the detected events only and reported as 40 s; two of seven
    events were missed. What is the median over all events, and why is the second number the one to
    report?
 

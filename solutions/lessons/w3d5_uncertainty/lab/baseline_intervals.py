@@ -20,12 +20,13 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 
 HERE = Path(__file__).resolve().parent
+MANIFEST = HERE / "splits" / "v2.json"  # frozen split manifest from w3d1
 sys.path.insert(0, str(HERE / "src"))
 
 from flowguard.baselines import MahalanobisScorer, SingleSensorZScorer, burn_in_scores  # noqa: E402
 from flowguard.data import SENSOR_COLUMNS, load_raw  # noqa: E402
 from flowguard.metrics import best_f1_threshold, pr_auc  # noqa: E402
-from flowguard.splits import dev_experiments, make_splits, validate_splits  # noqa: E402
+from flowguard.splits import dev_experiments, load_splits, validate_splits  # noqa: E402
 from flowguard.uncertainty import (cluster_bootstrap, paired_bootstrap_diff,  # noqa: E402
                                    paired_permutation_test, sign_test, wilson_interval)
 
@@ -112,7 +113,7 @@ def main(argv: list[str] | None = None) -> int:
     except FileNotFoundError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
-    manifest = make_splits(tidy, seed=0)          # v2: overlap groups stay together
+    manifest = load_splits(MANIFEST)  # v2, frozen in w3d1; never redrawn (the test set is fixed once results have been seen)
     validate_splits(manifest, tidy)
     test, dev = manifest["test"], dev_experiments(manifest)
     labelled = sorted(test + dev)

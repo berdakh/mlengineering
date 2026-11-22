@@ -19,7 +19,7 @@ import _paths  # noqa: F401
 from flowguard.baselines import SingleSensorZScorer, burn_in_scores
 from flowguard.data import load_raw
 from flowguard.evaluation import evaluate_experiments
-from flowguard.splits import SKAB_OVERLAP_GROUPS, dev_experiments, make_splits, validate_splits
+from flowguard.splits import dev_experiments, load_splits, validate_splits
 from operating_point import choose_operating_point, rate_upper_bound
 
 BURN_IN = 100
@@ -47,7 +47,7 @@ def main(argv: list[str] | None = None) -> int:
     except FileNotFoundError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2
-    manifest = make_splits(tidy, seed=0, keep_together=SKAB_OVERLAP_GROUPS)
+    manifest = load_splits(HERE.parent / "lab" / "splits" / "v2.json")  # v2, frozen in w3d1; never redrawn (the test set is fixed once results have been seen)
     validate_splits(manifest, tidy)
     scores = burn_in_scores(lambda: SingleSensorZScorer("flow_rate"), tidy, BURN_IN)
     part = {name: tidy["experiment_id"].isin(ids).to_numpy() for name, ids in

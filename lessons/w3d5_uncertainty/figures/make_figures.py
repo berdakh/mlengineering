@@ -71,11 +71,11 @@ def fig_skab_intervals() -> None:
     import baseline_intervals as bi
     from flowguard.baselines import MahalanobisScorer, SingleSensorZScorer, burn_in_scores
     from flowguard.data import load_raw
-    from flowguard.splits import make_splits
+    from flowguard.splits import load_splits
     from flowguard.uncertainty import cluster_bootstrap
 
     tidy = load_raw(raw)
-    manifest = make_splits(tidy, seed=0)
+    manifest = load_splits(HERE.parent / "lab" / "splits" / "v2.json")  # v2, frozen in w3d1; never redrawn (the test set is fixed once results have been seen)
     test = manifest["test"]
     cluster_of = bi.cluster_ids(manifest, test)
     scores = {

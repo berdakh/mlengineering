@@ -20,6 +20,7 @@ import numpy as np
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
+MANIFEST = HERE / "splits" / "v2.json"  # frozen split manifest from w3d1
 sys.path.insert(0, str(HERE / "src"))
 
 from flowguard.baselines import SingleSensorZScorer, burn_in_scores  # noqa: E402
@@ -27,7 +28,7 @@ from flowguard.data import SENSOR_COLUMNS, load_raw  # noqa: E402
 from flowguard.erroranalysis import (error_segments, per_experiment_table, slice_metrics,  # noqa: E402
                                      summarise_segments)
 from flowguard.metrics import best_f1_threshold  # noqa: E402
-from flowguard.splits import dev_experiments, find_overlap_groups, make_splits, validate_splits  # noqa: E402
+from flowguard.splits import dev_experiments, find_overlap_groups, load_splits, validate_splits  # noqa: E402
 
 BURN_IN = 100
 LATE_AFTER = 30
@@ -72,7 +73,7 @@ def main() -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     groups = find_overlap_groups(tidy)
-    manifest = make_splits(tidy, seed=0, keep_together=groups)
+    manifest = load_splits(MANIFEST)  # v2, frozen in w3d1; never redrawn (the test set is fixed once results have been seen)
     validate_splits(manifest, tidy)
     dev = tidy[tidy["experiment_id"].isin(dev_experiments(manifest))].reset_index(drop=True)
     scores = burn_in_scores(lambda: SingleSensorZScorer("flow_rate"), dev, BURN_IN)
