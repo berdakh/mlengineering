@@ -383,8 +383,8 @@ What is the "protocol B" of the system you most want to build next?
 **Retrieval question for later** (review day): a PCA detector with `k` chosen to keep 99% of the
 variance has stopped alarming on a known fault that a `k` for 80% caught. Explain in terms of T² and Q.
 
-**Next.** w4d3: a neural comparison where it is justified — a small sequence model under the same
-protocol, with seed variance reported (status in [roadmap/SCHEDULE.md](../../roadmap/SCHEDULE.md)).
+**Next.** [w4d3: a neural comparison where it is justified](../w4d3_neural_comparison/README.md) — a small
+sequence model under the same protocol, with seed variance reported.
 
 ---
 
