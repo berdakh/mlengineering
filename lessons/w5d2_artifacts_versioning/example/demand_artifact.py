@@ -14,7 +14,6 @@ model is a ridge regression on lag-1, lag-52 and a trend term. The script
 from __future__ import annotations
 
 import hashlib
-import io
 import json
 import pickle
 import pickletools

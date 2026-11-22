@@ -400,8 +400,8 @@
       "prerequisites": "w5d1, w2d5.",
       "handbook": "H10.3",
       "path": "lessons/w5d3_online_inference",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w5d4_fastapi_validation",
@@ -413,8 +413,8 @@
       "prerequisites": "w5d2; diagnostic b3 reviewed.",
       "handbook": "H11.1, H11.2",
       "path": "lessons/w5d4_fastapi_validation",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w5d5_api_testing",

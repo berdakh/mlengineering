@@ -160,11 +160,11 @@ unit("w5d2_artifacts_versioning", "Model artifacts, metadata and versioning",
 unit("w5d3_online_inference", "Online inference on streams: state, warm-up and parity",
      "Implement stateful windowed scoring for one-sample-at-a-time input and prove parity with batch scoring.",
      "Streaming scorer with batch/online parity tests and documented warm-up behaviour.",
-     "w5d1, w2d5.", "H10.3", path="lessons/w5d3_online_inference")
+     "w5d1, w2d5.", "H10.3", path="lessons/w5d3_online_inference", status="Execution verified", has_checks=True)
 unit("w5d4_fastapi_validation", "FastAPI I: endpoints, schemas and input validation",
      "Expose predictions through a typed HTTP API: request/response models, validation errors versus server errors, health and readiness endpoints.",
      "`/predict`, `/healthz`, `/readyz` with pydantic schemas and documented error model.",
-     "w5d2; diagnostic b3 reviewed.", "H11.1, H11.2", path="lessons/w5d4_fastapi_validation")
+     "w5d2; diagnostic b3 reviewed.", "H11.1, H11.2", path="lessons/w5d4_fastapi_validation", status="Execution verified", has_checks=True)
 unit("w5d5_api_testing", "FastAPI II: API tests, integration tests and model lifecycle",
      "Test the service at the HTTP boundary (happy path, invalid input, model missing), manage model loading at startup, reason about concurrency.",
      "API and integration test suite running without a network.",
