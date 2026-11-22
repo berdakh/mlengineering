@@ -41,6 +41,15 @@ rate at the chosen threshold; the spread of per-unit optimal thresholds.
 artifact; report threshold-dependent metrics only at that value; when you also show the best
 achievable test value, label it as an oracle.
 
+```mermaid
+flowchart LR
+    D["development experiments"] --> S["scores"] --> R{"criterion fixed<br/>in advance"}
+    R -->|"best F1, cost rule,<br/>or false-alarm quantile"| T["threshold tau"]
+    T --> A["stored with the<br/>model artifact"]
+    A -->|"frozen"| E["test experiments:<br/>metrics at tau only"]
+    E -.->|"never back"| R
+```
+
 ## H6.2.3 Imbalance: what it changes and what it does not
 
 Imbalance does not make a classifier's within-class behaviour worse. It changes the *consequences*:
@@ -104,6 +113,11 @@ $\hat p \ge 5/60$":
 | constant forecast $\pi$ | 0.040 | 0.0384 | 0 % | 0 |
 
 The reweighted model's Brier score is four times worse than the constant forecast's.
+
+![Reliability curves of the unweighted and the class-weighted logistic regression](../../lessons/w2d6_baselines_metrics/figures/reliability.svg)
+
+*The same two models as reliability curves (SYNTHETIC, prevalence 4 %). The unweighted model follows
+the diagonal; the reweighted one predicts 0.82 in a bin where 20 % are positive.*
 
 ## H6.2.5 Recalibration and prior shift
 

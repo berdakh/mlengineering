@@ -81,6 +81,12 @@ Two cautions. AP values are not comparable across datasets, slices or time perio
 $\pi$: report the floor, or the ratio AP/$\pi$ ("lift"). And both summaries average over operating
 points you will never use; when the operating region is known, report the metric there.
 
+![One classifier at three prevalences: identical ROC curves, collapsing PR curves](../../lessons/w2d6_baselines_metrics/figures/pr_roc_prevalence.svg)
+
+*SYNTHETIC: negatives N(0,1), positives N(1.5,1), 400,000 rows per prevalence. ROC AUC 0.855-0.857
+throughout; AP 0.771, 0.338 and 0.071 at prevalence 0.35, 0.05 and 0.005, each against its own floor
+(dotted).*
+
 ## H5.2.4 Metrics at an operating point
 
 * **Precision@k / recall@k**: flag the $k$ highest scores. Matches a fixed capacity (reviews per
@@ -134,6 +140,20 @@ State this limitation whenever a risk model drives an intervention.
 6. Decide where the threshold comes from (H6.2.2) before looking at test data.
 7. Write the sentence a stakeholder can check: "at 2 false alarms per pump-month we detect x % of
    faults within y minutes".
+
+```mermaid
+flowchart TD
+    Q["What is the binding constraint?"] --> C1["fixed review capacity k"]
+    Q --> C2["known cost per action and per miss"]
+    Q --> C3["must catch nearly all: safety"]
+    Q --> C4["alarm fatigue"]
+    Q --> C5["no decision yet: comparing rankers"]
+    C1 --> M1["precision@k, recall@k"]
+    C2 --> M2["expected cost at p >= C/B<br/>needs calibrated p"]
+    C3 --> M3["alarm rate or precision<br/>at a recall floor"]
+    C4 --> M4["recall at a fixed<br/>false alarms per hour"]
+    C5 --> M5["AP with its floor;<br/>ROC AUC if prevalence will vary"]
+```
 
 **Industry example (illustrative numbers).** A card-fraud team can review 2,000 of 4 million daily
 transactions; fraud is about 0.1 %. The agreed metric is value-weighted recall within the daily

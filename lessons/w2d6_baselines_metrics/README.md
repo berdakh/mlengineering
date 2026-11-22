@@ -107,6 +107,12 @@ the Euclidean norm of the z-vector: no singularity and no sensitivity to relatio
 PCA-based artefact detection or spatial whitening from EEG, this is the same matrix and the same
 regularisation problem.
 
+![Max-|z| draws a square alarm boundary and misses a probe that breaks the correlation; Mahalanobis draws an ellipse and flags it](figures/mahalanobis_2d.svg)
+
+*Two correlated sensors, SYNTHETIC (r = 0.9), limits at the 99th percentile of normal rows. The orange
+probe has each value inside its own range (max |z| = 1.3 against a limit of 2.7) but breaks the
+relationship, so its Mahalanobis distance is 5.8 against a limit of 3.1.*
+
 **Where "normal" comes from** matters more than the choice between these two scorers, as the lab
 table shows. Two regimes:
 
@@ -148,6 +154,12 @@ so for the *same classifier* precision collapses as $\pi \to 0$. ROC AUC cannot 
 metrics do, which is why they are preferred when positives are rare and alarms cost attention. The
 price is that **PR numbers are not comparable across datasets or slices with different prevalence**:
 always print the floor next to them. The worked example makes both statements concrete.
+
+![One fixed classifier at three prevalences: the ROC curves coincide while the PR curves collapse towards their floors](figures/pr_roc_prevalence.svg)
+
+*SYNTHETIC, the score distributions of the worked example (part 1). ROC AUC stays at 0.855-0.857;
+average precision falls from 0.771 to 0.071 as positives go from 35 % to 0.5 % of rows. Dotted lines
+are each curve's floor, the prevalence.*
 
 SKAB is *not* a rare-event problem at the row level: about 35 % of labelled rows are anomalous
 (37 % of evaluated test rows here), because each experiment was built around one long fault. PR and
@@ -280,6 +292,11 @@ act on everybody              1.000         -                   -2600.0
   earns 813 per 1,000. The same decision rule fed miscalibrated probabilities acts on 80 % of rows
   and loses 1,641. The model was not worse at ranking; its numbers did not mean what the rule assumed.
 
+![Reliability curves: the plain model sits on the diagonal, the class-weighted one far below it](figures/reliability.svg)
+
+*Part 2 as a picture (SYNTHETIC, 4 % positives). The class-weighted model predicts 0.82 where 20 %
+are positive, and 0.29 where 1.7 % are: same ranking, unusable probabilities.*
+
 **Key code decisions.** The reliability bins are hand-chosen and unequal because predicted
 probabilities concentrate near zero; equal-width bins would put 95 % of the rows in the first bin
 (the challenge uses equal-count bins instead). The evaluation half is separate from the fitting half
@@ -290,6 +307,22 @@ so reliability is not measured in-sample.
 Work in `lessons/w2d6_baselines_metrics/lab/`. Given and complete: `src/flowguard/data.py`,
 `src/flowguard/splits.py`, `burn_in_scores` in `baselines.py`, and `baseline_table.py`. Yours:
 `metrics.py`, the scorer classes in `baselines.py`, `benchmark.py`, and `BASELINES.md`.
+
+The protocol every row of the table follows:
+
+```mermaid
+flowchart LR
+    R["raw SKAB<br/>35 files"] --> S["split manifest v1<br/>by experiment"]
+    S --> D["dev experiments<br/>25"]
+    S --> T["test experiments<br/>9"]
+    S --> N["reference normal<br/>anomaly-free"]
+    N -->|"fit: global reference"| SC["scorer"]
+    B["first 100 rows<br/>of each experiment"] -->|"fit: burn-in"| SC
+    SC --> DS["dev scores"] --> TH["best-F1 threshold<br/>chosen on dev"]
+    TH -->|"frozen"| TS["test scores"]
+    SC --> TS
+    TS --> M["test P, R, F1<br/>and PR-AUC"]
+```
 
 Check at any time (offline, synthetic frames, about 10 s):
 
@@ -374,6 +407,17 @@ experiments: dev 25, test 9; burn-in 100 rows; threshold = best F1 on dev
 
 test prevalence of anomalous rows (t >= 100): 0.373
 ```
+
+![Test PR-AUC per baseline on real SKAB, with the constant floor at 0.373 and the elapsed-time clock highlighted](figures/baseline_ladder.svg)
+
+*Real SKAB, the table above as bars (row level, 9 test experiments, no intervals yet). Read PR-AUC
+against the dashed floor, not against zero. The orange bar uses no sensor at all.*
+
+![Histogram of the burn-in flow-rate |z| on test rows: normal rows pile up near 0, anomalous rows spread from 0 to over 30](figures/score_by_class.svg)
+
+*Real SKAB test rows for the `flow_rate abs z, burn-in` baseline, with the threshold chosen on dev
+(2.4). Many anomalous rows sit below it and a tail of normal rows sits above: no threshold separates
+them, which is why the choice of operating point is a cost decision (section 2.8).*
 
 These are real results on SKAB at the pinned commit, reported as found. Do not read the solution's
 interpretation before writing yours. Things you should be able to see for yourself:

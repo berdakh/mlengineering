@@ -54,6 +54,26 @@ For tabular business prediction the ladder is: prevalence; one-rule heuristics a
 ("failed a payment in the last 90 days"); logistic regression with sensible preprocessing; then
 tree ensembles.
 
+```mermaid
+flowchart TD
+    A["constant / random<br/>the floor"] --> B["clock or row index<br/>protocol probe"]
+    B --> C["persistence<br/>forecast floor"]
+    C --> D["one sensor, one limit<br/>what operators have"]
+    D --> E["max of per-sensor z<br/>independent limits"]
+    E --> F["Mahalanobis / PCA<br/>joint structure"]
+    F --> G["supervised linear model<br/>needs labelled faults"]
+    B -.->|"if it scores well"| X["stop: the benchmark leaks"]
+```
+
+*Climb only while each rung beats the previous one by more than its uncertainty. A clock that scores
+well is a finding about the data, not a rung to beat.*
+
+![Test PR-AUC of every baseline on real SKAB against the constant floor](../../lessons/w2d6_baselines_metrics/figures/baseline_ladder.svg)
+
+*The ladder measured on real SKAB in lesson w2d6 (row level, 9 test experiments, no intervals). The
+elapsed-time clock reaches test F1 0.835, above every sensor baseline, because 31 of 34 anomalies
+start at rows 550-600.*
+
 ## H5.1.4 Per-sensor z-scores
 
 Estimate $\mu_j, \sigma_j$ on normal rows. The score
@@ -108,6 +128,13 @@ reduces to the Euclidean norm of $z$, which never fails and never sees a relatio
 drop directions with $\lambda_k$ below a floor (truncated PCA: the discarded directions are then
 unmonitored, or monitored separately as the Q/SPE statistic), or use a robust estimator (minimum
 covariance determinant) when the fitting data is contaminated.
+
+![Max-|z| alarm square versus Mahalanobis alarm ellipse on two correlated sensors](../../lessons/w2d6_baselines_metrics/figures/mahalanobis_2d.svg)
+
+*SYNTHETIC, r = 0.9, both limits at the 99th percentile of normal rows. The probe is in range on
+each axis (max |z| 1.3 < 2.7) but off the correlation (Mahalanobis 5.8 > 3.1). The ellipse's narrow
+axis is the low-variance direction whose $1/\lambda_k$ weight makes this work, and the same weight is
+why that direction needs shrinkage when data are few.*
 
 **Bridge from EEG.** This is the same object as the spatial covariance used for whitening before
 CSP or in Riemannian pipelines, with the same regularisation issue when trials are few relative to
