@@ -174,33 +174,33 @@ unit("w5d6_project_milestone_2", "Project milestone 2: packaged inference + API"
      "Tagged project release candidate; submit for review.",
      "w5d1-w5d5.", "-", path="lessons/w5d6_project_milestone_2", status="Execution verified", has_checks=True)
 unit("w5d7_review", "Review and catch-up (light)", REVIEW,
-     "Week 5 retrieval sheet; ML system design rep 1 (45 min, rubric after).", "Week 5 units.", "-")
+     "Week 5 retrieval sheet; ML system design rep 1 (45 min, rubric after).", "Week 5 units.", "-", path="lessons/w5d7_review")
 
 # ---------------------------------------------------------------- Week 6
 unit("w6d1_docker_basics", "Docker I: images, layers and a correct Dockerfile",
      "Explain what an image and container are; write a Dockerfile for the API (non-root, .dockerignore, cache-friendly layer order) and run it locally.",
      "Local container serving predictions; image build is repeatable.",
-     "w5d6; Docker Engine installed on Pop!_OS.", "H12.1")
+     "w5d6; Docker Engine installed on Pop!_OS.", "H12.1", path="lessons/w6d1_docker_basics")
 unit("w6d2_docker_reproducibility", "Docker II: pinned dependencies, multi-stage builds, smoke tests",
      "Make the environment reproducible (lockfile, pinned base image digest), reduce image size, and smoke-test the container.",
      "Multi-stage image with lockfile and an automated container smoke test.",
-     "w6d1.", "H12.2")
+     "w6d1.", "H12.2", path="lessons/w6d2_docker_reproducibility")
 unit("w6d3_ci", "Continuous integration with GitHub Actions",
      "Automate lint, tests and image build on every push; decide what belongs in CI versus scheduled evaluation jobs.",
      "Green CI workflow on the project repository with caching.",
-     "w6d2, w1d6.", "H14.1")
+     "w6d2, w1d6.", "H14.1", path="lessons/w6d3_ci")
 unit("w6d4_latency_resources", "Latency, throughput and resource use",
      "Measure p50/p95/p99 latency and memory under load, find the bottleneck, and tune workers/batching against a stated budget.",
      "Load-test report with method, percentiles and one evidence-based optimisation.",
-     "w6d1.", "H10.4, H15.1")
+     "w6d1.", "H10.4, H15.1", path="lessons/w6d4_latency_resources")
 unit("w6d5_cloud_deployment", "One small cloud deployment on AWS (authorisation-gated)",
      "Understand IAM, credentials, registries and cost; deploy the container by one route, or complete the fully local equivalent if cloud use is not authorised.",
      "Deployment runbook; either a deployed endpoint (with explicit authorisation and teardown) or a local dry-run with the same configuration.",
-     "w6d2; AWS account decisions made by you; cost briefing read.", "H13.1, H13.2")
+     "w6d2; AWS account decisions made by you; cost briefing read.", "H13.1, H13.2", path="lessons/w6d5_cloud_deployment")
 unit("w6d6_cd_ops_debugging", "Delivery and operational debugging; project milestone 3",
      "Promote an image by tag, configure through environment, read logs to diagnose seeded failures, and roll back.",
      "Debugging log for three seeded failures + rollback demonstration.",
-     "w6d3, w6d5.", "H14.2, H15.2")
+     "w6d3, w6d5.", "H14.2, H15.2", path="lessons/w6d6_cd_ops_debugging")
 unit("w6d7_review", "Review and catch-up (light)", REVIEW,
      "Week 6 retrieval sheet; interview set 6 (debugging narrative + Python, timed).", "Week 6 units.", "-")
 

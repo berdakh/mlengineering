@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-11-21, after Weeks 1-2 were completed.
+Last updated: 2026-11-22, after Week 5's core days were completed.
 Labels are defined in [docs/AUTHORING.md](docs/AUTHORING.md). Nothing here records a learner
 result: **no diagnostic submission has been received**, so no personalisation has been applied.
 
@@ -9,11 +9,11 @@ result: **no diagnostic submission has been received**, so no personalisation ha
 | | Count |
 |---|---|
 | Sessions scheduled | 56 (48 core, 8 light) |
-| Sessions with complete material | 14: all of Week 1 and Week 2 |
-| Sessions planned (objective, deliverable, prerequisites only) | 42: Weeks 3-8 (Week 3 is being written) |
-| Handbook sections written | 14: H1.1, H1.2, H2.1-H2.3, H3.1-H3.4, H4.1, H5.1, H5.2, H6.2, H7.1, H9.1 |
+| Sessions with complete, verified material | 34: Weeks 1-4 complete; Week 5 core days complete |
+| Sessions planned or in progress | 22: w5d7 and Weeks 6-8 (Week 6 is being written) |
 
-The course is **not** complete. The per-session state is in [roadmap/SCHEDULE.md](roadmap/SCHEDULE.md).
+The course is **not** complete. The per-session state is always in [roadmap/SCHEDULE.md](roadmap/SCHEDULE.md);
+the handbook index is [handbook/README.md](handbook/README.md).
 
 ## Authored and execution verified
 
@@ -88,11 +88,21 @@ Weeks 3-8 (42 sessions) and their handbook sections; interview sets 3 onward. We
 ## Next exact continuation step
 
 1. **Learner:** sit the diagnostic (w1d1, w1d2) and push `diagnostic/*/lab/` plus `diagnostic/SUBMISSION.md`.
-2. **Author:** finish Week 3 (`w3d1_leakage` ... `w3d7_review`), run `python tools/verify_checks.py --all`,
-   update `tools/build_course.py`, the handbook index and this file, then continue with Week 4 from
-   `w4d1_timeseries_fundamentals`. Follow `docs/AUTHORING.md`, `docs/FORK_BRIEF.md`, `docs/FLOWGUARD_SPEC.md`.
+2. **Author:** finish w5d7 and Week 6 (in progress), then Week 7 (`w7d1_service_logging_metrics` ...) and Week 8,
+   following `docs/AUTHORING.md`, `docs/FORK_BRIEF.md` and `docs/FLOWGUARD_SPEC.md`; after each week run
+   `python tools/verify_checks.py --all`, update `tools/build_course.py`, the handbook index and this file.
 3. **Author, on receiving the diagnostic:** review against `solutions/diagnostic/SCORING.md`, record outcomes
    in `progress/SKILLS_LEDGER.md`, and apply the adaptation rules.
+
+## Notes on authoring history
+
+* All real-data results from Week 3 on use the frozen split manifest
+  `solutions/lessons/w3d1_leakage/lab/splits/v2.json` (7 test, 27 development experiments). Week 2 used v1
+  (9 test, 25 development); w3d1 explains the repair. A consistency pass re-ran w3d3-w3d6 on v2.
+* Per-lesson verification records (commands, outcomes, sources opened, what is from memory) are at the end of
+  each lesson README and in each handbook section's "sources and verification status".
+* CI (`.github/workflows/ci.yml`) re-runs the full checks verification on Python 3.11, 3.12 and 3.13 on every
+  push and installs CPU-only PyTorch for w4d3.
 
 ## CI result
 

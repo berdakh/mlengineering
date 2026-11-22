@@ -451,7 +451,7 @@
       "deliverable": "Week 5 retrieval sheet; ML system design rep 1 (45 min, rubric after).",
       "prerequisites": "Week 5 units.",
       "handbook": "-",
-      "path": null,
+      "path": "lessons/w5d7_review",
       "status": "Planned",
       "has_checks": false
     },
@@ -464,7 +464,7 @@
       "deliverable": "Local container serving predictions; image build is repeatable.",
       "prerequisites": "w5d6; Docker Engine installed on Pop!_OS.",
       "handbook": "H12.1",
-      "path": null,
+      "path": "lessons/w6d1_docker_basics",
       "status": "Planned",
       "has_checks": false
     },
@@ -477,7 +477,7 @@
       "deliverable": "Multi-stage image with lockfile and an automated container smoke test.",
       "prerequisites": "w6d1.",
       "handbook": "H12.2",
-      "path": null,
+      "path": "lessons/w6d2_docker_reproducibility",
       "status": "Planned",
       "has_checks": false
     },
@@ -490,7 +490,7 @@
       "deliverable": "Green CI workflow on the project repository with caching.",
       "prerequisites": "w6d2, w1d6.",
       "handbook": "H14.1",
-      "path": null,
+      "path": "lessons/w6d3_ci",
       "status": "Planned",
       "has_checks": false
     },
@@ -503,7 +503,7 @@
       "deliverable": "Load-test report with method, percentiles and one evidence-based optimisation.",
       "prerequisites": "w6d1.",
       "handbook": "H10.4, H15.1",
-      "path": null,
+      "path": "lessons/w6d4_latency_resources",
       "status": "Planned",
       "has_checks": false
     },
@@ -516,7 +516,7 @@
       "deliverable": "Deployment runbook; either a deployed endpoint (with explicit authorisation and teardown) or a local dry-run with the same configuration.",
       "prerequisites": "w6d2; AWS account decisions made by you; cost briefing read.",
       "handbook": "H13.1, H13.2",
-      "path": null,
+      "path": "lessons/w6d5_cloud_deployment",
       "status": "Planned",
       "has_checks": false
     },
@@ -529,7 +529,7 @@
       "deliverable": "Debugging log for three seeded failures + rollback demonstration.",
       "prerequisites": "w6d3, w6d5.",
       "handbook": "H14.2, H15.2",
-      "path": null,
+      "path": "lessons/w6d6_cd_ops_debugging",
       "status": "Planned",
       "has_checks": false
     },
