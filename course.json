@@ -282,7 +282,7 @@
       "deliverable": "Residual-based detector evaluated with the Week 3 protocol.",
       "prerequisites": "Week 3.",
       "handbook": "H7.1, H7.4",
-      "path": null,
+      "path": "lessons/w4d1_timeseries_fundamentals",
       "status": "Planned",
       "has_checks": false
     },
@@ -295,7 +295,7 @@
       "deliverable": "Comparison table with intervals; note on which framing the labels support.",
       "prerequisites": "w4d1.",
       "handbook": "H5.3, H7.5",
-      "path": null,
+      "path": "lessons/w4d2_classical_detectors",
       "status": "Planned",
       "has_checks": false
     },
@@ -308,7 +308,7 @@
       "deliverable": "Neural result with seed variance in the comparison table; GPU optional.",
       "prerequisites": "w4d2; PyTorch (demonstrated in research).",
       "handbook": "H7.6",
-      "path": null,
+      "path": "lessons/w4d3_neural_comparison",
       "status": "Planned",
       "has_checks": false
     },
@@ -321,7 +321,7 @@
       "deliverable": "`flowguard sweep` + results table generated from run directories (MLflow as an optional extension).",
       "prerequisites": "w1d4, w4d2.",
       "handbook": "H8.1, H8.2",
-      "path": null,
+      "path": "lessons/w4d4_experiment_tracking",
       "status": "Planned",
       "has_checks": false
     },
@@ -334,7 +334,7 @@
       "deliverable": "One-page decision memo choosing the model to ship.",
       "prerequisites": "w4d3, w4d4, w3d5.",
       "handbook": "H5.4, H16.1",
-      "path": null,
+      "path": "lessons/w4d5_model_choice",
       "status": "Planned",
       "has_checks": false
     },
@@ -347,7 +347,7 @@
       "deliverable": "`make evaluate` regenerates the comparison report; submit for review.",
       "prerequisites": "w4d5.",
       "handbook": "-",
-      "path": null,
+      "path": "lessons/w4d6_project_milestone_1",
       "status": "Planned",
       "has_checks": false
     },
