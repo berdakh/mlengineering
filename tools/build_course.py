@@ -152,27 +152,27 @@ unit("w4d7_review", "Review and catch-up (light)", REVIEW,
 unit("w5d1_inference_pipeline", "Research experimentation versus production inference",
      "Package preprocessing and model as one inference object used identically in training evaluation and serving; build a batch inference command.",
      "`flowguard predict-batch` with a training/serving parity test.",
-     "w4d6.", "H10.1")
+     "w4d6.", "H10.1", path="lessons/w5d1_inference_pipeline")
 unit("w5d2_artifacts_versioning", "Model artifacts, metadata and versioning",
      "Serialise models with the metadata needed to trust and reload them (schema, feature list, versions, data and code hashes); understand pickle risks and alternatives.",
      "Versioned artifact bundle + load-time compatibility checks + model card draft.",
-     "w5d1.", "H10.2")
+     "w5d1.", "H10.2", path="lessons/w5d2_artifacts_versioning")
 unit("w5d3_online_inference", "Online inference on streams: state, warm-up and parity",
      "Implement stateful windowed scoring for one-sample-at-a-time input and prove parity with batch scoring.",
      "Streaming scorer with batch/online parity tests and documented warm-up behaviour.",
-     "w5d1, w2d5.", "H10.3")
+     "w5d1, w2d5.", "H10.3", path="lessons/w5d3_online_inference")
 unit("w5d4_fastapi_validation", "FastAPI I: endpoints, schemas and input validation",
      "Expose predictions through a typed HTTP API: request/response models, validation errors versus server errors, health and readiness endpoints.",
      "`/predict`, `/healthz`, `/readyz` with pydantic schemas and documented error model.",
-     "w5d2; diagnostic b3 reviewed.", "H11.1, H11.2")
+     "w5d2; diagnostic b3 reviewed.", "H11.1, H11.2", path="lessons/w5d4_fastapi_validation")
 unit("w5d5_api_testing", "FastAPI II: API tests, integration tests and model lifecycle",
      "Test the service at the HTTP boundary (happy path, invalid input, model missing), manage model loading at startup, reason about concurrency.",
      "API and integration test suite running without a network.",
-     "w5d4, w1d5.", "H9.2, H11.3")
+     "w5d4, w1d5.", "H9.2, H11.3", path="lessons/w5d5_api_testing")
 unit("w5d6_project_milestone_2", "Project milestone 2: packaged inference + API",
      "Integrate artifact, inference pipeline and API in the project with tests and usage documentation.",
      "Tagged project release candidate; submit for review.",
-     "w5d1-w5d5.", "-")
+     "w5d1-w5d5.", "-", path="lessons/w5d6_project_milestone_2")
 unit("w5d7_review", "Review and catch-up (light)", REVIEW,
      "Week 5 retrieval sheet; ML system design rep 1 (45 min, rubric after).", "Week 5 units.", "-")
 

@@ -373,7 +373,7 @@
       "deliverable": "`flowguard predict-batch` with a training/serving parity test.",
       "prerequisites": "w4d6.",
       "handbook": "H10.1",
-      "path": null,
+      "path": "lessons/w5d1_inference_pipeline",
       "status": "Planned",
       "has_checks": false
     },
@@ -386,7 +386,7 @@
       "deliverable": "Versioned artifact bundle + load-time compatibility checks + model card draft.",
       "prerequisites": "w5d1.",
       "handbook": "H10.2",
-      "path": null,
+      "path": "lessons/w5d2_artifacts_versioning",
       "status": "Planned",
       "has_checks": false
     },
@@ -399,7 +399,7 @@
       "deliverable": "Streaming scorer with batch/online parity tests and documented warm-up behaviour.",
       "prerequisites": "w5d1, w2d5.",
       "handbook": "H10.3",
-      "path": null,
+      "path": "lessons/w5d3_online_inference",
       "status": "Planned",
       "has_checks": false
     },
@@ -412,7 +412,7 @@
       "deliverable": "`/predict`, `/healthz`, `/readyz` with pydantic schemas and documented error model.",
       "prerequisites": "w5d2; diagnostic b3 reviewed.",
       "handbook": "H11.1, H11.2",
-      "path": null,
+      "path": "lessons/w5d4_fastapi_validation",
       "status": "Planned",
       "has_checks": false
     },
@@ -425,7 +425,7 @@
       "deliverable": "API and integration test suite running without a network.",
       "prerequisites": "w5d4, w1d5.",
       "handbook": "H9.2, H11.3",
-      "path": null,
+      "path": "lessons/w5d5_api_testing",
       "status": "Planned",
       "has_checks": false
     },
@@ -438,7 +438,7 @@
       "deliverable": "Tagged project release candidate; submit for review.",
       "prerequisites": "w5d1-w5d5.",
       "handbook": "-",
-      "path": null,
+      "path": "lessons/w5d6_project_milestone_2",
       "status": "Planned",
       "has_checks": false
     },
