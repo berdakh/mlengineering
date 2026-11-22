@@ -202,35 +202,35 @@ unit("w6d6_cd_ops_debugging", "Delivery and operational debugging; project miles
      "Debugging log for three seeded failures + rollback demonstration.",
      "w6d3, w6d5.", "H14.2, H15.2", path="lessons/w6d6_cd_ops_debugging", status="Execution verified", has_checks=True)
 unit("w6d7_review", "Review and catch-up (light)", REVIEW,
-     "Week 6 retrieval sheet; interview set 6 (debugging narrative + Python, timed).", "Week 6 units.", "-")
+     "Week 6 retrieval sheet; interview set 6 (debugging narrative + Python, timed).", "Week 6 units.", "-", path="lessons/w6d7_review", status="Execution verified")
 
 # ---------------------------------------------------------------- Week 7
 unit("w7d1_service_logging_metrics", "Structured logging and service metrics",
      "Emit structured request and prediction logs with correlation ids; define the service's golden signals (traffic, errors, latency, saturation).",
      "Structured logs + metrics endpoint; a query that answers 'what happened to request X'.",
-     "w5d6, w1d4.", "H15.1")
+     "w5d6, w1d4.", "H15.1", path="lessons/w7d1_service_logging_metrics")
 unit("w7d2_input_monitoring_drift", "Input monitoring and drift statistics",
      "Detect schema violations, range and missingness changes and distribution shift (PSI, KS, Wasserstein) with windows and thresholds chosen for an acceptable false-alarm rate.",
      "Drift monitor with a measured false-alarm rate on stable data.",
-     "w7d1, w3d5.", "H15.3")
+     "w7d1, w3d5.", "H15.3", path="lessons/w7d2_input_monitoring_drift")
 unit("w7d3_drift_vs_degradation", "Drift is not degradation: delayed labels and measured performance",
      "Separate input change from measured performance loss; design label backfill, proxy metrics and delayed evaluation.",
      "Replay experiment showing drift without degradation and degradation without flagged drift.",
-     "w7d2.", "H15.4")
+     "w7d2.", "H15.4", path="lessons/w7d3_drift_vs_degradation")
 unit("w7d4_model_updates_rollback", "Model updates: retraining triggers, shadow and canary, rollback",
      "Define when and how a model is replaced: triggers, offline gate, shadow/canary comparison, versioned rollback.",
      "Update and rollback procedure exercised locally with two model versions.",
-     "w5d2, w7d3.", "H15.5")
+     "w5d2, w7d3.", "H15.5", path="lessons/w7d4_model_updates_rollback")
 unit("w7d5_reliability", "Reliability and failure handling",
      "Handle bad input, timeouts, missing models and dependency failures deliberately: guards, fallbacks, degradation, failure-injection drills.",
      "Failure-injection test suite and a short incident note.",
-     "w5d5, w7d1.", "H15.6")
+     "w5d5, w7d1.", "H15.6", path="lessons/w7d5_reliability")
 unit("w7d6_project_milestone_4", "Project milestone 4: monitoring demonstration and runbook",
      "Demonstrate monitoring on a replay of held-out experiments and document operating procedures.",
      "Monitoring demo + runbook; submit for review.",
-     "w7d1-w7d5.", "-")
+     "w7d1-w7d5.", "-", path="lessons/w7d6_project_milestone_4")
 unit("w7d7_review", "Review and catch-up (light)", REVIEW,
-     "Week 7 retrieval sheet; ML system design rep 2 (45 min, spoken).", "Week 7 units.", "-")
+     "Week 7 retrieval sheet; ML system design rep 2 (45 min, spoken).", "Week 7 units.", "-", path="lessons/w7d7_review")
 
 # ---------------------------------------------------------------- Week 8
 unit("w8d1_project_completion", "Project completion audit: reproduce from a clean clone",

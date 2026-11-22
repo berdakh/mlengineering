@@ -542,8 +542,8 @@
       "deliverable": "Week 6 retrieval sheet; interview set 6 (debugging narrative + Python, timed).",
       "prerequisites": "Week 6 units.",
       "handbook": "-",
-      "path": null,
-      "status": "Planned",
+      "path": "lessons/w6d7_review",
+      "status": "Execution verified",
       "has_checks": false
     },
     {
@@ -555,7 +555,7 @@
       "deliverable": "Structured logs + metrics endpoint; a query that answers 'what happened to request X'.",
       "prerequisites": "w5d6, w1d4.",
       "handbook": "H15.1",
-      "path": null,
+      "path": "lessons/w7d1_service_logging_metrics",
       "status": "Planned",
       "has_checks": false
     },
@@ -568,7 +568,7 @@
       "deliverable": "Drift monitor with a measured false-alarm rate on stable data.",
       "prerequisites": "w7d1, w3d5.",
       "handbook": "H15.3",
-      "path": null,
+      "path": "lessons/w7d2_input_monitoring_drift",
       "status": "Planned",
       "has_checks": false
     },
@@ -581,7 +581,7 @@
       "deliverable": "Replay experiment showing drift without degradation and degradation without flagged drift.",
       "prerequisites": "w7d2.",
       "handbook": "H15.4",
-      "path": null,
+      "path": "lessons/w7d3_drift_vs_degradation",
       "status": "Planned",
       "has_checks": false
     },
@@ -594,7 +594,7 @@
       "deliverable": "Update and rollback procedure exercised locally with two model versions.",
       "prerequisites": "w5d2, w7d3.",
       "handbook": "H15.5",
-      "path": null,
+      "path": "lessons/w7d4_model_updates_rollback",
       "status": "Planned",
       "has_checks": false
     },
@@ -607,7 +607,7 @@
       "deliverable": "Failure-injection test suite and a short incident note.",
       "prerequisites": "w5d5, w7d1.",
       "handbook": "H15.6",
-      "path": null,
+      "path": "lessons/w7d5_reliability",
       "status": "Planned",
       "has_checks": false
     },
@@ -620,7 +620,7 @@
       "deliverable": "Monitoring demo + runbook; submit for review.",
       "prerequisites": "w7d1-w7d5.",
       "handbook": "-",
-      "path": null,
+      "path": "lessons/w7d6_project_milestone_4",
       "status": "Planned",
       "has_checks": false
     },
@@ -633,7 +633,7 @@
       "deliverable": "Week 7 retrieval sheet; ML system design rep 2 (45 min, spoken).",
       "prerequisites": "Week 7 units.",
       "handbook": "-",
-      "path": null,
+      "path": "lessons/w7d7_review",
       "status": "Planned",
       "has_checks": false
     },
