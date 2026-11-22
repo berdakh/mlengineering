@@ -152,8 +152,8 @@ def to_markdown(results: list[dict]) -> str:
              "| Scenario | Injected | /readyz | /healthz | Statuses | Degraded reasons | Out-of-support values | "
              "Alarms | Attempts | p50 ms | p95 ms |", "|---|---|---|---|---|---|---|---|---|---|---|"]
     for r in results:
-        st = ", ".join(f"{k}x{v}" for k, v in sorted(r["statuses"].items()))
-        rs = ", ".join(f"{k}x{v}" for k, v in sorted(r["reasons"].items()))
+        st = ", ".join(f"{v}× {k}" for k, v in sorted(r["statuses"].items()))
+        rs = ", ".join(f"{v}× {k}" for k, v in sorted(r["reasons"].items()))
         lines.append(f"| {r['name']} | {r['faults'] or r['note'] or '-'} | {r['readyz']['status_code']} | "
                      f"{r['healthz']} | {st} | {rs} | {r['out_of_support_values']} | {r['alarms']} | {r['attempts']} | "
                      f"{r['latency_ms']['p50']:.1f} | {r['latency_ms']['p95']:.1f} |")

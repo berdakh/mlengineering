@@ -1,0 +1,38 @@
+# Alerts for the flowguard service. Every alert here must have a section "### <name>" in RUNBOOK.md.
+# signal: the demo/monitoring signal that raises it (see flowguard.demo); severity: SEV1 (page now) .. SEV3.
+
+[[alert]]
+name = "ServiceNotReady"
+signal = "readyz"
+condition = "/readyz returns 503 for 2 consecutive probes (1 min)"
+severity = "SEV1"
+
+[[alert]]
+name = "ModelDegraded"
+signal = "degraded"
+condition = "more than 1 % of /predict answers have degraded=true over 10 min"
+severity = "SEV2"
+
+[[alert]]
+name = "InputOutOfSupport"
+signal = "out_of_support"
+condition = "more than 1 % of scored values outside the training support over 10 min"
+severity = "SEV2"
+
+[[alert]]
+name = "InputDrift"
+signal = "drift"
+condition = "PSI of a machine's flow rate against the development reference above the calibrated threshold"
+severity = "SEV3"
+
+[[alert]]
+name = "AlarmRateHigh"
+signal = "alarm_rate"
+condition = "share of alarming values above the 0.05 budget on a machine with no open maintenance ticket"
+severity = "SEV2"
+
+[[alert]]
+name = "FaultDetected"
+signal = "detector"
+condition = "an alarm event (>= 30 consecutive alarming samples after merging gaps of <= 10) on a machine"
+severity = "PLANT"

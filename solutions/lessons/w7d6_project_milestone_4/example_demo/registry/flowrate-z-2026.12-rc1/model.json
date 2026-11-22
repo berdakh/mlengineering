@@ -1,0 +1,8 @@
+{
+  "merge_gap": 10,
+  "min_duration": 30,
+  "model_version": "flowrate-z-2026.12-rc1",
+  "n_burn_in": 100,
+  "sensor": "flow_rate",
+  "threshold": 1.5
+}

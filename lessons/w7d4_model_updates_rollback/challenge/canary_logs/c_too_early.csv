@@ -1,0 +1,13 @@
+hour,arm,requests,errors,machine_hours,alerts
+0,control,850,11,45.0,4
+0,canary,107,1,5.0,0
+1,control,894,11,45.0,5
+1,canary,94,1,5.0,0
+2,control,925,11,45.0,4
+2,canary,104,2,5.0,1
+3,control,932,11,45.0,6
+3,canary,99,1,5.0,0
+4,control,939,10,45.0,3
+4,canary,108,1,5.0,1
+5,control,936,15,45.0,6
+5,canary,83,0,5.0,1

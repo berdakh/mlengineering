@@ -1,0 +1,69 @@
+# Monitoring demonstration over REAL SKAB test experiments (frozen v2 manifest). Every event is replayed
+# through the running service in the order written here. Row ranges are [start, end) within the experiment;
+# the labelled anomalies of these test experiments start at rows 562-577, so [0, 560] is normal operation.
+name = "flowguard on SKAB test experiments"
+alarm_rate_budget = 0.05       # share of scored values allowed to alarm during normal operation
+drift_bins = 10
+drift_quantile = 1.0           # threshold = largest PSI seen on a development experiment's normal rows
+
+[model]
+bad_threshold = 1.5            # the bad candidate: same detector, threshold typed as 1.5 instead of 7.2441
+bad_version = "flowrate-z-2026.12-rc1"
+
+[[event]]
+id = "E1-normal"
+kind = "normal"
+experiment = "valve1/5"
+rows = [0, 560]
+expect = "no_alert"
+
+[[event]]
+id = "E2-units-bug"
+kind = "bad_input"
+experiment = "valve1/5"
+rows = [0, 560]
+scale = 60.0                   # a client sends L/h instead of L/min
+expect = "out_of_support"
+
+[[event]]
+id = "E3-input-drift"
+kind = "drift"
+experiment = "valve2/0"
+rows = [0, 560]
+scale = 0.8                    # pump runs at 80 % of the usual flow (a new operating regime)
+expect = "drift"
+
+[[event]]
+id = "E4-fault"
+kind = "fault"
+experiment = "valve1/13"
+expect = "detector"
+
+[[event]]
+id = "E5-fault"
+kind = "fault"
+experiment = "valve1/8"
+expect = "detector"
+
+[[event]]
+id = "E6-labels"
+kind = "labels"
+experiments = ["valve1/5", "valve1/13", "valve1/8"]
+expect = "delayed_eval"
+
+[[event]]
+id = "E7-bad-promotion"
+kind = "promote"
+version = "bad"
+reason = "candidate with a mistyped threshold"
+experiment = "valve1/10"
+rows = [0, 560]
+expect = "alarm_rate"
+
+[[event]]
+id = "E8-rollback"
+kind = "rollback"
+reason = "alarm rate above budget after promotion"
+experiment = "valve1/10"
+rows = [0, 560]
+expect = "version_restored"

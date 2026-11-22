@@ -1,0 +1,52 @@
+figure,series,x,y
+demo_signals,Alarm rate,E1-normal,0.0
+demo_signals,Alarm rate,E2-units-bug,0.0
+demo_signals,Alarm rate,E3-input-drift,0.0
+demo_signals,Alarm rate,E4-fault,0.2746
+demo_signals,Alarm rate,E5-fault,0.0009
+demo_signals,Alarm rate,E7-bad-promotion,0.2446
+demo_signals,Alarm rate,E8-rollback,0.0
+demo_signals,Drift PSI,E1-normal,3.3819
+demo_signals,Drift PSI,E2-units-bug,8.6621
+demo_signals,Drift PSI,E3-input-drift,9.6241
+demo_signals,Drift PSI,E4-fault,3.7757
+demo_signals,Drift PSI,E5-fault,4.0356
+demo_signals,Drift PSI,E7-bad-promotion,3.9869
+demo_signals,Drift PSI,E8-rollback,3.9869
+demo_signals,Out-of-support share,E1-normal,0.0
+demo_signals,Out-of-support share,E2-units-bug,1.0
+demo_signals,Out-of-support share,E3-input-drift,0.0
+demo_signals,Out-of-support share,E4-fault,0.0
+demo_signals,Out-of-support share,E5-fault,0.0
+demo_signals,Out-of-support share,E7-bad-promotion,0.0
+demo_signals,Out-of-support share,E8-rollback,0.0
+drift_calibration,probe,E1-normal (valve1/5),3.3819
+drift_calibration,probe,"other/1, healthy part",7.3793
+drift_calibration,probe,E3-input-drift (x0.8),9.6241
+drift_calibration,calibration,valve1/7,3.2588
+drift_calibration,calibration,valve1/12,3.4459
+drift_calibration,calibration,valve1/11,3.4599
+drift_calibration,calibration,valve2/1,3.4778
+drift_calibration,calibration,valve1/14,3.5657
+drift_calibration,calibration,valve1/9,3.5742
+drift_calibration,calibration,valve1/6,3.7314
+drift_calibration,calibration,valve2/2,3.8158
+drift_calibration,calibration,valve2/3,3.8232
+drift_calibration,calibration,valve1/0,3.8797
+drift_calibration,calibration,valve1/3,3.8798
+drift_calibration,calibration,valve1/4,3.8961
+drift_calibration,calibration,valve1/1,3.9731
+drift_calibration,calibration,valve1/2,4.0835
+drift_calibration,calibration,valve1/15,4.2349
+drift_calibration,calibration,other/13,5.0665
+drift_calibration,calibration,other/12,5.4079
+drift_calibration,calibration,other/7,5.6405
+drift_calibration,calibration,other/11,5.728
+drift_calibration,calibration,other/9,5.916
+drift_calibration,calibration,other/10,6.05
+drift_calibration,calibration,other/6,6.0733
+drift_calibration,calibration,other/8,6.2727
+drift_calibration,calibration,other/5,6.4374
+drift_calibration,calibration,other/2,7.2695
+drift_calibration,calibration,other/4,7.409
+drift_calibration,calibration,other/3,7.5253

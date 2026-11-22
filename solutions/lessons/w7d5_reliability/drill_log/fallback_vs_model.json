@@ -1,0 +1,155 @@
+{
+  "summary": {
+    "model": {
+      "faults_detected": 5,
+      "faults": 7,
+      "false_alarms_per_hour": 0.0,
+      "precision": 0.978134110787172,
+      "recall": 0.2698029754724568,
+      "normal_hours": 1.2172222222222222
+    },
+    "fallback": {
+      "faults_detected": 2,
+      "faults": 7,
+      "false_alarms_per_hour": 0.0,
+      "precision": 0.9526143790849673,
+      "recall": 0.23441897868918377,
+      "normal_hours": 1.2172222222222222
+    }
+  },
+  "per_experiment": [
+    {
+      "experiment_id": "other/1",
+      "model": {
+        "detected": true,
+        "false_events": 0,
+        "flagged": 15,
+        "tp": 15,
+        "positives": 188,
+        "normal_hours": 0.13305555555555557
+      },
+      "fallback": {
+        "detected": false,
+        "false_events": 0,
+        "flagged": 0,
+        "tp": 0,
+        "positives": 188,
+        "normal_hours": 0.13305555555555557
+      }
+    },
+    {
+      "experiment_id": "other/14",
+      "model": {
+        "detected": true,
+        "false_events": 0,
+        "flagged": 127,
+        "tp": 112,
+        "positives": 302,
+        "normal_hours": 0.14694444444444443
+      },
+      "fallback": {
+        "detected": true,
+        "false_events": 0,
+        "flagged": 313,
+        "tp": 284,
+        "positives": 302,
+        "normal_hours": 0.14694444444444443
+      }
+    },
+    {
+      "experiment_id": "valve1/10",
+      "model": {
+        "detected": true,
+        "false_events": 0,
+        "flagged": 80,
+        "tp": 80,
+        "positives": 401,
+        "normal_hours": 0.1875
+      },
+      "fallback": {
+        "detected": false,
+        "false_events": 0,
+        "flagged": 0,
+        "tp": 0,
+        "positives": 401,
+        "normal_hours": 0.1875
+      }
+    },
+    {
+      "experiment_id": "valve1/13",
+      "model": {
+        "detected": true,
+        "false_events": 0,
+        "flagged": 313,
+        "tp": 313,
+        "positives": 399,
+        "normal_hours": 0.1875
+      },
+      "fallback": {
+        "detected": true,
+        "false_events": 0,
+        "flagged": 299,
+        "tp": 299,
+        "positives": 399,
+        "normal_hours": 0.1875
+      }
+    },
+    {
+      "experiment_id": "valve1/5",
+      "model": {
+        "detected": true,
+        "false_events": 0,
+        "flagged": 150,
+        "tp": 150,
+        "positives": 403,
+        "normal_hours": 0.18777777777777777
+      },
+      "fallback": {
+        "detected": false,
+        "false_events": 0,
+        "flagged": 0,
+        "tp": 0,
+        "positives": 403,
+        "normal_hours": 0.18777777777777777
+      }
+    },
+    {
+      "experiment_id": "valve1/8",
+      "model": {
+        "detected": false,
+        "false_events": 0,
+        "flagged": 1,
+        "tp": 1,
+        "positives": 400,
+        "normal_hours": 0.18722222222222223
+      },
+      "fallback": {
+        "detected": false,
+        "false_events": 0,
+        "flagged": 0,
+        "tp": 0,
+        "positives": 400,
+        "normal_hours": 0.18722222222222223
+      }
+    },
+    {
+      "experiment_id": "valve2/0",
+      "model": {
+        "detected": false,
+        "false_events": 0,
+        "flagged": 0,
+        "tp": 0,
+        "positives": 394,
+        "normal_hours": 0.18722222222222223
+      },
+      "fallback": {
+        "detected": false,
+        "false_events": 0,
+        "flagged": 0,
+        "tp": 0,
+        "positives": 394,
+        "normal_hours": 0.18722222222222223
+      }
+    }
+  ]
+}

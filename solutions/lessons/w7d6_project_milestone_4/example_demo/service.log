@@ -1,0 +1,8 @@
+{"alarms": 0, "event": "predict", "machine_id": "valve1/5", "model_version": "flowrate-z-2026.11", "out_of_support": 0, "request_id": "9426a0b71e5b44df93c6ac48f09958a8", "ts": 1795372021.301, "values": 560}
+{"count": 560, "event": "out_of_support", "request_id": "c24f188b6cbd46849b6d477a99602153", "ts": 1795372021.329}
+{"alarms": 0, "event": "predict", "machine_id": "valve1/5", "model_version": "flowrate-z-2026.11", "out_of_support": 560, "request_id": "c24f188b6cbd46849b6d477a99602153", "ts": 1795372021.329, "values": 560}
+{"alarms": 0, "event": "predict", "machine_id": "valve2/0", "model_version": "flowrate-z-2026.11", "out_of_support": 0, "request_id": "aabc5a483fca480db1b2da8d97301a0b", "ts": 1795372021.36, "values": 560}
+{"alarms": 313, "event": "predict", "machine_id": "valve1/13", "model_version": "flowrate-z-2026.11", "out_of_support": 0, "request_id": "5a72a37c6ea54e0dbd6be471fe6ba539", "ts": 1795372021.393, "values": 1140}
+{"alarms": 1, "event": "predict", "machine_id": "valve1/8", "model_version": "flowrate-z-2026.11", "out_of_support": 0, "request_id": "1ed67d5c998f4e48bfd8ba55d66918fb", "ts": 1795372021.431, "values": 1144}
+{"alarms": 137, "event": "predict", "machine_id": "valve1/10", "model_version": "flowrate-z-2026.12-rc1", "out_of_support": 0, "request_id": "6fa3d2377f7341b192f1916ec022c54c", "ts": 1795372022.075, "values": 560}
+{"alarms": 0, "event": "predict", "machine_id": "valve1/10", "model_version": "flowrate-z-2026.11", "out_of_support": 0, "request_id": "30ece6b5f69947168c04a6a92d6a34b6", "ts": 1795372022.64, "values": 560}

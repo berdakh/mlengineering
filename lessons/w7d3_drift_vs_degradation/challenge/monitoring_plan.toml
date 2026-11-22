@@ -1,0 +1,42 @@
+# Monitoring and label-backfill plan for flowguard. Replace every TODO and placeholder.
+# Units: days, faults and alarms per week. Keys are checked; values are yours to justify.
+
+[context]
+expected_faults_per_week = 0   # TODO: from your replay (state that it is a constructed timeline)
+expected_alarms_per_week = 0   # TODO
+
+[[input_validity]]
+name = "TODO"                  # e.g. the request schema of w5d4
+check = "TODO"
+on_failure = "TODO"            # e.g. reject_request (422) and count it
+
+[input_drift]
+columns = ["TODO"]
+statistic = "TODO"             # psi | ks | wasserstein
+window_days = 0
+threshold_method = "TODO"
+calibration_quantile = 0.0
+reference = "TODO"
+
+[[performance]]
+metric = "alarm_precision"
+baseline = 0.0
+margin = 0.0
+window_days = 0
+min_labels = 0
+label_source = "TODO"
+evaluate_after_days = 0
+when_insufficient = "TODO"
+
+[[label_sources]]
+name = "TODO"
+covers = "TODO"                # alarms | missed_faults
+join_key = "TODO"
+expected_delay_days = [0, 0]
+coverage = "TODO"
+
+[actions]
+drift_only = "TODO"
+degradation_only = "TODO"
+drift_and_degradation = "TODO"
+insufficient = "TODO"

@@ -1,5 +1,6 @@
-"""BROKEN SERVICE: /readyz says 200 ready even when the model failed to load."""
-"""HTTP API with reliability guards (schema flowguard-api/2).
+"""BROKEN SERVICE: /readyz says 200 ready even when the model failed to load.
+
+HTTP API with reliability guards (schema flowguard-api/2).
 
     FLOWGUARD_MODEL_DIR=bundle uvicorn --factory flowguard.api:app_from_env --host 127.0.0.1 --port 8000
 

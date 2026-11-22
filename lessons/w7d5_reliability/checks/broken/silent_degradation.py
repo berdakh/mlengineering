@@ -1,5 +1,6 @@
-"""BROKEN SERVICE: a model failure returns the fallback answer with degraded=False (a silent wrong answer)."""
-"""HTTP API with reliability guards (schema flowguard-api/2).
+"""BROKEN SERVICE: a model failure returns the fallback answer with degraded=False (a silent wrong answer).
+
+HTTP API with reliability guards (schema flowguard-api/2).
 
     FLOWGUARD_MODEL_DIR=bundle uvicorn --factory flowguard.api:app_from_env --host 127.0.0.1 --port 8000
 

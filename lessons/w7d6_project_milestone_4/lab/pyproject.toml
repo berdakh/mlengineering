@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flowguard"
+dynamic = ["version"]
+description = "Fault detection on the SKAB water-circulation testbed (educational prototype)."
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.26", "pandas>=2.1", "fastapi>=0.110", "pydantic>=2.6", "uvicorn>=0.29", "httpx>=0.27"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools.dynamic]
+version = {attr = "flowguard.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

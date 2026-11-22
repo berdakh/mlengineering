@@ -1,0 +1,66 @@
+# Reference monitoring and label-backfill plan for flowguard (w7d3 challenge).
+# Rates come from the CONSTRUCTED replay of lesson w7d3 (20 valve recordings, one per day, each with
+# one labelled fault): 20 faults and 11 alarms in 20 days. A real plant has far fewer faults; with
+# real rates the windows below would have to be months long, and the plan says so in its prose.
+
+[context]
+expected_faults_per_week = 7.0
+expected_alarms_per_week = 3.85
+
+[[input_validity]]
+name = "request schema"
+check = "pydantic contract of w5d4: required columns, finite values, ranges from the data dictionary, max batch size"
+on_failure = "reject_request_422_and_count"
+
+[[input_validity]]
+name = "sampling"
+check = "strictly increasing timestamps; gaps over 5 s counted per run (w2d3)"
+on_failure = "score_with_warning_and_count"
+
+[input_drift]
+columns = ["flow_rate"]
+statistic = "psi"
+window_days = 5
+threshold_method = "calibrated"
+calibration_quantile = 0.99
+reference = "flow rate of the 16 development valve recordings of the frozen manifest v2; 200 contiguous chunks of one window's length"
+
+[[performance]]
+metric = "alarm_precision"
+baseline = 1.0
+margin = 0.1
+window_days = 21
+min_labels = 10
+label_source = "maintenance_verdicts"
+evaluate_after_days = 10
+when_insufficient = "report_unknown"
+
+[[performance]]
+metric = "event_recall"
+baseline = 0.61
+margin = 0.15
+window_days = 21
+min_labels = 15
+label_source = "inspection_reports"
+evaluate_after_days = 60
+when_insufficient = "report_unknown"
+
+[[label_sources]]
+name = "maintenance_verdicts"
+covers = "alarms"
+join_key = "alarm_id"
+expected_delay_days = [2, 10]
+coverage = "every alarm is investigated; the latest verdict per alarm_id wins"
+
+[[label_sources]]
+name = "inspection_reports"
+covers = "alarms"
+join_key = "fault_id"
+expected_delay_days = [14, 60]
+coverage = "about 60 % of missed faults are ever found; recall from these labels is an upper bound"
+
+[actions]
+drift_only = "investigate_input_source_no_model_action"
+degradation_only = "escalate_to_model_owner_and_check_pipeline"
+drift_and_degradation = "investigate_both_then_consider_retraining_through_the_w7d4_gate"
+insufficient = "collect_labels_and_report_unknown"

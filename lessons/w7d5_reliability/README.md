@@ -1,0 +1,402 @@
+# W7D5 — Reliability: guards, explicit degradation, retries and failure drills
+
+Unit id `w7d5_reliability` · Week 7, day 5 · Handbook:
+[H15.6 Reliability patterns](../../handbook/ch15_logging_monitoring_updates/h15_6_reliability_patterns.md)
+· Content status: see [STATUS.md](../../STATUS.md)
+
+## 1. Purpose
+
+**Objective.** Make the flowguard service handle bad input, a broken or slow model and overload
+*deliberately*: values outside the training support are flagged, model failures degrade to a declared
+fallback with an explicit `degraded` flag, slow model calls hit a deadline, overload is shed with `429`,
+and a client retries only what is worth retrying. Then prove each claim with a failure-injection test.
+
+**Why an applied ML engineer needs it.** A research model fails loudly: an exception in a notebook stops
+the analysis. A deployed model fails in three quieter ways. It can be *down* (the bundle did not load), it
+can be *slow* (a starved CPU, a stuck dependency), and, worst, it can be *wrong without saying so*: a NaN
+that compares `False` against every threshold, a unit conversion bug that a scale-invariant score cannot
+see, a fallback answer presented as a model answer. Reliability engineering for ML is mostly about
+turning the third kind into the first two: making every failure visible to the caller, to the metrics and
+to the on-call engineer.
+
+**Prerequisites.** [w5d4](../w5d4_fastapi_validation/README.md) (FastAPI, validation, 422 vs 503),
+[w5d5](../w5d5_api_testing/README.md) (TestClient, concurrency tests, mutation-graded test suites),
+[w6d4](../w6d4_latency_resources/README.md) (latency percentiles, thread oversubscription),
+[w6d6](../w6d6_cd_ops_debugging/README.md) (readiness, rollback, debugging from logs).
+w7d1 (structured logs and metrics) helps but is not required: the lab ships a small `obs.py` with
+counters at `/metrics` and JSON log events.
+
+**Time budget (2 h essential).**
+
+| Activity | Minutes |
+|---|---|
+| Read section 2 | 25 |
+| Worked example: retry storm simulation | 10 |
+| Lab tasks 1-2: guards, explicit degradation, readiness, bulkhead | 45 |
+| Lab tasks 3-4: retrying client; your failure-injection suite | 25 |
+| Lab task 5: the drill on real SKAB data; read the drill log | 10 |
+| Assessment questions and reflection | 5 |
+| *Optional extension: challenge (failure-mode table, circuit breaker, ordering guard); interview rep* | *up to 60* |
+
+## 2. Conceptual explanation
+
+### 2.1 Three ways an ML service fails
+
+| Kind | Example in flowguard | What the caller sees without guards | What it should see |
+|---|---|---|---|
+| **Down** | bundle missing, checksum mismatch | `503` or a crash loop | `/readyz` 503, `/healthz` 200, predictions from a declared fallback flagged `degraded` |
+| **Slow** | model call stuck behind a starved CPU | requests hang, clients time out and retry, load grows | a deadline answer flagged `degraded`, and `429` when too much work is in flight |
+| **Silently wrong** | NaN scores; flow sent in L/h instead of L/min | a normal-looking `200` | a `degraded` answer (NaN), or the values listed in `out_of_support` (units) |
+
+The last row deserves the most attention. In the drill below, sending the flow rate multiplied by 60
+produced **exactly the same 313 alarms** as the correct units on `valve1/13`. That is not luck: the
+burn-in z-score `|x − mean(burn-in)| / sd(burn-in)` is invariant to scaling the input, so the model is
+structurally blind to the bug. Only a guard that compares raw values with the range seen in development
+data notices it.
+
+You already know this distinction from iEEG work: a disconnected electrode is "down", a saturated
+amplifier is "silently wrong", and an artefact-rejection stage that marks epochs rather than deleting them
+is the research equivalent of `out_of_support`.
+
+### 2.2 Defensive layers, from the edge inwards
+
+```mermaid
+flowchart TD
+    REQ["POST /predict"] --> V{"schema valid?<br/>finite floats, lengths,<br/>no extra fields"}
+    V -- no --> R422["422 with field paths"]
+    V -- yes --> S["flag values outside<br/>training support<br/>(out_of_support)"]
+    S --> M{"model loaded?"}
+    M -- no --> D1["degraded: model_unavailable"]
+    M -- yes --> B{"bulkhead slot free?"}
+    B -- no --> R429["429 + Retry-After"]
+    B -- yes --> C["model call in worker thread<br/>with deadline"]
+    C -- "exception" --> D2["degraded: model_error"]
+    C -- "too slow" --> D3["degraded: deadline"]
+    C -- "NaN or inf" --> D4["degraded: invalid_scores"]
+    C -- "finite scores" --> OK["200, degraded: false"]
+    D1 & D2 & D3 & D4 --> FB["fallback rule answers<br/>degraded: true, reason,<br/>counter + log event"]
+```
+
+1. **Validation at the edge** (w5d4): malformed requests never reach the model. This is a contract with the
+   caller, answered with `422` and the field paths.
+2. **Model-level guards**: inputs that are well-formed but outside what the model has seen
+   (*out of support*) are still scored but flagged; outputs that are not finite are treated as failures.
+   A guard never silently "fixes" data. Clipping a value to the support range, for example, would turn an
+   extrapolation into a confident-looking answer about a different input.
+3. **Resource guards**: a deadline per model call, and a bulkhead that limits concurrent model calls.
+4. **Degradation**: when the model cannot answer, a declared fallback answers, and says so.
+
+### 2.3 Precise terms
+
+* **Liveness** (`/healthz`): can this process answer at all? If not, restart it. A bad bundle is *not* a
+  liveness failure: restarting reloads the same bad bundle, and a liveness probe that fails on it turns
+  one broken artifact into a crash loop.
+* **Readiness** (`/readyz`): should this instance receive traffic? Without a model the answer is no
+  (`503`), so a load balancer prefers healthy instances and a rollout gate (w6d6) stops. The instance still
+  answers `/predict` with the fallback for any caller that does reach it.
+* **Deadline**: the time budget for one request's model call. When it passes, answer without the model.
+* **Bulkhead**: a hard limit on concurrent work for one dependency, so that one slow dependency cannot
+  consume every thread. Named after the watertight compartments of a ship.
+* **Load shedding**: rejecting excess work quickly (`429 Too Many Requests` with `Retry-After`) instead of
+  queueing it without bound. A queue only converts overload into latency for everyone.
+* **Graceful degradation**: answering with reduced quality, explicitly labelled, instead of failing.
+* **Idempotency key**: a client-chosen identifier sent with every attempt of one logical request, so a
+  server can recognise a retry of work it already did.
+* **Circuit breaker**: after repeated failures of a dependency, stop calling it for a while and fail fast;
+  then let one trial call through (challenge).
+
+### 2.4 Deadlines, bulkheads and Little's law
+
+A deadline bounds latency; it does not stop work. In Python you cannot kill a thread, so after a
+`deadline` answer the slow model call keeps running in its worker thread. If the bulkhead slot were
+released when the *answer* is sent, a slow dependency would let in-flight work grow without bound,
+exactly the failure the bulkhead exists for. The lab therefore releases the slot in the future's
+completion callback, and one of the checks proves it: with `max_inflight = 1` and a model that takes
+0.8 s against a 0.1 s deadline, the second request is shed with `429` until the first call ends.
+
+Little's law (w6d4) gives the size: concurrent work `L = λ · W`. At 20 requests/s and a 50 ms model call,
+`L = 1`; if the model slows to 1 s, `L = 20`. A bulkhead of 4 means that beyond 4 concurrent calls the
+service sheds rather than queues, and the shed rate becomes a direct, alertable signal of the slowdown.
+
+### 2.5 Retries: when, how often, how far apart
+
+Retry only failures that a later attempt can fix:
+
+| Response | Retry? | Why |
+|---|---|---|
+| connection refused, read timeout | yes | transient network or restart |
+| `429`, `503` (with `Retry-After`) | yes, after the server's pause | the server asked you to come back |
+| `502`, `504` | yes | a proxy or gateway failed in between |
+| `400`, `404`, `409`, `413`, `422` | **no** | the same request fails the same way again |
+| `500` | it depends; not here | it may be a deterministic bug, so retrying multiplies the damage |
+
+**Backoff with full jitter.** The delay before retry *k* is drawn uniformly from
+`[0, min(cap, base · 2^k)]`. The exponential spreads attempts over time. The jitter matters just as
+much: it de-synchronises clients that all failed at the same moment. Without it, every client retries
+in the same instant, as the worked example shows.
+
+**Retry-After wins.** If the server sends `Retry-After`, it knows its own state better than the client's
+formula does; honour it, capped at `max_delay`.
+
+```mermaid
+sequenceDiagram
+    participant C as RetryingClient
+    participant S as flowguard API
+    C->>S: POST /predict (Idempotency-Key k1)
+    S-->>C: 429, Retry-After 1 (bulkhead full)
+    Note over C: sleep exactly 1 s
+    C->>S: POST /predict (same key k1)
+    S-->>C: 503, no Retry-After
+    Note over C: sleep uniform(0, min(cap, base x 2)) s
+    C->>S: POST /predict (same key k1)
+    S-->>C: 200 (scores)
+    Note over C,S: a 422 would have been returned to the caller at once, never retried
+```
+
+**Idempotency.** A retry is only safe if repeating the request cannot do harm twice. Scoring a window is
+naturally idempotent. For anything with a side effect (creating an alert ticket, recording a
+maintenance action) the client sends one `Idempotency-Key` for all attempts of one logical request, so the
+server can return the stored result instead of acting twice.
+
+**Bounded attempts.** Unbounded retries turn a short outage into a permanent overload. Total extra load is
+at most `max_attempts − 1` times the original traffic, and only while failures last.
+
+### 2.6 Choosing the fallback
+
+A fallback must not depend on what failed. flowguard's fallback is an *envelope rule*: alarm when the raw
+flow rate leaves the 0.5–99.5 % range of normal development data (27.94 to 128.69 L/min). It needs no
+bundle, no burn-in and no state, and its bounds live in the service configuration, not in the bundle.
+
+It is also much worse, and the lesson measures how much worse rather than assuming it is "good enough".
+On the 7 frozen test experiments, with the same post-processing as the shipped operating point:
+
+| Detector | Faults detected | False alarm events per hour | Point precision | Point recall |
+|---|---|---|---|---|
+| Model (burn-in z-score, threshold 7.2441) | 5 of 7 | 0.00 | 0.978 | 0.270 |
+| Fallback envelope rule | 2 of 7 | 0.00 | 0.953 | 0.234 |
+
+![Model detects 5 of 7 test faults, the fallback envelope rule only 2; neither raises false alarm events](figures/fallback_vs_model.svg)
+
+*Figure 1. Per-experiment detection on the real SKAB test set (frozen v2 manifest). The fallback is a
+safety net with a known, documented cost, which is why its answers must carry `degraded: true`.*
+
+This is why "degraded" must be explicit: a consumer who knows it received a fallback answer can treat a
+quiet stretch as "unknown" rather than "healthy".
+
+### 2.7 Failure injection: drills as tests
+
+A guard you have never triggered is a guess. The lab's `faults.py` lets a test or a drill switch on
+`model_error`, `nan_scores`, `slow_model=<s>` or `bundle_corrupt` through `FLOWGUARD_FAULTS` (read once at
+startup; never set in production configuration). Each failure mode the service claims to handle gets
+one test that produces it and asserts the full contract: status code, `degraded` and `reason`, the counter,
+and a log event carrying the request id. This is the "chaos engineering" idea at the scale of one
+service: inject the failure on purpose, in a controlled place, before production does it for you.
+
+### 2.8 Severity and on-call, briefly
+
+Reliability work ends in people. A minimal scheme for a small team:
+
+| Severity | Meaning for flowguard | Response |
+|---|---|---|
+| SEV1 | no answers at all, or silently wrong answers to the plant | page now; roll back first, investigate after |
+| SEV2 | degraded answers for most traffic (fallback active) | page in working hours; fix the cause today |
+| SEV3 | elevated shed rate, single degraded requests | ticket; look at it this week |
+
+Each alert should point to a runbook entry (w7d6) with the first three actions.
+
+### 2.9 An industry example
+
+A payments company's fraud model sits behind a feature store. During a regional network incident the
+feature store becomes slow, not down. Without deadlines the scoring service's threads all wait, its
+latency grows, the checkout service times out and retries every request three times, and the extra load
+keeps the feature store from recovering. The fix that teams converge on is the same set of patterns you
+build today: a deadline on the feature call, a bulkhead around it, a fallback rule (approve below an
+amount, review above) whose answers are labelled so downstream systems apply stricter limits, retries
+with jitter, and a circuit breaker that stops calling the feature store until it recovers. (An
+illustrative composite, not a documented single incident.)
+
+### 2.10 Limitations and misconceptions
+
+* *"Return 500 on any model problem, it is honest."* It is honest but unhelpful, and it hides the
+  difference between a bug and a known degraded mode. Clients then retry 500s and multiply load.
+* *"The fallback should be the previous model."* Sometimes, but only if it does not share the failed
+  component (the same bundle store, the same feature pipeline). Here it does, so the fallback is a rule
+  with no dependencies.
+* *"Retries make a service more reliable."* They make a *transient* failure invisible and a *persistent*
+  one worse. Bound them, jitter them, and never retry 4xx except 429.
+* *"A deadline frees the resources."* It frees the caller. The work keeps running unless the
+  dependency supports cancellation, so pair deadlines with a bulkhead.
+* *"Liveness should check the model."* Then one bad artifact restarts every instance forever.
+* What this lesson does **not** cover: multi-instance failover, distributed rate limiting, and
+  cancellation of in-flight model calls. The drill runs one process on one machine.
+
+## 3. Worked example: a retry storm (SYNTHETIC)
+
+`example/retry_storm.py` simulates 200 clients whose first request lands during a 2-second outage.
+After recovery the service serves at most 20 requests per 100 ms and sheds the rest with `503`. Each client
+retries up to 10 times with base delay 0.1 s and cap 6.4 s. Three policies: retry immediately,
+exponential backoff without jitter, exponential backoff with full jitter.
+
+```bash
+python lessons/w7d5_reliability/example/retry_storm.py
+```
+
+Output (deterministic, seed 0):
+
+```text
+200 clients, outage 2.0 s, capacity 20 per 100 ms, max 10 attempts, base 0.1 s, cap 6.4 s (SYNTHETIC)
+policy       requests served gave up peak/bucket all served by
+immediate        2000      0     200           0         never
+exponential      1800    100     100         200         never
+full_jitter      1385    200       0          17        8.05 s
+```
+
+![Without jitter, 200 clients come back in single 100 ms buckets 10 times over capacity; with full jitter the load spreads below capacity](figures/retry_storm.svg)
+
+*Figure 2. Requests per 100 ms after the outage (SYNTHETIC). Top: every client that failed together
+retries together, each wave serves 20 and re-synchronises the other 180. Bottom: full jitter spreads the
+retries and everyone is served within about 8 s.*
+
+**Interpretation.** Immediate retries spend all ten attempts inside the outage. Exponential backoff
+without jitter is worse than it looks: the clients' delays are identical, so all 200 arrive in the same
+100 ms bucket, 10 times the capacity, at 3.1 s, 6.3 s, 12.7 s and so on. Half the clients give up. Full
+jitter sends fewer requests in total (1,385 against 1,800), never exceeds 17 per bucket after recovery,
+and serves everyone. The numbers depend on the invented capacity and outage. The qualitative
+result, synchronised waves without jitter, holds for any deterministic schedule.
+
+**Reproduce.** The script has no dependencies beyond the standard library; change `N_CLIENTS`,
+`CAPACITY` or `CAP` at the top and re-run.
+
+## 4. Guided lab
+
+The lab is a snapshot of the Week 5 service (`lab/`, package `flowguard` 0.8.0) with three new modules
+given to you (`faults.py`, `obs.py`, `settings.py`), a prebuilt bundle of the shipped model (`bundle/`),
+and service settings computed from development data only (`configs/service.toml`). You implement
+`guards.py`, the reliability parts of `api.py`, `client.py`, and your own failure-injection suite in
+`tests/`. Read the contract at the top of `src/flowguard/api.py` and `src/flowguard/client.py` first.
+
+```bash
+cd lessons/w7d5_reliability/lab
+PYTHONPATH=src python -m pytest tests -q        # your suite (one example test to start)
+cd ../../..
+python wb.py check w7d5                         # the graded checks (start: 27 of 40 fail)
+```
+
+**Task 1 — guards (10 min).** Implement `out_of_support`, `fallback_alarms` and `all_finite` in
+`src/flowguard/guards.py`. Bounds are inclusive. *Checkpoint:* `checks/test_guards.py` passes.
+
+**Task 2 — the predict contract (35 min).** Rewrite `predict` in `src/flowguard/api.py`, in this order:
+
+* a) flag out-of-support values (`settings.support_low/high`), add to
+  `flowguard_out_of_support_total`, log an `out_of_support` event;
+* b) degrade explicitly for `model_unavailable`, `model_error`, `invalid_scores` and `deadline`: one inner
+  helper that builds the degraded body, increments `flowguard_degraded_total{reason=...}` and logs a
+  `degraded` event with the request id;
+* c) readiness: `/readyz` 503 with `{"status": "degraded", "reason": ..., "fallback": "envelope-rule"}`
+  when no model is loaded; `/healthz` stays 200;
+* d) the bulkhead: `slots.acquire(blocking=False)` or `429` with `Retry-After`; submit `_score` to
+  `executor`; `future.add_done_callback(lambda f: slots.release())`; `future.result(timeout=...)`.
+
+*Checkpoint:* `checks/test_api_contract.py` passes. *Debugging:* if the deadline test takes about 1 s, you
+are waiting on the future without a timeout. If `test_slot_is_held_until_the_slow_work_ends` fails, you
+release the slot in a `finally:` around the HTTP handler instead of in the done-callback. A `500` on the
+NaN fault means `all_finite` is not checked before building the response. FastAPI cannot encode NaN.
+
+**Task 3 — the retrying client (15 min).** Implement `backoff` and `post_json` in
+`src/flowguard/client.py`. Always call `self.sleep`, never `time.sleep`; the checks pass a fake clock and
+record the delays. *Checkpoint:* `checks/test_client.py` passes, including the jitter distribution test.
+
+**Task 4 — your drills (10 min).** Extend `tests/test_faults.py` (fixtures are in `tests/conftest.py`)
+until it would catch a broken service. The checks copy your `src/` and `tests/`, swap in each of five
+broken `api.py` files from `checks/broken/`, and expect your suite to fail on every one and pass on your
+own service. *Checkpoint:* `checks/test_drill_suite.py` passes.
+
+**Task 5 — the drill on real data (10 min).** With the SKAB files downloaded
+(`python project/get_skab.py`):
+
+```bash
+python lessons/w7d5_reliability/lab/drill.py        # about 15 s; writes lab/results/drill_log.{md,json}
+```
+
+It starts a real uvicorn process on `127.0.0.1` for each scenario, replays the test experiment
+`valve1/13` in 4 requests of up to 300 values, scrapes `/metrics` and stops the server. Reference run:
+
+| Scenario | Injected | /readyz | Degraded reasons | Out-of-support values | Alarms | Attempts | p50 ms | p95 ms |
+|---|---|---|---|---|---|---|---|---|
+| normal | - | 200 | none | 0 | 313 | 4 | 2.6 | 3.8 |
+| units_bug | values ×60 | 200 | none | 1140 | 313 | 4 | 2.8 | 5.9 |
+| model_error | `model_error` | 200 | 4 × model_error | 0 | 299 | 4 | 2.0 | 3.6 |
+| nan_scores | `nan_scores` | 200 | 4 × invalid_scores | 0 | 299 | 4 | 4.4 | 12.1 |
+| slow_model | `slow_model=1.0`, deadline 0.25 s | 200 | 4 × deadline | 0 | 299 | 4 | 254.1 | 254.4 |
+| bundle_corrupt | `bundle_corrupt` | 503 | 4 × model_unavailable | 0 | 299 | 4 | 1.9 | 3.4 |
+| overload | `slow_model=0.3`, bulkhead 1, 4 clients | 200 | none | 0 | 313 | 10 | 1807.9 | 3165.2 |
+
+![p50 and p95 latency per drill scenario: about 2-4 ms normally, 254 ms under the deadline, 1.8-3.2 s under overload](figures/drill_latency.svg)
+
+*Figure 3. Client-side latency per scenario in the reference drill (REAL data, one machine, one run;
+absolute times will differ on yours).*
+
+Read it as an operator would. Every failure produced a `200` with a reason, or a `503` readiness, never a
+silent wrong answer. `/healthz` was 200 in every scenario. The deadline held latency at 254 ms against a
+model that took 1 s. Under overload, 6 requests were shed and retried after `Retry-After: 1`, and all 4
+logical requests eventually succeeded. The 299 fallback alarms against 313 model alarms on this
+experiment look close, but this is one of the 2 test faults the fallback does catch (Figure 1). The units
+bug changed nothing the model could see; only `out_of_support` (1,140 of 1,140 values) reveals it.
+
+**Optional: rebuild the settings.** `python lessons/w7d5_reliability/lab/scripts/build.py` recomputes the
+bundle and the support/envelope bounds from development experiments, and
+`scripts/compare_fallback.py` reproduces the table in 2.6.
+
+## 5. Independent challenge
+
+[challenge/README.md](challenge/README.md): write flowguard's failure-mode table (FMEA style, at least 10
+rows across input, model/artifact, dependency, resource and stream failures), then implement two of its
+mitigations, a `CircuitBreaker` and a per-machine `SampleOrderGuard`, against a stated contract.
+`python wb.py check w7d5 --challenge` grades the structure of the table and the behaviour of both classes.
+
+## 6. Progressive hints
+
+[Hint 1 — concept](hints/hint1_concept.md) · [Hint 2 — approach](hints/hint2_approach.md) ·
+[Hint 3 — partial implementation](hints/hint3_partial.md)
+
+## 7. Assessment
+
+[assessment.md](assessment.md): reasoning questions, a design-choice explanation, a rubric and a 15-minute
+interview rep on a cascading failure. Answers are in
+`solutions/lessons/w7d5_reliability/assessment_answers.md`. Open it only after writing your own.
+
+## 8. Reflection and review
+
+**You should now be able to, without notes:** list the three ways an ML service fails and the signal that
+makes each visible; implement explicit degradation with a reason, a counter and a log event; separate
+liveness from readiness; size and implement a bulkhead with a deadline; write a retry policy that is
+bounded, jittered, honours `Retry-After`, keeps one idempotency key and never retries 4xx; and prove each
+behaviour with a failure-injection test.
+
+**Reflection prompt.** In your own past real-time BCI or acquisition systems, which failure was "silently
+wrong" rather than "down"? What guard would have made it visible within a minute?
+
+**Retrieval question (for the w7d7 review).** A colleague's service returns `500` when its model raises,
+its client retries every non-2xx response three times with a fixed 1 s delay, and `/healthz` loads the
+model. Name the three changes you would make first and the failure each one prevents.
+
+**Next.** [w7d6](../w7d6_project_milestone_4/README.md), project milestone 4: a monitoring demonstration
+on a replay of held-out experiments and the runbook that tells an on-call engineer what to do when the
+alerts from this week fire.
+
+## Verification record
+
+Executed on 2026-11-22 (Python 3.13.18, FastAPI 0.165.0, Starlette 1.7.0, uvicorn 0.54.0, httpx 0.28.1,
+NumPy 2.5.3, pandas 3.0.5):
+
+* `python lessons/w7d5_reliability/example/retry_storm.py`: output above, copied from the run.
+* `python tools/verify_checks.py lessons/w7d5_reliability`: lab reference passes 40 checks and all 9 lab
+  mutants are rejected; challenge reference passes 16 checks and all 4 challenge mutants are rejected.
+  The shipped starters fail (lab: 27 failed, 13 passed; challenge: 16 failed).
+* `solutions/lessons/w7d5_reliability/lab/drill.py` against real uvicorn processes on 127.0.0.1 (all
+  stopped afterwards; `pgrep` found none): the table in task 5 is the reference run, also committed as
+  `solutions/lessons/w7d5_reliability/drill_log/drill_log.md`.
+* `scripts/build.py` and `scripts/compare_fallback.py` on the real SKAB files (frozen v2 manifest):
+  support 0.5555 to 133.688 L/min, envelope 27.937 to 128.689 L/min; the comparison table in 2.6.
+* Figures regenerated by `figures/make_figures.py` and viewed as PNG.
+* Not verified: Python 3.11/3.12 locally, the time budget, behaviour with several uvicorn workers.

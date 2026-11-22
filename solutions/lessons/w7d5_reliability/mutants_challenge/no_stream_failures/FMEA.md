@@ -1,0 +1,17 @@
+# flowguard failure-mode table (reference)
+
+Scope: the w7d5 service (FastAPI app serving the flow-rate z-score bundle), its streaming client path
+(w5d3) and its deployment (w6). Severity: 1 (cosmetic) to 4 (wrong maintenance decision or outage).
+
+| Failure | Category | Detection | Impact | Mitigation | Test |
+|---|---|---|---|---|---|
+| Client sends flow in L/h instead of L/min (x60) | input | out_of_support list in the response and flowguard_out_of_support_total rising | 3: the z-score is scale invariant, so scores look normal and nobody notices | training-support guard flags every value; alert when the out-of-support rate exceeds 1 % of values | test_out_of_support_flagged_scored_and_counted; drill scenario units_bug |
+| Malformed request: NaN, missing field, extra field, oversize batch | input | 422 with field paths; 4xx rate on the request counter | 1: request rejected, caller fixes it | pydantic schema with FiniteFloat, extra=forbid, length limits at the edge | test_schema_violations_are_422 |
+| Bundle missing or checksum mismatch at startup | artifact | /readyz 503 with reason; model_load_failed log event | 4 without mitigation: no model answers | readiness fails so traffic moves to healthy instances; predict degrades to the envelope rule with degraded=true; roll back the bundle | test_unloadable_model; drill scenario bundle_corrupt |
+| Model raises during scoring | model | flowguard_model_errors_total by exception type; degraded log events | 3: no score for that request | degrade to the envelope rule, explicit degraded flag and reason model_error | test_model_failure_degrades_explicitly[model_error] |
+| Model returns NaN or inf | model | all_finite guard; degraded_total{reason=invalid_scores} | 4 if passed through: NaN compares False, so no alarm ever fires | treat non-finite output as a failure and degrade explicitly | test_model_failure_degrades_explicitly[invalid_scores]; drill scenario nan_scores |
+| Model call slow (CPU starvation, thread oversubscription) | dependency | deadline answers counted in degraded_total{reason=deadline}; latency p95 | 3: callers time out and retry, multiplying load | per-request deadline; bulkhead holds the slot until the slow call ends | test_slot_is_held_until_the_slow_work_ends; drill scenario slow_model |
+| Upstream feature service (a dependency of a future model) keeps failing | dependency | consecutive failures; breaker state open in logs | 3: every request waits for a timeout first | CircuitBreaker: stop calling after 5 consecutive failures, probe once after 30 s | test_breaker_opens_after_consecutive_failures; test_half_open_allows_one_trial |
+| Traffic burst beyond capacity | resource | flowguard_shed_total; 429 rate; queue time | 3: latency for everyone if queued without limit | load shedding with 429 and Retry-After; retrying client with full jitter honouring Retry-After | test_overload_is_shed_with_retry_after; drill scenario overload |
+| Retry storm after a brief outage | resource | request rate spikes in lock-step after recovery | 3: the recovering service is knocked over again | full-jitter exponential backoff, bounded attempts, never retry 4xx | test_full_jitter_distribution; worked example retry_storm.py |
+| Container killed for memory (OOMKilled) | deployment | exit 137 in container state; restart count | 4: outage until restarted | memory limit sized from load tests (w6d4); readiness gate on restart | w6d6 incident drill (manual) |

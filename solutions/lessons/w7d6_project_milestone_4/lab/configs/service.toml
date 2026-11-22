@@ -1,0 +1,10 @@
+# Service settings (flowguard.settings). Override any of them with FLOWGUARD_<NAME> environment variables.
+# support_* and envelope_* are computed from DEVELOPMENT experiments of splits/v2.json by
+# scripts/build.py; do not edit them by hand.
+deadline_s = 0.5
+max_inflight = 4
+retry_after_s = 1
+support_low = 0.555512
+support_high = 133.688
+envelope_low = 27.937282000000003
+envelope_high = 128.689

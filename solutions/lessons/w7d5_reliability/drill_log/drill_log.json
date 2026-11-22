@@ -1,0 +1,240 @@
+[
+  {
+    "name": "normal",
+    "note": "",
+    "faults": "",
+    "requests": 4,
+    "statuses": {
+      "200": 4
+    },
+    "reasons": {
+      "none": 4
+    },
+    "out_of_support_values": 0,
+    "alarms": 313,
+    "attempts": 4,
+    "retries_after_429": 0,
+    "readyz": {
+      "status_code": 200,
+      "body": {
+        "status": "ready",
+        "model_version": "flowrate-z-2026.11"
+      }
+    },
+    "healthz": 200,
+    "wall_s": 0.021482893000211334,
+    "metrics": [],
+    "server_exit_code": -15,
+    "latency_ms": {
+      "p50": 2.570154999375518,
+      "p95": 3.7664184994355305,
+      "max": 3.9496869994763983
+    }
+  },
+  {
+    "name": "units_bug",
+    "note": "client sends L/h instead of L/min (x60)",
+    "faults": "",
+    "requests": 4,
+    "statuses": {
+      "200": 4
+    },
+    "reasons": {
+      "none": 4
+    },
+    "out_of_support_values": 1140,
+    "alarms": 313,
+    "attempts": 4,
+    "retries_after_429": 0,
+    "readyz": {
+      "status_code": 200,
+      "body": {
+        "status": "ready",
+        "model_version": "flowrate-z-2026.11"
+      }
+    },
+    "healthz": 200,
+    "wall_s": 0.03658975699909206,
+    "metrics": [
+      "flowguard_out_of_support_total 1140"
+    ],
+    "server_exit_code": -15,
+    "latency_ms": {
+      "p50": 2.7513109998835716,
+      "p95": 5.938597049953385,
+      "max": 6.490757999927155
+    }
+  },
+  {
+    "name": "model_error",
+    "note": "",
+    "faults": "model_error",
+    "requests": 4,
+    "statuses": {
+      "200": 4
+    },
+    "reasons": {
+      "model_error": 4
+    },
+    "out_of_support_values": 0,
+    "alarms": 299,
+    "attempts": 4,
+    "retries_after_429": 0,
+    "readyz": {
+      "status_code": 200,
+      "body": {
+        "status": "ready",
+        "model_version": "flowrate-z-2026.11"
+      }
+    },
+    "healthz": 200,
+    "wall_s": 0.02014528200015775,
+    "metrics": [
+      "flowguard_degraded_total{reason=\"model_error\"} 4",
+      "flowguard_model_errors_total{error=\"RuntimeError\"} 4"
+    ],
+    "server_exit_code": -15,
+    "latency_ms": {
+      "p50": 2.034425499914505,
+      "p95": 3.5677896499691992,
+      "max": 3.822706999926595
+    }
+  },
+  {
+    "name": "nan_scores",
+    "note": "",
+    "faults": "nan_scores",
+    "requests": 4,
+    "statuses": {
+      "200": 4
+    },
+    "reasons": {
+      "invalid_scores": 4
+    },
+    "out_of_support_values": 0,
+    "alarms": 299,
+    "attempts": 4,
+    "retries_after_429": 0,
+    "readyz": {
+      "status_code": 200,
+      "body": {
+        "status": "ready",
+        "model_version": "flowrate-z-2026.11"
+      }
+    },
+    "healthz": 200,
+    "wall_s": 0.04447821200119506,
+    "metrics": [
+      "flowguard_degraded_total{reason=\"invalid_scores\"} 4"
+    ],
+    "server_exit_code": -15,
+    "latency_ms": {
+      "p50": 4.375787499157013,
+      "p95": 12.141895899003426,
+      "max": 13.388301998929819
+    }
+  },
+  {
+    "name": "slow_model",
+    "note": "",
+    "faults": "slow_model=1.0",
+    "requests": 4,
+    "statuses": {
+      "200": 4
+    },
+    "reasons": {
+      "deadline": 4
+    },
+    "out_of_support_values": 0,
+    "alarms": 299,
+    "attempts": 4,
+    "retries_after_429": 0,
+    "readyz": {
+      "status_code": 200,
+      "body": {
+        "status": "ready",
+        "model_version": "flowrate-z-2026.11"
+      }
+    },
+    "healthz": 200,
+    "wall_s": 1.029925282999102,
+    "metrics": [
+      "flowguard_degraded_total{reason=\"deadline\"} 4"
+    ],
+    "server_exit_code": -15,
+    "latency_ms": {
+      "p50": 254.13021949952963,
+      "p95": 254.41893929983053,
+      "max": 254.42235599984997
+    }
+  },
+  {
+    "name": "bundle_corrupt",
+    "note": "",
+    "faults": "bundle_corrupt",
+    "requests": 4,
+    "statuses": {
+      "200": 4
+    },
+    "reasons": {
+      "model_unavailable": 4
+    },
+    "out_of_support_values": 0,
+    "alarms": 299,
+    "attempts": 4,
+    "retries_after_429": 0,
+    "readyz": {
+      "status_code": 503,
+      "body": {
+        "status": "degraded",
+        "reason": "injected bundle_corrupt",
+        "fallback": "envelope-rule"
+      }
+    },
+    "healthz": 200,
+    "wall_s": 0.019342810999660287,
+    "metrics": [
+      "flowguard_degraded_total{reason=\"model_unavailable\"} 4"
+    ],
+    "server_exit_code": -15,
+    "latency_ms": {
+      "p50": 1.9245354997110553,
+      "p95": 3.431656799602933,
+      "max": 3.681227999550174
+    }
+  },
+  {
+    "name": "overload",
+    "note": "4 concurrent clients, bulkhead of 1, retrying client honouring Retry-After",
+    "faults": "slow_model=0.3",
+    "requests": 4,
+    "statuses": {
+      "200": 4
+    },
+    "reasons": {
+      "none": 4
+    },
+    "out_of_support_values": 0,
+    "alarms": 313,
+    "attempts": 10,
+    "retries_after_429": 6,
+    "readyz": {
+      "status_code": 200,
+      "body": {
+        "status": "ready",
+        "model_version": "flowrate-z-2026.11"
+      }
+    },
+    "healthz": 200,
+    "wall_s": 3.33868285599965,
+    "metrics": [
+      "flowguard_shed_total 6"
+    ],
+    "server_exit_code": -15,
+    "latency_ms": {
+      "p50": 1807.8652670001247,
+      "p95": 3165.16133340001,
+      "max": 3316.345619999993
+    }
+  }
+]

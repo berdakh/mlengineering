@@ -1,0 +1,3 @@
+{"ts": 1795372020.551, "action": "promote", "version": "flowrate-z-2026.11", "reason": "demo start: shipped model"}
+{"ts": 1795372021.447, "action": "promote", "version": "flowrate-z-2026.12-rc1", "reason": "candidate with a mistyped threshold"}
+{"ts": 1795372022.079, "action": "rollback", "version": "flowrate-z-2026.11", "reason": "alarm rate above budget after promotion"}

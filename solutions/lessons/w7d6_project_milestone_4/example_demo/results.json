@@ -1,0 +1,202 @@
+{
+  "scenario": "flowguard on SKAB test experiments",
+  "package_version": "0.9.0",
+  "drift_threshold": 7.525281299036207,
+  "alarm_rate_budget": 0.05,
+  "events": [
+    {
+      "id": "E1-normal",
+      "kind": "normal",
+      "expected": "no_alert",
+      "model_version": "flowrate-z-2026.11",
+      "observed": {
+        "values": 560,
+        "alarm_values": 0,
+        "alarm_rate": 0.0,
+        "alarm_events": 0,
+        "out_of_support_values": 0,
+        "degraded_responses": 0,
+        "psi": 3.381886763056972
+      },
+      "signals": [],
+      "as_expected": true
+    },
+    {
+      "id": "E2-units-bug",
+      "kind": "bad_input",
+      "expected": "out_of_support",
+      "model_version": "flowrate-z-2026.11",
+      "observed": {
+        "values": 560,
+        "alarm_values": 0,
+        "alarm_rate": 0.0,
+        "alarm_events": 0,
+        "out_of_support_values": 560,
+        "degraded_responses": 0,
+        "psi": 8.662105801645389
+      },
+      "signals": [
+        "out_of_support",
+        "drift"
+      ],
+      "as_expected": true
+    },
+    {
+      "id": "E3-input-drift",
+      "kind": "drift",
+      "expected": "drift",
+      "model_version": "flowrate-z-2026.11",
+      "observed": {
+        "values": 560,
+        "alarm_values": 0,
+        "alarm_rate": 0.0,
+        "alarm_events": 0,
+        "out_of_support_values": 0,
+        "degraded_responses": 0,
+        "psi": 9.62406616930824
+      },
+      "signals": [
+        "drift"
+      ],
+      "as_expected": true
+    },
+    {
+      "id": "E4-fault",
+      "kind": "fault",
+      "expected": "detector",
+      "model_version": "flowrate-z-2026.11",
+      "observed": {
+        "values": 1140,
+        "alarm_values": 313,
+        "alarm_rate": 0.27456140350877195,
+        "alarm_events": 1,
+        "out_of_support_values": 0,
+        "degraded_responses": 0,
+        "psi": 3.775650009036103
+      },
+      "signals": [
+        "alarm_rate",
+        "detector"
+      ],
+      "as_expected": true
+    },
+    {
+      "id": "E5-fault",
+      "kind": "fault",
+      "expected": "detector",
+      "model_version": "flowrate-z-2026.11",
+      "observed": {
+        "values": 1144,
+        "alarm_values": 1,
+        "alarm_rate": 0.0008741258741258741,
+        "alarm_events": 0,
+        "out_of_support_values": 0,
+        "degraded_responses": 0,
+        "psi": 4.035603722583983
+      },
+      "signals": [],
+      "as_expected": false
+    },
+    {
+      "id": "E6-labels",
+      "kind": "labels",
+      "expected": "delayed_eval",
+      "model_version": "flowrate-z-2026.11",
+      "observed": {
+        "labelled_replays": 3,
+        "faults": 2,
+        "faults_detected": 1,
+        "false_alarm_events": 0,
+        "event_recall": 0.5
+      },
+      "signals": [
+        "delayed_eval"
+      ],
+      "as_expected": true
+    },
+    {
+      "id": "E7-bad-promotion",
+      "kind": "promote",
+      "expected": "alarm_rate",
+      "model_version": "flowrate-z-2026.12-rc1",
+      "observed": {
+        "values": 560,
+        "alarm_values": 137,
+        "alarm_rate": 0.24464285714285713,
+        "alarm_events": 3,
+        "out_of_support_values": 0,
+        "degraded_responses": 0,
+        "psi": 3.986923775068271
+      },
+      "signals": [
+        "alarm_rate",
+        "detector"
+      ],
+      "as_expected": true
+    },
+    {
+      "id": "E8-rollback",
+      "kind": "rollback",
+      "expected": "version_restored",
+      "model_version": "flowrate-z-2026.11",
+      "observed": {
+        "values": 560,
+        "alarm_values": 0,
+        "alarm_rate": 0.0,
+        "alarm_events": 0,
+        "out_of_support_values": 0,
+        "degraded_responses": 0,
+        "psi": 3.986923775068271
+      },
+      "signals": [
+        "version_restored"
+      ],
+      "as_expected": true
+    }
+  ],
+  "server": {
+    "pids": [
+      27738,
+      27747,
+      27753
+    ],
+    "restarts": 2,
+    "stopped": true
+  },
+  "registry_history": [
+    {
+      "ts": 1795372020.551,
+      "action": "promote",
+      "version": "flowrate-z-2026.11",
+      "reason": "demo start: shipped model"
+    },
+    {
+      "ts": 1795372021.447,
+      "action": "promote",
+      "version": "flowrate-z-2026.12-rc1",
+      "reason": "candidate with a mistyped threshold"
+    },
+    {
+      "ts": 1795372022.079,
+      "action": "rollback",
+      "version": "flowrate-z-2026.11",
+      "reason": "alarm rate above budget after promotion"
+    }
+  ],
+  "final_metrics": [
+    "flowguard_alarm_values_total 0",
+    "flowguard_values_scored_total 560"
+  ],
+  "summary": {
+    "events": 8,
+    "events_as_expected": 7,
+    "drift_threshold": 7.525281299036207,
+    "alarm_rate_budget": 0.05,
+    "values_scored": 5084,
+    "out_of_support_values": 560,
+    "faults_labelled": 2,
+    "faults_detected": 1,
+    "false_alarm_events_labelled": 0,
+    "server_restarts": 2
+  }
+}
