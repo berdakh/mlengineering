@@ -2,12 +2,12 @@
 
 ## Reasoning questions
 
-**1.** Upward. 0.868 is the maximum of 24 noisy estimates; the configuration was chosen partly because its
-fold scores were favourable. The bias grows with the noise of each estimate (σ, about the SE ≈ 0.03
+**1.** Upward. 0.891 is the maximum of 24 noisy estimates; the configuration was chosen partly because its
+fold scores were favourable. The bias grows with the noise of each estimate (σ, about the SE ≈ 0.015-0.03
 here), with the number of candidates K (≈ σ·E[max of K], roughly σ√(2 ln K) for many near-equal
 candidates), and shrinks with the correlation between candidates' errors (√(1−ρ); shared folds make it
-smaller) and with real spread in true quality. In the lab's real run the best trial's dev score was 0.868;
-the nested estimate of the procedure was 0.744 ± 0.036.
+smaller) and with real spread in true quality. In the lab's real run the best trial's dev score was 0.891;
+the nested estimate of the procedure was 0.850 ± 0.032.
 *Common wrong answer:* "it is unbiased because CV is unbiased" - CV is (nearly) unbiased for a *fixed*
 configuration, not for one selected by the same CV.
 
@@ -41,7 +41,7 @@ the failure.
 
 ## Design-choice explanation - what a strong answer contains
 
-* In the real run the top trials' SEs (~0.029) exceed the spread among the top few means (0.868 vs 0.859),
+* In the real run the top trials' SEs (~0.015) are as large as the gap between the top means (0.891 vs 0.878),
   so their ordering is noise; the one-SE rule picked trial 12 (50 boosting iterations) over trial 17 (200).
 * Complexity ordering justified operationally: linear before boosted (latency, interpretability, simpler
   artifact), shorter windows before longer (less warm-up and shorter delay online, w5d3), stronger

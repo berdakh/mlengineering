@@ -13,8 +13,8 @@ feature sets, thresholds, seeds, "the run that worked". Each choice is a small f
 compare candidates, and the score of the winner on that data is too high. In research the cost is an
 inflated table; in a product it is a launch decision made on a number that will not be met, and a
 threshold that pages people at a rate nobody predicted. Today you will see a real search on SKAB in which
-the best trial's own score is 0.868, the honest estimate of the procedure is 0.744, and the four outer
-folds cannot even agree on a model family.
+the best trial's own score is 0.891, the honest estimate of the procedure is 0.850, and the four outer
+folds do not agree on a model family or a feature window.
 
 **Deliverable.** `flowguard.selection` (tested), and `lab/SELECTION.md`: protocol, the three dev-side
 numbers, one test evaluation at frozen thresholds, and your reading.
@@ -154,7 +154,7 @@ losses based on 0.912, was not met, and the next model's (honest) evaluation loo
 * "CV is unbiased" - for a fixed configuration, approximately; not for the configuration CV selected.
 * "Nested CV gives the performance of the final model" - it estimates the procedure; the final model is
   one draw from it.
-* "If test beats the nested estimate, the nested estimate was pessimistic" - with 9 test experiments and
+* "If test beats the nested estimate, the nested estimate was pessimistic" - with 7 test experiments and
   4 outer folds both numbers are noisy; one comparison says little (see the lab).
 * "The one-SE rule corrects optimism" - it changes the choice, not the bias of the attached number.
 * "A threshold is post-processing, not a parameter" - it is fitted, so it must be fitted on dev.
@@ -270,48 +270,51 @@ python lessons/w3d3_hyperparameter_selection/lab/selection_report.py --n-candida
 ```
 
 The report searches two families (logistic regression and histogram gradient boosting, each with a
-feature-window hyperparameter) with grouped 4-fold CV on the 25 development experiments, computes the
+feature-window hyperparameter) with grouped 4-fold CV on the 27 development experiments, computes the
 nested estimate with the one-SE rule, chooses thresholds on out-of-fold dev scores, and evaluates once on
-the 9 test experiments. The search took 110 s on the original authoring run and 463 s on a busy
-container; expect 2-8 minutes.
+the 7 test experiments. The split is read from `lab/splits/v2.json`, the manifest repaired and frozen in
+[w3d1](../w3d1_leakage/README.md): the test set is never redrawn once results have been seen, so every
+Week 3 lesson reports on the same seven experiments. The search plus nesting took about 4.5 minutes on
+the last authoring run; expect 2-8 minutes.
 
 Expected with the reference implementation (yours must match to three decimals; all randomness is seeded):
 
 ```
-dev experiments 25 in 4 folds, test 9; 24 candidates; metric = point-level PR-AUC
+dev experiments 27 in 4 folds, test 7; 24 candidates; metric = point-level PR-AUC
 
-search: dev CV PR-AUC over candidates: min 0.735, median 0.778, max 0.868
-  best trial    #17: 0.868 +/- 0.029 (SE over folds)  hgb, window 10, max_depth 4, learning_rate 0.045, max_iter 200
-  one-SE choice #12: 0.859 +/- 0.029                   hgb, window 10, max_depth 4, learning_rate 0.262, max_iter 50
+search: dev CV PR-AUC over candidates: min 0.794, median 0.828, max 0.891
+  best trial    #17: 0.891 +/- 0.015 (SE over folds)  hgb, window 10, max_depth 4, learning_rate 0.045, max_iter 200
+  one-SE choice #12: 0.878 +/- 0.012                   hgb, window 10, max_depth 4, learning_rate 0.262, max_iter 50
 
-nested estimate of search + one-SE selection + refit: 0.744 +/- 0.036
-  outer fold 0: inner selected mean 0.861 -> outer score 0.796  hgb, window 10
-  outer fold 1: inner selected mean 0.821 -> outer score 0.637  logreg, window 10, C 0.0015
-  outer fold 2: inner selected mean 0.834 -> outer score 0.758  hgb, window 0
-  outer fold 3: inner selected mean 0.742 -> outer score 0.783  logreg, window 10, C 0.0015
+nested estimate of search + one-SE selection + refit: 0.850 +/- 0.032
+  outer fold 0: inner selected mean 0.899 -> outer score 0.852  hgb, window 10
+  outer fold 1: inner selected mean 0.861 -> outer score 0.759  logreg, window 10, C 0.0015
+  outer fold 2: inner selected mean 0.854 -> outer score 0.886  hgb, window 0
+  outer fold 3: inner selected mean 0.869 -> outer score 0.904  hgb, window 60
 
 TEST (looked at once), selected candidate refitted on all dev experiments:
-  test PR-AUC 0.923   (dev CV of the selected trial 0.859, best dev CV of any trial 0.868, nested 0.744)
-  threshold [best_f1] = 0.257:        dev P 0.741 R 0.776 F1 0.758 FAR 0.165 | test P 0.834 R 0.797 F1 0.815 FAR 0.106
-  threshold [alert_budget 5%] = 0.915: dev P 0.854 R 0.482 F1 0.616 FAR 0.050 | test P 0.987 R 0.536 F1 0.694 FAR 0.005
+  test PR-AUC 0.922   (dev CV of the selected trial 0.878, best dev CV of any trial 0.891, nested 0.850)
+  threshold [best_f1] = 0.262:        dev P 0.768 R 0.791 F1 0.779 FAR 0.151 | test P 0.774 R 0.907 F1 0.835 FAR 0.158
+  threshold [alert_budget 5%] = 0.920: dev P 0.868 R 0.523 F1 0.653 FAR 0.050 | test P 0.941 R 0.637 F1 0.759 FAR 0.024
 
-for scale: elapsed time alone (no sensors) has test PR-AUC 0.535; test prevalence 0.401
+for scale: elapsed time alone (no sensors) has test PR-AUC 0.524; test prevalence 0.373
 ```
 
 ![Twenty-four recorded SKAB trials sorted by dev score with SE bars, and horizontal lines for the best trial's dev score, the nested estimate with its band, and the single test score](figures/skab_trials.svg)
 
-*Figure 4 (real SKAB, 25 development and 9 test experiments).* The SE bars of the top trials overlap
+*Figure 4 (real SKAB, 27 development and 7 test experiments).* The SE bars of the top trials overlap
 heavily; the best trial's own score (dashed) sits far above the nested estimate of the procedure (solid,
 band ±1 SE). The single test look (dotted) lands above both.
 
 Things to see for yourself before reading the reference interpretation:
 
-* why 0.868 is not "expected performance", and which number is;
-* what it means that two outer folds chose logistic regression and two chose boosting;
-* whether test 0.923 against nested 0.744 is evidence that nesting was pessimistic. Count the independent
-  units on each side (4 outer folds of 6-7 experiments; 9 test experiments) and look at the spread of the
-  four outer scores (0.637 to 0.796) before answering;
-* what the alert-budget threshold buys (test false-alarm rate 0.5 % of normal rows) and costs (recall 0.54).
+* why 0.891 is not "expected performance", and which number is;
+* what it means that one outer fold chose logistic regression and three chose boosting, with three
+  different feature windows;
+* whether test 0.922 against nested 0.850 is evidence that nesting was pessimistic. Count the independent
+  units on each side (4 outer folds of 6-8 experiments; 7 test experiments) and look at the spread of the
+  four outer scores (0.759 to 0.904) before answering;
+* what the alert-budget threshold buys (test false-alarm rate 2.4 % of normal rows) and costs (recall 0.64).
 
 **Completion criteria.** All 40 lab checks pass; `SELECTION.md` is filled from your own run, states the
 protocol (including the number of test looks: one), and gives the nested estimate, not the best trial's
@@ -372,4 +375,7 @@ matplotlib 3.11.2 (figures only), SKAB at commit `b2c0d46`.
 * Shipped starter: 40 of 40 lab checks fail; challenge 14 fail, 2 error.
 * Worked example, `selection_report.py` (rerun on the reference solution; numbers above copied from that
   run), the challenge reference (`selection_rule.py`, `optimism.py`) and `figures/make_figures.py` executed.
+* 2026-11-22: `selection_report.py` switched to the frozen w3d1 manifest (`lab/splits/v2.json`, 7 test
+  experiments) instead of redrawing a split; the search was rerun and every real-SKAB number and the
+  trials figure regenerated from that run.
 * Not verified: time budgets; the industry example is an illustrative composite.

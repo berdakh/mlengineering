@@ -24,7 +24,7 @@ tune them on?
 
 ## 5. What cannot be claimed
 
-With 9 test events and under two hours of normal operation, which statements about this detector
+With 7 test events and about 1.2 hours of normal operation, which statements about this detector
 are not supported? Give one number that shows it.
 
 ## 6. Decision

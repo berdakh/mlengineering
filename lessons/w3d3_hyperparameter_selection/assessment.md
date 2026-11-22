@@ -5,8 +5,8 @@ About 15 minutes for the questions; the interview rep is separate.
 
 ## Reasoning questions
 
-1. You compare 24 configurations by 4-fold grouped CV; the best scores 0.868 ± 0.029 (SE over folds).
-   Why is 0.868 a biased estimate of that configuration's performance on new experiments, and in which
+1. You compare 24 configurations by 4-fold grouped CV; the best scores 0.891 ± 0.015 (SE over folds).
+   Why is 0.891 a biased estimate of that configuration's performance on new experiments, and in which
    direction? Name two quantities that determine how large the bias is.
 2. A colleague "does nested CV" like this: run the grid search with grouped 4-fold CV on all development
    experiments, take the best configuration, then run grouped 4-fold CV of that configuration and report

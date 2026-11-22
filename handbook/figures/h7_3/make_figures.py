@@ -3,8 +3,8 @@
     python project/get_skab.py            # once
     python handbook/figures/h7_3/make_figures.py
 
-Nine test experiments of the project split (manifest v2, seed 0), thresholds from the 25 development
-experiments (best point F1). Two detectors: elapsed time (no sensors) and |z| of flow rate with a
+The seven test experiments of the project split (manifest v2, repaired and frozen in w3d1), thresholds
+from its 27 development experiments (best point F1). Two detectors: elapsed time (no sensors) and |z| of flow rate with a
 100-row burn-in reference (alarms post-processed with min_duration 10, merge_gap 30). Three rules.
 Uses the reference flowguard package of lesson w3d4.
 """
@@ -31,7 +31,7 @@ from flowguard.baselines import SingleSensorZScorer, burn_in_scores  # noqa: E40
 from flowguard.benchmark import evaluate_scores  # noqa: E402
 from flowguard.data import load_raw  # noqa: E402
 from flowguard.evaluation import extract_events, match_events  # noqa: E402
-from flowguard.splits import SKAB_OVERLAP_GROUPS, make_splits  # noqa: E402
+from flowguard.splits import load_splits  # noqa: E402
 
 BURN_IN = 100
 
@@ -56,13 +56,14 @@ def found(test, flags, rule: str, min_duration: int, merge_gap: int) -> tuple[in
 def main() -> None:
     apply()
     tidy = load_raw(ROOT / "data" / "raw" / "skab")
-    manifest = make_splits(tidy, seed=0, keep_together=SKAB_OVERLAP_GROUPS)
+    manifest = load_splits(ROOT / "solutions" / "lessons" / "w3d1_leakage" / "lab" / "splits" / "v2.json")  # frozen in w3d1
     in_test = (tidy["experiment_id"].isin(manifest["test"]) & (tidy["t"] >= BURN_IN)).to_numpy()
     test = tidy[in_test].reset_index(drop=True)
     detectors = {
         "elapsed time (no sensors)": (tidy["t"].to_numpy(dtype=float), 1, 0),
         "flow-rate |z|, burn-in": (burn_in_scores(lambda: SingleSensorZScorer("flow_rate"), tidy, BURN_IN), 10, 30),
     }
+    n_test = len(manifest["test"])
     rules = ["any overlap", "start inside event, early tolerance 0", "start inside event, early tolerance 5"]
     short = ["any overlap", "alarm starts in event\n(tolerance 0 rows)", "alarm starts in event\n(tolerance 5 rows)"]
     fig, axes = plt.subplots(1, 2, figsize=(9, 3.6), sharey=True)
@@ -71,17 +72,17 @@ def main() -> None:
         flags = (scores[in_test] >= threshold).astype(int)
         counts = [found(test, flags, rule, md, mg) for rule in rules]
         for rule, (n, fa) in zip(rules, counts):
-            print(f"{name}: {rule}: {n}/9 events found, {fa} false alarms")
+            print(f"{name}: {rule}: {n}/{n_test} events found, {fa} false alarms")
         ax.bar(range(3), [c[0] for c in counts], color=colour, width=0.6)
         for x, (n, fa) in enumerate(counts):
-            ax.text(x, n + 0.15, f"{n}/9", ha="center", fontsize=10)
+            ax.text(x, n + 0.15, f"{n}/{n_test}", ha="center", fontsize=10)
             ax.text(x, 0.25, f"{fa} false\nalarms", ha="center", fontsize=8, color=INK["surface"])
         ax.set_xticks(range(3), short, fontsize=8)
         ax.set_title(name)
-        ax.set_ylim(0, 10.5)
+        ax.set_ylim(0, n_test + 1.5)
         ax.grid(axis="x", visible=False)
-    axes[0].set_ylabel("test events counted as detected (of 9)")
-    fig.suptitle("Real SKAB, 9 test experiments: under 'any overlap' a clock detects almost everything",
+    axes[0].set_ylabel(f"test events counted as detected (of {n_test})")
+    fig.suptitle(f"Real SKAB, {n_test} test experiments: under 'any overlap' a clock detects every fault",
                  x=0.01, y=1.04, ha="left", fontsize=10, color=INK["secondary"])
     save(fig, HERE / "matching_rule_matters.svg")
 

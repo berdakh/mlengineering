@@ -80,9 +80,9 @@ cannot answer, write what you would check; open the key only when all twelve hav
 
 **Uncertainty (w3d5)**
 
-9. Describe a cluster bootstrap for a metric computed on 9 test experiments: what is resampled,
-   what is recomputed, what is reported. Why is resampling rows wrong here, and what is still
-   doubtful about an interval built from 9 clusters?
+9. Describe a cluster bootstrap for a metric computed on the 7 test experiments of the frozen split:
+   what is resampled, what is recomputed, what is reported. Why is resampling rows wrong here, and
+   what is still doubtful about an interval built from 7 clusters?
 10. Two models are scored on the same test experiments. Why compare them with a *paired* procedure,
     and what exactly is the quantity whose interval you report? When the interval for the
     difference contains zero, what do you write in the report?

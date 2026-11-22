@@ -95,8 +95,13 @@ which for `n = 0` reduces to `−ln α / H ≈ 3/H` at 95 %. Consequences for sm
 | normal hours `H` | zero false alarms: 95 % upper bound per hour | budget it can certify |
 |---|---|---|
 | 1.22 (SKAB test) | 2.46 | none tighter than ~2.5 per hour |
-| 4.59 (SKAB dev) | 0.65 | ~1 per 1.5 h |
+| 5.00 (SKAB dev) | 0.60 | ~1 per 1.7 h |
 | 24 | 0.125 | 1 per 8 h |
+
+![Log-log lines of the 95 % upper bound on the false-alarm rate against hours observed, for 0, 1 and 3 false alarms; the SKAB test (1.22 h) and dev (5.00 h) exposures are marked, and reaching a bound of one per 8 hours needs 24 h with none](../figures/h6_5/rate_bound_vs_hours.svg)
+
+*Analytical (no data); the marked exposures are the measured normal hours of the frozen v2 split.
+Regenerate with `python handbook/figures/h6_5/make_figures.py`.*
 
 (Rows 1-2 from w3d4's runs; row 3 from the formula.) The constant-rate assumption is itself
 optimistic: on SKAB the same operating point raised 0 false alarms in 4.59 dev hours and 4 in the 2.74 h

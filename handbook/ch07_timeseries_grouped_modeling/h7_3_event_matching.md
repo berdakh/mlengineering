@@ -64,6 +64,13 @@ known to lag reality, case 2 is a genuine early detection and `τ_early` should 
 if the label is accurate, case 2 is an alarm that preceded the fault, and calling it a detection
 rewards alarms that are always on.
 
+![Bar charts for two detectors on the seven SKAB test experiments: under any-overlap the elapsed-time clock detects 7 of 7 with no false alarms; requiring the alarm to start inside the event drops it to 3 of 7 with 4 false alarms](../figures/h7_3/matching_rule_matters.svg)
+
+*Real SKAB, the seven test experiments of the frozen v2 manifest (thresholds from the 27 development
+experiments; regenerate with `python handbook/figures/h7_3/make_figures.py`).* The same alarms, three
+rules. Any-overlap credits a clock with every fault; the start-based rule gives it 3 of 7, and a 5-row
+early tolerance gives back 3 more. For the flow-rate detector the rule changes events found from 7 to 3.
+
 ![Flow rate, z-score and alarms for SKAB test experiment valve1/10: 28 raw alarms, one hit, 13 redundant inside the event and 14 false; two alarms after post-processing](../../lessons/w3d4_point_vs_event_evaluation/figures/alarms_on_signal.svg)
 
 *Real SKAB, `valve1/10`.* Case 3 in practice: raw flags give one hit and 13 redundant alarms inside a

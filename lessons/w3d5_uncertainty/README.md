@@ -138,8 +138,9 @@ Decisions hidden in "recompute the metric exactly":
   scales across experiments; the mean of per-experiment PR-AUC weights experiments equally. They
   are different estimands with different intervals. Say which one you report.
 * **The cluster is the unit of independence, which is not always the file.** Five pairs of SKAB
-  files share identical rows. `other/2`, `other/3` and `other/4` are one cluster. The v2 test set
-  has 9 experiments and **7** independent clusters.
+  files share identical rows, so `other/2`, `other/3` and `other/4` are one cluster: all 34
+  labelled experiments form **30** independent clusters. The frozen v2 test set (w3d1) has 7
+  experiments, each its own cluster, because w3d1 moved every overlap group to development.
 
 **When the bootstrap fails, and it fails exactly where you are working.**
 
@@ -152,14 +153,15 @@ Decisions hidden in "recompute the metric exactly":
 * *Ratio metrics with empty resamples.* Recall or PR-AUC is undefined when a resample has no
   positives; precision when nothing is flagged. Decide in advance (drop and count, as the lab does),
   and report the count.
-* *Boundary values.* If all 9 events are detected, every resample gives recall 1.0 and the
+* *Boundary values.* If all 7 events are detected, every resample gives recall 1.0 and the
   percentile interval is [1, 1]. Use a binomial interval (2.4).
 
 **BCa in brief.** The bias-corrected and accelerated interval shifts the percentile points to
 correct for median bias and for a standard error that changes with the parameter. It is second-order
 accurate and is the default of `scipy.stats.bootstrap`. It needs a jackknife over clusters and
 still cannot rescue 7 clusters. On the real per-cluster PR-AUC of the flow-rate baseline it moves
-the limits by about 0.01 (7 clusters: percentile [0.826, 0.942], BCa [0.812, 0.933]).
+the lower limit by about 0.025 (7 test clusters: percentile [0.822, 0.913], BCa [0.797, 0.907];
+`scipy.stats.bootstrap`, 9,999 resamples, seed 0).
 
 ### 2.4 Proportions with few trials
 
@@ -209,11 +211,11 @@ cancels. Three consequences:
 * **The paired bootstrap** draws one set of cluster ids per replicate and applies it to both
   models, then takes the percentile interval of the differences.
 
-![Per-cluster PR-AUC differences on real SKAB scatter from about -0.6 to +0.6 while their means are -0.08 and +0.02 with intervals that include zero](figures/paired_differences.svg)
+![Per-cluster PR-AUC differences on real SKAB scatter from about -0.6 to +0.6 while their means are -0.08 and +0.03 with intervals that include zero](figures/paired_differences.svg)
 
 *REAL SKAB results, all 30 independent clusters (logistic-regression scores on development clusters
 are out-of-fold). Each dot is one cluster's difference; the blue line and band are the mean and its
-paired 95 % bootstrap interval. Supervised minus flow-rate z: +0.023 [−0.037, +0.085], better on 16
+paired 95 % bootstrap interval. Supervised minus flow-rate z: +0.033 [−0.026, +0.095], better on 18
 of 30. Mahalanobis minus flow-rate z: −0.084 [−0.184, +0.014], better on 12 of 30. (These pooled-over-
 clusters means differ slightly from the pooled-PR-AUC differences in table C of the lab.)*
 * **Tests on per-cluster differences `d_i = a_i − b_i`:**
@@ -260,11 +262,11 @@ minimum detectable difference of about 0.25 PR-AUC with 7 clusters, 0.20 with 9,
 0.09 with 34. Differences of a few hundredths, which is what the tables show, are far below what
 this dataset can resolve. That calculation, by simulation, is the challenge.
 
-![Simulated power against the number of independent test clusters for two real SKAB comparisons: 30 clusters give power 0.35 and 0.07](../../handbook/figures/h6_6/power_curve.svg)
+![Simulated power against the number of independent test clusters for two real SKAB comparisons: 30 clusters give power 0.35 and 0.13](../../handbook/figures/h6_6/power_curve.svg)
 
 *Simulation driven by the REAL per-cluster differences (sign-flip permutation test, α = 0.05).
-With the 30 clusters available, power is 0.35 for Mahalanobis versus flow-rate z and 0.07 for
-supervised versus flow-rate z; the latter needs between 400 and 800 clusters for 80 % power.
+With the 30 clusters available, power is 0.35 for Mahalanobis versus flow-rate z and 0.13 for
+supervised versus flow-rate z; the latter needs between 200 and 400 clusters for 80 % power.
 This figure gives away part of the challenge's answer: if you want to work it out yourself, skip it.*
 
 ### 2.8 Industry example
@@ -358,7 +360,7 @@ Part 1: same 12 experiments, A = B + 0.02 on each
 The paired interval is about 40 times narrower than the unpaired one because the correlation is
 0.9994: plug `σ_a ≈ σ_b ≈ 0.099`, `r = 0.9994` into the variance formula of 2.5. Real model pairs
 are less extreme. On SKAB the per-cluster PR-AUC of the supervised and flow-rate baselines correlate
-at 0.42, and Mahalanobis and flow-rate at -0.12, where pairing buys nothing. Expect a gain when two
+at 0.40, and Mahalanobis and flow-rate at -0.12, where pairing buys nothing. Expect a gain when two
 models fail on the same experiments, not a miracle.
 
 Part 2 prints the proportion table of section 2.4. Part 3:
@@ -439,35 +441,43 @@ python project/get_skab.py                                   # if not done yet
 python lessons/w3d5_uncertainty/lab/baseline_intervals.py    # about 1 minute
 ```
 
-The reference run (2026-11-21, SKAB at commit `b2c0d46`, v2 split seed 0, rows with `t >= 100`,
-2,000 resamples, seed 0) printed:
+The script reads the split from `lab/splits/v2.json`, the manifest repaired and frozen in
+[w3d1](../w3d1_leakage/README.md): the test set is never redrawn once results have been seen, so every
+Week 3 lesson reports on the same seven test experiments. The reference run (2026-11-22, SKAB at
+commit `b2c0d46`, rows with `t >= 100`, 2,000 resamples, seed 0) printed:
 
 ```
-split v2: 9 test experiments = 7 independent clusters; 34 labelled experiments = 30 clusters
+split v2: 7 test experiments = 7 independent clusters; 34 labelled experiments = 30 clusters; n_boot = 2000
 
 A. Test set, pooled point-level PR-AUC, 95% intervals
 | baseline | cluster bootstrap (correct unit) | row bootstrap (wrong unit) | width ratio |
-| elapsed time t (no sensors)      | 0.535 [0.485, 0.601] | [0.521, 0.550] | 4.0x |
-| flow_rate abs z, burn-in         | 0.897 [0.848, 0.933] | [0.890, 0.904] | 5.8x |
-| Mahalanobis, burn-in             | 0.722 [0.567, 0.880] | [0.708, 0.737] | 11.0x |
-| logistic regression (supervised) | 0.906 [0.870, 0.954] | [0.899, 0.913] | 6.1x |
+|---|---|---|---|
+| elapsed time t (no sensors) | 0.524 [0.484, 0.588] | [0.507, 0.540] | 3.1x |
+| flow_rate abs z, burn-in | 0.884 [0.811, 0.928] | [0.872, 0.895] | 5.0x |
+| Mahalanobis, burn-in | 0.759 [0.611, 0.869] | [0.740, 0.776] | 7.2x |
+| logistic regression (supervised) | 0.900 [0.852, 0.938] | [0.889, 0.913] | 3.6x |
 
 B. All labelled experiments (valid only for scorers that were never fitted to labels)
 | baseline | pooled PR-AUC | mean per-cluster PR-AUC |
+|---|---|---|
 | elapsed time t (no sensors) | 0.503 [0.485, 0.526] | 0.524 [0.488, 0.569] |
-| flow_rate abs z, burn-in    | 0.789 [0.716, 0.857] | 0.812 [0.751, 0.864] |
-| Mahalanobis, burn-in        | 0.703 [0.615, 0.784] | 0.728 [0.649, 0.806] |
+| flow_rate abs z, burn-in | 0.789 [0.716, 0.857] | 0.812 [0.751, 0.864] |
+| Mahalanobis, burn-in | 0.703 [0.615, 0.784] | 0.728 [0.649, 0.806] |
 
 C. Paired comparisons (difference in pooled PR-AUC, A minus B)
 | A | B | data | clusters | difference [95% CI] | A better in | sign test p | permutation p |
-| logistic regression | flow_rate abs z | test         | 7  | +0.009 [-0.040, +0.089] | 2/7   | 0.4531 | 0.7500 |
-| Mahalanobis         | flow_rate abs z | test         | 7  | -0.175 [-0.348, +0.022] | 2/7   | 0.4531 | 0.1875 |
-| Mahalanobis         | flow_rate abs z | all labelled | 30 | -0.086 [-0.212, +0.029] | 12/30 | 0.3616 | 0.1202 |
-| flow_rate abs z     | elapsed time t  | all labelled | 30 | +0.286 [+0.217, +0.349] | 27/30 | 0.0000 | 0.0001 |
+|---|---|---|---|---|---|---|---|
+| logistic regression (supervised) | flow_rate abs z, burn-in | test | 7 | +0.016 [-0.003, +0.049] | 6/7 | 0.1250 | 0.0781 |
+| Mahalanobis, burn-in | flow_rate abs z, burn-in | test | 7 | -0.125 [-0.278, -0.013] | 2/7 | 0.4531 | 0.1875 |
+| Mahalanobis, burn-in | flow_rate abs z, burn-in | all labelled | 30 | -0.086 [-0.212, +0.029] | 12/30 | 0.3616 | 0.1202 |
+| flow_rate abs z, burn-in | elapsed time t (no sensors) | all labelled | 30 | +0.286 [+0.217, +0.349] | 27/30 | 0.0000 | 0.0001 |
 
-D. Event-level sanity count on the test set
-| flow_rate abs z, burn-in         | 9/9 | [0.70, 1.00] |
-| logistic regression (supervised) | 9/9 | [0.70, 1.00] |
+D. Event-level sanity count on the test set (threshold = best F1 on dev; an event counts as
+   detected if at least one of its rows is flagged; false alarms are NOT counted, see w3d4)
+| baseline | events detected | Wilson 95% interval |
+|---|---|---|
+| flow_rate abs z, burn-in | 7/7 | [0.65, 1.00] |
+| logistic regression (supervised) | 7/7 | [0.65, 1.00] |
 ```
 
 Your numbers should match to the printed precision if you use `np.random.default_rng(seed)` and
@@ -476,28 +486,33 @@ the limits in the second or third decimal.
 
 What these results say, as found:
 
-* **Row-level intervals are 4 to 11 times too narrow** on this data.
+* **Row-level intervals are 3 to 7 times too narrow** on this data.
 * **The split moved the headline number more than any model difference.** The flow-rate baseline
-  scored test PR-AUC 0.805 on the w2d6 (v1) test set and scores 0.897 on the v2 test set. Same
-  detector, different nine experiments. The cluster interval on all 30 clusters, [0.716, 0.857],
+  scored test PR-AUC 0.805 on the w2d6 (v1) test set and scores 0.884 on the frozen v2 test set:
+  same detector, two experiments moved. The cluster interval on all 30 clusters, [0.716, 0.857],
   says the same thing in one line.
-* **Supervised versus flow-rate z-score: cannot be distinguished.** +0.009 with an interval from
-  −0.040 to +0.089; the supervised model is better on 2 of 7 clusters.
-* **Mahalanobis versus flow-rate z-score: lower on average, not established.** −0.086 on 30
-  clusters, interval [−0.212, +0.029], permutation p = 0.12. The two detectors' per-cluster scores are
-  nearly uncorrelated (-0.12): they fail on different experiments, which is worth knowing in itself.
+* **Supervised versus flow-rate z-score: cannot be distinguished.** +0.016 with an interval from
+  −0.003 to +0.049; the supervised model is better on 6 of 7 clusters, but with 7 clusters the sign
+  test gives p = 0.125 and the permutation test p = 0.078.
+* **Mahalanobis versus flow-rate z-score: lower, not established.** On the 7 test clusters the
+  bootstrap interval, −0.125 [−0.278, −0.013], excludes zero, but the sign test (p = 0.45) and the
+  permutation test (p = 0.19) do not reject, and with 7 clusters the percentile interval undercovers
+  (section 3.1). When the tests disagree like this, report the disagreement, not the convenient one.
+  On all 30 clusters: −0.086, interval [−0.212, +0.029], permutation p = 0.12. The two detectors'
+  per-cluster scores are nearly uncorrelated (−0.12): they fail on different experiments, which is
+  worth knowing in itself.
 * **Sensors versus a clock: established.** +0.286 [+0.217, +0.349], better on 27 of 30 clusters.
   This is the only comparison in the table the data can carry, and it is the one that matters
   after w2d6's finding that elapsed time predicts the label.
-* **Event count:** 9 of 9 at the dev threshold, Wilson interval [0.70, 1.00]. It ignores false
+* **Event count:** 7 of 7 at the dev threshold, Wilson interval [0.65, 1.00]. It ignores false
   alarms entirely and is superseded by w3d4's matching.
 * With 7 clusters the percentile intervals above undercover (section 3.1). Treat them as optimistic.
 
-![Real SKAB test set: cluster-bootstrap intervals are 4 to 11 times wider than row-bootstrap intervals for the same four baselines](figures/skab_intervals.svg)
+![Real SKAB test set: cluster-bootstrap intervals are 3 to 7 times wider than row-bootstrap intervals for the same four baselines](figures/skab_intervals.svg)
 
-*REAL SKAB, v2 test set (9 experiments, 7 independent clusters), table A above as a picture. The
+*REAL SKAB, frozen v2 test set (7 experiments, 7 independent clusters), table A above as a picture. The
 row-level bars (orange) look precise and are not; the Mahalanobis interval on the correct unit spans
-0.57 to 0.88. Values in `figures/skab_intervals.csv`; regenerate with
+0.61 to 0.87. Values in `figures/skab_intervals.csv`; regenerate with
 `python lessons/w3d5_uncertainty/figures/make_figures.py` (about 1.5 minutes).*
 
 Paste your own tables into `lab/INTERVALS.md` and answer its four questions. A reference reading is
@@ -580,3 +595,8 @@ scikit-learn 1.9.1: both worked examples; the reference lab on the real SKAB fil
 challenge and its power run; `python tools/verify_checks.py lessons/w3d5_uncertainty` (reference
 passes both parts; 4 lab mutants and 3 challenge mutants rejected); the shipped starters fail
 (lab 30 of 30, challenge 10 of 10). Not verified: Python 3.11/3.12; time boxes.
+
+
+2026-11-22: real-data scripts switched to the frozen w3d1 manifest (`lab/splits/v2.json`, 7 test
+experiments) instead of redrawing a split with `make_splits`; every real-SKAB number and figure in this
+unit was regenerated from a fresh run.

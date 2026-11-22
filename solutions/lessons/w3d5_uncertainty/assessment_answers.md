@@ -8,7 +8,7 @@ interview-rep demo by running `interview_rep/paired_precision.py`).
 
 **Model answer.** The resampling unit is wrong. Rows of one experiment are correlated, so a row
 bootstrap produces replicate test sets that are far more alike than two real test sets of ten new
-experiments would be. The interval is too narrow, typically by a factor of several (4 to 11 on SKAB
+experiments would be. The interval is too narrow, typically by a factor of several (3 to 7 on SKAB
 in the lab), and the "±" also hides that the interval need not be symmetric. Smallest change: resample
 the 10 experiments (or overlap groups) with replacement, keep the threshold frozen, recompute F1 on the
 concatenated rows, and report the percentile interval with "10 clusters" beside it. Add that with 10
@@ -96,7 +96,8 @@ for hundreds of tests."
 was a set of experiments; but five pairs of SKAB files share identical rows, so `other/2`, `other/3`,
 `other/4` are not three independent draws of "a fault experiment". Treating them as separate clusters
 would count shared information twice and narrow the interval; resampling overlap groups is resampling
-the actual independent units, and the v2 test set has 7 of them, not 9. The opposite choice (rows or
+the actual independent units: the 34 labelled experiments are 30 of them, not 34 (the frozen
+v2 test set happens to contain no overlap group, so its 7 experiments are 7 clusters). The opposite choice (rows or
 files) estimates variability under a sampling process that never happened; it is never what we want
 for a claim about new experiments, though a file-level bootstrap would be acceptable if files were
 known to be independent. The threshold was chosen on development data and is part of the deployed

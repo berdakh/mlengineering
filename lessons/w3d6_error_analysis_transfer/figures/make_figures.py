@@ -60,7 +60,8 @@ def fig_recall_per_experiment(dev, scores, labels, threshold):
     ax.set_yticks(y, table["experiment_id"])
     ax.set_xlim(0, 1.02)
     ax.set_xlabel("point-level recall within the experiment")
-    ax.set_title("The mean (0.66) describes almost no experiment: recall runs from 0.01 to 0.99")
+    r = table["recall"]
+    ax.set_title(f"The mean ({r.mean():.2f}) describes almost no experiment: recall runs from {r.min():.2f} to {r.max():.2f}")
     ax.legend(title="family", loc="lower right")
     ax.grid(axis="y", visible=False)
     save(fig, HERE / "recall_per_experiment.svg")
@@ -87,8 +88,8 @@ def fig_failure_kinds(dev, scores, labels, threshold):
 
 
 def fig_alarm_strips(dev, scores, labels, threshold):
-    chosen = ["valve1/8", "other/5", "other/7", "other/13"]
-    notes = {"valve1/8": "detected and held (recall 0.99)", "other/5": "detected at onset, then drops out (fragment)",
+    chosen = ["valve1/12", "other/5", "other/7", "other/13"]   # development experiments only
+    notes = {"valve1/12": "detected and held (recall 0.995)", "other/5": "detected at onset, then drops out (fragment)",
              "other/7": "detected 80 rows late", "other/13": "alarms before the labelled onset"}
     fig, axes = plt.subplots(len(chosen), 1, figsize=(8.4, 6.6), sharex=True)
     for ax, experiment_id in zip(axes, chosen):

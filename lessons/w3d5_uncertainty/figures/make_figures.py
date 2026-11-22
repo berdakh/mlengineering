@@ -108,7 +108,8 @@ def fig_skab_intervals() -> None:
     ax.set_xlabel("pooled point-level PR-AUC on the test set, 95% interval")
     ax.grid(axis="y", visible=False)
     ax.legend(loc="lower left", bbox_to_anchor=(0.0, 1.02), ncols=1, borderaxespad=0)
-    ax.set_title("Real SKAB: the row-level interval is 4 to 11 times too narrow", y=1.32)
+    ratio = (df["cluster_high"] - df["cluster_low"]) / (df["row_high"] - df["row_low"])
+    ax.set_title(f"Real SKAB: the row-level interval is {ratio.min():.0f} to {ratio.max():.0f} times too narrow", y=1.32)
     save(fig, HERE / "skab_intervals.svg")
 
 

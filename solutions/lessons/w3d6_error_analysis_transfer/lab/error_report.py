@@ -80,7 +80,7 @@ def main() -> int:
     labels = dev["anomaly"].to_numpy()
     usable = dev["t"].to_numpy() >= BURN_IN
     threshold, f1 = best_f1_threshold(labels[usable], scores[usable])
-    print(f"manifest v2, seed 0: {len(manifest['test'])} test (untouched), "
+    print(f"manifest v2 (frozen in w3d1): {len(manifest['test'])} test (untouched), "
           f"{dev['experiment_id'].nunique()} development experiments")
     print(f"baseline: flow_rate abs z, burn-in {BURN_IN}; threshold {threshold:.3f} (dev F1 {f1:.3f})")
 

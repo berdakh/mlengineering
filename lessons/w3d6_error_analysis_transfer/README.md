@@ -16,8 +16,8 @@ independently and under time pressure, carry out a complete evaluation on a tabu
 you have not seen.
 
 **Why an applied ML engineer needs it.** After the first model, the job is choosing the next piece
-of work. "Recall is 0.66" does not say what to change; "half of all wrong rows are the alarm dropping
-out after the first detection, on 24 of 25 experiments" does. In interviews and in design reviews you
+of work. "Recall is 0.67" does not say what to change; "half of all wrong rows are the alarm dropping
+out after the first detection, on 26 of 27 experiments" does. In interviews and in design reviews you
 will be asked "what does your model get wrong?", and an answer with sizes and a next experiment is
 what separates analysis from anecdote. The timed half measures whether the Week 2-3 habits (framing,
 leak audit, a split that matches deployment, a decision metric, an interval, a baseline) hold when
@@ -271,7 +271,7 @@ other/13        178                   0
 other/3          57                  57
 other/4          57                   0
 
-baseline errors in the affected experiments ['other/12', 'other/13', 'other/3', 'other/4']: 1024
+baseline errors in the affected experiments ['other/12', 'other/13', 'other/3', 'other/4']: 1028
   of which on contradictory rows: 24
 ...
   irreducible errors = 235 of 470 contradictory rows
@@ -291,9 +291,11 @@ given SKAB at commit `b2c0d46` (`project/get_skab.py --verify`).
 Work in `lessons/w3d6_error_analysis_transfer/lab/`. It ships `flowguard` with snapshots of `data`,
 `splits` (v2, overlap groups kept together), `metrics`, `baselines`, and a stub
 `erroranalysis.py` whose docstrings are the specification. `error_report.py` is complete; it runs the
-w2d6 bar baseline (`|z|` of `flow_rate` against each experiment's first 100 rows) on the **25
-development experiments** with the best-F1 development threshold, and prints the tables. The nine test
-experiments are never scored.
+w2d6 bar baseline (`|z|` of `flow_rate` against each experiment's first 100 rows) on the **27
+development experiments** with the best-F1 development threshold, and prints the tables. The split is
+read from `lab/splits/v2.json`, the manifest repaired and frozen in [w3d1](../w3d1_leakage/README.md):
+the test set is never redrawn once results have been seen, so every Week 3 lesson uses the same seven
+test experiments, and they are never scored here.
 
 ### Task 1 — `per_experiment_table` (10 min)
 
@@ -324,35 +326,35 @@ segments' `n_rows` must sum to the number of wrong rows, and no segment crosses 
 python lessons/w3d6_error_analysis_transfer/lab/error_report.py      # about 1 s
 ```
 
-Checkpoint values from the reference run (2026-11-22, SKAB `b2c0d46`, manifest v2 seed 0): threshold
-2.577 (development F1 0.686); row-pooled recall 0.656, mean of per-experiment recalls 0.663; failure
+Checkpoint values from the reference run (2026-11-22, SKAB `b2c0d46`, frozen manifest v2): threshold
+2.404 (development F1 0.700); row-pooled recall 0.674, mean of per-experiment recalls 0.674; failure
 kinds
 
 ```
       kind  n_segments  n_rows  n_experiments
-  fragment         695    2861             24
- pre_onset         648    1346             23
-post_event         407    1081             21
-      late           6     273              6
-  boundary          25     149             19
+  fragment         698    3039             26
+ pre_onset         730    1433             24
+post_event         432    1212             23
+      late           5     243              5
+  boundary          26     192             19
 ```
 
 No event is missed outright. If your numbers differ, check the threshold convention (`score >=
 threshold` is flagged) and that `burn_in=100` rows are excluded.
 
-![Per-experiment recall of the flow-rate baseline on 25 real SKAB development experiments ranges from 0.01 to 0.99 around a mean of 0.66, with no family clustering](figures/recall_per_experiment.svg)
+![Per-experiment recall of the flow-rate baseline on 27 real SKAB development experiments ranges from 0.01 to 0.99 around a mean of 0.67, with no family clustering](figures/recall_per_experiment.svg)
 
 *REAL SKAB, development experiments only. The mean describes almost no experiment; the families are
 interleaved, which is the first hint that "family" will not be the explanation.*
 
-![Failure kinds of the flow-rate baseline: fragments account for 2,861 of the wrong rows, pre-onset 1,346 and post-event 1,081; no event is missed](figures/failure_kinds.svg)
+![Failure kinds of the flow-rate baseline: fragments account for 3,039 of the wrong rows, pre-onset 1,433 and post-event 1,212; no event is missed](figures/failure_kinds.svg)
 
 *REAL SKAB, same run. Left: wrong rows by kind; right: number of segments. Rows and segments rank the
 kinds differently for `late`: few segments, each long.*
 
 ![Score traces for four real SKAB experiments showing a held detection, a dropout after onset, an 80-row late detection, and alarms before the labelled onset](figures/alarm_strips.svg)
 
-*REAL SKAB. One experiment per failure kind: `valve1/8` (detected and held), `other/5` (fragment),
+*REAL SKAB, development experiments. One experiment per failure kind: `valve1/12` (detected and held), `other/5` (fragment),
 `other/7` (late), `other/13` (pre-onset, the experiment with contradictory labels). Look at the
 shaded label and the alarm ticks, not the score scale.*
 
@@ -444,3 +446,8 @@ the reference challenge (`evaluate.py`: rule 0.727, model 0.722 with customer-bo
 `python tools/verify_checks.py lessons/w3d6_error_analysis_transfer` (reference passes both parts; 4
 lab and 5 challenge mutants rejected); the shipped starters fail (lab 32 of 32; challenge 14 failed,
 5 errors). Not verified: Python 3.11/3.12; the time boxes, in particular whether 90 minutes suffices.
+
+
+2026-11-22: real-data scripts switched to the frozen w3d1 manifest (`lab/splits/v2.json`, 7 test
+experiments) instead of redrawing a split with `make_splits`; every real-SKAB number and figure in this
+unit was regenerated from a fresh run.

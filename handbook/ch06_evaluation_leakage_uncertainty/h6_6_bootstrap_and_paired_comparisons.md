@@ -107,7 +107,8 @@ replicate is an index operation, not a re-run of the model.
 * *Pooled versus per-unit metric.* Pooled PR-AUC weights long units more and mixes score scales across
   units; the mean of per-unit PR-AUC weights units equally. Different estimands, different intervals.
 * *The unit is the independent unit, not the file.* On SKAB five pairs of files share identical rows,
-  so overlap groups are the clusters; the v2 test set has 9 experiments and 7 clusters.
+  so overlap groups are the clusters; the frozen v2 test set has 7 experiments, each its own
+  cluster (no overlap group falls in it); all 34 labelled experiments form 30 clusters.
 * *Undefined replicates.* A resample with no positives has no recall or PR-AUC. Decide before looking:
   drop and count (and report the count), or resample stratified by whether a unit contains positives.
   Never set the value to 0 or 1.
@@ -123,8 +124,8 @@ replicate is an index operation, not a re-run of the model.
 **BCa.** The bias-corrected and accelerated interval adjusts the percentile points for median bias and
 for skew estimated by a jackknife over units; it is second-order accurate and is the default method of
 `scipy.stats.bootstrap`. It helps with skewed statistics, not with too few units. On the real
-per-cluster PR-AUC of the SKAB flow-rate baseline with 7 clusters it moved the limits by about 0.01
-(percentile [0.826, 0.942], BCa [0.812, 0.933]; w3d5 lesson, section 2.3).
+per-cluster PR-AUC of the SKAB flow-rate baseline on the 7 test clusters it moved the lower limit by
+about 0.025 (percentile [0.822, 0.913], BCa [0.797, 0.907]; w3d5 lesson, section 2.3).
 
 ![Coverage of nominal 95 % intervals in simulation: the row bootstrap collapses as the ICC grows; the cluster bootstrap stays near nominal with 30 clusters and undercovers with 7 or 9](../../lessons/w3d5_uncertainty/figures/coverage.svg)
 
@@ -172,15 +173,15 @@ resampled rows and subtract.
 | Sign-flip permutation | the values | exchangeability of the two models within a unit under H0 | exact; with `G` units the smallest two-sided p is `2/2^G` (0.0156 for 7; 0.0625 for 5) |
 | Paired t | the values | approximate normality of `d̄` | fine for moderate `G`; fragile with outlying units |
 
-On SKAB the correlation between models across clusters is modest (0.42 for supervised versus flow-rate
+On SKAB the correlation between models across clusters is modest (0.40 for supervised versus flow-rate
 z, −0.12 for Mahalanobis versus flow-rate z), so pairing helps less than in textbook examples. It is
 still the correct analysis, and per-unit differences show something a pooled number hides: the spread
 of differences is wide (several clusters differ by more than ±0.4 PR-AUC) while their mean is near zero.
 
 ![Per-cluster PR-AUC differences on real SKAB data sorted from most negative to most positive, with the mean and its paired interval as a band near zero](../../lessons/w3d5_uncertainty/figures/paired_differences.svg)
 
-*REAL SKAB, 30 independent clusters. Supervised minus flow-rate z: +0.023 [−0.037, +0.085], better on
-16 of 30; Mahalanobis minus flow-rate z: −0.084 [−0.184, +0.014], better on 12 of 30.*
+*REAL SKAB, 30 independent clusters. Supervised minus flow-rate z: +0.033 [−0.026, +0.095], better on
+18 of 30; Mahalanobis minus flow-rate z: −0.084 [−0.184, +0.014], better on 12 of 30.*
 
 **Many comparisons.** With `k` independent comparisons at α = 0.05 the probability of at least one
 false "win" is `1 − 0.95^k` (0.26 for 6, 0.40 for 10). The best of a leaderboard is biased upward
@@ -207,12 +208,12 @@ $$
 This normal approximation is optimistic for `G < 15`; simulate with the actual test (the w3d5
 challenge does this with a sign-flip permutation test and the empirical differences).
 
-![Simulated power against the number of independent test clusters for two real SKAB comparisons; 80 % power needs about 100 clusters for one and between 400 and 800 for the other](../figures/h6_6/power_curve.svg)
+![Simulated power against the number of independent test clusters for two real SKAB comparisons; 80 % power needs about 100 clusters for one and between 200 and 400 for the other](../figures/h6_6/power_curve.svg)
 
 *Simulation resampling the REAL per-cluster differences (`../figures/h6_6/power_curve.csv`). With the 30
 clusters available, power is 0.35 (Mahalanobis versus flow-rate z, mean difference −0.084, sd 0.29) and
-0.07 (supervised versus flow-rate z, mean +0.023, sd 0.18). The second needs between 400 and 800
-independent experiments; the normal approximation gives 459.*
+0.13 (supervised versus flow-rate z, mean +0.033, sd 0.18). The second needs between 200 and 400
+independent experiments; the normal approximation gives 231.*
 
 Reading "not significant" correctly: "the data do not show a difference, and could only have shown one
 of about δ_min or more" is a statement; "the models are equal" is not. Equivalence needs its own test

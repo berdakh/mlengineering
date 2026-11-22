@@ -62,8 +62,8 @@ evaluation, nothing on limitations.
    the experiment is the independent unit, as the patient is in clinical data. Gives the measured
    gap: row-level folds ROC AUC 0.986 versus 0.849 with experiments held out (`w2d4`, development
    experiments, random forest on raw sensors).
-2. **0.02 with 34 events.** Not confident at all without a paired, experiment-level interval. Test
-   sets hold about 9 experiments; one event is 0.11 of event recall. States the right tool (resample
+2. **0.02 with 34 events.** Not confident at all without a paired, experiment-level interval. The
+   frozen test set holds 7 experiments; one event is 0.14 of event recall. States the right tool (resample
    experiments, compare models on the same resamples) and declines to rank.
 3. **35 % prevalence.** Concedes the point: at sample level this is closer to segmentation of a
    long anomalous period than to rare-event detection. Precision does not transfer; computes or
@@ -145,11 +145,13 @@ hour of normal running, because that is what an operator experiences.
 On baselines: a constant score gives PR AUC 0.37, which is just the prevalence. A z-score on a
 single sensor, normalised on the first minutes of each run, gives 0.81. Supervised logistic
 regression gives 0.83. So the simple baseline is already close, and I do not yet have intervals;
-with 9 test experiments I expect them to be wide enough that I cannot rank those two.
+with 7 or 9 test experiments I expect them to be wide enough that I cannot rank those two.
 
 Three things limit how far you should trust this. First, I found that some rows are duplicated
 across files, a few with contradictory labels, so the first version of my split let related
-experiments fall on both sides; I issued a second version that keeps them together. Second, the
+experiments fall on both sides. I repaired it without redrawing the test set: the two test
+experiments that shared rows with development moved to development, leaving 7 test and 27
+development experiments, frozen as version 2. Second, the
 faults are injected at almost the same time in every recording. A 'detector' that only reads the
 clock gets F1 0.84. I banned time-like features and keep that clock baseline in every table as a
 check. Third, 35 % of samples are anomalous, which is nothing like a real plant, so precision would

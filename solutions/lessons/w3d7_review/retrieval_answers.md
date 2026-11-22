@@ -152,7 +152,7 @@ For `K` candidates of equal true quality whose scores have noise standard deviat
 expected best score exceeds the truth by `s` times the expected maximum of `K` standard normals:
 about 1.5 `s` for `K = 10`, 2.2 `s` for 40, 2.5 `s` for 100 (simulated in the authoring session);
 the growth is logarithmic, roughly `s·sqrt(2 ln K)` as an upper bound. Correlated candidates (the
-usual case) inflate less. With few independent test units `s` is large, so on 9 experiments even a
+usual case) inflate less. With few independent test units `s` is large, so on 7 test experiments even a
 modest search can manufacture several points.
 
 | Common wrong answer | Why it fails |
@@ -192,22 +192,22 @@ adjacent alerts merge) changes the numbers and must be stated next to them.
 | "False alarm rate = FP rows / normal rows" | That is the point-level FPR; an operator counts interruptions per unit time |
 | "Point-adjust: if any sample in a segment is hit, count the whole segment as detected" | Inflates point metrics so far that a random scorer looks good on long segments; if used it must be labelled as such |
 
-## 9. Cluster bootstrap with nine experiments
+## 9. Cluster bootstrap with seven experiments
 
 Procedure: compute the per-experiment ingredients once (scores and labels, or per-experiment
-counts). Repeat `B` times (say 2,000): draw 9 experiments **with replacement** from the 9 test
+counts). Repeat `B` times (say 2,000): draw 7 experiments **with replacement** from the 7 test
 experiments; recompute the metric on the drawn set as a whole (pool the rows of the drawn
 experiments, a repeated experiment counting twice); store it. Report the point estimate on the
 original test set with a percentile interval of the bootstrap values, and state "resampling unit:
-experiment, n = 9".
+experiment, n = 7".
 
 Resampling rows is wrong because rows within an experiment are strongly autocorrelated: a
 row bootstrap treats about 10,000 rows as 10,000 independent observations and returns an interval
 several times too narrow. The variation that matters is *which experiments you happened to get*.
 
-What remains doubtful with 9 clusters: the bootstrap approximates the population by the sample, and
-9 units describe it coarsely. Percentile intervals from so few clusters tend to be too narrow; any
-one experiment is absent from about 35 % of resamples (`(8/9)^9 = 0.346`, computed), so a single
+What remains doubtful with 7 clusters: the bootstrap approximates the population by the sample, and
+7 units describe it coarsely. Percentile intervals from so few clusters tend to be too narrow; any
+one experiment is absent from about 34 % of resamples (`(6/7)^7 = 0.340`, computed), so a single
 unusual experiment makes the distribution lumpy; metrics such as event recall take few distinct
 values; some resamples of a family-stratified question contain no experiment of a family. The
 interval is a lower bound on honest uncertainty, to be reported as such. Stratifying the resampling

@@ -3,17 +3,17 @@
 ## Reasoning questions
 
 **1.** Pooled recall weights each experiment by its number of anomalous rows; the experiment mean
-weights them equally. They agree when experiments have similar numbers of positives (SKAB: 188-586,
+weights them equally. They agree when experiments have similar numbers of positives (SKAB development: 265-586,
 mostly about 400) and disagree when sizes differ and correlate with difficulty (planted data: one
 600-row success, three 30-row failures). (a) The reliability engineer cares about faults, so the
-per-experiment view, and really the distribution: "7 of 25 below 0.5". (b) Alert storage scales with
+per-experiment view, and really the distribution: "7 of 27 below 0.5". (b) Alert storage scales with
 flagged rows, so the pooled, row-level figure.
 
 *Common incorrect answers.* "The mean is more robust" (to what? it answers a different question).
 "Pooled is the correct recall" (it is one of two estimands). Reporting either without sizes.
 
-**2.** Frequency: fragments are 50 % of wrong rows, late 5 %. Cost per case: a late detection costs
-the delay the stakeholder named, perhaps 40-80 s each on six events; fragments cost recall on paper
+**2.** Frequency: fragments are 50 % of wrong rows, late 4 %. Cost per case: a late detection costs
+the delay the stakeholder named, 32-80 s each on five events; fragments cost recall on paper
 and, operationally, hundreds of separate notifications per fault (alert fatigue), which also erodes
 trust in the alerts that matter. Fixability: fragments about 0.6 with hysteresis, a known and cheap
 change; late detections about 0.3 with this sensor. Product puts fragments first. It reverses if the
@@ -22,12 +22,12 @@ safety-relevant. Note the interaction: the fragment remedy adds delay, so the tw
 and fixed independently.
 
 *Common incorrect answers.* Ranking by row count alone. Ranking late first "because the stakeholder
-said delay" without sizing it (6 events, all detected). Ignoring that the fixes trade off.
+said delay" without sizing it (5 events, all detected). Ignoring that the fixes trade off.
 
 **3.** (i) It is defined from the labels (mean flow during the anomalous segment), so it is not
 available at prediction time and cannot be a routing rule or feature. (ii) It is close to a
 tautology: a detector built on flow deviation has low recall where flow deviates little; the slice
-restates the metric. Also acceptable: (iii) it was the fifth slice examined, on 7 experiments, with
+restates the metric. Also acceptable: (iii) it was the fifth slice examined, on 6 experiments, with
 no correction. A legitimate version: a slice computable before or without the outcome (fault family
 from the maintenance log, operating regime at burn-in), stated in advance, confirmed on held-out
 experiments.
@@ -47,8 +47,9 @@ do not let them drive a family comparison (they produce most of `other`'s false-
 is bad on `other`" (two files).
 
 **5.** `flow_rate` is quantised, so within an experiment the burn-in z-score takes few distinct
-values. A threshold change of 0.0004 crosses one of those values and flips every row sitting on that
-level at once (here 66 anomalous rows of `valve2/2`). Survives: the ranking of failure kinds (fragment
+values. Moving the threshold by 0.0017 (from the tuned 2.4044 to the next distinct score value, 2.4061) crosses
+one of those values and flips every row sitting on that level at once (here 28 anomalous rows of
+`valve1/3`, recall 0.834 to 0.765). Survives: the ranking of failure kinds (fragment
 about 50 % at both thresholds), zero missed events, the lack of a family effect. Does not survive:
 any statement about an individual experiment's recall or delay to two decimals, and anything inferred
 from "the best threshold". General lesson: a tuned threshold on a discrete score is a point on a
@@ -75,7 +76,7 @@ differ when label delay depends on the outcome (lates are known *later* than on-
 
 ## Design-choice explanation - model answer
 
-Choose `h` and the lower threshold by grouped cross-validation over the 25 development experiments
+Choose `h` and the lower threshold by grouped cross-validation over the 27 development experiments
 (overlap groups kept together), never on test. For each candidate compute, on held-out folds,
 fragment rows, pre-onset short runs, and detection delay per experiment; pick the smallest `h` after
 which fragment rows stop falling, not the F1 maximum, since F1 on this benchmark rewards anything
@@ -85,7 +86,7 @@ rows and post-event alarms lengthen. Abandon if fragment rows fall by less than 
 if median delay rises by more than the stakeholder's tolerance (to be asked; it is not in the brief).
 Report per-experiment changes, not only means, and run the chosen setting once on test at the end.
 
-*Common weak answers.* Tuning `h` to maximise dev F1 on all 25 experiments and reporting that F1.
+*Common weak answers.* Tuning `h` to maximise dev F1 on all 27 experiments and reporting that F1.
 Omitting the delay cost. Having no abandon criterion.
 
 ## Interview rep - rubric (read after your first attempt)

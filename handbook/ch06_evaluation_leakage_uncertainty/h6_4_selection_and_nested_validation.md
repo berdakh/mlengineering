@@ -67,7 +67,7 @@ Properties:
 
 A single fixed validation split is enough when the validation set is large relative to the differences
 between candidates and only a handful of candidates are compared; the dev-test split must still be by
-group. With 25 development experiments, it is not enough.
+group. With 27 development experiments, it is not enough.
 
 ## 6.4.4 Search strategy
 

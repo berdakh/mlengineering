@@ -196,7 +196,7 @@ What to do with label noise:
   the metric with and without them.
 * **Tolerant matching at boundaries.** If onset times are uncertain by a few seconds, scoring a
   detection 3 rows early as a false alarm punishes the model for the annotator's rounding. Event-level
-  metrics with a tolerance window (planned H6.5) are the principled fix; in point-level analysis,
+  metrics with a tolerance window (H6.5) are the principled fix; in point-level analysis,
   classify short edge-touching error runs separately as *boundary* errors so they are not mixed with
   genuine misses and false alarms.
 
