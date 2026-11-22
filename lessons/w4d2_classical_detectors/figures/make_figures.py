@@ -152,20 +152,22 @@ def fig_skab_scores(protocols: pd.DataFrame):
             held = dev["experiment_id"].isin(fold).to_numpy()
             oof[held] = cd.fit_score(makers[best], mode, dev[~held], dev[held], cols)
         thr, _ = best_f1_threshold(dev["anomaly"].to_numpy(), oof)
-        s = cd.fit_score(makers[best], mode, dev, one, cols) / thr
+        ref = np.sort(oof)                       # percentile within the development scores: comparable
+        pct = lambda v: 100.0 * np.searchsorted(ref, v, side="right") / len(ref)  # noqa: E731
+        s = pct(cd.fit_score(makers[best], mode, dev, one, cols))
         rows[name] = s
-        ax.plot(one["t"], np.clip(s, 0, 3), color=c, lw=0.9)
-        ax.axhline(1.0, color=INK["muted"], lw=0.8, ls="--")
+        ax.plot(one["t"], s, color=c, lw=0.9)
+        ax.axhline(pct(thr), color=INK["muted"], lw=0.8, ls="--")
         ax.set_ylabel(name.replace(" (w2d6 baseline)", ""), fontsize=8)
-        ax.set_ylim(0, 3.1)
-        ax.set_yticks([0, 1, 2, 3])
+        ax.set_ylim(-3, 103)
+        ax.set_yticks([0, 50, 100])
         an = one["anomaly"].to_numpy()
         on = np.flatnonzero(np.diff(np.r_[0, an, 0]) == 1)
         off = np.flatnonzero(np.diff(np.r_[0, an, 0]) == -1)
         tt = one["t"].to_numpy()
         for s0, s1 in zip(on, off):
             ax.axvspan(tt[s0], tt[s1 - 1], color=SERIES[1], alpha=0.12, lw=0)
-    axes[0].set_title(f"REAL SKAB test experiment {e}: score / threshold (dashed = 1, capped at 3)")
+    axes[0].set_title(f"REAL SKAB test experiment {e}: score as a percentile of development scores; dashed = threshold")
     axes[-1].set_xlabel("row t (about 1 s)")
     pd.DataFrame(rows).to_csv(HERE / "skab_scores_valve1_5.csv", index=False)
     save(fig, HERE / "skab_scores.svg")

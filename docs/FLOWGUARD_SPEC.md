@@ -75,6 +75,7 @@ Week 3+ units that need a manifest build a v2 one with their snapshot and state 
 | Module | Purpose | Introduced |
 |---|---|---|
 | `flowguard.forecast` | naive / AR one-step forecasters, residual scores, CUSUM | w4d1 |
+| `flowguard.windowfeatures` | causal window features for the supervised detectors | w4d2 |
 | `flowguard.detectors` | PCA (T2, Q), isolation forest, gradient-boosted trees, common fit/score interface | w4d2, w4d5 |
 | `flowguard.neural` | window dataset, small conv autoencoder, early stopping (PyTorch, CPU) | w4d3 |
 | `flowguard.tracking` / CLI `sweep`, `runs table`, `runs reproduce` | run registry and sweeps over w1d4 run directories | w4d4 |

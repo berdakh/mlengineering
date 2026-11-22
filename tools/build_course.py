@@ -124,11 +124,11 @@ unit("w3d7_review", "Review and catch-up (light)", REVIEW,
 unit("w4d1_timeseries_fundamentals", "Time-series fundamentals and forecast-residual detectors",
      "Reason about autocorrelation, non-stationarity and windowing; build naive, seasonal-naive and autoregressive forecasters and use their residuals as anomaly scores.",
      "Residual-based detector evaluated with the Week 3 protocol.",
-     "Week 3.", "H7.1, H7.4", path="lessons/w4d1_timeseries_fundamentals")
+     "Week 3.", "H7.1, H7.4", path="lessons/w4d1_timeseries_fundamentals", status="Execution verified", has_checks=True)
 unit("w4d2_classical_detectors", "Classical detectors: PCA/T2-Q, isolation forest, boosted trees on window features",
      "Fit methods to the label structure (semi-supervised vs supervised framing) and compare them under one protocol and compute budget.",
      "Comparison table with intervals; note on which framing the labels support.",
-     "w4d1.", "H5.3, H7.5", path="lessons/w4d2_classical_detectors")
+     "w4d1.", "H5.3, H7.5", path="lessons/w4d2_classical_detectors", status="Execution verified", has_checks=True)
 unit("w4d3_neural_comparison", "A neural comparison, where it is justified",
      "Train a small 1D-CNN or LSTM autoencoder (PyTorch, CPU) with a fair tuning budget and multiple seeds; report seed variance.",
      "Neural result with seed variance in the comparison table; GPU optional.",

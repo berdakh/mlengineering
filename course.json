@@ -283,8 +283,8 @@
       "prerequisites": "Week 3.",
       "handbook": "H7.1, H7.4",
       "path": "lessons/w4d1_timeseries_fundamentals",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w4d2_classical_detectors",
@@ -296,8 +296,8 @@
       "prerequisites": "w4d1.",
       "handbook": "H5.3, H7.5",
       "path": "lessons/w4d2_classical_detectors",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w4d3_neural_comparison",

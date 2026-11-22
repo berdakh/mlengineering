@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="608.664219pt" height="265.839469pt" viewBox="0 0 608.664219 265.839469" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="608.664219pt" height="286.645058pt" viewBox="0 0 608.664219 286.645058" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -20,8 +20,8 @@
  </defs>
  <g id="figure_1">
   <g id="patch_1">
-   <path d="M 0 265.839469 
-L 608.664219 265.839469 
+   <path d="M 0 286.645058 
+L 608.664219 286.645058 
 L 608.664219 0 
 L 0 0 
 z
@@ -1829,14 +1829,14 @@ z
    </g>
    <g id="legend_1">
     <g id="line2d_40">
-     <path d="M 141.80875 197.830875 
-L 149.80875 197.830875 
-L 157.80875 197.830875 
+     <path d="M 121.1445 271.51537 
+L 129.1445 271.51537 
+L 137.1445 271.51537 
 " style="fill: none; stroke: #2a78d6; stroke-width: 2; stroke-linecap: round"/>
     </g>
     <g id="text_15">
      <!-- protocol A: frozen test set (7 experiments) -->
-     <g style="fill: #0b0b0b" transform="translate(164.20875 200.630875) scale(0.08 -0.08)">
+     <g style="fill: #0b0b0b" transform="translate(143.5445 274.31537) scale(0.08 -0.08)">
       <defs>
        <path id="Inter-Regular-5e4" d="M 922 641 
 C 1156 641 1344 828 1344 1063 
@@ -1939,14 +1939,14 @@ z
      </g>
     </g>
     <g id="line2d_41">
-     <path d="M 141.80875 211.510562 
-L 149.80875 211.510562 
-L 157.80875 211.510562 
+     <path d="M 318.8545 271.51537 
+L 326.8545 271.51537 
+L 334.8545 271.51537 
 " style="fill: none; stroke: #eb6834; stroke-width: 2; stroke-linecap: round"/>
     </g>
     <g id="text_16">
      <!-- protocol B: unseen family `other` (8 clusters) -->
-     <g style="fill: #0b0b0b" transform="translate(164.20875 214.310562) scale(0.08 -0.08)">
+     <g style="fill: #0b0b0b" transform="translate(341.2545 274.31537) scale(0.08 -0.08)">
       <defs>
        <path id="Inter-Regular-41" d="M 563 0 
 L 2266 0 
