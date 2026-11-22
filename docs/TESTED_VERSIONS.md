@@ -15,6 +15,10 @@ Lower bounds in `requirements.txt` are intentions, not test results, unless a CI
 | pydantic | 2.13.5 |
 | pytest | 9.1.1 |
 | SQLite (stdlib `sqlite3`) | 3.53.1 |
+| matplotlib (figures only) | 3.11.2 |
+| PyTorch (w4d3 only) | 2.15.0 |
+| FastAPI / Starlette / uvicorn / httpx | 0.165.0 / 1.7.0 / 0.54.0 / 0.28.1 |
+| Docker Engine | 29.10.0 |
 | OS | Linux x86_64, glibc 2.39 (container) |
 
 ## Continuous integration
@@ -27,5 +31,5 @@ with the newest package versions that satisfy `requirements.txt`. The run on com
 * Pop!_OS itself (the authoring environment is a Linux container, not your machine).
 * Python 3.10 and older: unsupported, because the labs use `tomllib` (standard library from 3.11).
   Pop!_OS 22.04 ships Python 3.10; lesson w1d3 explains how to obtain a newer interpreter.
-* GPU execution. Nothing authored so far uses PyTorch.
-* Docker, FastAPI, AWS: no material depends on them yet.
+* GPU execution (w4d3 ran on CPU only).
+* AWS: no AWS call was ever made; deployment content is verified only against CLI example sources and API models.

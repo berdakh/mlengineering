@@ -1,0 +1,200 @@
+{
+  "_provenance": "Measured on 2026-11-22 in the course authoring container (Docker Engine 29.10.0, BuildKit, x86_64, busy shared host). Images were built with python:3.12-slim plus the sandbox proxy's CA certificate (+201 kB, substituted with --build-arg PYTHON_BASE / --build-context), so pip could reach PyPI. 'naive' = FROM python:3.12, COPY . ., pip install -r requirements.txt with pip's cache, shell-form CMD (not shipped; built only for this comparison).",
+  "images": {
+    "naive (python:3.12, one stage)": {
+      "disk_mb": 1903,
+      "content_mb": 496,
+      "base_disk_mb": 1620,
+      "base_content_mb": 430
+    },
+    "w6d1 (slim, one stage)": {
+      "disk_mb": 395,
+      "content_mb": 90,
+      "base_disk_mb": 179,
+      "base_content_mb": 45.5
+    },
+    "w6d2 (slim, builder + runtime)": {
+      "disk_mb": 402,
+      "content_mb": 91.6,
+      "base_disk_mb": 179,
+      "base_content_mb": 45.5
+    }
+  },
+  "site_packages_kb_w6d2": {
+    "pandas": 82388,
+    "numpy (incl. numpy.libs)": 66720,
+    "pydantic_core": 5348,
+    "pydantic": 4212,
+    "tzdata": 2840,
+    "fastapi": 1952,
+    "anyio": 1500,
+    "click": 1000,
+    "uvicorn": 920,
+    "starlette": 776,
+    "dateutil": 752,
+    "all other packages": 3720
+  },
+  "site_packages_kb_w6d1": {
+    "pandas": 74096,
+    "numpy (incl. numpy.libs)": 70192,
+    "pip": 6904,
+    "total": 173760
+  },
+  "versions": {
+    "pandas": {
+      "w6d1 image": "3.0.5",
+      "w6d2 image": "3.1.1"
+    },
+    "numpy": {
+      "w6d1 image": "2.5.3",
+      "w6d2 image": "2.5.5"
+    }
+  },
+  "build_seconds": {
+    "w6d1 no-cache": 23.1,
+    "w6d2 no-cache": 26.2,
+    "w6d1 code edit": [
+      1.7,
+      1.8,
+      2.0
+    ],
+    "w6d2 code edit": [
+      1.9,
+      1.5,
+      1.6
+    ]
+  },
+  "resolution_dates": [
+    "2025-11-22",
+    "2026-11-08",
+    "2026-11-22"
+  ],
+  "resolved_versions": [
+    [
+      "annotated-doc",
+      "0.0.4",
+      "0.0.5",
+      "0.0.7"
+    ],
+    [
+      "annotated-types",
+      "0.7.0",
+      "0.8.0",
+      "0.8.0"
+    ],
+    [
+      "anyio",
+      "4.11.0",
+      "4.16.0",
+      "4.16.0"
+    ],
+    [
+      "click",
+      "8.3.1",
+      "8.5.1",
+      "8.5.1"
+    ],
+    [
+      "fastapi",
+      "0.121.3",
+      "0.162.2",
+      "0.165.0"
+    ],
+    [
+      "h11",
+      "0.16.0",
+      "0.16.0",
+      "0.16.0"
+    ],
+    [
+      "idna",
+      "3.11",
+      "3.20",
+      "3.20"
+    ],
+    [
+      "numpy",
+      "2.3.5",
+      "2.5.4",
+      "2.5.5"
+    ],
+    [
+      "opentelemetry-api",
+      "-",
+      "1.45.2",
+      "1.45.2"
+    ],
+    [
+      "pandas",
+      "2.3.3",
+      "3.1.1",
+      "3.1.1"
+    ],
+    [
+      "pydantic",
+      "2.12.4",
+      "2.14.3",
+      "2.14.4"
+    ],
+    [
+      "pydantic-core",
+      "2.41.5",
+      "2.50.4",
+      "2.50.5"
+    ],
+    [
+      "python-dateutil",
+      "2.9.0.post0",
+      "4.0.0",
+      "4.0.0"
+    ],
+    [
+      "pytz",
+      "2025.2",
+      "-",
+      "-"
+    ],
+    [
+      "six",
+      "1.17.0",
+      "-",
+      "-"
+    ],
+    [
+      "sniffio",
+      "1.3.1",
+      "-",
+      "-"
+    ],
+    [
+      "starlette",
+      "0.50.0",
+      "1.10.0",
+      "1.10.0"
+    ],
+    [
+      "typing-extensions",
+      "4.15.0",
+      "4.16.0",
+      "4.16.0"
+    ],
+    [
+      "typing-inspection",
+      "0.4.2",
+      "0.4.5",
+      "0.4.5"
+    ],
+    [
+      "tzdata",
+      "2025.2",
+      "2026.6",
+      "2026.6"
+    ],
+    [
+      "uvicorn",
+      "0.38.0",
+      "0.54.0",
+      "0.54.0"
+    ]
+  ]
+}

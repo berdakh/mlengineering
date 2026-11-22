@@ -180,11 +180,11 @@ unit("w5d7_review", "Review and catch-up (light)", REVIEW,
 unit("w6d1_docker_basics", "Docker I: images, layers and a correct Dockerfile",
      "Explain what an image and container are; write a Dockerfile for the API (non-root, .dockerignore, cache-friendly layer order) and run it locally.",
      "Local container serving predictions; image build is repeatable.",
-     "w5d6; Docker Engine installed on Pop!_OS.", "H12.1", path="lessons/w6d1_docker_basics")
+     "w5d6; Docker Engine installed on Pop!_OS.", "H12.1", path="lessons/w6d1_docker_basics", status="Execution verified", has_checks=True)
 unit("w6d2_docker_reproducibility", "Docker II: pinned dependencies, multi-stage builds, smoke tests",
      "Make the environment reproducible (lockfile, pinned base image digest), reduce image size, and smoke-test the container.",
      "Multi-stage image with lockfile and an automated container smoke test.",
-     "w6d1.", "H12.2", path="lessons/w6d2_docker_reproducibility")
+     "w6d1.", "H12.2", path="lessons/w6d2_docker_reproducibility", status="Execution verified", has_checks=True)
 unit("w6d3_ci", "Continuous integration with GitHub Actions",
      "Automate lint, tests and image build on every push; decide what belongs in CI versus scheduled evaluation jobs.",
      "Green CI workflow on the project repository with caching.",

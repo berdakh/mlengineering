@@ -1,0 +1,179 @@
+{
+  "meta": {
+    "workers": 2,
+    "body": "real SKAB valve1/13, first 600 samples",
+    "body_bytes": 141618,
+    "batch": 600,
+    "warmup_s": 3.0,
+    "server_rss_mb_idle": 220.9,
+    "server_rss_mb_after": 236.6,
+    "cpus": 4,
+    "env": {},
+    "server_args": [],
+    "launcher": "serve",
+    "load_average_at_end": [
+      0.6357421875,
+      0.943359375,
+      1.27197265625
+    ],
+    "budget": {
+      "p95_ms": 100.0,
+      "p99_ms": 250.0,
+      "error_rate": 0.001
+    }
+  },
+  "runs": [
+    {
+      "target_rps": 20.0,
+      "duration_s": 15.0,
+      "summary": {
+        "n_sent": 300,
+        "n_ok": 300,
+        "n_errors": 0,
+        "error_rate": 0.0,
+        "throughput_rps": 20.05434994488267,
+        "late_starts": 0,
+        "max_start_lag_ms": 2.3314669997489545,
+        "p50_ms": 10.206816500613058,
+        "p95_ms": 15.08406715056481,
+        "p99_ms": 19.967831210888033,
+        "mean_ms": 10.983774510526322,
+        "max_ms": 63.184196002112
+      },
+      "budget": {
+        "ok": true,
+        "checks": {
+          "p95_ms": {
+            "limit": 100.0,
+            "observed": 15.08406715056481,
+            "ok": true
+          },
+          "p99_ms": {
+            "limit": 250.0,
+            "observed": 19.967831210888033,
+            "ok": true
+          },
+          "error_rate": {
+            "limit": 0.001,
+            "observed": 0.0,
+            "ok": true
+          }
+        }
+      }
+    },
+    {
+      "target_rps": 60.0,
+      "duration_s": 15.0,
+      "summary": {
+        "n_sent": 900,
+        "n_ok": 900,
+        "n_errors": 0,
+        "error_rate": 0.0,
+        "throughput_rps": 60.03302753830501,
+        "late_starts": 0,
+        "max_start_lag_ms": 2.4141076664818684,
+        "p50_ms": 8.01281833264511,
+        "p95_ms": 10.545888198703318,
+        "p99_ms": 15.578952234318422,
+        "mean_ms": 8.444312666936943,
+        "max_ms": 47.63627499960421
+      },
+      "budget": {
+        "ok": true,
+        "checks": {
+          "p95_ms": {
+            "limit": 100.0,
+            "observed": 10.545888198703318,
+            "ok": true
+          },
+          "p99_ms": {
+            "limit": 250.0,
+            "observed": 15.578952234318422,
+            "ok": true
+          },
+          "error_rate": {
+            "limit": 0.001,
+            "observed": 0.0,
+            "ok": true
+          }
+        }
+      }
+    },
+    {
+      "target_rps": 90.0,
+      "duration_s": 15.0,
+      "summary": {
+        "n_sent": 1350,
+        "n_ok": 1350,
+        "n_errors": 0,
+        "error_rate": 0.0,
+        "throughput_rps": 90.01236286199035,
+        "late_starts": 1,
+        "max_start_lag_ms": 12.396874333717278,
+        "p50_ms": 9.318043445091462,
+        "p95_ms": 15.090274778867752,
+        "p99_ms": 27.464135725513188,
+        "mean_ms": 10.458976102277962,
+        "max_ms": 84.9842577772506
+      },
+      "budget": {
+        "ok": true,
+        "checks": {
+          "p95_ms": {
+            "limit": 100.0,
+            "observed": 15.090274778867752,
+            "ok": true
+          },
+          "p99_ms": {
+            "limit": 250.0,
+            "observed": 27.464135725513188,
+            "ok": true
+          },
+          "error_rate": {
+            "limit": 0.001,
+            "observed": 0.0,
+            "ok": true
+          }
+        }
+      }
+    },
+    {
+      "target_rps": 120.0,
+      "duration_s": 15.0,
+      "summary": {
+        "n_sent": 1800,
+        "n_ok": 1800,
+        "n_errors": 0,
+        "error_rate": 0.0,
+        "throughput_rps": 119.9976192712324,
+        "late_starts": 4,
+        "max_start_lag_ms": 21.81211599963717,
+        "p50_ms": 8.161385999301274,
+        "p95_ms": 11.880396432661653,
+        "p99_ms": 35.02167183920388,
+        "mean_ms": 9.165431017381707,
+        "max_ms": 78.67392433217901
+      },
+      "budget": {
+        "ok": true,
+        "checks": {
+          "p95_ms": {
+            "limit": 100.0,
+            "observed": 11.880396432661653,
+            "ok": true
+          },
+          "p99_ms": {
+            "limit": 250.0,
+            "observed": 35.02167183920388,
+            "ok": true
+          },
+          "error_rate": {
+            "limit": 0.001,
+            "observed": 0.0,
+            "ok": true
+          }
+        }
+      }
+    }
+  ]
+}

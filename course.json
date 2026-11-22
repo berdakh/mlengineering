@@ -465,8 +465,8 @@
       "prerequisites": "w5d6; Docker Engine installed on Pop!_OS.",
       "handbook": "H12.1",
       "path": "lessons/w6d1_docker_basics",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w6d2_docker_reproducibility",
@@ -478,8 +478,8 @@
       "prerequisites": "w6d1.",
       "handbook": "H12.2",
       "path": "lessons/w6d2_docker_reproducibility",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w6d3_ci",
