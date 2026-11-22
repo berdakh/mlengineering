@@ -1,0 +1,20 @@
+{
+  "files": {
+    "model.json": "a252e6e29afb5c8087047ba38ab274976ddeee5c1d62d24cd5fbc79a2c31e3c0"
+  },
+  "package_version": "0.8.0",
+  "provenance": {
+    "config": {
+      "merge_gap": 10,
+      "min_duration": 30,
+      "model_version": "flowrate-z-2026.11",
+      "n_burn_in": 100,
+      "sensor": "flow_rate",
+      "threshold": 7.2441307141
+    },
+    "config_sha256": "25b5b0e20b40bb3c844526c03f55e89adf767f7392aa436ab8e280514d7278aa",
+    "dev_experiments": 27,
+    "splits_sha256": "a9f4e2438e666e04bb89b9364f938ffa01554969298c16b9e9eb2082bd005314"
+  },
+  "schema": "flowguard-bundle/1"
+}
