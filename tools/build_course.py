@@ -152,11 +152,11 @@ unit("w4d7_review", "Review and catch-up (light)", REVIEW,
 unit("w5d1_inference_pipeline", "Research experimentation versus production inference",
      "Package preprocessing and model as one inference object used identically in training evaluation and serving; build a batch inference command.",
      "`flowguard predict-batch` with a training/serving parity test.",
-     "w4d6.", "H10.1", path="lessons/w5d1_inference_pipeline")
+     "w4d6.", "H10.1", path="lessons/w5d1_inference_pipeline", status="Execution verified", has_checks=True)
 unit("w5d2_artifacts_versioning", "Model artifacts, metadata and versioning",
      "Serialise models with the metadata needed to trust and reload them (schema, feature list, versions, data and code hashes); understand pickle risks and alternatives.",
      "Versioned artifact bundle + load-time compatibility checks + model card draft.",
-     "w5d1.", "H10.2", path="lessons/w5d2_artifacts_versioning")
+     "w5d1.", "H10.2", path="lessons/w5d2_artifacts_versioning", status="Execution verified", has_checks=True)
 unit("w5d3_online_inference", "Online inference on streams: state, warm-up and parity",
      "Implement stateful windowed scoring for one-sample-at-a-time input and prove parity with batch scoring.",
      "Streaming scorer with batch/online parity tests and documented warm-up behaviour.",

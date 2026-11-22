@@ -85,3 +85,16 @@ Week 3+ units that need a manifest build a v2 one with their snapshot and state 
 
 All real-data results from Week 3 on use the frozen manifest
 `solutions/lessons/w3d1_leakage/lab/splits/v2.json` (7 test, 27 development experiments).
+
+## Additions in Week 5 (as built in the lesson snapshots)
+
+| Module | Purpose | Introduced |
+|---|---|---|
+| `flowguard.inference` | `Detector`: one object owning burn-in state, features, scoring and the input schema | w5d1 |
+| `flowguard.batch`, CLI `predict-batch` | idempotent batch scoring with model version in the output | w5d1 |
+| `flowguard.artifacts` | checksummed bundles without pickle (JSON + npz); registry with immutable versions and an atomic `current` pointer | w5d2 |
+| `flowguard.streaming` | `StreamScorer.update(row)`, `StreamRegistry`; batch parity | w5d3 |
+| `flowguard.api` | `create_app(model_dir)`: `/predict`, `/healthz`, `/readyz`, `/version`; 422/503 semantics | w5d4 |
+
+The shipped model from w4d5 onward: burn-in flow-rate z-score, threshold 7.2441 (alert-budget operating point).
+CSV round trips use `float_precision="round_trip"`; the default parser is not exact.

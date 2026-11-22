@@ -374,8 +374,8 @@
       "prerequisites": "w4d6.",
       "handbook": "H10.1",
       "path": "lessons/w5d1_inference_pipeline",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w5d2_artifacts_versioning",
@@ -387,8 +387,8 @@
       "prerequisites": "w5d1.",
       "handbook": "H10.2",
       "path": "lessons/w5d2_artifacts_versioning",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w5d3_online_inference",

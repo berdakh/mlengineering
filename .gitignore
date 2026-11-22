@@ -27,3 +27,5 @@ data/processed/
 data/features/
 lessons/*/lab/results/
 solutions/lessons/*/lab/results/
+lessons/*/challenge/results/
+solutions/lessons/*/challenge/results/
