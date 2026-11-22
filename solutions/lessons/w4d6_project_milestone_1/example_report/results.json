@@ -1,0 +1,291 @@
+{
+  "data": {
+    "anomalous_row_fraction": 0.3493756851421085,
+    "experiments": 35,
+    "experiments_by_family": {
+      "anomaly-free": 1,
+      "other": 14,
+      "valve1": 16,
+      "valve2": 4
+    },
+    "rows": 46806
+  },
+  "decision": {
+    "chosen": "flow-rate |z|",
+    "eligible": [
+      "flow-rate |z|",
+      "Mahalanobis",
+      "logistic (supervised)"
+    ],
+    "reason": "flow-rate |z|: no candidate is shown to be practically better, so the simplest candidate that is not shown to be worse"
+  },
+  "dev_by_family": [
+    {
+      "events_detected": 3,
+      "events_total": 12,
+      "experiments": 12,
+      "false_alarms": 0,
+      "family": "other"
+    },
+    {
+      "events_detected": 6,
+      "events_total": 12,
+      "experiments": 12,
+      "false_alarms": 0,
+      "family": "valve1"
+    },
+    {
+      "events_detected": 2,
+      "events_total": 3,
+      "experiments": 3,
+      "false_alarms": 0,
+      "family": "valve2"
+    }
+  ],
+  "development": [
+    {
+      "budget_met_on_dev": true,
+      "complexity": 0,
+      "diff": 0.0,
+      "diff_hi": 0.0,
+      "diff_lo": 0.0,
+      "dominated_by": "",
+      "events_detected": 11,
+      "events_total": 27,
+      "false_alarms_per_hour": 0.0,
+      "merge_gap": 10,
+      "min_duration": 30,
+      "name": "flow-rate |z|",
+      "pareto": true,
+      "primary": 0.7648100991,
+      "primary_hi": 0.8447424337,
+      "primary_lo": 0.6802983393,
+      "size_bytes": 370,
+      "supervised": false,
+      "threshold": 7.2441307141,
+      "vs_reference": "equivalent"
+    },
+    {
+      "budget_met_on_dev": true,
+      "complexity": 1,
+      "diff": -0.0597842717,
+      "diff_hi": 0.070959524,
+      "diff_lo": -0.2115249657,
+      "dominated_by": "flow-rate |z|",
+      "events_detected": 8,
+      "events_total": 27,
+      "false_alarms_per_hour": 0.0,
+      "merge_gap": 0,
+      "min_duration": 30,
+      "name": "Mahalanobis",
+      "pareto": false,
+      "primary": 0.7050258274,
+      "primary_hi": 0.8002504665,
+      "primary_lo": 0.5968806662,
+      "size_bytes": 920,
+      "supervised": false,
+      "threshold": 34.0783311553,
+      "vs_reference": "inconclusive"
+    },
+    {
+      "budget_met_on_dev": true,
+      "complexity": 2,
+      "diff": -0.202624244,
+      "diff_hi": -0.1197026935,
+      "diff_lo": -0.299048604,
+      "dominated_by": "flow-rate |z|;Mahalanobis;logistic (supervised)",
+      "events_detected": 3,
+      "events_total": 27,
+      "false_alarms_per_hour": 0.0,
+      "merge_gap": 0,
+      "min_duration": 30,
+      "name": "isolation forest",
+      "pareto": false,
+      "primary": 0.5621858551,
+      "primary_hi": 0.6388453274,
+      "primary_lo": 0.4914276734,
+      "size_bytes": 759036,
+      "supervised": false,
+      "threshold": 0.5900616834,
+      "vs_reference": "worse"
+    },
+    {
+      "budget_met_on_dev": true,
+      "complexity": 3,
+      "diff": 0.0687953094,
+      "diff_hi": 0.1283136817,
+      "diff_lo": 0.0220446159,
+      "dominated_by": "",
+      "events_detected": 13,
+      "events_total": 27,
+      "false_alarms_per_hour": 0.0,
+      "merge_gap": 10,
+      "min_duration": 30,
+      "name": "logistic (supervised)",
+      "pareto": true,
+      "primary": 0.8336054085,
+      "primary_hi": 0.8948438798,
+      "primary_lo": 0.7623335332,
+      "size_bytes": 1045,
+      "supervised": true,
+      "threshold": 3.964503467,
+      "vs_reference": "inconclusive"
+    }
+  ],
+  "protocol": {
+    "alert_budget_hours": 8,
+    "burn_in_rows": 100,
+    "dev_clusters": 23,
+    "dev_experiments": 27,
+    "interval_level": 0.95,
+    "mpid": 0.05,
+    "n_boot": 2000,
+    "reference": "flow-rate |z|",
+    "seed": 0,
+    "test_clusters": 7,
+    "test_experiments": [
+      "other/1",
+      "other/14",
+      "valve1/10",
+      "valve1/13",
+      "valve1/5",
+      "valve1/8",
+      "valve2/0"
+    ],
+    "unit": "overlap group"
+  },
+  "provenance": {
+    "code_version": "41a95b50065d-dirty",
+    "packages": {
+      "numpy": "2.5.3",
+      "pandas": "3.0.5",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1"
+    },
+    "python": "3.13.18",
+    "splits_file": "v2.json",
+    "splits_sha256": "a9f4e2438e666e04bb89b9364f938ffa01554969298c16b9e9eb2082bd005314",
+    "tidy_sha256": "437c2ff433aced23a5142d3f97ddc3ef8b4f78ead5908757b4e900754cdf4ef4"
+  },
+  "schema": "flowguard-evaluation/1",
+  "test": [
+    {
+      "chosen": true,
+      "events_detected": 5,
+      "events_total": 7,
+      "false_alarms": 0,
+      "false_alarms_per_hour": 0.0,
+      "median_delay_s": 100.0,
+      "name": "flow-rate |z|",
+      "normal_hours": 1.2155555555555557,
+      "pr_auc": 0.8842514082603946,
+      "pr_auc_hi": 0.9278419932827553,
+      "pr_auc_lo": 0.8113569343485438,
+      "recall_hi": 0.9177810759959433,
+      "recall_lo": 0.3589344518326194
+    },
+    {
+      "chosen": false,
+      "events_detected": 1,
+      "events_total": 7,
+      "false_alarms": 0,
+      "false_alarms_per_hour": 0.0,
+      "median_delay_s": null,
+      "name": "Mahalanobis",
+      "normal_hours": 1.2155555555555557,
+      "pr_auc": 0.7590781986762352,
+      "pr_auc_hi": 0.8689098798690782,
+      "pr_auc_lo": 0.6112846195306849,
+      "recall_hi": 0.5131278292743188,
+      "recall_lo": 0.02567962434474355
+    },
+    {
+      "chosen": false,
+      "events_detected": 1,
+      "events_total": 7,
+      "false_alarms": 0,
+      "false_alarms_per_hour": 0.0,
+      "median_delay_s": null,
+      "name": "isolation forest",
+      "normal_hours": 1.2155555555555557,
+      "pr_auc": 0.5466307593828719,
+      "pr_auc_hi": 0.7002724983136303,
+      "pr_auc_lo": 0.39854243700696845,
+      "recall_hi": 0.5131278292743188,
+      "recall_lo": 0.02567962434474355
+    },
+    {
+      "chosen": false,
+      "events_detected": 4,
+      "events_total": 7,
+      "false_alarms": 0,
+      "false_alarms_per_hour": 0.0,
+      "median_delay_s": 186.0,
+      "name": "logistic (supervised)",
+      "normal_hours": 1.2155555555555557,
+      "pr_auc": 0.9005528270624786,
+      "pr_auc_hi": 0.9445381892085692,
+      "pr_auc_lo": 0.8237934640956464,
+      "recall_hi": 0.8417801447485302,
+      "recall_lo": 0.25045836452765724
+    }
+  ],
+  "test_per_experiment": [
+    {
+      "delay_s": 100.0,
+      "detected": 1,
+      "events": 1,
+      "experiment_id": "other/1",
+      "false_alarms": 0,
+      "family": "other"
+    },
+    {
+      "delay_s": 59.0,
+      "detected": 1,
+      "events": 1,
+      "experiment_id": "other/14",
+      "false_alarms": 0,
+      "family": "other"
+    },
+    {
+      "delay_s": 186.0,
+      "detected": 1,
+      "events": 1,
+      "experiment_id": "valve1/10",
+      "false_alarms": 0,
+      "family": "valve1"
+    },
+    {
+      "delay_s": 75.0,
+      "detected": 1,
+      "events": 1,
+      "experiment_id": "valve1/13",
+      "false_alarms": 0,
+      "family": "valve1"
+    },
+    {
+      "delay_s": 91.0,
+      "detected": 1,
+      "events": 1,
+      "experiment_id": "valve1/5",
+      "false_alarms": 0,
+      "family": "valve1"
+    },
+    {
+      "delay_s": null,
+      "detected": 0,
+      "events": 1,
+      "experiment_id": "valve1/8",
+      "false_alarms": 0,
+      "family": "valve1"
+    },
+    {
+      "delay_s": null,
+      "detected": 0,
+      "events": 1,
+      "experiment_id": "valve2/0",
+      "false_alarms": 0,
+      "family": "valve2"
+    }
+  ]
+}

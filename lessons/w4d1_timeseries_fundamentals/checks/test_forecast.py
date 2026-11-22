@@ -149,11 +149,13 @@ def test_cusum_detects_a_one_sigma_shift_with_the_expected_delay(fc):
 
 
 def test_cusum_rarely_alarms_on_noise(fc):
+    # two-sided k = 0.5, h = 5: the in-control run length averages a few hundred samples, so about 1 in
+    # 10 runs of 50 samples alarms; a chart that ignores k alarms in most of them
     alarms = 0
     for seed in range(20):
-        stat = fc.cusum(np.random.default_rng(100 + seed).standard_normal(100), k=0.5)
+        stat = fc.cusum(np.random.default_rng(100 + seed).standard_normal(50), k=0.5)
         alarms += bool((stat > 5.0).any())
-    assert alarms <= 3     # two-sided ARL0 for k=0.5, h=5 is a few hundred samples
+    assert alarms <= 6
 
 
 # ---------------------------------------------------------------- the given per-experiment helper

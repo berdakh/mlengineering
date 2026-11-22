@@ -1,0 +1,24 @@
+{
+  "business": "Larkspur meal-kit subscriptions (SYNTHETIC)",
+  "decision": "which churn model scores customers on the account page to choose a retention offer",
+  "reference": "A",
+  "metric": "ROC AUC on the held-out month, pooled over customers",
+  "unit_of_resampling": "region (customers in a region share pricing, couriers and promotions)",
+  "mpid": 0.02,
+  "p95_budget_ms": 50.0,
+  "models": {
+    "A": {
+      "kind": "gradient-boosted trees, 120 features, in the current Python service",
+      "new_dependencies": []
+    },
+    "B": {
+      "kind": "transformer over the order-event sequence, needs a GPU-backed inference server",
+      "new_dependencies": [
+        "onnxruntime-gpu",
+        "a model-server container",
+        "a GPU node pool"
+      ]
+    }
+  },
+  "variant": "default"
+}

@@ -25,6 +25,7 @@ from flowguard.baselines import MahalanobisScorer, SingleSensorZScorer
 from flowguard.data import SENSOR_COLUMNS
 
 _SENSORS = list(SENSOR_COLUMNS)
+Z_CLIP = 20.0   # a sensor 1000 SD away is "far"; unclipped z lets one sensor dominate the fit (as in w3d5)
 
 
 class _Unsupervised:
@@ -69,7 +70,7 @@ class _LogisticStep:
         self.mean_, self.std_, self.model_ = mean, std, model
 
     def score(self, rows: pd.DataFrame) -> np.ndarray:
-        z = (rows[_SENSORS].to_numpy(dtype=float) - self.mean_) / self.std_
+        z = np.clip((rows[_SENSORS].to_numpy(dtype=float) - self.mean_) / self.std_, -Z_CLIP, Z_CLIP)
         return self.model_.decision_function(np.hstack([z, np.abs(z)]))
 
 
@@ -99,7 +100,7 @@ class SupervisedLogistic:
             g = g.sort_values("t", kind="stable")
             mean, std = self._standardise(g, g.iloc[: self.n_burn])
             rest = g.iloc[self.n_burn:]
-            z = (rest[_SENSORS].to_numpy(dtype=float) - mean) / std
+            z = np.clip((rest[_SENSORS].to_numpy(dtype=float) - mean) / std, -Z_CLIP, Z_CLIP)
             feats.append(np.hstack([z, np.abs(z)]))
             labels.append(rest["anomaly"].to_numpy())
         y = np.concatenate(labels)
