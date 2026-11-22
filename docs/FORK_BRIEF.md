@@ -41,3 +41,28 @@ lessons/<id>` passes for both parts with every mutant rejected; the shipped star
 
 Report (<= 250 words): files written; commands run with real outcomes; sources opened; anything
 unverified; new dependencies; anything the integrator must act on.
+
+## Visuals (required in every lesson and handbook section)
+
+The learner asked for more visuals. Each lesson needs at least four, each handbook section at least two,
+placed where they carry an idea better than prose. Two kinds:
+
+1. **Diagrams as Mermaid** in fenced ```mermaid blocks (GitHub renders them): pipelines and data flow,
+   package/module structure, decision trees, sequence diagrams (request -> validation -> model -> response),
+   state machines, timelines of train/validation/test splits (`gantt` works well for split layouts).
+   Keep each under ~15 nodes; label edges; no styling directives beyond defaults. For layouts Mermaid
+   draws badly (e.g. fold-by-experiment grids), use a small ASCII/Unicode block diagram in a code fence.
+2. **Data figures from real runs**: a committed script `figures/make_figures.py` in the unit (or
+   `handbook/figures/<section>/make_figures.py`) that imports `tools.figstyle` (read its docstring and
+   obey its rules), regenerates every figure deterministically, and writes `figures/*.svg`. Embed with
+   `![alt text that states the takeaway](figures/name.svg)` followed by a one-sentence caption that
+   says what to look at and whether the data is SYNTHETIC or real. Numbers in a figure must come from
+   a run of that script; print them too so the lesson's table matches. Typical candidates: a signal with
+   the labelled event and the detector's alarms; causal vs centred window response to a step; score
+   distributions by class; PR and ROC curves side by side; a reliability curve; interval plots
+   (point estimate + CI per model); leaky vs honest estimates; latency histograms with percentiles.
+   Small multiples instead of dual axes. matplotlib is a figure-authoring dependency only: labs and
+   checks must not import it.
+
+Before finishing, open each SVG's rendering once (convert to PNG with matplotlib and view it with the
+Read tool) to catch overlapping labels or empty plots. Report the list of figures.

@@ -6,3 +6,4 @@ scikit-learn>=1.4
 scipy>=1.11
 pydantic>=2.6
 pytest>=8
+matplotlib>=3.8   # only for regenerating figures (figures/make_figures.py); labs and checks do not need it
