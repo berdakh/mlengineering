@@ -27,12 +27,22 @@ Units covered: `w4d1` time-series fundamentals and forecast-residual detectors, 
 detectors, `w4d3` neural comparison, `w4d4` experiment tracking, `w4d5` model choice, `w4d6` project
 milestone 1 (evaluation report).
 
-**Alignment note.** The Week 4 lessons were being written at the same time as this review unit. The
-questions are based on each lesson's stated objective, on the project specification and findings,
-and on standard correct content; they will be re-aligned with the final lesson texts (wording,
-emphasis and the numbers your comparison table actually contains). If a question refers to something
-your version of a lesson did not cover, answer from first principles and note it with
-`python wb.py note w4d7 "..."`.
+The week in one picture. Each arrow is a question the next lesson answers.
+
+```mermaid
+flowchart LR
+    TS["w4d1 time-series basics<br/>ACF, stationarity,<br/>forecast residuals, CUSUM"] --> CD["w4d2 classical detectors<br/>PCA T2 and Q, isolation forest,<br/>boosted trees; protocols A and B"]
+    CD --> NN["w4d3 neural comparison<br/>same protocol, 5 seeds,<br/>cost reported"]
+    CD --> TR["w4d4 experiment tracking<br/>run id = config hash,<br/>registry, reproduce"]
+    NN --> TR
+    TR --> MC["w4d5 model choice<br/>MPID, interval reading,<br/>Pareto, simplest not worse"]
+    MC --> RP["w4d6 milestone 1<br/>make evaluate,<br/>byte-identical report"]
+    W3["Week 3: frozen v2 split,<br/>event metrics, cluster bootstrap"] -.-> CD
+    W3 -.-> MC
+```
+
+All real-data numbers in this week's lessons, and in the questions below, come from the frozen
+manifest v2 (`w3d1`): **7 test and 27 development experiments**, test prevalence 0.373.
 
 ## 1. Spaced-review items due today (5-10 minutes)
 
@@ -46,55 +56,69 @@ cannot answer, write what you would check; open the key only when all twelve hav
 
 **Time-series fundamentals (w4d1)**
 
-1. What does it mean for a series to be (weakly) stationary? Give two ways a pump sensor can be
-   non-stationary during *normal* operation, and say what each does to a fixed z-score threshold.
-2. Name three baseline forecasters and the kind of series on which each is hard to beat. In this
-   project, why are forecasters a means and not the goal, and why can a forecaster with a *lower*
-   forecast error be a *worse* anomaly detector?
+1. What is weak stationarity, and name three ways a pump sensor departs from it with the usual
+   remedy for each. Why is the fault itself a non-stationarity, and what does that imply for how
+   quickly a model of "normal" should adapt? For an AR(1) sensor with `φ = 0.9`, roughly how many
+   independent observations are 300 rows worth?
+2. After a sustained level shift of size `Δ`, what does the residual of a naive (last-value)
+   forecaster do, and what does the residual of a fitted AR(p) with intercept do? On the 7 test
+   experiments the naive residual scored PR-AUC 0.401 and AR(2) 0.809, with a no-skill floor of
+   0.373. Explain both numbers, and why a forecaster with lower forecast error can be a worse detector.
+3. Write the two-sided tabular CUSUM. What do `k` and `h` control, what is the approximate detection
+   delay after a shift of `δ` residual standard deviations, and what does an in-control run length of
+   about 460 samples mean at 1 Hz? On test, AR(2) + CUSUM gave 3.3 false alarms per hour (4 of 7 events,
+   median delay 111 s) against about 223 per hour for the plain AR(2) residual at its best-F1
+   threshold. What changed: the detector or the operating point?
 
 **Classical detectors (w4d2)**
 
-3. A PCA model is fitted on normal data with `k` retained components. Define the two monitoring
-   statistics usually called T² and Q (or SPE). Which kind of anomaly does each detect, and which
-   kind does a per-sensor z-score miss that Q catches?
-4. Explain how an isolation forest scores a point, without formulas beyond "path length". What does
-   its `contamination` parameter do, and why is setting it from the test set a leak?
-5. "Semi-supervised" versus "supervised" framing on SKAB: what data does each train on, what is
-   the argument for each, and what does holding out the whole `other` family (protocol B) measure
-   that the standard split does not?
+4. A PCA model is fitted on standardised normal rows with `k` components. Define T² and Q (SPE),
+   say which kind of fault each sees, and how the lab sets their limits and chooses `k`. Which
+   statistic was weakest on SKAB, and what does that suggest about how the faults move the sensors?
+5. How does an isolation forest score a point? What does `contamination` change and what does it not
+   change, and why is setting it from test prevalence a leak? Name one kind of anomaly its axis-aligned
+   splits see poorly.
+6. On the frozen test set (protocol A) the gradient-boosted trees had the best PR-AUC, 0.920. Trained
+   on the valve families and scored on the unseen `other` family (protocol B) they fell to 0.636,
+   while the isolation forest (0.831 to 0.783) and PCA T² (0.762 to 0.761) held. What question does
+   each protocol answer, which framing do the SKAB labels support, and what would you ship?
 
 **Neural comparison (w4d3)**
 
-6. List four conditions for a comparison between a neural model and a classical one to be *fair*.
-   You train the neural model with 5 seeds and get F1 between 0.78 and 0.86. The classical model
-   scores 0.83. What can you conclude, and what would you report?
-7. An autoencoder trained to reconstruct normal windows is used as a detector via reconstruction
-   error. Give two distinct reasons it can fail to flag real anomalies, and one check for each.
+7. List what was held equal in the neural versus classical comparison and what was not. Five
+   autoencoder seeds gave test PR-AUC 0.682 to 0.837 (mean 0.754, sd 0.068), Mahalanobis 0.768, and
+   the paired difference for the median seed was −0.057 [−0.194, +0.104]. What do you conclude and
+   report? The seed with the lowest validation loss had the lowest test score: what does that teach?
 
 **Tracking and reproducibility (w4d4)**
 
-8. What must be recorded for a row of your results table to be reproducible from its run id alone?
-   Name one thing people usually forget, and say what "reproduced" should mean numerically.
-9. You swept 60 configurations. Which numbers from the sweep may appear in the report, computed on
-   which data, and how do you keep the sweep from becoming selection on the test set?
+8. What must a run directory record, how is the run id formed, and why must the configuration be
+   serialised canonically? Why is `status.json` written last, and why is the index rebuilt from the
+   directories instead of being the source of truth? What does `reproduce` have to do to count as
+   evidence?
+9. The Mahalanobis/isolation-forest sweep produced 12 runs on development data; the best row scored
+   0.735. Which numbers from the sweep may appear in a report, why is 0.735 optimistic for its
+   configuration, and how does the tooling keep test data out of sweeps?
 
 **Model choice and the report (w4d5, w4d6)**
 
-10. Your best complex model beats the simplest competitive baseline by Δ = 0.02 with a 95 % interval
-    of [−0.03, 0.07]. List the considerations that should decide which one ships, and state the
-    decision you would defend.
-11. What does "the report is regenerated by `make evaluate`" guarantee, and what does it not? Name
-    three things an evaluation report must contain besides the comparison table.
+10. Define the MPID and the four readings of an interval for (candidate − reference). On development
+    data, logistic regression beat the flow-rate z-score by +0.069 [+0.022, +0.128] with MPID 0.05.
+    What is the reading, which model does the w4d5 rule choose and why? On its one test look the
+    logistic model scored 0.901 against 0.884 for the chosen one: should you switch?
+11. What does "the report is regenerated by `make evaluate`" guarantee, and what not? Why does the
+    milestone report contain no timestamp and no latency figures, and what is the one thing `make`
+    cannot detect as stale? Name three sections the report must have besides the results table.
 
 **Delayed question from Week 3 (w3d5)**
 
-12. Why is a bootstrap over rows wrong for this project, what is resampled instead, and what remains
-    doubtful about the resulting interval?
+12. Why is a bootstrap over rows wrong for this project, what is resampled instead on the 7 test
+    experiments, and what remains doubtful about the resulting interval?
 
 ## 3. Score and choose (10 minutes)
 
 Open [`solutions/lessons/w4d7_review/retrieval_answers.md`](../../solutions/lessons/w4d7_review/retrieval_answers.md)
-(question 12's key is answer 9 of `solutions/lessons/w3d7_review/retrieval_answers.md`).
+(question 12's full key is answer 9 of `solutions/lessons/w3d7_review/retrieval_answers.md`).
 Mark each answer **solid**, **shaky** or **missing** and record the lists:
 
 ```bash
@@ -158,7 +182,7 @@ leaves the list after two consecutive solid answers.
 ```
 ## Spaced review
 - w4d7 Q3 (T2 vs Q)                         - due w5d7
-- w3d7 Q9 (cluster bootstrap, 9 clusters)   - due w6d7   (second miss)
+- w3d7 Q9 (cluster bootstrap, 7 clusters)   - due w6d7   (second miss)
 ```
 
 **Flags.** Set each from evidence:
@@ -188,13 +212,13 @@ Checklist
 - [ ] Project check: milestone 1 report regenerates from a command; it names the split version, the
       resampling unit of every interval, and includes the elapsed-time baseline
 
-Next: Week 5 starts with `w5d1` (research experimentation versus production inference); see
-[roadmap/SCHEDULE.md](../../roadmap/SCHEDULE.md).
+**Next:** Week 5 starts with `w5d1` (research experimentation versus production inference: one inference
+pipeline for training and serving). Its material is not written yet; its objective, deliverable and
+prerequisites are in [roadmap/SCHEDULE.md](../../roadmap/SCHEDULE.md).
 
 ---
 
-*Content status and verification: see `STATUS.md`. Interview set 4's coding reference was executed
-against its tests and deliberately wrong answers were rejected; the numbers in its worked answers
-were simulated or computed (details in `solutions/interview/set4.md`). The retrieval answers are
-prose; the numerical illustrations in answers 3 and 6 were produced by running code. Statements
-about the Week 4 lessons await re-alignment as noted above.*
+*Content status and verification: see `STATUS.md`. Questions and answers were aligned with the final
+Week 4 lessons on 2026-11-22; every number quoted is copied from those lessons' authoring runs on the
+frozen v2 manifest. Interview set 4's coding reference was executed against its tests and deliberately
+wrong answers were rejected (details in `solutions/interview/set4.md`).*

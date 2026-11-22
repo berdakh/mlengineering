@@ -30,8 +30,9 @@ should trust the numbers."*
 2. Record **one take** of five minutes. Do not restart. If you finish early, stop.
 3. Use your own project's numbers if you have them by heart. If you have not yet produced a number,
    say so in the answer ("I have not measured X yet") rather than leaving it out. The course's
-   reference numbers from Weeks 1-2 are in `project/README.md`; quoting those is acceptable today,
-   as long as you say they are the reference runs and not yours.
+   reference numbers (frozen split v2: 7 test, 27 development experiments) are in the Week 3-4
+   lessons and in `project/README.md`; quoting those is acceptable, as long as you say they are the
+   reference runs and not yours.
 4. Listen to the recording once, with the rubric in `solutions/interview/set4.md` (part A, E1) in
    front of you, and tick what you actually said. Score what is on the recording, not what you meant.
 5. Note the two most important things you left out. Record a second take tomorrow or on `w5d7`;
@@ -46,15 +47,14 @@ Pick six, alternating between ones you expect to answer well and ones you do not
 aloud in at most two minutes. They are the questions a careful interviewer asks next.
 
 1. Why did you split by experiment instead of by row? What would the number have been otherwise?
-2. You have 34 events. How confident are you in a difference of 0.02 between two models?
+2. Your supervised model beats the one-sensor z-score by 0.016 PR-AUC on the test set. Is it better?
 3. Your positive class is about 35 % of samples. Is this really anomaly detection? What happens to
    your precision in a plant where faults are rare?
-4. What is the simplest thing that gets close to your best model? What does that tell you?
-5. I see your model uses a long rolling window. Could it just be learning when the fault is
-   scheduled to happen?
+4. Your gradient-boosted trees had the best test score. Why are they not the model you chose?
+5. Could your model just be learning when the fault is scheduled to happen? How would you know?
 6. Did you find anything wrong with the dataset itself? What did you do about it?
-7. How did you choose the threshold, and what would you do differently at deployment?
-8. Point-level F1 looks good. Would an operator be happy? What would they care about instead?
+7. How did you choose the threshold? At that threshold, would an operator be happy?
+8. You tried a neural network. What happened, and is that a fair verdict on neural models?
 9. How do you know your features do not use future information? Could you prove it to me?
 10. Which of your conclusions would you expect *not* to hold on a real plant, and why?
 

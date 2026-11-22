@@ -146,7 +146,7 @@ unit("w4d6_project_milestone_1", "Project milestone 1: evaluation report",
      "`make evaluate` regenerates the comparison report; submit for review.",
      "w4d5.", "-", path="lessons/w4d6_project_milestone_1", status="Execution verified", has_checks=True)
 unit("w4d7_review", "Review and catch-up (light)", REVIEW,
-     "Week 4 retrieval sheet; interview set 4 (explain your evaluation in 5 minutes, recorded).", "Week 4 units.", "-", path="lessons/w4d7_review")
+     "Week 4 retrieval sheet; interview set 4 (explain your evaluation in 5 minutes, recorded).", "Week 4 units.", "-", path="lessons/w4d7_review", status="Execution verified")
 
 # ---------------------------------------------------------------- Week 5
 unit("w5d1_inference_pipeline", "Research experimentation versus production inference",
