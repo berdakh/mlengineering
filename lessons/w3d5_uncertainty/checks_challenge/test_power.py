@@ -51,10 +51,13 @@ def test_draw_is_asked_for_n_experiments(pw):
 
 def test_reproducible_and_seed_dependent(pw):
     draw = pw.normal_draw(0.4, 1.0)
-    a = pw.power(draw, 25, n_sim=300, seed=10)
-    b = pw.power(draw, 25, n_sim=300, seed=10)
+    # Four calls with one seed must agree exactly. (Two calls are not enough: an unseeded
+    # simulation reproduces a 300-study power estimate by chance a few per cent of the time;
+    # four identical results by chance has probability of order 1e-4.)
+    repeats = [pw.power(draw, 25, n_sim=300, seed=10) for _ in range(4)]
+    a = repeats[0]
     others = {pw.power(draw, 25, n_sim=300, seed=s) for s in (11, 12, 13)}
-    assert a == b, "same seed must give the same power estimate"
+    assert len(set(repeats)) == 1, f"same seed must give the same power estimate, got {repeats}"
     assert others != {a}, "the seed must drive the simulation"
 
 

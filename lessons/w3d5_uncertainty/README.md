@@ -67,6 +67,17 @@ Today's intervals condition on the fitted model: they describe **test-set sampli
 the right quantity for "how well does *this* artifact do on new experiments like these". It is the
 wrong quantity for "how good is this *method*", which also needs the second and third rows.
 
+```mermaid
+flowchart LR
+    Q["Question being asked"] --> A{"About this fitted model<br/>or about the method?"}
+    A -- "this artifact on new experiments" --> T["Test-set sampling:<br/>cluster bootstrap of the test set,<br/>Wilson interval for event counts"]
+    A -- "the method" --> M["Also training-set sampling<br/>and seed noise:<br/>refit on resampled clusters, several seeds"]
+    A -- "the method incl. tuning and model choice" --> S["Also selection:<br/>nested validation (w3d3),<br/>one untouched test set"]
+    T --> R["Report: estimate, interval,<br/>unit of resampling, number of clusters"]
+    M --> R
+    S --> R
+```
+
 ### 2.2 Why rows are the wrong unit
 
 Take `G` clusters with `m` rows each. Suppose rows within a cluster are correlated with intraclass
@@ -80,6 +91,11 @@ Var(mean) = σ² / (G·m) · [1 + (m − 1)·ρ]
 The design effect is the factor by which a row-level analysis underestimates the variance. The
 *effective sample size* is `G·m / deff`. With `m = 40` and `ρ = 0.5`, 1,200 rows are worth
 `1200 / 20.5 ≈ 59` independent observations; as `ρ → 1` they are worth `G`.
+
+![Effective sample size of about 1,200 rows falls steeply with the intraclass correlation and never goes below the number of clusters](../../handbook/figures/h6_6/design_effect.svg)
+
+*Formula, no data. The same 1,200 rows arranged as 30, 10 or 7 clusters: at an ICC of 0.2 they are
+worth about 136, 48 and 34 independent observations. Source: `handbook/figures/h6_6/make_figures.py`.*
 
 You know this structure. Windows from one subject share electrode placement, impedance, skull
 thickness, medication and state; epochs are not independent trials of "a human". In an EEG decoding
@@ -101,6 +117,18 @@ were what got sampled, so **experiments are what get redrawn**:
 2. Build the pseudo-dataset from all rows of the drawn clusters (a cluster drawn twice appears twice).
 3. Recompute the metric exactly as on the real data.
 4. Repeat `B` times. The 2.5th and 97.5th percentiles of the `B` values are the **percentile interval**.
+
+```mermaid
+flowchart TB
+    D["Test set: rows tagged with<br/>cluster id (overlap group)"] --> P["Per-cluster table:<br/>scores, labels, frozen threshold"]
+    P --> L{"Repeat B times"}
+    L --> R1["Draw G cluster ids<br/>with replacement"]
+    R1 --> R2["Concatenate all rows<br/>of the drawn clusters"]
+    R2 --> R3["Recompute the metric<br/>exactly as on the real data"]
+    R3 --> L
+    L --> Q["2.5th and 97.5th percentiles<br/>= percentile interval"]
+    R3 -. "no positives in a resample" .-> X["drop and count it;<br/>report the count"]
+```
 
 Decisions hidden in "recompute the metric exactly":
 
@@ -156,6 +184,11 @@ still allows 70%. The binomial model assumes independent events, so here too cou
 files, if you want to be strict. (Useful to remember: zero failures in `n` trials gives an upper
 95% bound of roughly `3/n` on the failure rate.)
 
+![Wilson 95 % intervals for detection rates: 9 of 9 still allows 70 %, and only hundreds of events give a narrow interval](figures/wilson_widths.svg)
+
+*Formula, no data (Wilson score interval). The black dot is the observed rate, the bar the interval,
+the number its lower limit. Values in `figures/wilson_widths.csv`.*
+
 ### 2.5 Paired comparisons
 
 Two detectors scored on the **same** experiments are not two independent samples. Per experiment,
@@ -175,6 +208,14 @@ cancels. Three consequences:
   the difference is [−0.063, +0.090], and the paired interval is [+0.0155, +0.0191].
 * **The paired bootstrap** draws one set of cluster ids per replicate and applies it to both
   models, then takes the percentile interval of the differences.
+
+![Per-cluster PR-AUC differences on real SKAB scatter from about -0.6 to +0.6 while their means are -0.08 and +0.02 with intervals that include zero](figures/paired_differences.svg)
+
+*REAL SKAB results, all 30 independent clusters (logistic-regression scores on development clusters
+are out-of-fold). Each dot is one cluster's difference; the blue line and band are the mean and its
+paired 95 % bootstrap interval. Supervised minus flow-rate z: +0.023 [−0.037, +0.085], better on 16
+of 30. Mahalanobis minus flow-rate z: −0.084 [−0.184, +0.014], better on 12 of 30. (These pooled-over-
+clusters means differ slightly from the pooled-PR-AUC differences in table C of the lab.)*
 * **Tests on per-cluster differences `d_i = a_i − b_i`:**
   * *Sign test*: counts wins only; exact binomial; needs nothing but independence. Insensitive to
     magnitudes.
@@ -218,6 +259,13 @@ between the supervised baseline and the flow-rate z-score has `σ_d = 0.18`. Sim
 minimum detectable difference of about 0.25 PR-AUC with 7 clusters, 0.20 with 9, 0.10 with 30 and
 0.09 with 34. Differences of a few hundredths, which is what the tables show, are far below what
 this dataset can resolve. That calculation, by simulation, is the challenge.
+
+![Simulated power against the number of independent test clusters for two real SKAB comparisons: 30 clusters give power 0.35 and 0.07](../../handbook/figures/h6_6/power_curve.svg)
+
+*Simulation driven by the REAL per-cluster differences (sign-flip permutation test, α = 0.05).
+With the 30 clusters available, power is 0.35 for Mahalanobis versus flow-rate z and 0.07 for
+supervised versus flow-rate z; the latter needs between 400 and 800 clusters for 80 % power.
+This figure gives away part of the challenge's answer: if you want to work it out yourself, skip it.*
 
 ### 2.8 Industry example
 
@@ -280,6 +328,11 @@ Reading it:
   is "at least this wide".
 * When rows really are independent (ICC 0) and clusters are few, the row bootstrap is the better
   procedure. The cluster bootstrap is not free; it is the price of not knowing the ICC is zero.
+
+![Coverage of nominal 95 % intervals: the row bootstrap falls to about 0.32 at ICC 0.5 while the cluster bootstrap stays near 0.93 with 30 clusters and about 0.87 with 7 or 9](figures/coverage.svg)
+
+*SYNTHETIC simulation (the table above, 1,000 datasets per point). Orange is the wrong unit, blue
+the correct one, in every figure of this lesson. Values in `figures/coverage.csv`.*
 
 Key code decision: both intervals are computed on the same simulated dataset in each repetition, so
 the comparison is itself paired.
@@ -440,6 +493,13 @@ What these results say, as found:
   alarms entirely and is superseded by w3d4's matching.
 * With 7 clusters the percentile intervals above undercover (section 3.1). Treat them as optimistic.
 
+![Real SKAB test set: cluster-bootstrap intervals are 4 to 11 times wider than row-bootstrap intervals for the same four baselines](figures/skab_intervals.svg)
+
+*REAL SKAB, v2 test set (9 experiments, 7 independent clusters), table A above as a picture. The
+row-level bars (orange) look precise and are not; the Mahalanobis interval on the correct unit spans
+0.57 to 0.88. Values in `figures/skab_intervals.csv`; regenerate with
+`python lessons/w3d5_uncertainty/figures/make_figures.py` (about 1.5 minutes).*
+
 Paste your own tables into `lab/INTERVALS.md` and answer its four questions. A reference reading is
 in the solutions tree; write yours first.
 
@@ -511,7 +571,11 @@ numbers. Keep `per_cluster_pr_auc.csv` open: the clusters where the detectors di
 
 ### Verification record
 
-Executed on 2026-11-21 with Python 3.13.18, NumPy 2.5.3, pandas 3.0.5, SciPy 1.18.1,
+Figures: `figures/make_figures.py` and `handbook/figures/h6_6/make_figures.py` were rerun on
+2026-11-22 and reproduced the plotted values above.
+On 2026-11-22 the challenge's reproducibility check was found to let an unseeded simulation
+pass by chance (two equal estimates, a few per cent of runs); it now requires four identical
+results, and `verify_checks` was rerun three times with all mutants rejected each time. Executed on 2026-11-21 with Python 3.13.18, NumPy 2.5.3, pandas 3.0.5, SciPy 1.18.1,
 scikit-learn 1.9.1: both worked examples; the reference lab on the real SKAB files; the reference
 challenge and its power run; `python tools/verify_checks.py lessons/w3d5_uncertainty` (reference
 passes both parts; 4 lab mutants and 3 challenge mutants rejected); the shipped starters fail

@@ -112,11 +112,11 @@ unit("w3d4_point_vs_event_evaluation", "Point-level versus event-level evaluatio
 unit("w3d5_uncertainty", "Uncertainty: cluster bootstrap, paired comparisons, small-n honesty",
      "Attach defensible intervals to metrics when the independent unit is the experiment, not the sample; compare models with paired resampling.",
      "Confidence intervals and a paired comparison for the baselines, with a stated unit of resampling.",
-     "w3d4.", "H6.6", path="lessons/w3d5_uncertainty")
+     "w3d4.", "H6.6", path="lessons/w3d5_uncertainty", status="Execution verified", has_checks=True)
 unit("w3d6_error_analysis_transfer", "Error analysis and timed transfer exercise",
      "Turn errors into a ranked failure taxonomy with slices; then run a complete leak-free evaluation on the unfamiliar business table, unassisted, in 90 minutes.",
      "Project error-analysis note; transfer exercise part 2 submission.",
-     "w3d1-w3d5.", "H6.7", path="lessons/w3d6_error_analysis_transfer")
+     "w3d1-w3d5.", "H6.7", path="lessons/w3d6_error_analysis_transfer", status="Execution verified", has_checks=True)
 unit("w3d7_review", "Review and catch-up (light)", REVIEW,
      "Week 3 retrieval sheet; interview set 3 (validation, leakage, ML fundamentals, spoken answers).", "Week 3 units.", "-", path="lessons/w3d7_review")
 

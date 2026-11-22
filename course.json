@@ -244,8 +244,8 @@
       "prerequisites": "w3d4.",
       "handbook": "H6.6",
       "path": "lessons/w3d5_uncertainty",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w3d6_error_analysis_transfer",
@@ -257,8 +257,8 @@
       "prerequisites": "w3d1-w3d5.",
       "handbook": "H6.7",
       "path": "lessons/w3d6_error_analysis_transfer",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w3d7_review",
