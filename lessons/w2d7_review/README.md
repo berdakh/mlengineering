@@ -24,11 +24,8 @@ Units covered: `w2d1` SQL I, `w2d2` SQL II, `w2d3` ingestion and data quality, `
 splits, `w2d5` causal features, `w2d6` baselines and metrics; the project conventions in
 [`docs/FLOWGUARD_SPEC.md`](../../docs/FLOWGUARD_SPEC.md) and [`project/README.md`](../../project/README.md).
 
-**Alignment note.** The Week 2 lessons were being written at the same time as this review unit. The
-questions below are based on each lesson's stated objective, on the project specification, and on
-standard correct content; they will be re-aligned with the final lesson texts (wording, emphasis and
-any lesson-specific numbers). If a question refers to something your version of a lesson did not
-cover, answer from first principles and note it with `python wb.py note w2d7 "..."`.
+The questions were re-aligned with the final Week 2 lessons on 2026-11-21; numbers quoted from the
+project data are the ones those lessons report.
 
 ## 1. Spaced-review items due today (5-10 minutes)
 
@@ -61,16 +58,18 @@ what you would check if you cannot answer; open the key only when all twelve hav
 
 6. Distinguish *data validation* from *model evaluation*. For the SKAB recordings, name three
    different categories of check with one concrete example each, and say what "fail loudly" should
-   mean for an ingestion command. Seven SKAB files contain sampling gaps longer than 5 s (the largest
-   is 247 s): what should ingestion do about them, and what should it not do?
+   mean for an ingestion command. Six SKAB files contain sampling gaps longer than 5 s (nine gaps, the
+   largest 247 s): what should ingestion do about them, what should it not do, and is this an *error*
+   or a *warning*?
 7. What must an ingestion step record so that someone else can re-run it and know they got the same
    data? Why is the raw data downloaded by script rather than committed?
 
 **Framing and splits (w2d4)**
 
 8. In the project, what is the *unit of prediction* and what is the *unit of independence*? Why are
-   splits defined over experiments and not rows, what does the split manifest contain, and why is it
-   a versioned file rather than a seed in the training code?
+   splits defined over experiments and not rows (recall the size of the gap `w2d4` measured), what
+   does the split manifest contain, and why is it a versioned file rather than a seed in the
+   training code?
 9. Distinguish a point-level label from an event-level label on this dataset. SKAB has about 35 % of
    samples labelled anomalous and 34 events in total. State one consequence of each number for how
    results must be reported.
@@ -79,10 +78,14 @@ what you would check if you cannot answer; open the key only when all twelve hav
 
 10. Define a *causal* feature. Give one innocent-looking pandas operation that violates causality and
     one that leaks across the train/test boundary without violating causality. Describe a test that
-    can detect look-ahead in a feature function without knowing its implementation.
+    can detect look-ahead in a feature function without knowing its implementation. In `w2d5`, which
+    mattered more for the offline score on SKAB: centring the window, or the choice of reference rows
+    for normalisation? What follows from each answer?
 11. Why establish a trivial baseline before any model? What are the expected ROC AUC and the expected
     average precision (PR AUC) of an uninformative scorer at prevalence `p`? Where must a decision
-    threshold be chosen, and why not on the test set?
+    threshold be chosen, and why not on the test set? In `w2d6` a scorer that uses only elapsed time
+    and no sensor reached a higher test F1 than every sensor baseline: what does that tell you about
+    the dataset, and what must it change in the project?
 
 **Delayed question from Week 1 (w1d5)**
 
@@ -175,7 +178,8 @@ Checklist
 - [ ] Interview set 2 attempted under the stated conditions, checked and scored
 - [ ] `review` flags and the spaced-review list updated
 - [ ] Project check: `splits/v1.json` exists in your project and has not been edited since it was
-      frozen (Week 3 depends on it); if you changed it, bump the version instead
+      frozen; if you changed it, bump the version instead. (`w3d1` supersedes it with a `v2` that keeps
+      experiments sharing duplicated rows together; see `project/README.md`.)
 
 Next: Week 3 starts with `w3d1` (leakage: a taxonomy and prevention by construction); see
 [roadmap/SCHEDULE.md](../../roadmap/SCHEDULE.md).
@@ -186,4 +190,4 @@ Next: Week 3 starts with `w3d1` (leakage: a taxonomy and prevention by construct
 against the checker and deliberately wrong answers were rejected (details in
 `solutions/interview/set2.md`). The retrieval answers are prose; SQL semantics quoted in them
 (NULL handling in aggregates, default window frame under ties) were confirmed by execution in SQLite
-3.53.1. Statements about the Week 2 lessons await re-alignment as noted above.*
+3.53.1. Project numbers are quoted from the Week 2 lessons, which report runs on the real SKAB files.*

@@ -24,9 +24,8 @@ Units covered: the diagnostic (`w1d1`, `w1d2`), [`w1d3`](../w1d3_package_structu
 [`w1d4`](../w1d4_config_logging/README.md), [`w1d5`](../w1d5_testing_ml_code/README.md), and `w1d6`
 (independent notebook refactor). Handbook: H2.1, H2.2, H9.1.
 
-Note on `w1d6`: that unit was being written at the same time as this one. Questions 11 and 12 are
-based on its stated objective (behaviour-preserving refactoring under version control); they will be
-re-aligned with the final lesson text. If you have not done `w1d6` yet, skip them and return on day 7 of Week 2.
+Question 12 covers [`w1d6`](../w1d6_notebook_to_package/README.md) and handbook H2.3. If you have
+not done `w1d6` yet, skip it and return on day 7 of Week 2.
 
 ## 1. Retrieval sheet (25 minutes, closed book)
 
@@ -76,8 +75,9 @@ is information. Do not open the answers until all twelve have an attempt.
 **Refactoring under version control (w1d6)**
 
 12. What is a characterisation (golden-output) test, why do you write it *before* touching the code,
-    and when do you delete or replace it? Then: list four categories of file that an ML project
-    must keep out of Git, with the reason for each.
+    and when do you delete or replace it? Why should a commit never mix a structural change with a
+    behaviour change? Then: list four categories of file that an ML project must keep out of Git,
+    with the reason for each.
 
 ## 2. Score and choose (10 minutes)
 

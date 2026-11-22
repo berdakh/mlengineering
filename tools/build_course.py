@@ -96,29 +96,29 @@ unit("w2d7_review", "Review and catch-up (light)", REVIEW,
 unit("w3d1_leakage", "Leakage: a taxonomy and prevention by construction",
      "Classify and remove target, preprocessing, temporal, group and selection leakage; use pipelines so the correct thing is the default.",
      "Leak hunt report on a seeded dataset with corrected estimates and the mechanism of each leak.",
-     "w2d6; diagnostic b2 reviewed.", "H6.1")
+     "w2d6; diagnostic b2 reviewed.", "H6.1", path="lessons/w3d1_leakage")
 unit("w3d2_group_temporal_validation", "Group-aware and temporal validation",
      "Design validation that matches deployment: grouped, temporal, and combined (experiment x time) schemes with purging/embargo where windows overlap.",
      "Validation design memo + implementation for the project; comparison against a naive random split.",
-     "w3d1.", "H6.3, H7.2")
+     "w3d1.", "H6.3, H7.2", path="lessons/w3d2_group_temporal_validation")
 unit("w3d3_hyperparameter_selection", "Hyperparameter and threshold selection without fooling yourself",
      "Select hyperparameters and decision thresholds using only training/validation data; quantify selection optimism with nested validation.",
      "Tuned baseline with a nested estimate and a frozen-threshold test evaluation.",
-     "w3d2.", "H6.4")
+     "w3d2.", "H6.4", path="lessons/w3d3_hyperparameter_selection")
 unit("w3d4_point_vs_event_evaluation", "Point-level versus event-level evaluation for detection",
      "Implement and interpret point-wise metrics, event matching, detection delay and false alarms per hour; explain when each misleads.",
      "Tested `flowguard.evaluation` module; point vs event results table with interpretation.",
-     "w3d2 (your HFO event-evaluation experience transfers directly).", "H6.5, H7.3")
+     "w3d2 (your HFO event-evaluation experience transfers directly).", "H6.5, H7.3", path="lessons/w3d4_point_vs_event_evaluation")
 unit("w3d5_uncertainty", "Uncertainty: cluster bootstrap, paired comparisons, small-n honesty",
      "Attach defensible intervals to metrics when the independent unit is the experiment, not the sample; compare models with paired resampling.",
      "Confidence intervals and a paired comparison for the baselines, with a stated unit of resampling.",
-     "w3d4.", "H6.6")
+     "w3d4.", "H6.6", path="lessons/w3d5_uncertainty")
 unit("w3d6_error_analysis_transfer", "Error analysis and timed transfer exercise",
      "Turn errors into a ranked failure taxonomy with slices; then run a complete leak-free evaluation on the unfamiliar business table, unassisted, in 90 minutes.",
      "Project error-analysis note; transfer exercise part 2 submission.",
-     "w3d1-w3d5.", "H6.7")
+     "w3d1-w3d5.", "H6.7", path="lessons/w3d6_error_analysis_transfer")
 unit("w3d7_review", "Review and catch-up (light)", REVIEW,
-     "Week 3 retrieval sheet; interview set 3 (validation, leakage, ML fundamentals, spoken answers).", "Week 3 units.", "-")
+     "Week 3 retrieval sheet; interview set 3 (validation, leakage, ML fundamentals, spoken answers).", "Week 3 units.", "-", path="lessons/w3d7_review")
 
 # ---------------------------------------------------------------- Week 4
 unit("w4d1_timeseries_fundamentals", "Time-series fundamentals and forecast-residual detectors",
@@ -146,7 +146,7 @@ unit("w4d6_project_milestone_1", "Project milestone 1: evaluation report",
      "`make evaluate` regenerates the comparison report; submit for review.",
      "w4d5.", "-")
 unit("w4d7_review", "Review and catch-up (light)", REVIEW,
-     "Week 4 retrieval sheet; interview set 4 (explain your evaluation in 5 minutes, recorded).", "Week 4 units.", "-")
+     "Week 4 retrieval sheet; interview set 4 (explain your evaluation in 5 minutes, recorded).", "Week 4 units.", "-", path="lessons/w4d7_review")
 
 # ---------------------------------------------------------------- Week 5
 unit("w5d1_inference_pipeline", "Research experimentation versus production inference",

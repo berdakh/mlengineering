@@ -191,7 +191,7 @@
       "deliverable": "Leak hunt report on a seeded dataset with corrected estimates and the mechanism of each leak.",
       "prerequisites": "w2d6; diagnostic b2 reviewed.",
       "handbook": "H6.1",
-      "path": null,
+      "path": "lessons/w3d1_leakage",
       "status": "Planned",
       "has_checks": false
     },
@@ -204,7 +204,7 @@
       "deliverable": "Validation design memo + implementation for the project; comparison against a naive random split.",
       "prerequisites": "w3d1.",
       "handbook": "H6.3, H7.2",
-      "path": null,
+      "path": "lessons/w3d2_group_temporal_validation",
       "status": "Planned",
       "has_checks": false
     },
@@ -217,7 +217,7 @@
       "deliverable": "Tuned baseline with a nested estimate and a frozen-threshold test evaluation.",
       "prerequisites": "w3d2.",
       "handbook": "H6.4",
-      "path": null,
+      "path": "lessons/w3d3_hyperparameter_selection",
       "status": "Planned",
       "has_checks": false
     },
@@ -230,7 +230,7 @@
       "deliverable": "Tested `flowguard.evaluation` module; point vs event results table with interpretation.",
       "prerequisites": "w3d2 (your HFO event-evaluation experience transfers directly).",
       "handbook": "H6.5, H7.3",
-      "path": null,
+      "path": "lessons/w3d4_point_vs_event_evaluation",
       "status": "Planned",
       "has_checks": false
     },
@@ -243,7 +243,7 @@
       "deliverable": "Confidence intervals and a paired comparison for the baselines, with a stated unit of resampling.",
       "prerequisites": "w3d4.",
       "handbook": "H6.6",
-      "path": null,
+      "path": "lessons/w3d5_uncertainty",
       "status": "Planned",
       "has_checks": false
     },
@@ -256,7 +256,7 @@
       "deliverable": "Project error-analysis note; transfer exercise part 2 submission.",
       "prerequisites": "w3d1-w3d5.",
       "handbook": "H6.7",
-      "path": null,
+      "path": "lessons/w3d6_error_analysis_transfer",
       "status": "Planned",
       "has_checks": false
     },
@@ -269,7 +269,7 @@
       "deliverable": "Week 3 retrieval sheet; interview set 3 (validation, leakage, ML fundamentals, spoken answers).",
       "prerequisites": "Week 3 units.",
       "handbook": "-",
-      "path": null,
+      "path": "lessons/w3d7_review",
       "status": "Planned",
       "has_checks": false
     },
@@ -360,7 +360,7 @@
       "deliverable": "Week 4 retrieval sheet; interview set 4 (explain your evaluation in 5 minutes, recorded).",
       "prerequisites": "Week 4 units.",
       "handbook": "-",
-      "path": null,
+      "path": "lessons/w4d7_review",
       "status": "Planned",
       "has_checks": false
     },

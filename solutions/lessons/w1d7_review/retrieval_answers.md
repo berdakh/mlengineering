@@ -235,6 +235,11 @@ tests with independent oracles (known answers, invariances), the corresponding p
 **updated deliberately**, in its own commit with the reason recorded, whenever you intentionally
 change behaviour (such as removing the scaling leak): the pin never justifies keeping a bug.
 
+**Why not mix the two kinds of change in one commit** (the `w1d6` rule): a structural change is
+verified by an *unchanged* characterisation output; a behaviour change is verified by a *changed*
+output that you can explain, plus a new or updated test. A commit containing both can be verified by
+neither kind of evidence, and it cannot be reverted or bisected cleanly.
+
 Keep out of Git, with reasons:
 
 1. **Secrets and credentials** (`.env`, keys, cloud credential files): history is permanent and widely copied; a pushed secret must be treated as compromised.
@@ -249,5 +254,4 @@ Keep out of Git, with reasons:
 | "Delete the secret in the next commit" | It remains in history; rotate the secret |
 | "Commit the dataset so results are reproducible" | Reproducibility needs identity (hash, source, version), not a copy in the repository; licences such as SKAB's GPL-3.0 are a further reason this course downloads instead |
 
-*Note: answer 12 is aligned with the stated objective of `w1d6` and with H2.1 section 5 (changing
-structure without changing behaviour). It will be re-checked against the final `w1d6` text.*
+*Answer 12 was re-checked against the final `w1d6` lesson and handbook H2.3 (2026-11-21).*

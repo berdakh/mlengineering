@@ -3,9 +3,8 @@
 Open only after all twelve questions have a written attempt. Each answer states the mechanism a
 "solid" answer must contain, then common wrong answers and why they fail.
 
-**Alignment note.** These answers were written from the Week 2 lesson objectives, the project
-specification and standard correct content, while the lessons themselves were still being written.
-They will be re-aligned with the final lesson texts. Where a statement was confirmed by running
+These answers were re-aligned with the final Week 2 lessons on 2026-11-21. Project numbers are the
+ones reported in those lessons from runs on the real SKAB files. Where a statement was confirmed by running
 code, that is said explicitly; everything else is reasoning, not a measurement. The diagnostic
 database is **synthetic**: numbers quoted from it illustrate mechanisms only.
 
@@ -140,15 +139,20 @@ Three categories with examples (canonical names from `docs/FLOWGUARD_SPEC.md`):
 
 "Fail loudly": the command exits non-zero with a message naming the check, the file and the offending
 values, and writes a machine-readable report (`quality_report.json`); it never drops or repairs rows
-silently. Per the spec, the check functions themselves *report* (`CheckResult(name, passed, detail)`)
-and the command decides which failures are fatal.
+silently. Per the spec, the check functions themselves *report* (`CheckResult(name, passed, detail,
+severity)`) and the command decides: **error**-severity failures stop ingestion, **warning**-severity
+findings are recorded and ingestion continues. The reference ingest on the real 35 files reports
+11 checks, 0 errors and 1 warning (the sampling gaps).
 
 **The gaps.** Ingestion should *detect, measure and record* them (per experiment: count, positions,
 durations) and carry enough information forward (the timestamps, or a gap flag) for later steps to
 decide. It should **not** interpolate across them, silently re-index as if sampling were uniform, or
 discard the affected experiments: each of those is a modelling decision with consequences for rolling
 windows (a 60-row window spanning a 247 s gap is not 60 s of history) and belongs in the feature
-step, visibly. A gap is a *warning-level* finding here, not an error: the data is valid, merely irregular.
+step, visibly. A gap is a *warning-level* finding here, not an error: the data is valid as recorded,
+merely irregular (nine gaps longer than 5 s, in six experiments; about 5 % of all steps are 2 s). A
+warning is a debt assigned to a later step, not something to ignore: detection delay must be measured
+in seconds, not rows.
 
 | Common wrong answer | Why it fails |
 |---|---|
@@ -182,13 +186,21 @@ source, which is stronger than "the copy that happened to be committed".
 time), later turned into alerts/events. *Unit of independence:* the **experiment** (`experiment_id`):
 samples within an experiment are strongly autocorrelated and share its conditions, as samples within
 a patient do. Splitting by row would put near-duplicates of each test sample in the training set and
-estimate interpolation within a recording, not generalisation to a new one.
+estimate interpolation within a recording, not generalisation to a new one. `w2d4` measured it on the
+development experiments: a random forest on raw sensor values scores ROC AUC 0.986 with rows shuffled
+into folds and 0.849 with whole experiments held out (PR AUC 0.980 versus 0.841).
 
 The manifest (`splits/v1.json`) contains: `version`, `seed`, `unit` (`experiment_id`), the list of
 **test** experiments, the **development folds** (lists of experiment ids), the `reference_normal`
 recording (`anomaly-free/anomaly-free`), and `protocol_b` (hold out the whole `other` family to
 measure generalisation to unseen fault mechanisms). `validate_splits` rejects overlap between test
-and folds and unknown ids.
+and folds and unknown ids. The frozen reference `v1` has 9 test experiments (4 `valve1`, 1 `valve2`,
+4 `other`) and 25 development experiments in four folds (7/6/6/6).
+
+`v1` has a known defect found after it was frozen: five pairs of files share identical rows
+(1,290 rows; 235 with contradictory labels), and `v1` does not keep those experiments on the same
+side. The correct response is the one the versioning exists for: do not edit `v1`; issue `v2` with
+overlap groups kept together (`w3d1`) and treat earlier numbers as not comparable.
 
 It is a versioned file rather than a seed because the split is part of the **experimental protocol**:
 it must be identical across models, machines, library versions and months; it must be reviewable
@@ -245,6 +257,14 @@ serving time.
   Each value still uses only its own past, but the transformation was estimated with test data. Fit on
   training experiments (or the anomaly-free reference) only.
 
+**What mattered on SKAB (`w2d5`).** Centring the window raised pooled average precision by only
+0.002-0.014; the choice of reference rows moved it from about 0.50 to about 0.73. Two lessons, and
+they point in different directions. First, a small effect on one offline number does not make
+look-ahead acceptable: the centred feature cannot be computed at serving time at all, so the reason
+to forbid it is construction, not the size of the gain (the same argument as the scaler leak in
+`w1d3`). Second, the largest lever was a quiet modelling decision (what "normal" is measured
+against), which deserves the scrutiny usually spent on model choice.
+
 **Implementation-independent test (prefix invariance):** compute features on a full series; then
 alter or delete everything after time `t` (or truncate to the first `t+1` rows) and recompute; the
 features for all times `<= t` must be **exactly equal**. Use several `t` and random data. Compare
@@ -278,6 +298,16 @@ development folds), frozen, and then applied once to the test set. Choosing it o
 selects the best of many candidates using test labels, so the reported operating point is optimistic
 and unavailable in deployment, where test labels do not exist. Threshold-free metrics (AP, ROC AUC)
 do not excuse this: the shipped system makes decisions at one threshold.
+
+**The clock baseline (`w2d6`).** On the 9 test experiments: constant score PR AUC 0.373 (the test
+prevalence), burn-in z-score on flow rate 0.805, supervised logistic regression 0.827; and a scorer
+that uses only elapsed time `t` reaches test F1 0.835, above every sensor baseline. The reason is the
+experimental protocol: in 31 of 34 files the anomaly starts at row 550-600. So (a) the dataset lets a
+model score well by learning *when in the recording it is*, which is worthless on a real plant;
+(b) `t`, `datetime` and anything monotone in them are forbidden as features, and features that
+accumulate over the recording (cumulative sums, expanding statistics, slow drifts) must be suspected
+of encoding the clock; (c) the clock scorer stays in every results table as a *leakage probe*: a
+model that does not clearly beat it has not shown that it detects faults.
 
 | Common wrong answer | Why it fails |
 |---|---|
