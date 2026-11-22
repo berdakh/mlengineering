@@ -87,6 +87,25 @@ the response (geometric approach to a step: fraction `1−(1−α)^k` after *k* 
 exactly complete) and the state needed to update it online (one number per signal instead of
 a buffer of *w*).
 
+```text
+ time →            t-5  t-4  t-3  t-2  t-1   t   t+1  t+2  t+3
+ causal, w = 5           [ ■    ■    ■    ■    ■ ]                      uses rows ≤ t: buildable online
+ centred, w = 5                    [ ■    ■    ■    ■    ■ ]            uses t+1, t+2: exists only offline
+ warm-up (first rows)    fewer than w rows exist → NaN (min_periods = w), never a silently shorter window
+ gap or new experiment   ··· ■ ■ ║ ■ ■ ···    the window must not reach across ║ (reset, or define it in seconds)
+```
+
+![Line chart of a noisy step signal with causal and centred 30-sample rolling means and an alert threshold; the centred mean alerts 7 samples before onset](../../lessons/w2d5_feature_pipeline/figures/step_response.svg)
+
+*SYNTHETIC data. A window is a filter; a centred window is the same filter with its output moved into
+the past, so its "response" begins before the stimulus.*
+
+![Median detection delay against window length for causal and centred rolling means](../../lessons/w2d5_feature_pipeline/figures/delay_vs_window.svg)
+
+*SYNTHETIC data, 400 simulated series per window length. Script:
+`lessons/w2d5_feature_pipeline/figures/make_figures.py`.*
+
+
 ## H7.1.3 Where non-causal operations hide
 
 Offline code rarely says "use the future". The future arrives through convenient defaults.

@@ -73,6 +73,14 @@ config = build_and_validate(merged)       # defaults filled in by the dataclasse
 Validating each layer separately duplicates rules and lets a later layer introduce an invalid value
 unchecked. Validating once, last, guarantees that what you validated is what runs.
 
+```mermaid
+flowchart LR
+    d["code defaults"] --> f["config file"] --> env["environment variables<br/>deployment-specific values and secrets"] --> cli["command-line overrides"]
+    cli --> r["resolved configuration<br/>validated, frozen, snapshotted"]
+```
+
+*Layers from least to most specific. Each later layer overrides the earlier ones; secrets enter only through the environment and are never written to the snapshot.*
+
 ### Strictness
 
 A loader has three jobs and should fail loudly at each:
@@ -164,6 +172,20 @@ logger with `propagate = False` is reached. Each handler applies its own level. 
 With no configuration, a record that passes the level test but finds no handler anywhere goes to the
 "handler of last resort": stderr, `WARNING` and above, message only. That is why un-configured
 scripts show warnings but never `info`.
+
+```mermaid
+flowchart LR
+    rec["LogRecord<br/>created by logger.info"] --> lv{"logger level<br/>allows it?"}
+    lv -- no --> drop["discarded"]
+    lv -- yes --> own["this logger's handlers"]
+    own --> prop{"propagate?"}
+    prop -- yes --> parent["parent logger's handlers,<br/>up to root"]
+    parent --> hl{"handler level<br/>allows it?"}
+    hl -- yes --> fmt["Formatter"] --> out["stream / file / collector"]
+    hl -- no --> drop
+```
+
+*The life of a log record: two level checks (logger, then each handler) and propagation up the dotted-name hierarchy.*
 
 ### Library versus application
 
@@ -299,6 +321,10 @@ groups are few.
 
 Never select the seed by the test metric; that is tuning on the test set with one extra
 hyperparameter.
+
+![SYNTHETIC pump data: test F1 across ten split seeds ranges from 0.778 to 0.930](../../lessons/w1d4_config_logging/figures/seed_spread.svg)
+
+*SYNTHETIC data, from lesson w1d4. A seed selects one draw from this distribution; it does not make the draw representative.*
 
 ## H2.2.5 Run records and provenance
 

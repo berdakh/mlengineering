@@ -64,6 +64,18 @@ Read from the left, it is a design procedure. Read from the right, it is an audi
 does not mimic deployment makes the metric meaningless, a metric that ignores costs makes model
 selection arbitrary, and so on back to "nobody needed this".
 
+```mermaid
+flowchart LR
+    N["need<br/>(who is hurt by what)"] --> D["decision<br/>(who acts, when, with what options)"]
+    D --> P["prediction that would<br/>change the decision"]
+    P --> LB["label that defines 'right'<br/>(source, delay, noise)"]
+    LB --> C["costs of each error"]
+    C --> M["metric that tracks the costs"]
+    M --> E["evaluation that<br/>mimics deployment"]
+    E -. "audit: read right to left" .-> N
+```
+
+
 ### 2.2 The worksheet, with precise terms
 
 | # | Item | The question | Typical failure |
@@ -121,6 +133,20 @@ classification is *possible*), one episode per recording and three families with
 (so learning "normal" is supported). There is no future quantity anyone wants (so forecasting is at
 most a means). Protocol B in the split exists precisely to test the classification framing's weak point.
 
+```mermaid
+flowchart TD
+    S["a sensor stream and a need"] --> Q1{"Does the decision depend on<br/>a future VALUE of the signal?"}
+    Q1 -->|"yes"| F["forecasting"]
+    Q1 -->|"no"| Q2{"Do labelled examples exist for every<br/>fault form you expect to meet?"}
+    Q2 -->|"yes, enough episodes"| CL["supervised classification"]
+    Q2 -->|"no: rare, varied or novel faults"| Q3{"Is verified-normal data available,<br/>and is 'normal' stable?"}
+    Q3 -->|"yes"| AD["anomaly detection<br/>(labels used only to evaluate)"]
+    Q3 -->|"no"| R["rules, or collect labels first"]
+    F -. "residuals can feed" .-> AD
+    CL -. "test its weak point:<br/>hold out a fault family" .-> PB["protocol B"]
+```
+
+
 ### 2.5 From EEG to equipment, and where the analogy breaks
 
 | Seizure / HFO detection | Fault detection on SKAB | Where it breaks |
@@ -176,6 +202,19 @@ new version, with every reported number recomputed and labelled with the version
 `sqrt(p(1-p)/n)`. With the 9 test events of the reference split and true recall 0.8 that is 0.13: a
 95 % interval of roughly 0.5 to 1.0. This is not a flaw of the split; it is the size of the dataset
 stated honestly, and it is why w3d5 attaches intervals to everything.
+
+The reference manifest drawn as a grid. Each numbered cell is one experiment; its colour is its only role.
+
+![Grid of the 34 labelled experiments by family: 9 in the test set, the other 25 in four development folds, each family represented in the test set](figures/split_layout.svg)
+
+*Real experiment ids from `splits/v1.json`: 4 + 1 + 4 test experiments, and development folds of
+7/6/6/6. (This is manifest v1; w3d1 revises it so that experiments sharing duplicated rows stay together.)*
+
+![Interval plot: a 95 percent interval around a true recall of 0.8 is plus or minus 0.26 with 9 test events and plus or minus 0.13 with 34](figures/recall_interval.svg)
+
+*What nine test events can tell you. The formula is the one above; the upper ends are clipped at 1.
+No data is involved, only arithmetic.*
+
 
 ### 2.7 A concrete industry example
 
@@ -281,6 +320,15 @@ threshold chosen); it is a baseline for the *protocol*, not a model result. Expe
 across library versions.
 
 **Reproducibility.** Both scripts fix their seeds. Versions used: [docs/TESTED_VERSIONS.md](../../docs/TESTED_VERSIONS.md).
+
+The same output as a picture, one dot per fold:
+
+![Dot plot of fold scores: row-level folds cluster at PR-AUC 0.98 and ROC-AUC 0.986, experiment-level folds spread from 0.73 to 0.94 with means 0.841 and 0.849](figures/row_vs_experiment.svg)
+
+*Real SKAB, development experiments only. Look at the spread as much as the level: the tight orange
+cluster is four copies of the same leak; the wide blue one is the honest uncertainty of six held-out
+recordings. Regenerate with `python lessons/w2d4_problem_framing_splits/figures/make_figures.py`.*
+
 
 ---
 

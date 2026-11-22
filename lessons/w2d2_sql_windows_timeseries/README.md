@@ -90,6 +90,21 @@ Three consequences you will meet today:
 A **CTE** (`WITH name AS (...)`) is the tool for staging these levels. Treat each CTE as one step
 with a stated grain, exactly as you would name intermediate DataFrames.
 
+The same order as a diagram, with the place where each kind of filter can live:
+
+```mermaid
+flowchart LR
+    F["FROM / JOIN"] --> W["WHERE<br/>row filter"]
+    W --> G["GROUP BY"]
+    G --> H["HAVING<br/>group filter"]
+    H --> WIN["window functions<br/>see only surviving rows"]
+    WIN --> S["SELECT list / DISTINCT"]
+    S --> O["ORDER BY"]
+    O --> L["LIMIT"]
+    WIN -. "to filter on a window result,<br/>wrap in a CTE and filter outside" .-> W2["outer WHERE rn = 1"]
+```
+
+
 ### 2.3 Frames, and the default that bites
 
 The frame is the subset of the partition used for the current row. Two units matter here:
@@ -132,6 +147,25 @@ duplicated. Use `ROW_NUMBER()` with a deterministic tie-breaker when the contrac
 `ROW_NUMBER()` with a non-total ordering is worse than `RANK()`: it returns one row, but which one
 may change between runs or engines.
 
+One partition with a tied timestamp, three frames for the current row (marked `>`). Brackets show the
+rows inside the frame; the right column is `SUM(x)` over it.
+
+```text
+ ts_epoch   x     ROWS 2 PRECEDING        RANGE 600 PRECEDING       default (ORDER BY, no frame)
+                  AND CURRENT ROW         AND CURRENT ROW           = RANGE UNBOUNDED PRECEDING .. CURRENT ROW
+   1000     1                                                        [
+   1300     2     [                                                  [
+   2100     4     [                        [                         [
+>  2400     8     [  = 2 + 4 + 8 = 14      [                         [
+   2400    16                              [  = 4 + 8 + 16 = 28      [  = 1 + 2 + 4 + 8 + 16 = 31
+   2900    32
+
+ ROWS  counts physical rows: the peer at ts 2400 (x = 16) is outside.
+ RANGE measures the ORDER BY value: every row with ts in [1800, 2400] is inside, peers included.
+ The default frame is a RANGE frame, so a "running total" of the first 2400 row already contains the second.
+```
+
+
 ### 2.4 Offsets: `LAG`, `LEAD` and intervals from events
 
 `LAG(x)` and `LEAD(x)` read the previous and next row of the partition; they ignore the frame.
@@ -172,6 +206,15 @@ run. Whether that is right is a definition you owe the reader; state it (the lab
 The classic error is forgetting the partition in step 1. `LAG` then looks at the previous row of
 another device, which is the same bug as running event extraction across concatenated channels.
 
+The reference query for Task 5 on one device and one day of the lab database:
+
+![Line chart of reported temperature for device D01 on 2 March with 21 flagged samples grouped into 5 shaded episodes](figures/islands.svg)
+
+*Twenty-one flagged samples become five episodes. Two of them are a single sample wide: whether those
+deserve to be events is the minimum-duration decision the text above says you owe the reader.
+SYNTHETIC data; regenerate with `python lessons/w2d2_sql_windows_timeseries/figures/make_figures.py`.*
+
+
 ### 2.6 As-of joins and point-in-time correctness
 
 Some tables describe *what was true from when*: a calibration, a price list, a customer's plan, a
@@ -205,6 +248,26 @@ There is one more that no query can detect: a row whose *timestamp* is in the pa
 *written* later (a backfilled or corrected value, such as the re-sent readings in today's data).
 Point-in-time correctness is about when information became available, which needs an ingestion
 time. Today's data has only `reading_id` as a proxy for arrival order; H3.2.5 discusses this.
+
+```mermaid
+flowchart LR
+    subgraph DIM["calibration rows for one device (valid_from)"]
+        direction LR
+        V1["v1"] --> V2["v2"] --> V3["v3"]
+    end
+    R1["reading at t, with v2 <= t < v3"] -->|"as-of: latest valid_from <= t"| V2
+    R1 -. "wrong: current row" .-> V3
+    R0["reading at t < v1"] -->|"LEFT JOIN keeps it"| N["NULL calibration"]
+```
+
+On the lab database, device D01 changes calibration four times in three days. Each reading is corrected
+with the offset, and compared with the threshold, that were in force when it was measured:
+
+![Two stacked panels for device D01: the calibration offset applied steps through five values; the corrected temperature is compared against an alert threshold that steps between 7.5, 8.0 and 8.5 degrees](figures/asof_calibration.svg)
+
+*Joining every reading to the latest calibration row instead would re-score three days of history with
+an offset and threshold that did not exist yet. SYNTHETIC data, same script.*
+
 
 ### 2.7 The same operations in pandas
 

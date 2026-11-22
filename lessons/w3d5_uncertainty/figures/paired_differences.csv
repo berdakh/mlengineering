@@ -1,0 +1,3 @@
+comparison,mean,low,high,wins,clusters
+supervised logistic regression minus flow-rate z,0.02311333333333332,-0.03665441666666668,0.08526008333333336,16,30
+Mahalanobis minus flow-rate z,-0.08379333333333336,-0.18395450000000002,0.013900083333333316,12,30

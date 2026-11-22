@@ -84,6 +84,18 @@ The practical consequence for refactoring: **the notebook's printed output is a 
 not a specification.** You pin it so that you can tell when *you* change something, and you expect
 to overturn parts of it.
 
+```mermaid
+flowchart TD
+    c1["cell 1: df = load everything"] --> c2["cell 2: df = df filtered to one group<br/>'just to look'"]
+    c2 --> c3["cell 3: summary of df<br/>labelled as if it were ALL data"]
+    c1 -. "re-run cell 3 after cell 1 only" .-> c3
+    c3 --> out1["result A<br/>cells run 1, 2, 3"]
+    c3 --> out2["result B<br/>cells run 1, 3"]
+    k["kernel state:<br/>whatever df was last assigned"] -.-> c3
+```
+
+*Hidden state: the same cell gives different results depending on which cells ran before it, and the file on disk does not record which did.*
+
 ### 2.2 Two kinds of change, never in one commit
 
 Let `f` be the program before a commit and `f'` after it.
@@ -109,6 +121,18 @@ you ran; it is as brittle as the output format; and it cannot be used when the o
 wrong in ways that make it worthless to preserve. In today's lab the notebook's output is of that
 last kind for several cells, which is why the lab asks for a discrepancy table instead of a golden
 file.
+
+```mermaid
+flowchart LR
+    s["behaviour pinned by a<br/>characterization test"] --> r["refactoring commit:<br/>move or rename code"]
+    r --> t1{"golden output<br/>unchanged?"}
+    t1 -- yes --> r2["next refactoring commit"]
+    t1 -- no --> undo["undo: it was not a refactoring"]
+    r2 --> b["behaviour-changing commit:<br/>one fix, golden output updated<br/>in the same diff"]
+    b --> t2["new tests state the intended behaviour"]
+```
+
+*Two kinds of commit. In a refactoring the golden file must not move; in a behaviour change it must, visibly.*
 
 ### 2.3 Seams: where to cut
 
@@ -148,6 +172,17 @@ git commit -m "Extract load_experiment (no behaviour change)"
 Commit size is governed by one rule: **a commit should be describable in one sentence without the
 word "and"**, and the project should work after it. That makes `git bisect` usable later (every
 commit is a valid state to test) and makes review cheap.
+
+```mermaid
+flowchart LR
+    wt["working tree<br/>files as edited"] -- "git add -p<br/>choose hunks" --> idx["staging area<br/>the commit you are composing"]
+    idx -- "git diff --staged<br/>READ it" --> rev{"one purpose?<br/>nothing accidental?"}
+    rev -- no --> wt
+    rev -- yes --> com["git commit"]
+    com --> hist["history<br/>small, reviewable steps"]
+```
+
+*The staging area is where you review yourself before anyone else does.*
 
 ### 2.5 What never goes into the repository
 
@@ -231,6 +266,18 @@ d991c63 Extract mean_kwh and peak_days, replace cells with main() (no behaviour 
 c6808c8 Add notebook export and sample data as found
 ```
 
+```mermaid
+gitGraph
+    commit id: "notebook as found"
+    commit id: "pin output (wrong value included)"
+    commit id: "extract loading"
+    commit id: "remove hidden state"
+    commit id: "FIX fleet mean" type: HIGHLIGHT
+    commit id: "README"
+```
+
+*The six commits of the worked example. Only the highlighted one changes what the program prints (3.603 to 1.949).*
+
 **The flaw.** The notebook has a cell `df = df[df.meter_id == "M2"]` ("look at the big one"), and a
 later cell prints `"fleet mean kwh per reading"` from `df`. The "fleet" mean is the mean of one meter.
 
@@ -313,6 +360,20 @@ WB_TARGET_DIR=~/projects/flowguard python -m pytest lessons/w1d6_notebook_to_pac
 
 (`python wb.py check w1d6` honours the same variable.) The checks use synthetic files only. They do
 not look at your Git history; that is what `COMMIT_REVIEW.md` is for.
+
+```
+data/raw/skab/                                   tidy table (flowguard.data.load_raw)
+  anomaly-free/anomaly-free.csv   9,405 rows       experiment_id | family | t | datetime | 8 sensors | anomaly | changepoint
+  valve1/0.csv ... 15.csv         16 files         --------------+--------+---+----------+-----------+---------+------------
+  valve2/0.csv ... 3.csv           4 files   ==>   valve1/0      | valve1 | 0 | ...      | ...       | 0       | 0
+  other/1.csv  ... 14.csv         14 files         valve1/0      | valve1 | 1 | ...      | ...       | 0       | 0
+                                                   ...
+  35 files, ';' separated,                         46,806 rows, one per (experiment_id, timestamp),
+  8 sensor columns (+ 2 label columns              snake_case columns, sorted,
+  except in anomaly-free)                          labels 0 where a file has none
+```
+
+*What the refactored loader must produce from the raw files (real SKAB counts).*
 
 ### Checklist
 

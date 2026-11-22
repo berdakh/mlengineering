@@ -40,11 +40,13 @@ def cv_accuracy(X, y, folds) -> float:
     return float(np.mean([np.mean(model().fit(X[tr], y[tr]).predict(X[va]) == y[va]) for tr, va in folds]))
 
 
-def main() -> None:
-    print("Part A - optimism of row-wise K-fold as within-machine correlation grows (mean of 5 repetitions)")
-    print("| ICC rho | row 5-fold | machine 5-fold | truth: new machines | row optimism |")
-    print("|---|---|---|---|---|")
-    for rho in (0.0, 0.2, 0.5, 0.8):
+RHOS = (0.0, 0.2, 0.5, 0.8)
+
+
+def part_a() -> list[dict]:
+    """Mean over 5 repetitions of row-wise K-fold, machine-wise K-fold and the truth, per ICC."""
+    out = []
+    for rho in RHOS:
         rows, grouped, truth = [], [], []
         for rep in range(5):
             rng = np.random.default_rng(1000 * rep + int(100 * rho))
@@ -53,8 +55,18 @@ def main() -> None:
             grouped.append(cv_accuracy(X, y, GroupKFold(5).split(X, y, g)))
             X_new, y_new, _ = simulate(300, rho, rng)
             truth.append(float(np.mean(model().fit(X, y).predict(X_new) == y_new)))
-        print(f"| {rho:.1f} | {np.mean(rows):.3f} | {np.mean(grouped):.3f} | {np.mean(truth):.3f} | "
-              f"{np.mean(rows) - np.mean(truth):+.3f} |")
+        out.append({"rho": rho, "row": float(np.mean(rows)), "group": float(np.mean(grouped)),
+                    "truth": float(np.mean(truth))})
+    return out
+
+
+def main() -> None:
+    print("Part A - optimism of row-wise K-fold as within-machine correlation grows (mean of 5 repetitions)")
+    print("| ICC rho | row 5-fold | machine 5-fold | truth: new machines | row optimism |")
+    print("|---|---|---|---|---|")
+    for r in part_a():
+        print(f"| {r['rho']:.1f} | {r['row']:.3f} | {r['group']:.3f} | {r['truth']:.3f} | "
+              f"{r['row'] - r['truth']:+.3f} |")
 
     print("\nPart B - effective sample size: spread of a per-row accuracy over 2,000 simulated test sets")
     print("of 20 machines x 100 rows, when correctness is correlated within a machine (rho_e)")

@@ -24,6 +24,24 @@ and remaining-useful-life regression does not exercise event-level detection); U
 condition monitoring (per-cycle classification, little temporal structure between cycles);
 physiological datasets (too close to your existing expertise to demonstrate transfer).
 
+```mermaid
+flowchart LR
+    raw["raw SKAB files<br/>downloaded, immutable"] --> ing["ingest + quality checks<br/>w2d3"]
+    ing --> spl["split manifest<br/>by experiment, w2d4 / w3d1"]
+    spl --> feat["causal features<br/>w2d5"]
+    feat --> base["baselines<br/>w2d6"]
+    base --> evalp["evaluation protocol<br/>point + event metrics,<br/>intervals, Week 3"]
+    evalp --> models["model comparison<br/>and choice, Week 4"]
+    models --> art["versioned artifact +<br/>inference pipeline, Week 5"]
+    art --> api["FastAPI service<br/>Week 5"]
+    api --> img["container + CI<br/>Week 6"]
+    img --> dep["deployment<br/>authorisation-gated"]
+    dep --> mon["logging, drift and<br/>performance monitoring, Week 7"]
+    mon -. "retrain / roll back" .-> models
+```
+
+*The project from raw data to a monitored service, with the week in which each stage is built.*
+
 ## Provenance and terms (verified 2026-11-21)
 
 * Source: <https://github.com/waico/SKAB>, pinned to commit `b2c0d46c2971dcbfe71e26087b6d231998bb91c2`.
@@ -69,6 +87,14 @@ Files are semicolon-separated. One row per timestamp.
 * No missing values in any column.
 * Note: the upstream folder listing numbers files from 1, the actual files from 0 (`valve1/0.csv` ... `valve1/15.csv`).
 
+![Real SKAB experiment valve1/0: eight sensor traces over 1,147 rows with the labelled anomalous segment, rows 573 to 973, shaded](figures/one_experiment.svg)
+
+*Real data, experiment `valve1/0`. Some sensors respond visibly to the valve closing (temperature, flow rate), others hardly at all, and two are quantised. Regenerate all figures on this page with `python project/figures/make_figures.py`.*
+
+![Real SKAB data: number of rows for each of the 34 labelled experiments, coloured by family; valve1 16 experiments, valve2 4, other 14](figures/rows_per_experiment.svg)
+
+*Real data. Experiments are of similar length (745 to 1,327 rows), so no single experiment dominates a pooled metric by size alone.*
+
 ### Findings from the Week 1-2 lessons (verified on the files, 2026-11-21)
 
 * **Rows are duplicated across files.** 1,290 rows are identical in all eight sensors and timestamp in two
@@ -86,6 +112,10 @@ Files are semicolon-separated. One row per timestamp.
   works much better (w2d5, w2d6).
 * First baseline numbers (w2d6, 9 test experiments, no intervals yet): point-level PR-AUC 0.373 for a
   constant score, 0.805 for a burn-in z-score on flow rate, 0.827 for supervised logistic regression.
+
+![Real SKAB data: one horizontal bar per experiment with the anomalous segment marked; in 31 of 34 experiments it starts between rows 550 and 600](figures/anomaly_onsets.svg)
+
+*Real data; the plotted values are in `figures/anomaly_onsets.csv`. The anomalous segment starts at row 550-600 in 31 of 34 experiments. A model given elapsed time, or any feature that drifts with it, can learn the protocol instead of the fault.*
 
 These facts drive design decisions. With 34 events, any event-level metric has wide uncertainty:
 this project must report intervals (w3d5) and must not claim small differences between models.

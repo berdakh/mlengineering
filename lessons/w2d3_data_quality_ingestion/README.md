@@ -75,6 +75,17 @@ You have lived this rule already: the acquisition file (`.edf`, `.vhdr`, BIDS `s
 never overwritten by the filtered version, and a derivative is always traceable to it. Ingestion is
 the same discipline applied to tables.
 
+```mermaid
+flowchart LR
+    SRC["source<br/>(pinned commit, sha256 per file)"] --> RAW[("data/raw<br/>immutable")]
+    RAW --> ING["ingest<br/>explicit parse + checks"]
+    ING -->|"no error-severity failure"| INT[("data/interim/skab.csv<br/>declared schema")]
+    ING --> REP["quality_report.json<br/>provenance.json"]
+    ING -. "any error" .-> STOP["exit non-zero<br/>no table written"]
+    INT --> FEAT["features (w2d5)"] --> PROC[("data/processed<br/>tied to a split manifest")]
+```
+
+
 ### 2.2 Parsing is a set of decisions; make each one in code
 
 A CSV has no types. `pd.read_csv(path)` succeeds on almost anything, and the ways it succeeds
@@ -152,6 +163,18 @@ and defensible; put judgement calls in warnings and review them.
 recur. If a repair is ever adopted (say, "keep the last of duplicated rows"), it is a separate,
 named, tested transformation with its own line in the report: how many rows it touched.
 
+```mermaid
+flowchart TD
+    C["a check fails"] --> Q1{"Would a later step silently compute<br/>something false if we continued?"}
+    Q1 -->|"yes"| E["ERROR<br/>stop, write the report, write no table"]
+    Q1 -->|"no"| Q2{"Does a modelling decision<br/>depend on this fact?"}
+    Q2 -->|"yes"| W["WARNING<br/>record in the report, continue, review"]
+    Q2 -->|"no"| D["not a check: drop it,<br/>or keep it as a note in exploration"]
+    E --> X["examples: missing column, unparseable value,<br/>duplicate key, label outside 0/1, rows out of order"]
+    W --> Y["examples: sampling gap, stuck sensor,<br/>implausible range, not exactly one event"]
+```
+
+
 ### 2.5 Idempotence and provenance
 
 A step is **idempotent** if running it again on the same input changes nothing:
@@ -168,6 +191,25 @@ commit, licence, SHA-256 and row count of each input, SHA-256 and row count of t
 version. It answers "which files produced this table?" without anyone's memory. Note the honest
 limit: byte-identical output is guaranteed within one environment; a different pandas version may
 format a float differently, which is why the code and library versions are part of the record.
+
+```mermaid
+sequenceDiagram
+    participant CLI as flowguard ingest
+    participant RAW as data/raw (read only)
+    participant CHK as quality.run_checks
+    participant OUT as out dir
+    CLI->>RAW: read every file with explicit separator and dtypes
+    CLI->>CHK: tidy table, as it arrived (not sorted, not de-duplicated)
+    CHK-->>CLI: list of CheckResult(name, passed, detail, severity)
+    CLI->>OUT: quality_report.json (always)
+    alt any error-severity failure
+        CLI-->>CLI: exit non-zero, table not written
+    else only warnings or all passed
+        CLI->>OUT: skab.csv to a temporary name, then atomic rename
+        CLI->>OUT: provenance.json (source, commit, hashes, row counts, code version)
+    end
+```
+
 
 ### 2.6 Data validation is not model evaluation
 
@@ -387,6 +429,25 @@ flow_rate            0.57    0.94    1.00
    essentially every valve experiment. In `other` no single sensor moves in more than 57 % of
    experiments. **Decision:** generalisation across families is a separate question from
    generalisation across experiments; protocol B holds out a family (w2d4).
+
+Findings 1 and 2 in one picture, and one the table does not show: the anomalous segment starts at nearly
+the same elapsed time in almost every experiment.
+
+![Timeline of the 34 labelled SKAB experiments: a grey bar for normal operation and an orange bar for the anomalous segment, which starts near 600 seconds in most experiments; nine black ticks mark sampling gaps in six files](figures/experiment_timelines.svg)
+
+*Real data. The anomaly begins at row 550-600 in 31 of 34 experiments, so position in the recording
+predicts the label. That is an artefact of the experimental protocol, not a property of faults; it is
+recorded here and becomes a leakage probe in w2d6 and w3d1. Black ticks are the nine gaps longer than 5 s.*
+
+Finding 4, per family, on normal rows only:
+
+![Eight small box plots, one per sensor, comparing normal-operation values across valve1, valve2, other and the anomaly-free recording](figures/sensor_levels_by_family.svg)
+
+*Real data. The two valve families run at about 32 L/min with low vibration; the `other` family and the
+fault-free recording run at about 126 L/min. A threshold on raw values separates operating regimes
+before it separates faults. Regenerate both figures with
+`python lessons/w2d3_data_quality_ingestion/figures/make_figures.py`.*
+
 
 **A correction worth keeping.** The first version of block 5 pooled all rows of a family and
 subtracted pooled means. It reported a 243-SD accelerometer shift for `other`. That number was an

@@ -68,6 +68,10 @@ The same analogy gives the two error types. A suite that fails on correct code (
 alarm) is **flaky** or **over-specified**; a suite that passes on defective code (miss) is
 **weak**. "All tests pass" tells you nothing until you know the suite's sensitivity.
 
+![Real harness runs: six test suites against 14 injected defects; starter, runs-without-error and self-comparison detect 0, the end-to-end metric suite 1, loose tolerances 13, the reference suite 14](figures/kill_matrix.svg)
+
+*Real runs of this lesson's grading harness. All six suites pass on the correct package; a suite is only as good as the defects it notices. Defects are numbered rather than named so the figure does not give the lab away. Regenerate with `python lessons/w1d5_testing_ml_code/figures/make_figures.py` (about a minute).*
+
 ### 2.2 The oracle problem
 
 A test needs an expected value that does **not** come from the code under test. For numerical
@@ -130,6 +134,10 @@ Fix the input (`fs=256`, `N=128` → 2 Hz bins; use 24, 40, 92 Hz), not the tole
 loose tolerances for tests whose claim is itself approximate ("interpolating three missing
 samples changes RMS by < 5 %"), and say so in a comment.
 
+![Largest error that passes as a function of the expected value, for an absolute tolerance of 1e-9, a relative tolerance of 1e-6 and their combination; the two cross at an expected value of 1e-3](figures/tolerance_regions.svg)
+
+*Arithmetic, not data. Below `|b| = abs / rel` the absolute term decides; above it the relative term does. An expected value of exactly zero needs an absolute tolerance.*
+
 ### 2.4 The test pyramid for ML, and the line that matters
 
 | Layer | Claim | Deterministic? | Runs | Example |
@@ -155,6 +163,25 @@ wiring error can fail it; (2) all seeds fixed, so it is deterministic; (3) a doc
 stating that it checks wiring, not quality. `auc >= 0.9` on such a frame catches "used the
 probability of the wrong class" (AUC ≈ 0) and "labels misaligned with features" (AUC ≈ 0.5).
 Real performance thresholds belong in the evaluation stage, with uncertainty attached.
+
+```mermaid
+flowchart TD
+    subgraph contracts["Code and data contracts - deterministic - a failure means something is broken"]
+        u["Unit tests<br/>every change, seconds"]
+        i["Integration and smoke tests<br/>every change, tiny fixed data"]
+        dv["Data validation<br/>every data load"]
+    end
+    subgraph quality["Model quality - an estimate with variance"]
+        sp["Statistical performance checks<br/>per trained model, in evaluation,<br/>reported with uncertainty"]
+    end
+    u --> i --> dv --> sp
+```
+
+*The line that matters runs between the two boxes: above it a red result is a defect, below it a red result may be an unlucky split.*
+
+![SYNTHETIC pump data: test ROC AUC of the correct code for 20 split seeds ranges from 0.9464 to 1.0; one seed falls below the 0.95 assertion threshold](figures/auc_over_seeds.svg)
+
+*SYNTHETIC data. The same correct code under 20 split seeds: `assert auc > 0.95` fails once (seed 4) with no defect present.*
 
 ### 2.5 What coverage means
 
@@ -280,6 +307,20 @@ always grade your *tests* against the reference copy in `checks/reference_pkg/`.
   networking blocked; a test that reads `data/synthetic/...` will fail there.
 - `checks/bugs.py` lists the defects. Reading it first turns this lab into guided
   practice — your call, but record it honestly in the workbench.
+
+```mermaid
+flowchart LR
+    t["your tests/"] --> r0["run on the CORRECT package"]
+    r0 --> ok{"all pass?"}
+    ok -- no --> bad["suite is wrong or flaky:<br/>fix the tests first"]
+    ok -- yes --> loop["for each of 14 defective<br/>copies of the package"]
+    loop --> r1["run your tests"]
+    r1 --> k{"any test fails?"}
+    k -- yes --> killed["defect detected"]
+    k -- no --> surv["defect survived:<br/>a missing or too-loose test"]
+```
+
+*How the lab grades you: your tests are the detector, the injected defects are the ground truth.*
 
 ### Step 0 — baseline (5 min)
 

@@ -89,6 +89,21 @@ Consequences you have certainly met:
 *Installing* a package means making it findable through step 4, which is the only step
 that does not depend on where you are standing or how you started Python.
 
+```mermaid
+flowchart TD
+    imp["import pumpwatch"] --> cache{"already in<br/>sys.modules?"}
+    cache -- yes --> done["reuse the loaded module"]
+    cache -- no --> p0["sys.path entry 0:<br/>the script's directory, or the<br/>current directory for python -m / -c"]
+    p0 -- found --> load["load and cache it"]
+    p0 -- not found --> std["standard library directories"]
+    std -- not found --> site["site-packages of the<br/>ACTIVE environment"]
+    site -- found --> load
+    site -- not found --> err["ModuleNotFoundError"]
+    note["An editable install adds your src/ directory<br/>to the search through site-packages"] -.-> site
+```
+
+*An import is a search over `sys.path`, in order. "Works from the repo root, fails elsewhere" means entry 0 found your code and nothing else would have.*
+
 ### 2.2 Precise terminology
 
 | Term | Meaning |
@@ -125,6 +140,25 @@ it is through an installation. If the packaging configuration is wrong, you find
 immediately, on your machine. The cost is one extra step (`pip install -e .`) before
 anything runs — which is the step your colleague and your Dockerfile need anyway.
 
+```
+flat layout                              src layout
+-----------                              ----------
+project/                                 project/
+  pumpwatch/        <- importable from     pyproject.toml
+    __init__.py        the repo root       src/
+  pyproject.toml       WITHOUT installing    pumpwatch/      <- importable ONLY
+  tests/                                       __init__.py      after installing
+                                           tests/
+
+python -c "import pumpwatch"             python -c "import pumpwatch"
+  from project/      -> works (entry 0)    from project/      -> fails until installed
+  from elsewhere     -> fails              from anywhere      -> works once installed
+  => a broken or missing install           => tests always run against the
+     can go unnoticed                         installed package
+```
+
+*The `src` layout removes the accidental import path, so "it imports" means "it is installed".*
+
 ### 2.4 What `pip install -e .` actually does
 
 1. pip reads `[build-system]`, creates an isolated temporary environment, and installs
@@ -140,6 +174,25 @@ Edits to existing `.py` files are live. **Metadata is not live**: after changing
 dependencies or entry points in `pyproject.toml`, re-run `pip install -e .`. An editable
 install is a development convenience, not a deployment mechanism — images and servers get
 a regular install (week 6).
+
+```mermaid
+sequenceDiagram
+    participant You
+    participant pip as pip, the build frontend
+    participant st as setuptools, the build backend
+    participant sp as site-packages of the venv
+    You->>pip: pip install -e .
+    pip->>pip: read pyproject.toml, section build-system
+    pip->>st: install the backend in an isolated build environment
+    pip->>st: build an editable wheel
+    st-->>pip: metadata, entry points, a pointer to src
+    pip->>sp: write pumpwatch dist-info and the path pointer
+    pip->>sp: create the console script bin/pumpwatch
+    pip->>sp: install declared dependencies
+    Note over You,sp: Edits under src take effect at once. Changes to dependencies, scripts or version need a reinstall.
+```
+
+*What an editable install does. The frontend orchestrates; the backend knows how to build your project.*
 
 ### 2.5 Environments: isolation, then reproducibility
 
@@ -173,6 +226,14 @@ week 6, a service image (locked).
   would not have let it do otherwise — but look at where it fits the scaler.
 - A characterization run is a pilot recording: before changing the rig, record what the
   current rig produces, so later differences can be attributed.
+
+![SYNTHETIC pump data: a healthy and a faulty window of unit P09 in time and frequency; the faulty window has an extra peak at 90 Hz inside the bp_high band](figures/pump_signal_spectrum.svg)
+
+*SYNTHETIC data. The features you will move into `pumpwatch.features` are the ones you compute on EEG windows: here `bp_high` picks up the 90 Hz fault component and `bp_low` the shaft rotation near 25 Hz. Regenerate with `python lessons/w1d3_package_structure/figures/make_figures.py`.*
+
+![SYNTHETIC pump data: per-unit strip plots; mean rms per unit ranges from 0.36 to 1.27 while healthy and faulty windows overlap, and the bp_high/bp_low ratio separates the classes within every faulty unit](figures/unit_vs_fault.svg)
+
+*SYNTHETIC data. Left: mean `rms` per unit runs from 0.36 to 1.27, a wider spread than the healthy-versus-faulty gap (0.81 versus 1.01 on average), which is why the split is by unit, as it is by subject in your work. Right: a ratio of band powers cancels the unit gain.*
 
 ### 2.7 A concrete industry example
 
@@ -289,6 +350,21 @@ Workspace: [`lab/`](lab/). Starter material: `messy_analysis.py` (the script),
 
 **Result to produce:** an installed `pumpwatch` command that reproduces the script's
 metrics from any directory, with the scaler leakage removed as a separate logged change.
+
+```mermaid
+flowchart LR
+    s["messy_analysis.py<br/>one script, globals"] --> g["Task 1<br/>golden output"]
+    g --> k["Task 2<br/>skeleton + editable install"]
+    k --> f["Tasks 3-4<br/>faithful port:<br/>features, io, split, model"]
+    f --> c["Task 5<br/>CLI + entry point"]
+    c --> w["Task 6<br/>run from another directory"]
+    w --> cmp{"same numbers<br/>as golden?"}
+    cmp -- no --> f
+    cmp -- yes --> fix["Task 7<br/>ONE behaviour change:<br/>scaler inside the pipeline"]
+    fix --> chk["Task 8<br/>checks + refactor log"]
+```
+
+*The lab in one picture: preserve behaviour first and prove it, then change behaviour once, on purpose.*
 
 ### Task 0 — Interpreter and environment (10 min)
 

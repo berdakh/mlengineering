@@ -84,6 +84,15 @@ the normal case rather than the special one.
   had only received data up to *t* would have computed. This is the property the perturbation
   test in the lab verifies.
 
+```text
+ time →            t-5  t-4  t-3  t-2  t-1   t   t+1  t+2  t+3
+ causal, w = 5           [ ■    ■    ■    ■    ■ ]                      uses rows ≤ t: buildable online
+ centred, w = 5                    [ ■    ■    ■    ■    ■ ]            uses t+1, t+2: exists only offline
+ warm-up (first rows)    fewer than w rows exist → NaN (min_periods = w), never a silently shorter window
+ gap or new experiment   ··· ■ ■ ║ ■ ■ ···    the window must not reach across ║ (reset, or define it in seconds)
+```
+
+
 ### 2.3 The window-length tradeoff, with numbers
 
 Take noise with standard deviation σ and a step fault of height Δ at time *t₀*. A trailing mean
@@ -119,6 +128,13 @@ drifts and has higher variance than the mean, of order `12σ²/w³` for white no
 windows. An EWMA with span *s* (`α = 2/(s+1)`) weights the past geometrically, has no hard
 warm-up edge and can be updated in O(1) state per sensor, which is why it is common in services;
 its step response reaches fraction `1-(1-α)^k` of Δ after *k* samples.
+
+![Line chart: the median detection delay of a causal rolling mean grows from 2 to 14 samples as the window grows from 10 to 60, tracking w times theta over delta; the centred window shows minus 2 to minus 15](figures/delay_vs_window.svg)
+
+*SYNTHETIC data (the simulation of the first worked example, 400 series per window length). The blue
+line is equation (1); the orange line is the same quantity minus w/2. Regenerate with
+`python lessons/w2d5_feature_pipeline/figures/make_figures.py`.*
+
 
 ### 2.4 Boundaries: warm-up, gaps and experiments
 
@@ -165,6 +181,22 @@ a BCI session calibration does). Choosing among them is evaluation work for
 [w2d6](../w2d6_baselines_metrics/README.md) and Week 3. What this unit fixes is the mechanism, so the
 choice is one argument to `fit` and not a property scattered through the code.
 
+```mermaid
+flowchart LR
+    subgraph FIT["fit: once, on designated rows only"]
+        TR["reference rows<br/>(training experiments, normal operation)"] --> ST["ReferenceStats<br/>mean, sd per feature"]
+    end
+    ST --> SAVE[("saved with the model")]
+    subgraph APPLY["transform: everywhere, with the stored state"]
+        A1["training rows"] --> Z["z = (x - mean) / sd"]
+        A2["validation / test rows"] --> Z
+        A3["one live row in the service"] --> Z
+    end
+    SAVE --> Z
+    TE["test rows"] -. "never reach fit" .-x ST
+```
+
+
 ### 2.6 Determinism and content-addressed caching
 
 Make the feature step a pure function:
@@ -191,6 +223,17 @@ Determinism has to be checked, not assumed: the lab verifies byte-identical outp
 computations. Sources of nondeterminism in feature code are usually unordered iteration
 (`set`, `groupby` on unsorted keys with `sort=False` and changing input order), parallel
 reductions, and float formatting differences between library versions.
+
+```mermaid
+flowchart LR
+    D["input data<br/>sha256 of file bytes"] --> K
+    P["parameters<br/>canonical JSON, sorted"] --> K
+    C["code identity<br/>FEATURE_VERSION"] --> K
+    K["cache key = hash(data, parameters, code)"] --> Q{"entry with this key<br/>and its metadata file exists?"}
+    Q -->|"yes"| HIT["reuse: no computation"]
+    Q -->|"no"| RUN["compute features"] --> W["write table, then metadata LAST<br/>(metadata present = entry complete)"]
+```
+
 
 ### 2.7 Industry example
 
@@ -267,6 +310,14 @@ Reading it:
 Code decisions worth noticing: `min_periods=w` everywhere so partial windows cannot blur the
 comparison; the crossing search starts 60 samples before onset so early (leaky) alerts are
 visible instead of being clipped to zero; seeds are fixed per part.
+
+One of the simulated series, with both rolling means and the alert threshold:
+
+![Line chart of a noisy step signal with a causal and a centred 30-sample rolling mean; the centred mean crosses the alert threshold 7 samples before the fault onset, the causal one 7 samples after](figures/step_response.svg)
+
+*SYNTHETIC data, one series, w = 30. The centred curve is the causal curve shifted 15 samples to the
+left, which is all "centring" is. Offline, that shift reads as a better detector.*
+
 
 ### 3.2 Real data: reference rows matter more than centring here
 

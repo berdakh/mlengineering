@@ -51,6 +51,35 @@ Dates are ISO-8601 text.
 | category | TEXT | `billing` / `playback` / `account` / `other` |
 | resolved_at | TEXT, nullable | NULL while open |
 
+```mermaid
+erDiagram
+    CUSTOMERS ||--o{ INVOICES : "is charged by"
+    CUSTOMERS |o--o{ TICKETS : "may open"
+    CUSTOMERS {
+        TEXT customer_id PK
+        TEXT signup_date
+        TEXT country "nullable"
+        TEXT plan
+        TEXT acquisition_channel
+    }
+    INVOICES {
+        INTEGER invoice_id PK
+        TEXT customer_id FK
+        TEXT invoice_date
+        REAL amount
+        TEXT status
+    }
+    TICKETS {
+        INTEGER ticket_id PK
+        TEXT customer_id FK "nullable"
+        TEXT opened_at
+        TEXT category
+        TEXT resolved_at "nullable"
+    }
+```
+
+*Tables in `streambox.db` (SYNTHETIC). One customer has many invoices and may have tickets; a ticket may have no customer.*
+
 ## `signups_dirty.csv` - used by a3
 
 A raw CRM export; described in `../a3_cleaning/README.md`. Uncleaned on purpose.

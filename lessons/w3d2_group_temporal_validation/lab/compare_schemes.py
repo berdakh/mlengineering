@@ -112,33 +112,45 @@ def evaluate(X: np.ndarray, y: np.ndarray, make_model, folds) -> tuple[float, fl
     return average_precision_score(truth, score), roc_auc_score(truth, score), per_fold
 
 
-def main(argv: list[str] | None = None) -> int:
-    ap = argparse.ArgumentParser(description="Compare validation schemes on SKAB (development experiments).")
-    ap.add_argument("--raw-dir", default=str(DEFAULT_RAW))
-    args = ap.parse_args(argv)
-    try:
-        tidy = load_raw(args.raw_dir)
-    except FileNotFoundError as exc:
-        print(f"error: {exc}", file=sys.stderr)
-        return 2
+def run(raw_dir: str | Path = DEFAULT_RAW) -> tuple[str, list[dict]]:
+    """(description of the development pool, one result dict per model x scheme)."""
+    tidy = load_raw(raw_dir)
     groups = find_overlap_groups(tidy)
     manifest = make_splits(tidy, seed=0, keep_together=groups)
     validate_splits(manifest, tidy)
     dev = tidy[tidy["experiment_id"].isin(dev_experiments(manifest))].reset_index(drop=True)
     y = dev["anomaly"].to_numpy()
     usable = dev["t"].to_numpy() >= BURN_IN
-    print(f"development pool: {dev['experiment_id'].nunique()} experiments, {int(usable.sum())} usable rows, "
-          f"positive fraction {y[usable].mean():.3f}; test experiments not opened\n")
+    pool = (f"development pool: {dev['experiment_id'].nunique()} experiments, {int(usable.sum())} usable rows, "
+            f"positive fraction {y[usable].mean():.3f}; test experiments not opened")
     all_schemes = schemes(dev, manifest, groups)
+    results = []
     for model_name, (make_features, make_model) in MODELS.items():
         X = make_features(dev)
+        for name, folds in all_schemes.items():
+            pr, roc, per_fold = evaluate(X, y, make_model, folds)
+            results.append({"model": model_name, "scheme": name, "n_folds": len(folds),
+                            "pr_auc": pr, "roc_auc": roc, "per_fold": per_fold})
+    return pool, results
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description="Compare validation schemes on SKAB (development experiments).")
+    ap.add_argument("--raw-dir", default=str(DEFAULT_RAW))
+    args = ap.parse_args(argv)
+    try:
+        pool, results = run(args.raw_dir)
+    except FileNotFoundError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    print(pool + "\n")
+    for model_name in MODELS:
         print(f"### {model_name}\n")
         print("| scheme | folds | pooled PR-AUC | pooled ROC-AUC | ROC-AUC per fold |")
         print("|---|---|---|---|---|")
-        for name, folds in all_schemes.items():
-            ap_, auc, per_fold = evaluate(X, y, make_model, folds)
-            detail = ", ".join(f"{label}: {value:.3f}" for label, value in per_fold)
-            print(f"| {name} | {len(folds)} | {ap_:.3f} | {auc:.3f} | {detail} |")
+        for r in (r for r in results if r["model"] == model_name):
+            detail = ", ".join(f"{label}: {value:.3f}" for label, value in r["per_fold"])
+            print(f"| {r['scheme']} | {r['n_folds']} | {r['pr_auc']:.3f} | {r['roc_auc']:.3f} | {detail} |")
         print()
     return 0
 

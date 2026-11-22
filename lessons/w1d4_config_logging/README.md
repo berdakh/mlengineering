@@ -131,6 +131,20 @@ varies *between deploys* and puts all of it in environment variables; ML trainin
 so it belongs in files under version control. Deployment settings of the future service (W5–W6) will
 follow the environment-variable rule.
 
+```mermaid
+flowchart LR
+    d["defaults<br/>in the dataclasses"] --> m(("merge"))
+    f["config file<br/>configs/base.toml"] --> m
+    c["command line<br/>--set section.key=value"] --> m
+    m --> v{"validate:<br/>unknown key? wrong type?<br/>out of range?"}
+    v -- "invalid" --> e["exit non-zero,<br/>message names the key"]
+    v -- "valid" --> cfg["frozen Config object"]
+    cfg --> snap["config.json snapshot<br/>written BEFORE any work"]
+    cfg --> code["library code receives plain values"]
+```
+
+*Precedence is defaults, then file, then command line: later sources override earlier ones, and the snapshot records the result after all of them.*
+
 ### 2.4 Logging architecture
 
 ```
@@ -163,6 +177,20 @@ this into JSON logs for the service; the habit is the same.
 
 **stdout is an interface.** The program's *result* goes to stdout, diagnostics to stderr.
 `pumpwatch train ... | jq .metrics.auc` must work at any log level.
+
+```mermaid
+flowchart LR
+    a["logger pumpwatch.features<br/>log.debug / log.info"] --> p["logger pumpwatch"]
+    b["logger pumpwatch.model"] --> p
+    c["logger pumpwatch.cli"] --> p
+    p -- "propagate" --> r["root logger<br/>handlers attached ONCE<br/>at the entry point"]
+    r --> h1["StreamHandler to stderr<br/>level from config"]
+    r --> h2["FileHandler in the run directory<br/>level DEBUG"]
+    h1 --> f1["Formatter"]
+    h2 --> f2["Formatter"]
+```
+
+*Library modules only obtain loggers and emit records. Where records go is decided in one place. Standard output stays free for the JSON result.*
 
 ### 2.5 Seeds, and the mathematics of what a seed does *not* give you
 
@@ -201,6 +229,14 @@ operations with no deterministic implementation), and seeding DataLoader workers
 `worker_init_fn` plus an explicit `generator`. Each costs speed or convenience — which is why they
 are configuration, and why the honest deliverable is a *statement of residual nondeterminism*
 rather than a claim of determinism.
+
+![SYNTHETIC pump data: test F1 for split seeds 0 to 9 with identical code and data ranges from 0.778 to 0.930, mean 0.879, sample standard deviation 0.044](figures/seed_spread.svg)
+
+*SYNTHETIC data, reference solution. The ten points share code and data and differ only in which three units are held out (numbers above each point). A 0.04 difference between two single runs is inside this spread. Regenerate with `python lessons/w1d4_config_logging/figures/make_figures.py`.*
+
+| seed | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| test F1 | 0.914 | 0.914 | 0.870 | 0.870 | 0.778 | 0.930 | 0.882 | 0.909 | 0.853 | 0.873 |
 
 ### 2.6 Connection to what you already know
 
@@ -391,6 +427,21 @@ ls /tmp/pw_runs/*/
 Expected metrics for the base config, from the reference solution on the tested versions:
 `auc ≈ 0.9992`, `f1 ≈ 0.909`, `test_units = ["P01", "P06", "P09"]`. If your numbers differ at the
 second decimal, something other than the config changed — find out what before continuing.
+
+```mermaid
+flowchart TD
+    cmd["pumpwatch train --config ... --set ... --run-dir runs"] --> dir["runs/RUN_ID/"]
+    dir --> c["config.json<br/>resolved config, after overrides"]
+    dir --> l["a .log file<br/>DEBUG and above"]
+    dir --> m["metrics.json"]
+    dir --> e["environment.json<br/>python, package versions,<br/>git commit, data sha256"]
+    c -. "answers: with what settings?" .-> q["Can this result be<br/>explained and re-run?"]
+    e -. "answers: with what code, data, libraries?" .-> q
+    m -. "answers: what came out?" .-> q
+    l -. "answers: what happened on the way?" .-> q
+```
+
+*Anatomy of a run directory: four files, four questions.*
 
 ### Task 4 — Logging (10 min)
 

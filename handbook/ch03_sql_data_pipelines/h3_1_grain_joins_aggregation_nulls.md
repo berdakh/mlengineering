@@ -196,6 +196,34 @@ one machine. Joining down a single chain produces rows at the finest grain (part
 and measures of *that* grain are safe (`SUM(quantity)` per machine is correct). The trouble starts
 only when a measure from a coarser level of the chain is summed, or when a second branch is joined.
 
+The two shapes that produce double counting, drawn as grains. An arrow points from the "one" side to
+the "many" side; a measure is safe to sum only at the grain of the table that owns it.
+
+```mermaid
+flowchart TD
+    subgraph CHASM["Chasm: two children of one parent"]
+        P1["parent<br/>(one row per machine)"] --> C1["child A<br/>(work orders, owns labour)"]
+        P1 --> C2["child B<br/>(downtime events, owns hours)"]
+    end
+    subgraph FAN["Fan: a measure on the parent, joined down to a child"]
+        P2["parent<br/>(work order, owns labour)"] --> C3["child<br/>(part lines)"]
+    end
+    CHASM --> X1["joined rows = a x b per parent<br/>labour x b, hours x a"]
+    FAN --> X2["joined rows = m per parent<br/>labour x m"]
+    X1 --> FIX["pre-aggregate every child to the join grain, then join"]
+    X2 --> FIX
+```
+
+On the lesson database the factor can be read off machine by machine: the reported labour of each
+machine is its true labour times its number of downtime events.
+
+![Scatter plot: for 24 machines, reported labour divided by true labour equals the number of downtime events, from 1 to 5](../../lessons/w2d1_sql_joins_grain/figures/fanout_factor_per_machine.svg)
+
+*Every point lies on the identity line, which is the row-count rule of H3.1.3 made visible. Under a
+LEFT JOIN a machine with no downtime events keeps one row per work order, hence the minimum of 1.
+SYNTHETIC data; script: `lessons/w2d1_sql_joins_grain/figures/make_figures.py`.*
+
+
 ## H3.1.5 NULL and three-valued logic
 
 NULL marks the absence of a value. SQL does not record why it is absent: not applicable, not yet
@@ -332,6 +360,18 @@ group's rows should supply it? Most engines reject such a query. SQLite and MySQ
 accept it and return the value from an arbitrary row of the group. That behaviour is a portability
 hazard and a correctness hazard; group by everything you select, or wrap the extra column in
 `MIN`/`MAX` when it is constant within the group.
+
+The order in which the clauses of one `SELECT` take effect explains where each kind of filter can go:
+
+```mermaid
+flowchart LR
+    FROM["FROM + JOIN ... ON<br/>(ON filters before unmatched rows are padded)"] --> WHERE["WHERE<br/>(row filter; no aggregates)"]
+    WHERE --> GB["GROUP BY"]
+    GB --> HAV["HAVING<br/>(group filter; aggregates allowed)"]
+    HAV --> SEL["SELECT<br/>(expressions, aliases)"]
+    SEL --> OB["ORDER BY / LIMIT"]
+```
+
 
 ## H3.1.7 Verifying a query
 

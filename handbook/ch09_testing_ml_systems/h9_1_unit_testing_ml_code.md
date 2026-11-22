@@ -118,6 +118,19 @@ job: pinning behaviour while you restructure code. Replace it with a real oracle
 
 ---
 
+```mermaid
+flowchart TD
+    q["What is the correct output?"] --> a{"Can it be derived<br/>by hand or from theory?"}
+    a -- yes --> ka["Known-answer test<br/>sine RMS, Parseval, ramp line length"]
+    a -- no --> b{"Is there a transformation of the input<br/>with a predictable effect on the output?"}
+    b -- yes --> inv["Invariance / metamorphic test<br/>scale, shift, permute, pad"]
+    b -- no --> c{"Is there a slow, obviously<br/>correct implementation?"}
+    c -- yes --> diff["Differential test<br/>fast code against the slow reference"]
+    c -- no --> con["Contract tests only<br/>shapes, types, ranges, errors raised"]
+```
+
+*Choosing an oracle. Work down the list; the earlier kinds detect more.*
+
 ## H9.1.3 Floating-point tolerances
 
 Definitions (verified against the installed libraries, §H9.1.10):
@@ -159,6 +172,10 @@ interpolation of three missing samples changes RMS by less than 5 %"). Give them
 own test, a justified bound, and a comment; do not let them set the tolerance for exact claims.
 
 ---
+
+![Largest error that passes for an absolute tolerance, a relative tolerance and their combination](../../lessons/w1d5_testing_ml_code/figures/tolerance_regions.svg)
+
+*From lesson w1d5. The combined rule `|a - b| <= max(rel * |b|, abs)` behaves as an absolute tolerance near zero and as a relative one elsewhere.*
 
 ## H9.1.4 pytest mechanics that carry the weight
 
@@ -281,6 +298,10 @@ the same caveat: the score is relative to the mutants you chose. Fourteen hand-p
 defects (w1d5) are realistic but not exhaustive.
 
 ---
+
+![Six test suites against 14 injected defects: detection counts 0, 0, 0, 1, 13 and 14](../../lessons/w1d5_testing_ml_code/figures/kill_matrix.svg)
+
+*Real harness runs from lesson w1d5. Coverage would rate several of these suites alike; mutation results separate them.*
 
 ## H9.1.7 Practical decisions and tradeoffs
 

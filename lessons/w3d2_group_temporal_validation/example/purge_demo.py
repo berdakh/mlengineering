@@ -52,7 +52,8 @@ def auc(X, y, folds) -> float:
     return roc_auc_score(np.concatenate(truth), np.concatenate(score))
 
 
-def main() -> None:
+def run() -> dict[str, list[float]]:
+    """scheme name -> pooled out-of-fold ROC-AUC for each of 10 seeds."""
     need = W - 1 + H
     schemes = {
         "shuffled 5-fold": lambda n: KFold(5, shuffle=True, random_state=0).split(np.arange(n)),
@@ -63,11 +64,14 @@ def main() -> None:
         f"blocked, 300 blocks, purge = embargo = {H} (label horizon only)": lambda n: blocked(n, 300, H, H),
         f"blocked, 300 blocks, purge = embargo = {need} (W - 1 + H)": lambda n: blocked(n, 300, need, need),
     }
+    return {name: [auc(*build(seed), make(N)) for seed in range(10)] for name, make in schemes.items()}
+
+
+def main() -> None:
     print(f"true ROC-AUC = 0.500. W = {W}, H = {H}, n = {N}; mean and s.d. over 10 seeds")
     print("| scheme | pooled out-of-fold ROC-AUC |")
     print("|---|---|")
-    for name, make in schemes.items():
-        values = [auc(*build(seed), make(N)) for seed in range(10)]
+    for name, values in run().items():
         print(f"| {name} | {np.mean(values):.3f} +- {np.std(values):.3f} |")
 
 

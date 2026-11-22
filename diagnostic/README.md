@@ -22,6 +22,22 @@ submissions are reviewed.
 Session A totals 110 minutes, session B 115. Use the remaining minutes of each session to fill in
 [`SUBMISSION.md`](SUBMISSION.md).
 
+```mermaid
+flowchart LR
+    subgraph A["Session A - W1D1 - 110 min"]
+        a1["a1_python<br/>40 min"] --> a2["a2_sql<br/>35 min"] --> a3["a3_cleaning<br/>35 min"]
+    end
+    subgraph B["Session B - W1D2 - 115 min"]
+        b1["b1_baseline<br/>35 min"] --> b2["b2_leakage<br/>35 min"] --> b3["b3_testing_api<br/>25 min"] --> b4["b4_explain<br/>20 min"]
+    end
+    a3 --> b1
+    b4 --> sub["SUBMISSION.md<br/>time, help used, written answers"]
+    sub --> rev["Review against the scoring guide"]
+    rev --> plan["Weeks 1-3 adapted:<br/>compress, keep or add a primer"]
+```
+
+*The path through the diagnostic. Nothing is adapted until the submission has been reviewed.*
+
 ## Rules (they make the result useful to you)
 
 1. **Time-box each section.** When the time is up, stop, note where you were, move on. An unfinished

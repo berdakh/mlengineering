@@ -18,7 +18,7 @@ not comparable with numbers in `BASELINES.md`.
 ## Headline
 
 Recall per experiment: mean 0.663, range 0.007 to 0.993. Row-pooled recall 0.656. The spread, not the
-mean, is the result: six experiments are below 0.5 and six are above 0.85.
+mean, is the result: seven experiments are below 0.5 and six are above 0.85.
 
 At the event level nothing is missed: every one of the 25 anomalous segments has at least one flagged
 row, and 19 are first flagged within 30 rows of onset.
@@ -81,6 +81,10 @@ figure. The large pre-onset run in `other/13` coincides with rows labelled anoma
 ## Limits
 
 * One model, one threshold, tuned on the analysed data.
+* The threshold sits on a cliff. `flow_rate` is quantised, so burn-in z-scores take few distinct values
+  per experiment: at 2.5766 (the tuned value) `valve2/2` has recall 0.785 and delay 37; at 2.577 it has
+  recall 0.618 and delay 56. Per-experiment figures are that fragile; the ranking of failure kinds is not
+  (fragment about 50 % of wrong rows at either value).
 * `valve2` has three development experiments: its row in any table is three numbers.
 * Segment counts depend on `late_after = 30` and on treating row index as time; six experiments have
   recording gaps longer than 5 s that the row index ignores.

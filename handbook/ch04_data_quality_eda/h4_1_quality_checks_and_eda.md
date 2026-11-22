@@ -89,6 +89,18 @@ per defect.
 results; the caller decides. A checker that sorts first cannot detect disorder. A checker that
 raises on the first unparseable value reports one problem, as a traceback, and hides the rest.
 
+```mermaid
+flowchart TD
+    C["a check fails"] --> Q1{"Would a later step silently compute<br/>something false if we continued?"}
+    Q1 -->|"yes"| E["ERROR<br/>stop, write the report, write no table"]
+    Q1 -->|"no"| Q2{"Does a modelling decision<br/>depend on this fact?"}
+    Q2 -->|"yes"| W["WARNING<br/>record in the report, continue, review"]
+    Q2 -->|"no"| D["not a check: drop it,<br/>or keep it as a note in exploration"]
+    E --> X["examples: missing column, unparseable value,<br/>duplicate key, label outside 0/1, rows out of order"]
+    W --> Y["examples: sampling gap, stuck sensor,<br/>implausible range, not exactly one event"]
+```
+
+
 ## H4.1.5 Validation, testing, evaluation, monitoring
 
 Four activities are regularly confused because all four "check things":
@@ -140,6 +152,20 @@ inside the independent unit, then summarise across units.
   property of the recording procedure; a feature built on it would not exist in deployment.
 - Explore on training data only once splits exist (w2d4). Until then, restrict yourself to
   structure and quality; decisions that tune a model on what the test set looks like are leakage.
+
+Two pictures from the SKAB exploration, each of which changed a decision:
+
+![Timeline of the 34 labelled SKAB experiments with the anomalous segment starting near 600 seconds in most of them and nine sampling gaps marked](../../lessons/w2d3_data_quality_ingestion/figures/experiment_timelines.svg)
+
+*Real data. Decision: elapsed time and row index are forbidden as model features, and windows must not
+span the marked gaps.*
+
+![Eight small box plots of normal-operation sensor values by experiment family](../../lessons/w2d3_data_quality_ingestion/figures/sensor_levels_by_family.svg)
+
+*Real data, normal rows only. Decision: normalise within an experiment before comparing experiments,
+and evaluate generalisation across families separately. Script:
+`lessons/w2d3_data_quality_ingestion/figures/make_figures.py`.*
+
 
 ## H4.1.7 Practical decisions and tradeoffs
 

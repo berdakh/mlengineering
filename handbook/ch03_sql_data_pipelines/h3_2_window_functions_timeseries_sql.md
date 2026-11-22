@@ -84,6 +84,20 @@ as `dedup -> gaps -> numbered -> summary` can be tested stage by stage by select
 CTEs are a readability device; whether the engine materialises them or inlines them is an
 optimiser detail that differs between engines and versions.
 
+```mermaid
+flowchart LR
+    F["FROM / JOIN"] --> W["WHERE"] --> G["GROUP BY"] --> H["HAVING"]
+    H --> WIN["window functions"]
+    WIN --> S["SELECT / DISTINCT"] --> O["ORDER BY"] --> L["LIMIT"]
+    subgraph OVER["OVER ( ... ) for one row"]
+        direction TB
+        P["PARTITION BY<br/>which rows are comparable"] --> OB["ORDER BY<br/>their sequence; ties make peers"]
+        OB --> FR["frame<br/>ROWS = physical rows, RANGE = key values"]
+    end
+    WIN --- OVER
+```
+
+
 ---
 
 ## H3.2.3 Frames, peers and the ranking functions
@@ -308,6 +322,15 @@ next to the query; event counts are meaningless without it. (H6.5 and H7.3 retur
 event-level evaluation: matching rules, merge gaps and minimum durations change recall and
 false-alarm counts.)
 
+Gaps and islands on real rows of the lesson database (device D01, one day; produced by the lab's
+reference query):
+
+![Line chart of reported temperature for device D01 on 2 March with 21 flagged samples grouped into 5 shaded episodes](../../lessons/w2d2_sql_windows_timeseries/figures/islands.svg)
+
+*The shaded bands are the islands; everything between them is a gap. SYNTHETIC data; script:
+`lessons/w2d2_sql_windows_timeseries/figures/make_figures.py`.*
+
+
 ---
 
 ## H3.2.5 As-of joins and point-in-time correctness
@@ -404,6 +427,12 @@ can be put in one ordered stream (a `UNION ALL` of both, ordered by time), a win
 carries the last dimension value forward performs the as-of join in a single sort. Engines with
 `IGNORE NULLS` support in `LAST_VALUE` make this convenient; SQLite does not support that option,
 and the range-join forms above are simpler to read.
+
+![Two stacked panels for device D01: calibration offset stepping through five values, and corrected temperature against the alert threshold in force](../../lessons/w2d2_sql_windows_timeseries/figures/asof_calibration.svg)
+
+*An as-of join in one picture: the dimension (offset, threshold) is a step function of time, and each
+fact row reads the step it falls on. SYNTHETIC data, device D01.*
+
 
 ---
 

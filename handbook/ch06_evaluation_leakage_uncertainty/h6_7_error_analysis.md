@@ -28,6 +28,20 @@ Three properties separate it from looking at bad examples:
 
 ## H6.7.2 The workflow
 
+```mermaid
+flowchart TD
+    A[Fix the object: model, threshold, split] --> B[Unit table: one row per experiment or customer]
+    B --> C[Sample errors, stratified and capped per unit]
+    C --> D[Annotate with a small closed label set]
+    D --> E{Other bucket above one fifth?}
+    E -- yes --> D
+    E -- no --> F[Quantify by pre-specified slices, with sizes]
+    F --> G[Rank: frequency x cost x fixability]
+    G --> H[One falsifiable experiment per top mode]
+    H --> I[Note, including what was checked and unremarkable]
+    I -- next model version --> A
+```
+
 **Step 0. Fix the object of study.** One model, one threshold, one dataset split, written down. Error
 analysis of a moving target produces a list that describes no system.
 
@@ -110,6 +124,11 @@ mean is about $s/\sqrt{k}$. Per-experiment recalls in a detection problem common
 | 10 | 0.09 | 0.19 |
 | 25 | 0.06 | 0.12 |
 
+![Approximate 95 % half-width of a slice mean against the number of units, for three between-unit standard deviations; ten units give about 0.19 at sd 0.3](../figures/h6_7/slice_half_width.svg)
+
+*Arithmetic, no data: $1.96\,s/\sqrt{k}$. Read off the half-width for your slice size before
+interpreting any slice difference.*
+
 A difference of 0.05 between two slices of 10 units is noise. The practical rule used in the lab:
 with fewer than five units print the minimum and maximum instead of an interval; from five upward
 use a percentile bootstrap **resampling units** (not rows). Resampling rows treats 400 correlated
@@ -123,7 +142,14 @@ A comparison can reverse when a slicing variable is ignored. In the worked examp
 B has higher recall than A in both operating regimes (0.990 vs 0.882 and 0.537 vs 0.480) and lower
 recall overall (0.628 vs 0.802), because B was evaluated mostly on the hard regime (400 of 500
 events) and A mostly on the easy one. Standardising both to the same regime mix gives B 0.764, A
-0.681. Consequences:
+0.681.
+
+![Recall of detectors A and B by operating regime and pooled: B is higher in both regimes and lower pooled, with n shown on every bar](../figures/h6_7/simpson_recall.svg)
+
+*SYNTHETIC counts from `slice_traps.py`. Look at the `n` under each bar: the pooled bars compare
+different mixes of easy and hard events.*
+
+Consequences:
 
 * Never compare two models on different evaluation sets, however similar they look.
 * When a pooled comparison and every within-slice comparison disagree, the mix differs. Report the
@@ -289,6 +315,8 @@ Executed in the authoring session (2026-11-21; Python 3.13.18, NumPy 2.5.3, pand
 * The Simpson's-paradox and slice-hunting figures: `lessons/w3d6_error_analysis_transfer/example/slice_traps.py`
   (synthetic; they show the arithmetic only).
 * The pooled-versus-mean example: the planted frames in `lessons/w3d6_error_analysis_transfer/checks/test_slice_metrics.py`.
+* Figures: `handbook/figures/h6_7/make_figures.py` regenerates both SVGs; the Simpson figure uses the
+  same random draw as the lesson example.
 * The standard-error table is arithmetic from $s = 0.3$; the half-width column is $1.96\,s/\sqrt{k}$
   and ignores the heavier tails appropriate for small $k$.
 

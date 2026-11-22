@@ -53,6 +53,22 @@ t_pred >= T    and    t_pred + H <= t_end     (label window closes inside the da
 The rows with `T - H <= t_pred < T` are usable for neither: a **purge gap** of one horizon. Forgetting
 it is the most common error in temporal splits of horizon-labelled data.
 
+The clock, for one prediction. Everything left of *t* may be used; the label is defined on an interval
+to the right of it and is known only later still.
+
+```text
+            features may use this                 label is defined here
+   ◄────────────────────────────────────┐   ┌──────────────────────────┐
+ ──────────────────────────────────────────────────────────────────────────────────────► time
+                                         t                              t + h            t + h + d
+                                  prediction time                  end of horizon     label available
+                                                                                     (delay d: inspection,
+                                                                                      maintenance log, churn window)
+
+ training example for time t exists only after t + h + d   →   the newest data is always unlabelled
+```
+
+
 ## H1.2.3 Labels: origin, delay, noise, censoring
 
 Ask of every label: *who or what produced it, when, and under what incentive?*
@@ -152,6 +168,13 @@ like those seen?" and "how well on fault mechanisms never seen?" need different 
 project: a stratified test set, and protocol B holding out one whole family). State which number
 answers which question.
 
+![Dot plot of fold scores under row-level and experiment-level validation on SKAB: 0.98 against 0.84 PR-AUC](../../lessons/w2d4_problem_framing_splits/figures/row_vs_experiment.svg)
+
+*Real SKAB, 25 development experiments, the same random forest both times. Choosing the row as the
+unit answers "can the model interpolate inside a recording it has seen?"; choosing the experiment
+answers the deployment question. Script: `lessons/w2d4_problem_framing_splits/figures/make_figures.py`.*
+
+
 ## H1.2.6 The split manifest
 
 A split is a decision with consequences for every later number, so store it as data:
@@ -178,6 +201,11 @@ training under the same `random_state`. The manifest keeps the seed as provenanc
 **Frozen after first results:** test membership; label and event definitions; metric definitions;
 exclusion rules. A change is a new version; old numbers keep their version label and are not compared
 across versions without recomputation.
+
+![Grid of the 34 labelled SKAB experiments coloured by role: test or one of four development folds](../../lessons/w2d4_problem_framing_splits/figures/split_layout.svg)
+
+*A manifest is small enough to draw. If you cannot draw yours, you probably cannot review it either.*
+
 
 ## H1.2.7 Constraints
 

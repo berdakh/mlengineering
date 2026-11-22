@@ -54,6 +54,23 @@ then nothing in this repository claims to know your results.
 Each lesson has a 2-hour essential path, an optional extension of up to 1 hour, a worked example, a
 guided lab with checks, an independent challenge with three levels of hints, and an assessment.
 
+```mermaid
+flowchart LR
+    hb["handbook/<br/>the concept in depth"] -. "linked from" .-> les
+    les["lessons/UNIT/README.md<br/>purpose, concepts,<br/>worked example"] --> lab["lab/<br/>guided practice<br/>on starter code"]
+    lab --> chk["checks/<br/>python wb.py check UNIT"]
+    chk -- "fail" --> lab
+    chk -- "pass = guided practice" --> cha["challenge/<br/>independent, with<br/>acceptance criteria"]
+    cha --> hints["hints/ 1, 2, 3<br/>only if stuck"]
+    hints --> cha
+    cha --> chk2["checks_challenge/"]
+    chk2 --> ass["assessment.md<br/>reasoning + interview rep"]
+    ass --> sol["solutions/<br/>open AFTER attempting"]
+    ass --> prog["progress/<br/>four separate flags"]
+```
+
+*How one unit's parts fit together.*
+
 ## Daily commands
 
 ```bash

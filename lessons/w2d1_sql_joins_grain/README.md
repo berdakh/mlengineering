@@ -76,6 +76,31 @@ of this lesson is to make the grain explicit before writing the `SELECT`.
 - **Cardinality** of a relationship: one-to-one, one-to-many, many-to-many. It determines what a
   join does to the row count.
 
+**The lesson database at a glance** (SYNTHETIC; full schema in [`data/README.md`](data/README.md)).
+Read each line as "one parent row has zero or more child rows"; the grain of a table is its primary key.
+
+```mermaid
+erDiagram
+    sites ||--o{ machines : "has"
+    sites ||--o{ technicians : "employs (NULL = contractor)"
+    machines ||--o{ work_orders : "receives"
+    machines ||--o{ downtime_events : "suffers"
+    technicians ||--o{ work_orders : "assigned (NULL = nobody)"
+    work_orders ||--o{ parts_used : "consumes"
+    parts ||--o{ parts_used : "appears in"
+    sites { int site_id PK }
+    machines { int machine_id PK }
+    technicians { int tech_id PK }
+    work_orders { int wo_id PK }
+    downtime_events { int event_id PK }
+    parts { int part_id PK }
+    parts_used { int wo_id PK }
+```
+
+`machines` has two independent children (`work_orders`, `downtime_events`), and `work_orders` has a
+child of its own (`parts_used`). Those two shapes are where every fan-out in this lesson comes from.
+
+
 ### 2.3 Joins as row-set operations, and the row-count rule
 
 A join of `A` and `B` on a predicate produces one output row for every *pair* `(a, b)` that satisfies
@@ -123,6 +148,31 @@ FROM machines m LEFT JOIN wo USING (machine_id) LEFT JOIN dt USING (machine_id);
 
 `COUNT(DISTINCT …)` and `SELECT DISTINCT` are not fixes. They repair counts of identifiers and leave
 sums wrong, and `SUM(DISTINCT labor_hours)` is wrong in a new way (two orders of 4.0 h count once).
+
+What the naive join does to one machine with 2 work orders and 3 downtime events:
+
+```text
+work_orders (machine 7)        downtime_events (machine 7)        machines ⋈ work_orders ⋈ downtime_events
+ wo_id  labor_hours             event_id  hours                    wo_id  labor  event_id  hours
+  101       4.0                    901     2.0                      101    4.0     901      2.0
+  102       6.0                    902     5.0                      101    4.0     902      5.0
+        ─────────                  903     1.0                      101    4.0     903      1.0
+ true labour 10.0                      ─────────                    102    6.0     901      2.0
+                                true downtime 8.0                   102    6.0     902      5.0
+                                                                    102    6.0     903      1.0
+                                                                   ───────────────────────────────
+                                                    2 x 3 = 6 rows:  SUM(labor) 30.0   SUM(hours) 16.0
+                                                                     = 3 x 10.0        = 2 x 8.0
+```
+
+(The six-row block is illustrative, not rows of the lesson database.) On the lesson database the same
+mechanism produces these totals:
+
+![Bar chart: true labour hours 633.8 against 1,218.1 from the naive join; true downtime hours 793.5 against 2,523.8](figures/fanout_totals.svg)
+
+*Both sums are inflated, by different factors, because each child is multiplied by the row count of the
+other. SYNTHETIC data; regenerate with `python lessons/w2d1_sql_joins_grain/figures/make_figures.py`.*
+
 
 ### 2.4 NULL and three-valued logic
 
@@ -173,6 +223,19 @@ A subtler version of the same trap: on a NULL-extended row *every* right-hand co
 `CASE WHEN m.decommissioned_date IS NULL THEN 1 END` counts a phantom "active machine" for a site
 that has no machines at all.
 
+Where a condition on the outer-joined table goes decides which rows survive:
+
+```mermaid
+flowchart TD
+    A["A LEFT JOIN B, plus a condition on a column of B"] --> Q{"Where is the condition?"}
+    Q -->|"in ON"| ON["B is filtered BEFORE matching"]
+    ON --> ON2["every row of A is kept;<br/>unmatched rows get NULLs for B"]
+    Q -->|"in WHERE"| WH["the joined rows are filtered AFTER matching"]
+    WH --> WH2["rows of A with no surviving match have B.col = NULL,<br/>the predicate is UNKNOWN, the row is dropped"]
+    WH2 --> INNER["the LEFT JOIN now behaves like an INNER JOIN"]
+```
+
+
 ### 2.6 Verifying a query
 
 Treat a query like code under test (W1D5). Useful oracles:
@@ -185,6 +248,17 @@ Treat a query like code under test (W1D5). Useful oracles:
 - **Reconciliation totals.** The grand total of a measure in the result equals the total computed
   from the single table at whose grain the measure is defined. This catches fan-out *and* dropped rows.
 - **Known small cases.** Check one entity by hand, preferably one with zero children and one with many.
+
+```mermaid
+flowchart LR
+    W["Write down the grain<br/>of the result"] --> K["Assert the key is unique<br/>(GROUP BY key HAVING COUNT(*) > 1 returns nothing)"]
+    K --> R["Row-count invariant:<br/>rows after each join = rows expected at that grain"]
+    R --> T["Reconcile totals against<br/>a single-table SUM"]
+    T --> S["Spot-check one entity by hand"]
+    R -. "count grew" .-> F["fan-out: pre-aggregate the child"]
+    T -. "total differs" .-> F
+```
+
 
 ### 2.7 A concrete industry example
 

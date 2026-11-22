@@ -45,6 +45,18 @@ it, a commit is "whatever I happened to have changed".
 `git diff --staged` compares index to the last commit: *what I am about to commit*.
 Reading the second one before every commit is the cheapest code review available.
 
+```mermaid
+flowchart LR
+    wt["Working tree<br/>what your editor shows"] -- "git add" --> idx["Index / staging area<br/>the next commit, being composed"]
+    idx -- "git commit" --> repo["Repository<br/>immutable snapshots"]
+    repo -- "git restore --staged" --> idx
+    repo -- "git restore, git switch" --> wt
+    wt -. "git diff" .- idx
+    idx -. "git diff --staged" .- repo
+```
+
+*Three places a file's content can be, the commands that move it, and the two diffs that compare neighbours.*
+
 ### Commits are snapshots, addressed by content
 
 A commit stores a snapshot of every tracked file (shared efficiently between commits), its parent
@@ -236,6 +248,19 @@ So there are three distinct states, with three distinct remedies:
 | File already tracked | `git rm --cached <path>` (removes from the index only, keeps the working file), plus the pattern | does not remove it from earlier commits |
 | File in history that must not be there (large data, licence problem, secret) | rewrite history; the Git documentation itself recommends `git filter-repo` over `git filter-branch`. Then force-push and have every collaborator re-clone | does not un-leak anything: copies exist in every clone and possibly in caches |
 
+```mermaid
+flowchart TD
+    f["A file in the project directory"] --> q1{"Can a command<br/>regenerate it?"}
+    q1 -- "yes: data, features, models, runs" --> ig["ignore it; commit the command<br/>and a hash or manifest"]
+    q1 -- no --> q2{"Is it a secret or<br/>machine-specific?"}
+    q2 -- yes --> env["keep out of Git:<br/>environment variables, local config"]
+    q2 -- no --> q3{"Is it large or binary?"}
+    q3 -- yes --> ext["external storage with a pointer"]
+    q3 -- no --> commit["commit it: code, config,<br/>tests, docs, small fixtures"]
+```
+
+*Deciding what belongs in the repository.*
+
 ### Secrets
 
 A secret that was pushed is compromised from that moment, whether or not you later rewrite history.
@@ -302,6 +327,19 @@ When it is the wrong tool: when current output is not worth preserving (so wrong
 no value), when output is not deterministic, or when the inputs you can run do not reach the code you
 are changing. Then construct small inputs with known answers and test those (H9.1), and document
 disagreements with the old output explicitly.
+
+```mermaid
+flowchart TD
+    a["Untested code whose current output<br/>people already rely on"] --> b["Run it; save the output as a golden file"]
+    b --> c["Characterization test:<br/>output must equal the golden file"]
+    c --> d["Refactor in small steps"]
+    d --> e{"test still green?"}
+    e -- yes --> d
+    e -- no --> f["revert the step, or admit it changed behaviour"]
+    d --> g["Replace the golden-file test with tests<br/>that state intended behaviour"]
+```
+
+*A characterization test is scaffolding: it pins what the code does, right or wrong, so structure can change safely.*
 
 ### Seams
 

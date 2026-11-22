@@ -132,7 +132,8 @@ def main(argv: list[str] | None = None) -> int:
 
     t0 = time.perf_counter()
     nested = nested_estimate(make_model, cands, feats, folds, pr_auc, ALL_COLUMNS, rule="one_se", complexity=complexity)
-    print(f"\nnested estimate of search + one-SE selection + refit ({time.perf_counter() - t0:.0f} s): "
+    t_nested = time.perf_counter() - t0
+    print(f"\nnested estimate of search + one-SE selection + refit ({t_nested:.0f} s): "
           f"{nested['mean']:.3f} +/- {nested['se']:.3f}")
     for k, (score, inner, params) in enumerate(zip(nested["outer_scores"], nested["inner_best"], nested["chosen_params"])):
         print(f"  outer fold {k}: inner selected mean {inner:.3f} -> outer score {score:.3f}  {params}")
@@ -148,7 +149,11 @@ def main(argv: list[str] | None = None) -> int:
     print(f"  test PR-AUC {pr_auc(y[test_rows], test_scores):.3f}   "
           f"(dev CV of the selected trial {simple['mean']:.3f}, best dev CV of any trial {best['mean']:.3f}, "
           f"nested {nested['mean']:.3f})")
-    report = {"trials": trials, "best": best, "one_se": simple, "nested": nested, "thresholds": {}}
+    clock = feats["t"].to_numpy(dtype=float)
+    report = {"n_candidates": len(cands), "seed": args.seed, "trials": trials, "best": best, "one_se": simple,
+              "nested": nested, "test_pr_auc": pr_auc(y[test_rows], test_scores),
+              "clock_test_pr_auc": pr_auc(y[test_rows], clock[test_rows]),
+              "seconds": {"search": round(t_search, 1), "nested": round(t_nested, 1)}, "thresholds": {}}
     for rule, budget in (("best_f1", None), ("alert_budget", 0.05)):
         r = frozen_threshold_evaluation(oof[dev_rows], y[dev_rows], test_scores, y[test_rows], rule, budget)
         report["thresholds"][rule] = r
@@ -156,8 +161,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"  threshold [{label}] = {r['threshold']:.3f}:  dev P {r['dev']['precision']:.3f} R {r['dev']['recall']:.3f} "
               f"F1 {r['dev']['f1']:.3f} FAR {r['dev']['false_alarm_rate']:.3f} | test P {r['test']['precision']:.3f} "
               f"R {r['test']['recall']:.3f} F1 {r['test']['f1']:.3f} FAR {r['test']['false_alarm_rate']:.3f}")
-    clock = feats["t"].to_numpy(dtype=float)
-    print(f"\nfor scale: elapsed time alone (no sensors) has test PR-AUC {pr_auc(y[test_rows], clock[test_rows]):.3f}; "
+    print(f"\nfor scale: elapsed time alone (no sensors) has test PR-AUC {report['clock_test_pr_auc']:.3f}; "
           f"test prevalence {y[test_rows].mean():.3f}")
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
