@@ -22,8 +22,10 @@ if not (REPO_ROOT / "solutions" / "lessons" / "w3d6_error_analysis_transfer").is
 
 from flowguard.baselines import SingleSensorZScorer, burn_in_scores  # noqa: E402
 from flowguard.data import SENSOR_COLUMNS, load_raw  # noqa: E402
+from flowguard.metrics import best_f1_threshold  # noqa: E402
+from flowguard.splits import dev_experiments, find_overlap_groups, make_splits  # noqa: E402
 
-BURN_IN, THRESHOLD = 100, 2.577     # the w2d6 bar baseline and its development threshold (error_report.py)
+BURN_IN = 100                       # the w2d6 bar baseline: flow_rate abs z against the first 100 rows
 
 try:
     tidy = load_raw(REPO_ROOT / "data" / "raw" / "skab")
@@ -43,6 +45,10 @@ print("\nby experiment:")
 print(conflict.groupby("experiment_id")["anomaly"].agg(rows="size", labelled_anomalous="sum").to_string())
 
 scores = burn_in_scores(lambda: SingleSensorZScorer("flow_rate"), labelled, BURN_IN)
+# The same threshold as lab/error_report.py: best F1 on the development experiments of manifest v2.
+manifest = make_splits(tidy, seed=0, keep_together=find_overlap_groups(tidy))
+dev_rows = labelled["experiment_id"].isin(dev_experiments(manifest)).to_numpy() & (labelled["t"].to_numpy() >= BURN_IN)
+THRESHOLD, _ = best_f1_threshold(labelled["anomaly"].to_numpy()[dev_rows], scores[dev_rows])
 flag = scores >= THRESHOLD
 wrong = (flag.astype(int) != labelled["anomaly"].to_numpy()) & (labelled["t"].to_numpy() >= BURN_IN)
 in_conflict = np.zeros(len(labelled), dtype=bool)

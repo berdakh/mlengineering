@@ -502,7 +502,7 @@ interval have been at that unit, roughly, and would the claim have survived?
 independent observations is that worth for a pooled mean, and what ceiling applies however many more
 rows per machine are logged?
 
-**Next.** [w3d6: error analysis and the timed transfer exercise](../../roadmap/SCHEDULE.md). The
+**Next.** [w3d6: error analysis and the timed transfer exercise](../w3d6_error_analysis_transfer/README.md). The
 intervals tell you how much you do not know; error analysis asks *which experiments* drive the
 numbers. Keep `per_cluster_pr_auc.csv` open: the clusters where the detectors disagree most
 (`other/6`, `other/7`, `valve1/4`, `valve1/6`, `valve2/1`) are where that analysis starts.
