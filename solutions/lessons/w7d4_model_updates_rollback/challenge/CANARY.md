@@ -10,7 +10,7 @@
 * **c_too_early: continue at hour 5.** Nothing is wrong, but six hours and 595 requests are below the
   24-hour and 2,000-request minimum, so the rule cannot promote.
 * **d_healthy: promote at hour 23.** At 24 hours both upper bounds are inside their limits (alert rate
-  about 0.11 per hour; error rate within control + 1 point).
+  0.10 per hour, upper bound 0.16; error upper bound 0.018 against control 0.011 + 0.01).
 * **e_borderline_alerts: stop at hour 2 when evaluated hourly; continue when evaluated once on all 96
   hours.** The true canary alert rate (1.0 per hour, stated in the generator) sits exactly on the budget.
 
