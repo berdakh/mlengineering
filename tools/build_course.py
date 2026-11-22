@@ -230,36 +230,36 @@ unit("w7d6_project_milestone_4", "Project milestone 4: monitoring demonstration 
      "Monitoring demo + runbook; submit for review.",
      "w7d1-w7d5.", "-", path="lessons/w7d6_project_milestone_4", status="Execution verified", has_checks=True)
 unit("w7d7_review", "Review and catch-up (light)", REVIEW,
-     "Week 7 retrieval sheet; ML system design rep 2 (45 min, spoken).", "Week 7 units.", "-", path="lessons/w7d7_review")
+     "Week 7 retrieval sheet; ML system design rep 2 (45 min, spoken).", "Week 7 units.", "-", path="lessons/w7d7_review", status="Execution verified")
 
 # ---------------------------------------------------------------- Week 8
 unit("w8d1_project_completion", "Project completion audit: reproduce from a clean clone",
      "Audit the project against the deliverables checklist and reproduce every headline number from a fresh clone.",
      "Clean-clone reproduction log; gap list closed or explicitly scoped out.",
-     "Milestones 1-4.", "H8.3")
+     "Milestones 1-4.", "H8.3", path="lessons/w8d1_project_completion")
 unit("w8d2_report_limitations", "Technical report and model limitations",
      "Write a short technical report and a limitations section that a sceptical reviewer would accept.",
      "4-page report, model card, limitations.",
-     "w8d1.", "H16.2")
+     "w8d1.", "H16.2", path="lessons/w8d2_report_limitations")
 unit("w8d3_system_design", "ML system design",
      "Apply a repeatable structure (requirements, data, labels, evaluation, serving, monitoring, iteration) to two timed designs, one in an unfamiliar domain.",
      "Two written designs scored against the rubric.",
-     "Weeks 5-7.", "H16.3")
+     "Weeks 5-7.", "H16.3", path="lessons/w8d3_system_design")
 unit("w8d4_coding_interviews", "Coding and SQL interviews, timed",
      "Solve Python data-structure and SQL problems under time pressure while explaining aloud.",
      "Timed set results and an error log by pattern.",
-     "Recurring interview reps.", "H16.4")
+     "Recurring interview reps.", "H16.4", path="lessons/w8d4_coding_interviews")
 unit("w8d5_project_explanation", "Explaining the project and defending tradeoffs",
      "Deliver 5-minute and 20-minute walkthroughs and answer adversarial questions on evaluation, limitations and alternatives.",
      "Recorded walkthrough + written answers to ten hard questions.",
-     "w8d2.", "H16.2")
+     "w8d2.", "H16.2", path="lessons/w8d5_project_explanation")
 unit("w8d6_final_assessment", "Final independent assessment",
      "Complete a parallel form of the diagnostic and the final transfer task unassisted, for comparison with Week 1 evidence.",
      "Final assessment submission.",
-     "All previous weeks.", "-")
+     "All previous weeks.", "-", path="lessons/w8d6_final_assessment")
 unit("w8d7_retrospective", "Retrospective and evidence portfolio (light)",
      "Compare Week 1 and Week 8 evidence, list what is demonstrated versus still unassessed, plan the next eight weeks.",
-     "Evidence portfolio index and personal next-steps plan.", "w8d6.", "-")
+     "Evidence portfolio index and personal next-steps plan.", "w8d6.", "-", path="lessons/w8d7_retrospective")
 
 
 def main() -> None:

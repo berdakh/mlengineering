@@ -634,7 +634,7 @@
       "prerequisites": "Week 7 units.",
       "handbook": "-",
       "path": "lessons/w7d7_review",
-      "status": "Planned",
+      "status": "Execution verified",
       "has_checks": false
     },
     {
@@ -646,7 +646,7 @@
       "deliverable": "Clean-clone reproduction log; gap list closed or explicitly scoped out.",
       "prerequisites": "Milestones 1-4.",
       "handbook": "H8.3",
-      "path": null,
+      "path": "lessons/w8d1_project_completion",
       "status": "Planned",
       "has_checks": false
     },
@@ -659,7 +659,7 @@
       "deliverable": "4-page report, model card, limitations.",
       "prerequisites": "w8d1.",
       "handbook": "H16.2",
-      "path": null,
+      "path": "lessons/w8d2_report_limitations",
       "status": "Planned",
       "has_checks": false
     },
@@ -672,7 +672,7 @@
       "deliverable": "Two written designs scored against the rubric.",
       "prerequisites": "Weeks 5-7.",
       "handbook": "H16.3",
-      "path": null,
+      "path": "lessons/w8d3_system_design",
       "status": "Planned",
       "has_checks": false
     },
@@ -685,7 +685,7 @@
       "deliverable": "Timed set results and an error log by pattern.",
       "prerequisites": "Recurring interview reps.",
       "handbook": "H16.4",
-      "path": null,
+      "path": "lessons/w8d4_coding_interviews",
       "status": "Planned",
       "has_checks": false
     },
@@ -698,7 +698,7 @@
       "deliverable": "Recorded walkthrough + written answers to ten hard questions.",
       "prerequisites": "w8d2.",
       "handbook": "H16.2",
-      "path": null,
+      "path": "lessons/w8d5_project_explanation",
       "status": "Planned",
       "has_checks": false
     },
@@ -711,7 +711,7 @@
       "deliverable": "Final assessment submission.",
       "prerequisites": "All previous weeks.",
       "handbook": "-",
-      "path": null,
+      "path": "lessons/w8d6_final_assessment",
       "status": "Planned",
       "has_checks": false
     },
@@ -724,7 +724,7 @@
       "deliverable": "Evidence portfolio index and personal next-steps plan.",
       "prerequisites": "w8d6.",
       "handbook": "-",
-      "path": null,
+      "path": "lessons/w8d7_retrospective",
       "status": "Planned",
       "has_checks": false
     }
