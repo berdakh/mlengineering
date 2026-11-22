@@ -208,11 +208,11 @@ unit("w6d7_review", "Review and catch-up (light)", REVIEW,
 unit("w7d1_service_logging_metrics", "Structured logging and service metrics",
      "Emit structured request and prediction logs with correlation ids; define the service's golden signals (traffic, errors, latency, saturation).",
      "Structured logs + metrics endpoint; a query that answers 'what happened to request X'.",
-     "w5d6, w1d4.", "H15.1", path="lessons/w7d1_service_logging_metrics")
+     "w5d6, w1d4.", "H15.1", path="lessons/w7d1_service_logging_metrics", status="Execution verified", has_checks=True)
 unit("w7d2_input_monitoring_drift", "Input monitoring and drift statistics",
      "Detect schema violations, range and missingness changes and distribution shift (PSI, KS, Wasserstein) with windows and thresholds chosen for an acceptable false-alarm rate.",
      "Drift monitor with a measured false-alarm rate on stable data.",
-     "w7d1, w3d5.", "H15.3", path="lessons/w7d2_input_monitoring_drift")
+     "w7d1, w3d5.", "H15.3", path="lessons/w7d2_input_monitoring_drift", status="Execution verified", has_checks=True)
 unit("w7d3_drift_vs_degradation", "Drift is not degradation: delayed labels and measured performance",
      "Separate input change from measured performance loss; design label backfill, proxy metrics and delayed evaluation.",
      "Replay experiment showing drift without degradation and degradation without flagged drift.",

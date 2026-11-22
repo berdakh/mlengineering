@@ -1,0 +1,69 @@
+figure,series,x,y
+timeline,valve1/13 A,300,0.885
+timeline,valve1/13 A,360,0.871
+timeline,valve1/13 A,420,0.847
+timeline,valve1/13 A,480,0.854
+timeline,valve1/13 A,540,0.822
+timeline,valve1/13 A,600,0.816
+timeline,valve1/13 A,660,0.823
+timeline,valve1/13 A,720,0.817
+timeline,valve1/13 A,780,0.822
+timeline,valve1/13 A,840,0.822
+timeline,valve1/13 A,900,0.793
+timeline,valve1/13 A,960,0.779
+timeline,valve1/13 A,1020,0.799
+timeline,valve1/13 A,1080,0.932
+timeline,valve1/13 B,300,0.555
+timeline,valve1/13 B,360,0.461
+timeline,valve1/13 B,420,0.763
+timeline,valve1/13 B,480,0.306
+timeline,valve1/13 B,540,0.533
+timeline,valve1/13 B,600,0.71
+timeline,valve1/13 B,660,0.771
+timeline,valve1/13 B,720,0.425
+timeline,valve1/13 B,780,0.578
+timeline,valve1/13 B,840,0.405
+timeline,valve1/13 B,900,0.587
+timeline,valve1/13 B,960,0.577
+timeline,valve1/13 B,1020,0.466
+timeline,valve1/13 B,1080,0.474
+timeline,other/14 A,300,1.006
+timeline,other/14 A,360,1.008
+timeline,other/14 A,420,1.009
+timeline,other/14 A,480,1.008
+timeline,other/14 A,540,1.07
+timeline,other/14 A,600,1.421
+timeline,other/14 A,660,1.552
+timeline,other/14 A,720,1.543
+timeline,other/14 A,780,1.535
+timeline,other/14 A,840,1.525
+timeline,other/14 B,300,0.3
+timeline,other/14 B,360,0.444
+timeline,other/14 B,420,0.492
+timeline,other/14 B,480,1.073
+timeline,other/14 B,540,1.085
+timeline,other/14 B,600,7.125
+timeline,other/14 B,660,8.194
+timeline,other/14 B,720,8.116
+timeline,other/14 B,780,8.053
+timeline,other/14 B,840,7.971
+rates,A global (test),-0.19,0.211
+rates,A global (test),0.81,0.143
+rates,A global (test),1.81,0.0
+rates,A global (test),2.81,1.0
+rates,B per run (test),0.19,0.026
+rates,B per run (test),1.19,0.2
+rates,B per run (test),2.19,0.0
+rates,B per run (test),3.19,0.125
+ks_autocorrelation,share p<0.05,0.0,0.04
+ks_autocorrelation,share p<0.05,0.25,0.08666666666666667
+ks_autocorrelation,share p<0.05,0.5,0.23
+ks_autocorrelation,share p<0.05,0.75,0.45666666666666667
+ks_autocorrelation,share p<0.05,0.9,0.7766666666666666
+ks_autocorrelation,share p<0.05,0.98,0.98
+psi_window,share PSI>0.1,30,0.9783333333333334
+psi_window,share PSI>0.1,60,0.8033333333333333
+psi_window,share PSI>0.1,120,0.27
+psi_window,share PSI>0.1,240,0.016666666666666666
+psi_window,share PSI>0.1,480,0.0
+psi_window,share PSI>0.1,1440,0.0

@@ -1,0 +1,65 @@
+figure,series,x,y
+duration_vs_samples,other/14,60,2.901
+duration_vs_samples,other/14,120,3.774
+duration_vs_samples,other/14,180,3.804
+duration_vs_samples,other/14,240,4.878
+duration_vs_samples,other/14,300,5.244
+duration_vs_samples,other/14,360,6.112
+duration_vs_samples,other/14,420,6.519
+duration_vs_samples,other/14,480,6.812
+duration_vs_samples,other/14,540,7.291
+duration_vs_samples,other/14,600,8.912
+duration_vs_samples,other/14,660,8.475
+duration_vs_samples,other/14,720,14.217
+duration_vs_samples,other/14,780,10.38
+duration_vs_samples,other/14,840,22.298
+duration_vs_samples,other/14,900,14.271
+duration_vs_samples,other/14,905,14.265
+duration_vs_samples,valve1/13,60,5.154
+duration_vs_samples,valve1/13,120,10.403
+duration_vs_samples,valve1/13,180,5.297
+duration_vs_samples,valve1/13,240,5.245
+duration_vs_samples,valve1/13,300,6.74
+duration_vs_samples,valve1/13,360,8.007
+duration_vs_samples,valve1/13,420,6.12
+duration_vs_samples,valve1/13,480,6.475
+duration_vs_samples,valve1/13,540,7.086
+duration_vs_samples,valve1/13,600,7.511
+duration_vs_samples,valve1/13,660,12.883
+duration_vs_samples,valve1/13,720,8.774
+duration_vs_samples,valve1/13,780,10.511
+duration_vs_samples,valve1/13,840,10.576
+duration_vs_samples,valve1/13,900,11.873
+duration_vs_samples,valve1/13,960,11.724
+duration_vs_samples,valve1/13,1020,14.167
+duration_vs_samples,valve1/13,1080,11.838
+duration_vs_samples,valve1/13,1140,16.445
+duration_vs_samples,valve1/13,600,9.097
+buckets,cumulative,0.005,6.0
+buckets,per_bucket,0.005,6.0
+buckets,cumulative,0.01,24.0
+buckets,per_bucket,0.01,18.0
+buckets,cumulative,0.025,38.0
+buckets,per_bucket,0.025,14.0
+buckets,cumulative,0.05,38.0
+buckets,per_bucket,0.05,0.0
+buckets,cumulative,0.1,38.0
+buckets,per_bucket,0.1,0.0
+buckets,cumulative,0.25,38.0
+buckets,per_bucket,0.25,0.0
+buckets,cumulative,0.5,38.0
+buckets,per_bucket,0.5,0.0
+buckets,cumulative,1,38.0
+buckets,per_bucket,1,0.0
+buckets,cumulative,2.5,38.0
+buckets,per_bucket,2.5,0.0
+buckets,cumulative,+Inf,38.0
+buckets,per_bucket,+Inf,0.0
+percentile_averaging,p99 from summed buckets,,721.9
+percentile_averaging,true p99 (all requests),,587.9
+percentile_averaging,mean of the two p99s,,528.9
+percentile_averaging,p99 instance B,,1007.9
+percentile_averaging,p99 instance A,,49.9
+burn_rate,paged_minutes,,168
+burn_rate,budget_spent_pct_day30,,42.4
+burn_rate,page_during_blip,,False

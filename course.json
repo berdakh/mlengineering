@@ -556,8 +556,8 @@
       "prerequisites": "w5d6, w1d4.",
       "handbook": "H15.1",
       "path": "lessons/w7d1_service_logging_metrics",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w7d2_input_monitoring_drift",
@@ -569,8 +569,8 @@
       "prerequisites": "w7d1, w3d5.",
       "handbook": "H15.3",
       "path": "lessons/w7d2_input_monitoring_drift",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w7d3_drift_vs_degradation",
