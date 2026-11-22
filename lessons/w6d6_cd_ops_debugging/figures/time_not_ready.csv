@@ -1,0 +1,4 @@
+incident,seconds_not_ready
+bad promotion (fix: rollback),20.0
+wrong MODEL_DIR (fix: revert config),19.5
+memory 64m (fix: revert limit),12.5

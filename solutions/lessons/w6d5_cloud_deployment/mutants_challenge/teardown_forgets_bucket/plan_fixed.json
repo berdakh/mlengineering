@@ -1,0 +1,143 @@
+{
+  "service": "demandcast-api",
+  "purpose": "Two-day demo of the store-level demand forecast API for the regional managers",
+  "region": "eu-west-1",
+  "credentials": {
+    "mode": "sso",
+    "permission_set": "demandcast-deployer",
+    "notes": "IAM Identity Center; least-privilege permission set covering ECR, ECS, logs, the task roles (iam:PassRole on them only) and the budget; credentials expire on their own"
+  },
+  "budget": {
+    "limit_usd": 20,
+    "alerts": [
+      {
+        "type": "ACTUAL",
+        "threshold_percent": 50
+      },
+      {
+        "type": "FORECASTED",
+        "threshold_percent": 100
+      }
+    ],
+    "notify": "the deploying engineer's work e-mail"
+  },
+  "registry": {
+    "repository": "demandcast",
+    "tag_mutability": "IMMUTABLE",
+    "image_tag": "4f9c2e1a7b3d",
+    "scan_on_push": true
+  },
+  "model_artifacts": {
+    "bucket": "demandcast-models-demo",
+    "public_read": false,
+    "block_public_access": true,
+    "access": "the task role has s3:GetObject on this one object prefix; the container reads model.npz with it at startup"
+  },
+  "compute": {
+    "type": "ecs_fargate",
+    "cpu": "512",
+    "memory": "1024",
+    "desired_count": 1
+  },
+  "network": {
+    "ingress": [
+      {
+        "port": 8080,
+        "cidr": "198.51.100.23/32",
+        "who": "office A egress IP"
+      },
+      {
+        "port": 8080,
+        "cidr": "198.51.100.87/32",
+        "who": "office B egress IP"
+      }
+    ],
+    "assign_public_ip": true,
+    "notes": "managers working from home use the company VPN, whose egress is office A"
+  },
+  "logs": {
+    "group": "/ecs/demandcast",
+    "retention_days": 7
+  },
+  "resources": [
+    {
+      "type": "ecr_repository",
+      "name": "demandcast"
+    },
+    {
+      "type": "s3_bucket",
+      "name": "demandcast-models-demo"
+    },
+    {
+      "type": "log_group",
+      "name": "/ecs/demandcast"
+    },
+    {
+      "type": "iam_role",
+      "name": "demandcast-task-execution"
+    },
+    {
+      "type": "iam_role",
+      "name": "demandcast-task"
+    },
+    {
+      "type": "ecs_cluster",
+      "name": "demandcast"
+    },
+    {
+      "type": "task_definition",
+      "name": "demandcast"
+    },
+    {
+      "type": "security_group",
+      "name": "demandcast-sg"
+    },
+    {
+      "type": "ecs_service",
+      "name": "demandcast-svc"
+    },
+    {
+      "type": "budget",
+      "name": "demandcast-demo"
+    }
+  ],
+  "teardown": [
+    {
+      "type": "ecs_service",
+      "name": "demandcast-svc",
+      "when": "Friday 18:00, calendar reminder set"
+    },
+    {
+      "type": "ecs_cluster",
+      "name": "demandcast"
+    },
+    {
+      "type": "task_definition",
+      "name": "demandcast"
+    },
+    {
+      "type": "security_group",
+      "name": "demandcast-sg"
+    },
+    {
+      "type": "log_group",
+      "name": "/ecs/demandcast"
+    },
+    {
+      "type": "ecr_repository",
+      "name": "demandcast"
+    },
+    {
+      "type": "iam_role",
+      "name": "demandcast-task"
+    },
+    {
+      "type": "iam_role",
+      "name": "demandcast-task-execution"
+    },
+    {
+      "type": "budget",
+      "name": "demandcast-demo"
+    }
+  ]
+}

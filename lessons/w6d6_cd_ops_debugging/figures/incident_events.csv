@@ -1,0 +1,12 @@
+t_seconds,event
+2.02,release A to staging
+7.86,promote A
+14.51,release B to staging
+20.63,promote B
+29.81,scenario 2 (bad promotion)
+65.52,rollback
+74.26,scenario 1 (config)
+92.07,"fix config, redeploy same digest"
+100.83,scenario 3 (memory)
+114.82,"fix memory, redeploy same digest"
+124.42,end

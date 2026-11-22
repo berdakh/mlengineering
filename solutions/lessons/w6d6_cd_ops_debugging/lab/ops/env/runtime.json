@@ -1,0 +1,4 @@
+{
+  "staging":    {"port": 8101, "memory": "256m", "cpus": "0.5"},
+  "production": {"port": 8102, "memory": "256m", "cpus": "0.5"}
+}

@@ -1,0 +1,6 @@
+{
+  "BudgetName": "${NAME}-budget",
+  "BudgetLimit": {"Amount": "${LIMIT_USD}", "Unit": "USD"},
+  "BudgetType": "COST",
+  "TimeUnit": "MONTHLY"
+}

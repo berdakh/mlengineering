@@ -1,0 +1,34 @@
+{
+  "service": "demandcast-api",
+  "purpose": "Two-day demo of the store-level demand forecast API for the regional managers",
+  "region": "eu-west-1",
+  "credentials": {
+    "mode": "access_keys",
+    "iam_user": "deploy-bot",
+    "policy": "AdministratorAccess",
+    "stored_at": "config/aws_credentials"
+  },
+  "budget": null,
+  "registry": {"repository": "demandcast", "tag_mutability": "MUTABLE", "image_tag": "latest", "scan_on_push": false},
+  "model_artifacts": {
+    "bucket": "demandcast-models-demo",
+    "public_read": true,
+    "block_public_access": false,
+    "access": "the container downloads model.npz anonymously over HTTPS at startup"
+  },
+  "compute": {"type": "ecs_fargate", "cpu": "1024", "memory": "2048", "desired_count": 2},
+  "network": {"ingress": [{"port": 8080, "cidr": "0.0.0.0/0"}], "assign_public_ip": true},
+  "logs": {"group": "/ecs/demandcast", "retention_days": null},
+  "resources": [
+    {"type": "iam_user", "name": "deploy-bot"},
+    {"type": "ecr_repository", "name": "demandcast"},
+    {"type": "s3_bucket", "name": "demandcast-models-demo"},
+    {"type": "log_group", "name": "/ecs/demandcast"},
+    {"type": "iam_role", "name": "demandcast-task-execution"},
+    {"type": "ecs_cluster", "name": "demandcast"},
+    {"type": "task_definition", "name": "demandcast"},
+    {"type": "security_group", "name": "demandcast-sg"},
+    {"type": "ecs_service", "name": "demandcast-svc"}
+  ],
+  "teardown": []
+}

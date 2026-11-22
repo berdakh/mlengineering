@@ -196,11 +196,11 @@ unit("w6d4_latency_resources", "Latency, throughput and resource use",
 unit("w6d5_cloud_deployment", "One small cloud deployment on AWS (authorisation-gated)",
      "Understand IAM, credentials, registries and cost; deploy the container by one route, or complete the fully local equivalent if cloud use is not authorised.",
      "Deployment runbook; either a deployed endpoint (with explicit authorisation and teardown) or a local dry-run with the same configuration.",
-     "w6d2; AWS account decisions made by you; cost briefing read.", "H13.1, H13.2", path="lessons/w6d5_cloud_deployment")
+     "w6d2; AWS account decisions made by you; cost briefing read.", "H13.1, H13.2", path="lessons/w6d5_cloud_deployment", status="Execution verified", has_checks=True)
 unit("w6d6_cd_ops_debugging", "Delivery and operational debugging; project milestone 3",
      "Promote an image by tag, configure through environment, read logs to diagnose seeded failures, and roll back.",
      "Debugging log for three seeded failures + rollback demonstration.",
-     "w6d3, w6d5.", "H14.2, H15.2", path="lessons/w6d6_cd_ops_debugging")
+     "w6d3, w6d5.", "H14.2, H15.2", path="lessons/w6d6_cd_ops_debugging", status="Execution verified", has_checks=True)
 unit("w6d7_review", "Review and catch-up (light)", REVIEW,
      "Week 6 retrieval sheet; interview set 6 (debugging narrative + Python, timed).", "Week 6 units.", "-")
 

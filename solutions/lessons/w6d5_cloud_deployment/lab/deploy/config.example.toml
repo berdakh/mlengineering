@@ -1,0 +1,30 @@
+# Deployment configuration for `python deploy/aws_deploy.py`. Copy to deploy/config.toml (git-ignored)
+# and fill it in. Values in <angle brackets> are placeholders: a dry run prints them as they are,
+# a live run refuses to start while any remain.
+#
+# Never write credentials here. Authentication comes from an AWS CLI profile that uses IAM Identity
+# Center (short-lived credentials from `aws sso login`), named in [aws].profile.
+# The account id can come from the environment instead: FLOWGUARD_AWS_ACCOUNT_ID.
+
+[aws]
+region = "eu-central-1"
+account_id = "<ACCOUNT_ID>"          # 12 digits; or set FLOWGUARD_AWS_ACCOUNT_ID
+profile = "flowguard-sso"            # an SSO profile created with `aws configure sso`
+
+[app]
+name = "flowguard"                   # prefix for every resource name
+release = "<GIT_SHA>"                # image tag = git SHA; or set FLOWGUARD_RELEASE
+container_port = 8000
+cpu = "256"                          # Fargate task size: 0.25 vCPU
+memory = "512"                       # MiB
+
+[network]
+vpc_id = "<VPC_ID>"                  # e.g. the default VPC
+subnet_id = "<SUBNET_ID>"            # a subnet of that VPC
+allowed_cidr = ""                    # "" = no inbound access at all (the default);
+                                     # "<your public IP>/32" lets only you reach port 8000
+allow_public = false                 # true is needed for any CIDR wider than /32, and a signed public box
+
+[budget]
+limit_usd = 10
+notify_email = "<YOUR_EMAIL>"

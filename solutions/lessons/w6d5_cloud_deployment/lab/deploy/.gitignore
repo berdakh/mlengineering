@@ -1,0 +1,3 @@
+# Your filled-in config and everything rendered from it stay local.
+config.toml
+rendered/

@@ -517,8 +517,8 @@
       "prerequisites": "w6d2; AWS account decisions made by you; cost briefing read.",
       "handbook": "H13.1, H13.2",
       "path": "lessons/w6d5_cloud_deployment",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w6d6_cd_ops_debugging",
@@ -530,8 +530,8 @@
       "prerequisites": "w6d3, w6d5.",
       "handbook": "H14.2, H15.2",
       "path": "lessons/w6d6_cd_ops_debugging",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w6d7_review",

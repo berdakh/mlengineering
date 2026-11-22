@@ -1,0 +1,23 @@
+{
+  "family": "${NAME}",
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "cpu": "${CPU}",
+  "memory": "${MEMORY}",
+  "executionRoleArn": "arn:aws:iam::${ACCOUNT_ID}:role/${NAME}-task-execution",
+  "runtimePlatform": {"cpuArchitecture": "X86_64", "operatingSystemFamily": "LINUX"},
+  "containerDefinitions": [
+    {
+      "name": "${NAME}",
+      "image": "${IMAGE}",
+      "essential": true,
+      "portMappings": [{"containerPort": ${PORT}, "protocol": "tcp"}],
+      "environment": [
+        {"name": "FLOWGUARD_ENV", "value": "production"},
+        {"name": "FLOWGUARD_RELEASE", "value": "${RELEASE}"},
+        {"name": "FLOWGUARD_MODEL_DIR", "value": "/models/flowguard-z/1.0.0"},
+        {"name": "FLOWGUARD_PORT", "value": "${PORT}"}
+      ]
+    }
+  ]
+}

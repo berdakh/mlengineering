@@ -1,0 +1,101 @@
+[
+  {
+    "env": "staging",
+    "release": "a1b2c3d4e5f6",
+    "image": "127.0.0.1:5005/flowguard",
+    "digest": "sha256:78b580ecfe5a5e95299bdd3a6894307d4598f3cf81d0942361b07e6f24d50572",
+    "deployed_at": "2026-11-22T17:29:12.423+00:00",
+    "status": "good",
+    "note": ""
+  },
+  {
+    "env": "production",
+    "release": "a1b2c3d4e5f6",
+    "image": "127.0.0.1:5005/flowguard",
+    "digest": "sha256:78b580ecfe5a5e95299bdd3a6894307d4598f3cf81d0942361b07e6f24d50572",
+    "deployed_at": "2026-11-22T17:29:18.111+00:00",
+    "status": "good",
+    "note": "promoted from staging"
+  },
+  {
+    "env": "staging",
+    "release": "b7c8d9e0f1a2",
+    "image": "127.0.0.1:5005/flowguard",
+    "digest": "sha256:224d357c2a625291521370850ba39930c966d5084afce7e84ca43193a07e76b7",
+    "deployed_at": "2026-11-22T17:29:25.187+00:00",
+    "status": "good",
+    "note": ""
+  },
+  {
+    "env": "production",
+    "release": "b7c8d9e0f1a2",
+    "image": "127.0.0.1:5005/flowguard",
+    "digest": "sha256:224d357c2a625291521370850ba39930c966d5084afce7e84ca43193a07e76b7",
+    "deployed_at": "2026-11-22T17:29:31.373+00:00",
+    "status": "good",
+    "note": "promoted from staging"
+  },
+  {
+    "env": "staging",
+    "release": "6c7f7b608ec9",
+    "image": "127.0.0.1:5005/flowguard",
+    "digest": "sha256:1b20cea7e16d31a8c2fdb722dd992adfe46857574fe2dce0f1d4e3ed8510c159",
+    "deployed_at": "2026-11-22T17:29:51.867+00:00",
+    "status": "failed",
+    "note": "threshold hotfix"
+  },
+  {
+    "env": "production",
+    "release": "6c7f7b608ec9",
+    "image": "127.0.0.1:5005/flowguard",
+    "digest": "sha256:1b20cea7e16d31a8c2fdb722dd992adfe46857574fe2dce0f1d4e3ed8510c159",
+    "deployed_at": "2026-11-22T17:30:08.045+00:00",
+    "status": "rolled_back",
+    "note": "threshold hotfix (urgent, promoted by hand)"
+  },
+  {
+    "env": "production",
+    "release": "b7c8d9e0f1a2",
+    "image": "127.0.0.1:5005/flowguard",
+    "digest": "sha256:224d357c2a625291521370850ba39930c966d5084afce7e84ca43193a07e76b7",
+    "deployed_at": "2026-11-22T17:30:15.820+00:00",
+    "status": "good",
+    "note": "rollback from 6c7f7b608ec9"
+  },
+  {
+    "env": "production",
+    "release": "b7c8d9e0f1a2",
+    "image": "127.0.0.1:5005/flowguard",
+    "digest": "sha256:224d357c2a625291521370850ba39930c966d5084afce7e84ca43193a07e76b7",
+    "deployed_at": "2026-11-22T17:30:34.607+00:00",
+    "status": "failed",
+    "note": "config change"
+  },
+  {
+    "env": "production",
+    "release": "b7c8d9e0f1a2",
+    "image": "127.0.0.1:5005/flowguard",
+    "digest": "sha256:224d357c2a625291521370850ba39930c966d5084afce7e84ca43193a07e76b7",
+    "deployed_at": "2026-11-22T17:30:42.389+00:00",
+    "status": "good",
+    "note": "revert MODEL_DIR"
+  },
+  {
+    "env": "production",
+    "release": "b7c8d9e0f1a2",
+    "image": "127.0.0.1:5005/flowguard",
+    "digest": "sha256:224d357c2a625291521370850ba39930c966d5084afce7e84ca43193a07e76b7",
+    "deployed_at": "2026-11-22T17:30:51.320+00:00",
+    "status": "failed",
+    "note": "right-size memory"
+  },
+  {
+    "env": "production",
+    "release": "b7c8d9e0f1a2",
+    "image": "127.0.0.1:5005/flowguard",
+    "digest": "sha256:224d357c2a625291521370850ba39930c966d5084afce7e84ca43193a07e76b7",
+    "deployed_at": "2026-11-22T17:31:04.975+00:00",
+    "status": "good",
+    "note": "revert memory"
+  }
+]
