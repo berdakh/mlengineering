@@ -89,7 +89,7 @@ def fig_skab_trials() -> None:
     ax.axhline(nested["mean"], color=HONEST, linewidth=1.8)
     ax.axhline(trials[-1]["mean"], color=OPTIMISTIC, linewidth=1.8, linestyle="--")
     ax.axhline(test, color=INK["primary"], linewidth=1.2, linestyle=":")
-    ax.text(0.2, nested["mean"] + 0.004, f"nested estimate of the procedure {nested['mean']:.3f} (band: +/- 1 SE)", color=INK["secondary"], va="bottom")
+    ax.text(n - 0.5, nested["mean"] - 0.006, f"nested estimate of the procedure {nested['mean']:.3f} (band: +/- 1 SE)", color=INK["secondary"], va="top", ha="right")
     ax.text(0.2, trials[-1]["mean"] + 0.004, f"best trial's own dev score {trials[-1]['mean']:.3f}", color=INK["secondary"], va="bottom")
     ax.text(0.2, test + 0.004, f"test, 9 experiments, one look {test:.3f}", color=INK["secondary"], va="bottom")
     ax.set_xlim(-0.8, n - 0.2)
@@ -97,7 +97,7 @@ def fig_skab_trials() -> None:
     ax.set_xlabel(f"{n} recorded trials, sorted by dev score")
     ax.set_ylabel("point-level PR-AUC (dev: mean over 4 grouped folds, bar = SE)")
     ax.set_title("Real SKAB search: the trial error bars overlap, and three 'performance' numbers disagree")
-    ax.legend(loc="lower right")
+    ax.legend(loc="center left", bbox_to_anchor=(0.01, 0.62))
     save(fig, HERE / "skab_trials.svg")
     print("skab_trials.svg: best", round(trials[-1]["mean"], 3), "nested", round(nested["mean"], 3), "+/-", round(nested["se"], 3),
           "test", round(test, 3), "min", round(trials[0]["mean"], 3))

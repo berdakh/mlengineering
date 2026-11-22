@@ -104,11 +104,11 @@ unit("w3d2_group_temporal_validation", "Group-aware and temporal validation",
 unit("w3d3_hyperparameter_selection", "Hyperparameter and threshold selection without fooling yourself",
      "Select hyperparameters and decision thresholds using only training/validation data; quantify selection optimism with nested validation.",
      "Tuned baseline with a nested estimate and a frozen-threshold test evaluation.",
-     "w3d2.", "H6.4", path="lessons/w3d3_hyperparameter_selection")
+     "w3d2.", "H6.4", path="lessons/w3d3_hyperparameter_selection", status="Execution verified", has_checks=True)
 unit("w3d4_point_vs_event_evaluation", "Point-level versus event-level evaluation for detection",
      "Implement and interpret point-wise metrics, event matching, detection delay and false alarms per hour; explain when each misleads.",
      "Tested `flowguard.evaluation` module; point vs event results table with interpretation.",
-     "w3d2 (your HFO event-evaluation experience transfers directly).", "H6.5, H7.3", path="lessons/w3d4_point_vs_event_evaluation")
+     "w3d2 (your HFO event-evaluation experience transfers directly).", "H6.5, H7.3", path="lessons/w3d4_point_vs_event_evaluation", status="Execution verified", has_checks=True)
 unit("w3d5_uncertainty", "Uncertainty: cluster bootstrap, paired comparisons, small-n honesty",
      "Attach defensible intervals to metrics when the independent unit is the experiment, not the sample; compare models with paired resampling.",
      "Confidence intervals and a paired comparison for the baselines, with a stated unit of resampling.",

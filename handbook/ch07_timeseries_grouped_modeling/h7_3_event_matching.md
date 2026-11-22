@@ -35,7 +35,7 @@ plus confirmation rows), floored at zero.
 
 ```mermaid
 flowchart TD
-    A["alarm start c"] --> Q1{"a_k minus tau_early <= c < b_k<br/>for some event k?"}
+    A["alarm start c"] --> Q1{"c within tau_early rows before event k,<br/>or inside it, for some k?"}
     Q1 -- no --> FA["false alarm"]
     Q1 -- yes --> Q2{"first alarm to detect event k?"}
     Q2 -- yes --> HIT["hit: delay = max 0, t raise minus t a_k"]

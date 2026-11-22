@@ -218,8 +218,8 @@
       "prerequisites": "w3d2.",
       "handbook": "H6.4",
       "path": "lessons/w3d3_hyperparameter_selection",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w3d4_point_vs_event_evaluation",
@@ -231,8 +231,8 @@
       "prerequisites": "w3d2 (your HFO event-evaluation experience transfers directly).",
       "handbook": "H6.5, H7.3",
       "path": "lessons/w3d4_point_vs_event_evaluation",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w3d5_uncertainty",
