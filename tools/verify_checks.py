@@ -77,8 +77,10 @@ def main() -> int:
         # Units still marked Planned in course.json may be half-written; they are not verified.
         planned = {u["path"] for u in json.loads((ROOT / "course.json").read_text())["units"]
                    if u["status"] == "Planned" and u.get("path")}
-        units = sorted({str(c.parent.relative_to(ROOT)) for base in ("diagnostic", "lessons")
-                        for c in (ROOT / base).glob("*/checks*") if c.is_dir()} - planned)
+        found = {str(c.parent.relative_to(ROOT)) for base in ("diagnostic", "lessons")
+                 for pattern in ("*/checks*", "*/*/checks*")  # nested: lessons/<unit>/<section>/checks
+                 for c in (ROOT / base).glob(pattern) if c.is_dir()}
+        units = sorted(u for u in found if not any(u == p or u.startswith(p + "/") for p in planned))
     elif args.unit:
         units = [args.unit.rstrip("/")]
     else:
