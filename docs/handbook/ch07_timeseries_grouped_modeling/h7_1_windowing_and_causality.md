@@ -128,8 +128,8 @@ Offline code rarely says "use the future". The future arrives through convenient
 | Global decompositions fitted on everything (PCA, ICA, dictionary learning) | basis depends on later data | fit on training period/units, then apply |
 | Smoothing the *labels* or scores before evaluation | post-processing that looks ahead | causal debouncing (k-of-n rule over past samples) |
 
-The EEG correspondences are direct: zero-phase band-pass filtering before epoching, ICA fitted
-on a full session and then used to "clean" that session's test trials, baseline correction with
+Biomedical signal analysis has direct correspondences. In EEG, for example: zero-phase band-pass
+filtering before epoching, ICA fitted on a full session and then used to "clean" that session's test trials, baseline correction with
 a post-stimulus interval. Each has an online counterpart with a cost in delay or quality.
 Reporting the offline variant is legitimate for offline science; reporting it as the expected
 performance of a real-time system is not.

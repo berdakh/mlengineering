@@ -152,11 +152,11 @@ print("repo root:", REPO_ROOT)
 # test look is fixed, and the new test number is reported as obtained after a second look. The challenge
 # logs your looks.
 #
-# ### 2.8 Connection to what you know
+# ### 2.8 Connection to other domains
 #
-# EEG decoding papers often tune hyperparameters, channel sets or frequency bands with cross-validation that
-# includes the test subjects, or tune per-subject thresholds on the subject being scored. You will recognise
-# both as the broken versions of section 2.3. Leave-one-subject-out with an inner leave-one-subject-out for
+# Many research papers (EEG decoding is a well-documented example) tune hyperparameters, channel sets or frequency bands with cross-validation that
+# includes the test subjects, or tune per-subject thresholds on the subject being scored. Both are the
+# broken versions of section 2.3. Leave-one-subject-out with an inner leave-one-subject-out for
 # tuning is nested validation; it is expensive, which is why it is often skipped, and the skipped version is
 # optimistic in exactly the way quantified here.
 #
@@ -587,9 +587,9 @@ check("w3d3", challenge=True)
 # estimates; run a recorded random search; apply the one-SE rule with a justified complexity ordering;
 # choose and freeze thresholds on out-of-fold dev scores; keep a test-look budget.
 #
-# **Reflection prompt** (5 lines, `python wb.py note w3d3 "..."`): in one of your published EEG/iEEG
-# results, list every choice that was made after looking at a score (band, channels, window, model,
-# threshold, epoch). Which data was each choice made on?
+# **Reflection prompt** (5 lines, `python wb.py note w3d3 "..."`): for one result you have produced or
+# know well, list every choice that was made after looking at a score (features, window, model, threshold,
+# preprocessing). Which data was each choice made on?
 #
 # **Retrieval question for later** (w3d7 review and Week 4): you ran 50 configurations, the best has CV
 # score 0.81 with SE 0.02 per configuration, and errors are moderately correlated (ρ ≈ 0.5). Roughly how

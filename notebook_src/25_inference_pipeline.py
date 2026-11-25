@@ -194,9 +194,9 @@ print("repo root:", REPO_ROOT)
 #
 # *Figure 2. What `predict-batch` does, and the three ways it can end.*
 #
-# ### 2.6 Connection to what you know
+# ### 2.6 Connection to other domains
 #
-# You have lived this distinction in brain-computer interfaces. The offline decoding pipeline filters a
+# Brain-computer interfaces show this distinction clearly. The offline decoding pipeline filters a
 # whole session with a zero-phase filter, normalises each channel with session statistics and
 # cross-validates. The online loop sees one block at a time: it must use a causal filter, normalisation
 # statistics frozen from the calibration run, and the classifier exactly as trained. A BCI that
@@ -576,9 +576,9 @@ check("w5d1", challenge=True)
 # * design a batch command that is idempotent, atomic, traceable and contains per-run failures;
 # * write a parity test between an evaluated path and a served path.
 #
-# **Reflection prompt (3 sentences in `progress/notes.md`).** Think of a real-time system from your BCI
-# work. Which statistic did the online loop compute differently from the offline analysis, and how did
-# you find out?
+# **Reflection prompt (3 sentences in `progress/notes.md`).** Think of a system that computes the same
+# thing offline and live (a dashboard and an alert, a notebook and a deployed model). Which statistic could
+# the live path compute differently from the offline one, and how would you find out?
 #
 # **Retrieval question for the review day.** A served model and its evaluation code agree to 1e-15 on
 # every score, yet production raises twice as many alarms as the offline estimate at the same

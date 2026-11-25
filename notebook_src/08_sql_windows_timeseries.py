@@ -91,8 +91,8 @@ print("repo root:", REPO_ROOT)
 # ### 2.1 Intuition: a window function adds a column without collapsing rows
 #
 # `GROUP BY` answers "one number per group" and destroys the rows. A window function answers "for
-# each row, a number computed from *related* rows" and keeps every row. You already do this
-# constantly: a z-score against a subject's own baseline, a moving RMS over the preceding second, the
+# each row, a number computed from *related* rows" and keeps every row. Time-series work does
+# this constantly: a z-score against a unit's own baseline, a moving RMS over the preceding second, the
 # sample index within a trial. In pandas these are `groupby(...).transform(...)`, `rolling(...)`,
 # `groupby(...).cumcount()`. SQL spells them all the same way:
 #
@@ -226,8 +226,9 @@ print("repo root:", REPO_ROOT)
 # start condition to "gap since previous row > 30 minutes" and the same query **sessionises** by time
 # gap; change it to "status differs from previous" and it collapses repeated states.
 #
-# Where the analogy with your detection work breaks: in iEEG you usually merge events closer than a
-# refractory gap and discard events shorter than a minimum duration, on a uniform sample grid. Here
+# Where the analogy with signal-based event detection breaks: detectors on a uniform sample grid
+# (in physiology or audio, say) usually merge events closer than a refractory gap and discard events
+# shorter than a minimum duration. Here
 # "consecutive" means adjacent *rows*, and a lost sample between two flagged rows does not split the
 # run. Whether that is right is a definition you owe the reader; state it (the lab does).
 #
@@ -786,7 +787,7 @@ check("w2d2", challenge=True)
 # **Q4 — changing the definition of an event.** Operations asks that two alert runs separated by a
 # *single* non-alert reading be reported as one episode. Describe the change to the gaps-and-islands
 # query from the lab (the start condition is enough; SQL is welcome). How does this relate to event
-# merging rules you have used for detections in iEEG?
+# merging rules in signal-based detectors (a refractory gap, a minimum duration)?
 #
 # **Q5 — is it point-in-time correct?** For each feature attached to a label at time `t`, say whether it
 # can read the future and why:

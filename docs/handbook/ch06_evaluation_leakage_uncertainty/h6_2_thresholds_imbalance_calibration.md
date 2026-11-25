@@ -148,10 +148,10 @@ constraint; thresholds chosen empirically on the score for the same population.
 
 ## H6.2.6 Bridges and an industry example
 
-In seizure or HFO detection you tuned a detection threshold per patient or on held-out patients and
-reported sensitivity against false detections per hour; that is the "quantile of scores on normal
-data" row of the table in H6.2.2, with the same transfer problem between patients that SKAB shows
-between experiments. Where the analogy breaks: in a business setting the threshold is often a per-row
+Medical event detection gives a familiar parallel: a seizure detector's threshold is tuned per patient
+or on held-out patients and reported as sensitivity against false detections per hour. That is the
+"quantile of scores on normal data" row of the table in H6.2.2, with the same transfer problem between
+patients that SKAB shows between experiments. Where the analogy breaks: in a business setting the threshold is often a per-row
 function of value, the base rate drifts with seasons and product changes, and labels arrive weeks
 late, so calibration has to be monitored and maintained after deployment.
 

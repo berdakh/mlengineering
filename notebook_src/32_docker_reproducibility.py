@@ -185,13 +185,12 @@ print("repo root:", REPO_ROOT)
 # differently: "never ready" (2) points at start-up and configuration; "wrong" (1) points at the model,
 # the dependencies or the code.
 #
-# ### 2.7 Connection to what you already know
+# ### 2.7 Connection to other domains
 #
 # This is the environment half of reproducibility that research papers usually skip. A methods section
-# says "PyTorch, scikit-learn"; at best a supplementary `environment.yml` with ranges. You have probably
-# seen a published decoder give different numbers a year later and blamed seeds or data. The lock and
-# the digest are the equivalent of freezing the exact preprocessing pipeline and toolbox versions behind
-# an EEG result; the smoke test is the equivalent of re-running one known recording through the deployed
+# says "PyTorch, scikit-learn"; at best a supplementary `environment.yml` with ranges. Published models
+# often give different numbers a year later, and the blame goes to seeds or data. The lock and the digest
+# are the equivalent of freezing the exact preprocessing pipeline and toolbox versions behind a result; the smoke test is the equivalent of re-running one known recording through the deployed
 # system and checking that the output matches the analysis bit for bit (here to a relative 1e-9).
 #
 # ### 2.8 An industry example

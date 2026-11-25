@@ -150,12 +150,12 @@ print("repo root:", REPO_ROOT)
 # *Figure 2 (SYNTHETIC: 400 alarms, P(true) logistic in peak score).* Investigating the worst-looking half
 # of the alarms reports precision near 1.0 against a true 0.68.
 #
-# ### 2.4 Connection to what you already know
+# ### 2.4 Connection to other domains
 #
-# In BCI work you track decoder accuracy across sessions only on calibration blocks where the intended
-# class is known; free-use periods have no labels, and EEG amplitude changes between sessions (electrode
-# impedance, gel drying) are covariate shift that a per-session normalisation can absorb. That is this
-# project's burn-in normalisation. You also know verification bias from clinical evaluation: if only
+# Brain-computer-interface studies track accuracy across sessions only on calibration blocks where the
+# intended class is known; free-use periods have no labels, and signal amplitude changes between sessions
+# (sensor contact, drying gel) are covariate shift that a per-session normalisation can absorb. That is
+# this project's burn-in normalisation. Clinical evaluation has the classic case of verification bias: if only
 # patients with positive screening get the reference test, sensitivity is overestimated. Maintenance
 # investigating only alarmed segments is the same design.
 #
@@ -579,7 +579,7 @@ check("w7d3", challenge=True)
 # - name the direction of the bias that verification and incomplete miss reporting introduce;
 # - size a monitoring window from the label rate and the difference you need to detect.
 #
-# **Reflection prompt (5 minutes, in `progress/notes.md`).** Which of your research systems had
+# **Reflection prompt (5 minutes, in `progress/notes.md`).** Which dataset or system you have worked with had
 # labels you trusted but which were produced by a selective process (who got the reference test, which
 # sessions were annotated)? Which direction did that bias your reported numbers?
 #

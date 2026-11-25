@@ -122,8 +122,8 @@ print("repo root:", REPO_ROOT)
 #   example. A *supervised* fitted step is different: selecting 20 of 2,000 noise features on all rows
 #   turns a true AUC of 0.5 into 0.932. The rule is the same for both because you cannot know in advance
 #   which case you are in, and because a served model never sees statistics computed from the test period.
-# * **Protocol leakage is the one researchers know best and engineers meet most.** You have seen it as
-#   session, amplifier or site effects in EEG, or as time-on-task confounding a vigilance label. In SKAB
+# * **Protocol leakage is the one researchers know best and engineers meet most.** In brain-signal
+#   studies it appears as session, amplifier or site effects, or as time-on-task confounding a vigilance label. In SKAB
 #   it is elapsed time: faults were injected at about row 570 in almost every experiment.
 #
 # ### 2.3 Why leaks inflate, and by how much
@@ -687,10 +687,10 @@ check("w3d1", challenge=True)
 # * build an evaluation in which preprocessing, selection and de-duplication cannot leak;
 # * repair a split manifest minimally and validate it against the data.
 #
-# **Reflection prompt (5 minutes, in `progress/notes.md`).** Think of one published EEG/iEEG result you
+# **Reflection prompt (5 minutes, in `progress/notes.md`).** Think of one published or project result you
 # know well, yours or someone else's. Which of the eight kinds could have been present, and which probe
-# would have caught it? Was any step (channel selection, artefact thresholds, band choice) made on all
-# subjects before cross-validation?
+# would have caught it? Was any step (feature selection, outlier thresholds, parameter choice) made on all
+# the data before cross-validation?
 #
 # **Retrieval question for later.** You are handed a churn table with a `cancellation_reason` column,
 # customers with several contracts, and a `days_since_last_login` computed at export time. Name the leak

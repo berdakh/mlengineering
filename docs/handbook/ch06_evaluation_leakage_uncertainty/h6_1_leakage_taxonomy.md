@@ -52,7 +52,7 @@ Eight kinds, grouped by where the information enters.
 
 Two kinds deserve a second look because they are easy to dismiss.
 
-**Protocol leakage** is the most common in research data, and EEG researchers know it well: label and
+**Protocol leakage** is the most common in research data. A classic example from EEG studies: label and
 acquisition are confounded (all patients recorded on one amplifier, all controls on another; vigilance
 labels confounded with time-on-task). The model learns the protocol. In the course project the anomaly
 starts in rows 550-600 in 31 of 34 experiments, so elapsed time is a strong "detector":

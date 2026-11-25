@@ -134,10 +134,11 @@ each axis (max |z| 1.3 < 2.7) but off the correlation (Mahalanobis 5.8 > 3.1). T
 axis is the low-variance direction whose $$1/\lambda_k$$ weight makes this work, and the same weight is
 why that direction needs shrinkage when data are few.*
 
-**Bridge from EEG.** This is the same object as the spatial covariance used for whitening before
-CSP or in Riemannian pipelines, with the same regularisation issue when trials are few relative to
-channels. The difference in monitoring is the direction of interest: there you look for discriminative
-directions, here deviations along *low-variance* directions are the alarm.
+**A parallel from signal processing.** The same covariance matrix appears whenever multichannel signals
+are whitened (in EEG decoding, audio array processing or finance), with the same regularisation issue
+when samples are few relative to channels. The difference in monitoring is the direction of interest:
+in classification you look for discriminative directions; here deviations along *low-variance*
+directions are the alarm.
 
 ## H5.1.6 Where "normal" comes from
 

@@ -226,10 +226,10 @@ delay, so the fragment/late balance is a design parameter and belongs in the dec
 operational cost differs by kind: one fragmented event produces many alert notifications from a
 single fault, which is an alert-fatigue problem and not a detection problem.
 
-Parallels in EEG/iEEG work are direct. Per-subject accuracy tables are unit tables. Channel- or
-montage-wise breakdowns are slices. Muscle and movement artefacts producing high-frequency power
-are the "alarm with no event" category, and the standard question "is this detector finding HFOs or
-finding sharp artefacts?" is error analysis by annotation. Where the analogy breaks: in research the
+Research on biomedical signals has direct parallels. In an EEG study, per-subject accuracy tables are
+unit tables and per-channel breakdowns are slices; muscle and movement artefacts that look like brain
+activity are the "alarm with no event" category, and asking "is this detector finding the events or
+finding artefacts?" is error analysis by annotation. Where the analogy breaks: in research the
 annotated event is usually treated as ground truth, while maintenance-log labels in industry are
 often late, coarse and written for a different purpose.
 
