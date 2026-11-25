@@ -29,7 +29,7 @@
   "provenance": {
     "alert_budget_per_hour": 0.125,
     "budget_met_on_dev": true,
-    "built_by": "labs/w5d3_online_inference/lab/build_bundle.py",
+    "built_by": "lessons/w5d3_online_inference/lab/build_bundle.py",
     "chosen_in": "w4d5_model_choice",
     "dev_event_recall": 0.4074074074074074,
     "dev_events": "11/27",
