@@ -699,8 +699,8 @@
       "prerequisites": "w8d2.",
       "handbook": "H16.2",
       "path": "lessons/w8d5_project_explanation",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w8d6_final_assessment",
@@ -712,8 +712,8 @@
       "prerequisites": "All previous weeks.",
       "handbook": "-",
       "path": "lessons/w8d6_final_assessment",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w8d7_retrospective",
@@ -725,8 +725,8 @@
       "prerequisites": "w8d6.",
       "handbook": "-",
       "path": "lessons/w8d7_retrospective",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     }
   ]
 }

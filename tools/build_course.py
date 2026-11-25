@@ -252,14 +252,14 @@ unit("w8d4_coding_interviews", "Coding and SQL interviews, timed",
 unit("w8d5_project_explanation", "Explaining the project and defending tradeoffs",
      "Deliver 5-minute and 20-minute walkthroughs and answer adversarial questions on evaluation, limitations and alternatives.",
      "Recorded walkthrough + written answers to ten hard questions.",
-     "w8d2.", "H16.2", path="lessons/w8d5_project_explanation")
+     "w8d2.", "H16.2", path="lessons/w8d5_project_explanation", status="Execution verified", has_checks=True)
 unit("w8d6_final_assessment", "Final independent assessment",
      "Complete a parallel form of the diagnostic and the final transfer task unassisted, for comparison with Week 1 evidence.",
      "Final assessment submission.",
-     "All previous weeks.", "-", path="lessons/w8d6_final_assessment")
+     "All previous weeks.", "-", path="lessons/w8d6_final_assessment", status="Execution verified", has_checks=True)
 unit("w8d7_retrospective", "Retrospective and evidence portfolio (light)",
      "Compare Week 1 and Week 8 evidence, list what is demonstrated versus still unassessed, plan the next eight weeks.",
-     "Evidence portfolio index and personal next-steps plan.", "w8d6.", "-", path="lessons/w8d7_retrospective")
+     "Evidence portfolio index and personal next-steps plan.", "w8d6.", "-", path="lessons/w8d7_retrospective", status="Execution verified", has_checks=True)
 
 
 def main() -> None:

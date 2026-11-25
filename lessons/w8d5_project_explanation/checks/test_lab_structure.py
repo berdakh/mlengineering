@@ -84,7 +84,7 @@ def test_slide_outline():
     assert not PLACEHOLDERS.search(text), "the slide outline still contains a placeholder"
     slides = sections(text)
     assert 5 <= len(slides) <= 12, f"{len(slides)} slides; 5-12"
-    assert "```mermaid" in text, "one architecture diagram as a mermaid block"
+    assert "```mermaid" in text, "one architecture diagram as a fenced mermaid code block"
     table_rows = [line for line in text.splitlines() if line.strip().startswith("|")]
     assert any(INTERVAL.search(r) for r in table_rows), "a results table with intervals"
     assert any("failure example" in h.lower() for h in slides), "one slide titled '... Failure example ...'"
