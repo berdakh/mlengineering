@@ -1,0 +1,12 @@
+figure,item,value
+audit_timeline,"clone, venv, pinned install",5.31
+audit_timeline,download data,6.91
+audit_timeline,verify data hashes,0.08
+audit_timeline,evaluate,63.15
+findings_matrix,good,PASS
+findings_matrix,absolute_path,absolute_path;missing_file
+findings_matrix,unpinned,unpinned_requirement
+findings_matrix,missing_dependency,missing_dependency
+findings_matrix,hand_edited,headline_mismatch
+findings_matrix,untracked_data,missing_file
+findings_matrix,nondeterministic,headline_mismatch;nondeterministic

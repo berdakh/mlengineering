@@ -647,8 +647,8 @@
       "prerequisites": "Milestones 1-4.",
       "handbook": "H8.3",
       "path": "lessons/w8d1_project_completion",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w8d2_report_limitations",
@@ -660,8 +660,8 @@
       "prerequisites": "w8d1.",
       "handbook": "H16.2",
       "path": "lessons/w8d2_report_limitations",
-      "status": "Planned",
-      "has_checks": false
+      "status": "Execution verified",
+      "has_checks": true
     },
     {
       "id": "w8d3_system_design",

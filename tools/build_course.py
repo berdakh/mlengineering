@@ -236,11 +236,11 @@ unit("w7d7_review", "Review and catch-up (light)", REVIEW,
 unit("w8d1_project_completion", "Project completion audit: reproduce from a clean clone",
      "Audit the project against the deliverables checklist and reproduce every headline number from a fresh clone.",
      "Clean-clone reproduction log; gap list closed or explicitly scoped out.",
-     "Milestones 1-4.", "H8.3", path="lessons/w8d1_project_completion")
+     "Milestones 1-4.", "H8.3", path="lessons/w8d1_project_completion", status="Execution verified", has_checks=True)
 unit("w8d2_report_limitations", "Technical report and model limitations",
      "Write a short technical report and a limitations section that a sceptical reviewer would accept.",
      "4-page report, model card, limitations.",
-     "w8d1.", "H16.2", path="lessons/w8d2_report_limitations")
+     "w8d1.", "H16.2", path="lessons/w8d2_report_limitations", status="Execution verified", has_checks=True)
 unit("w8d3_system_design", "ML system design",
      "Apply a repeatable structure (requirements, data, labels, evaluation, serving, monitoring, iteration) to two timed designs, one in an unfamiliar domain.",
      "Two written designs scored against the rubric.",
