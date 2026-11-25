@@ -5,6 +5,7 @@ machine) but a quadratic solution needs minutes."""
 from __future__ import annotations
 
 import random
+import signal
 import statistics
 import time
 
@@ -14,9 +15,22 @@ from conftest import load
 LIMIT_S = 4.0
 
 
+class TooSlow(Exception):
+    pass
+
+
 def timed(fn, *args):
+    """Run fn(*args), interrupting it after LIMIT_S seconds so a slow solution fails fast (Unix signals)."""
+    def _raise(signum, frame):
+        raise TooSlow(f"took longer than {LIMIT_S} s on the large input: check the complexity")
+    old = signal.signal(signal.SIGALRM, _raise)
+    signal.setitimer(signal.ITIMER_REAL, LIMIT_S)
     t0 = time.perf_counter()
-    out = fn(*args)
+    try:
+        out = fn(*args)
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, old)
     return out, time.perf_counter() - t0
 
 
@@ -194,9 +208,14 @@ def test_p4_matches_brute_force(p4):
 
 def test_p4_large_offset_is_stable(p4):
     # Values near 1e9 with tiny spread: naive E[x^2] - E[x]^2 loses all precision.
-    base = 1e9
-    data = [("tight", base + d) for d in (0.0, 0.1, 0.2)] + [("wide", base + d) for d in (0.0, 1.0, 2.0)]
-    assert p4(data, 2) == ["wide", "tight"]
+    # "wide" (variance 0.667) is the noisiest; every "t*" sensor has variance below 0.12 but sits near
+    # 1e8-1e10, where the shortcut E[x^2] - E[x]^2 returns values in the hundreds or thousands.
+    data = [("wide", float(d)) for d in (0, 1, 2)]
+    for i, (base, spread) in enumerate([(1e8, (0.0, 0.3, 0.6, 0.9)), (3e8, (0.0, 0.1, 0.2)),
+                                        (2e9, (0.0, 0.3, 0.6, 0.9)), (5e9, (0.0, 0.1, 0.2)),
+                                        (1e10, (0.0, 0.1, 0.2))]):
+        data += [(f"t{i}", base + d) for d in spread]
+    assert p4(data, 1) == ["wide"]
 
 
 def test_p4_scales(p4):
