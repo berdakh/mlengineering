@@ -244,11 +244,11 @@ unit("w8d2_report_limitations", "Technical report and model limitations",
 unit("w8d3_system_design", "ML system design",
      "Apply a repeatable structure (requirements, data, labels, evaluation, serving, monitoring, iteration) to two timed designs, one in an unfamiliar domain.",
      "Two written designs scored against the rubric.",
-     "Weeks 5-7.", "H16.3", path="lessons/w8d3_system_design")
+     "Weeks 5-7.", "H16.3", path="lessons/w8d3_system_design", status="Execution verified", has_checks=True)
 unit("w8d4_coding_interviews", "Coding and SQL interviews, timed",
      "Solve Python data-structure and SQL problems under time pressure while explaining aloud.",
      "Timed set results and an error log by pattern.",
-     "Recurring interview reps.", "H16.4", path="lessons/w8d4_coding_interviews")
+     "Recurring interview reps.", "H16.4", path="lessons/w8d4_coding_interviews", status="Execution verified", has_checks=True)
 unit("w8d5_project_explanation", "Explaining the project and defending tradeoffs",
      "Deliver 5-minute and 20-minute walkthroughs and answer adversarial questions on evaluation, limitations and alternatives.",
      "Recorded walkthrough + written answers to ten hard questions.",
