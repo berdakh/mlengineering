@@ -60,8 +60,8 @@ print("repo root:", REPO_ROOT)
 # **Prerequisites.** [w2d6](12_baselines_metrics.ipynb) (baselines, point metrics, frozen
 # dev thresholds) and the split discipline of [w3d2](14_group_temporal_validation.ipynb). The
 # lab ships snapshots of `flowguard.data`, `splits` (manifest v2, overlap groups kept together),
-# `baselines`, `metrics` and `benchmark`. SKAB downloaded: `python project/get_skab.py`. Your HFO and
-# seizure-detection evaluation experience transfers almost directly; section 2.7 says where it does not.
+# `baselines`, `metrics` and `benchmark`. SKAB downloaded: `python project/get_skab.py`. If you have
+# evaluated any event detector before (spikes, seizures, intrusions), section 2.7 says what transfers.
 #
 # **Time budget (2 h essential).**
 #
@@ -174,10 +174,10 @@ print("repo root:", REPO_ROOT)
 # course implements `point_adjust` only to demonstrate the effect. Point-adjusted numbers are never
 # reported.
 #
-# ### 2.7 Connection to what you know
+# ### 2.7 Connection to other domains
 #
-# This is HFO, spike and seizure-detection scoring. You have already chosen overlap criteria, counted
-# false detections per hour, and reported latency to seizure onset. Three things differ in industrial
+# Biomedical event detection (spikes or seizures in EEG, arrhythmias in ECG) is scored the same way:
+# overlap criteria, false detections per hour, latency to onset. Three things differ in industrial
 # monitoring:
 #
 # * **Event rates.** Equipment faults are rare relative to normal hours; budgets are stated as "one false
@@ -683,9 +683,9 @@ check("w3d4", challenge=True)
 # false-alarm rate as count, exposure and upper bound; choose an operating point from dev data under a
 # budget.
 #
-# **Reflection prompt** (5 lines, `python wb.py note w3d4 "..."`): in your HFO or seizure-detection
-# work, which matching rule did you use, was it written down before the results, and would any-overlap
-# have changed a headline number?
+# **Reflection prompt** (5 lines, `python wb.py note w3d4 "..."`): think of an event detector you have
+# built or read about (in a paper, a product, or this course). Which matching rule did it use, was it
+# written down before the results, and would any-overlap have changed a headline number?
 #
 # **Retrieval question for later** (w3d7 review, and again in Week 7): a detector raised zero false
 # alarms in 2 hours of held-out normal operation. The requirement is at most one per 8 hours. What can

@@ -51,6 +51,6 @@ Week 8 adds full timed sessions: [system design](../../labs/w8d3_system_design/R
 
 1. Write or say the answer before opening any rubric. A rep read but not attempted is logged as "read".
 2. Log each rep in `progress/notes.md` with: strand, time, what went wrong, the pattern behind the error.
-3. Level: prompts target mid-level Machine Learning Engineer / Applied Scientist loops. An academic title
-   does not imply a senior engineering target; seniority expectations are discussed in w8d3 with evidence
+3. Level: prompts target mid-level Machine Learning Engineer / Applied Scientist loops. A strong academic
+   record does not by itself imply a senior engineering target; seniority expectations are discussed in w8d3 with evidence
    from your own system-design reps.

@@ -54,7 +54,7 @@ These are observations for w2d3 (data quality) and w2d4 (splits), not fixed here
    max-abs z is 1.52 inside the fault-free recording, 57.48 for *normal* samples of the labelled
    experiments and 58.70 for anomalous ones. The labelled experiments' normal operating point is far
    from the fault-free recording's (different sessions), which swamps the fault effect. This is the
-   between-session shift familiar from EEG, and it means "fit on the fault-free file, threshold the
+   between-session shift seen in any sensor recorded over several sessions, and it means "fit on the fault-free file, threshold the
    distance" cannot be assumed to work; w2d6 tests it properly.
 4. The upstream folder listing numbers `valve1` files from 1; the files are numbered from 0. `other/`
    is numbered from 1.

@@ -136,11 +136,11 @@ print("repo root:", REPO_ROOT)
 # the primary metric. Each look at accumulating data is another test; checking a rule every hour at a 5 %
 # level is not a 5 % test (the challenge shows one).
 #
-# ### 2.4 Connection to what you already know
+# ### 2.4 Connection to other domains
 #
-# In a closed-loop BCI study you would not swap the decoder mid-session for one that scored better on
-# last week's calibration data; you would compare decoders on the same held-out trials (paired), run the
-# new one silently alongside the old one first (shadow), and keep the old one loadable. The same reasoning
+# A careful lab experiment does not swap its model mid-session for one that scored better on last week's
+# data; it compares the two on the same held-out trials (paired), runs the new one silently alongside the
+# old one first (shadow), and keeps the old one loadable. The same reasoning
 # applies, with two differences: production has no session boundary to reset at, and the person who must
 # undo a bad update at night may not be you, so the undo must be one command with an audit trail.
 #
@@ -556,7 +556,7 @@ check("w7d4", challenge=True)
 # - make promotion and rollback atomic, compatibility-checked and audited.
 #
 # **Reflection prompt (5 minutes, `progress/notes.md`).** Think of the last time you replaced a model or
-# pipeline in your research. Could you have restored the previous one, with the same outputs, in one
+# pipeline in a project. Could you have restored the previous one, with the same outputs, in one
 # command a month later? What would you have needed to version together?
 #
 # **Retrieval question for review day.** *A candidate improves the primary metric by 0.02 with a paired

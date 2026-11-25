@@ -19,7 +19,7 @@ It was chosen over the alternatives because it supports the *whole* workflow of 
 
 | Need | What SKAB provides |
 |---|---|
-| A grouped structure, so generalisation must be evaluated across independent units | 34 labelled experiments; the experiment is the unit, as the patient is in your EEG work |
+| A grouped structure, so generalisation must be evaluated across independent units | 34 labelled experiments; the experiment is the unit, as the patient is in a clinical study |
 | Temporal structure, so look-ahead leakage is possible and must be prevented | about 1 Hz multivariate series, 745-1,327 rows per experiment |
 | Point *and* event labels | `anomaly` (per-sample) and `changepoint` (transition markers) columns |
 | Distribution shift to study | three experiment families (`valve1`, `valve2`, `other`) with different fault mechanisms |

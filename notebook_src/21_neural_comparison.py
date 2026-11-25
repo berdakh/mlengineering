@@ -226,12 +226,12 @@ print("repo root:", REPO_ROOT)
 # the simpler model is the default, because every later week (packaging, serving, monitoring, retraining)
 # costs more for the neural one.
 #
-# ### 2.9 Connection to your research, an industry example, misconceptions
+# ### 2.9 Connection to other domains, an industry example, misconceptions
 #
-# **From EEG.** You have probably trained the same CNN decoder with several seeds and seen subject-level
-# accuracy move by several points. The same applies here, with experiments in place of subjects: the
-# seed spread and the test-set interval over experiments are the two error bars a decoding paper should
-# show. The difference in industry is that the comparison is usually against a cheap baseline that is
+# **From research practice.** Train the same CNN several times with different seeds on any small dataset
+# (EEG decoding is a well-known case) and per-subject accuracy moves by several points. The same applies
+# here, with experiments in place of subjects: the seed spread and the test-set interval over experiments
+# are the two error bars a results table should show. The difference in industry is that the comparison is usually against a cheap baseline that is
 # already deployed, so the burden of proof is on the new model.
 #
 # **Industry example.** A team replaces a threshold rule on pump current with an LSTM autoencoder after

@@ -77,7 +77,7 @@ within = normal.groupby("experiment_id")[list(SENSOR_COLUMNS)].std().median()
 print("4. normal-operation level: SD of experiment means / median within-experiment SD")
 print((between / within).round(2).to_string())
 print("   decision: where this ratio is well above 1 the experiment's own baseline dominates, exactly\n"
-      "   like between-subject offsets in EEG. Global thresholds on raw values will mostly detect\n"
+      "   like between-subject offsets in physiological recordings. Global thresholds on raw values will mostly detect\n"
       "   'which experiment is this'; features need per-experiment or causal rolling normalisation (w2d5).\n")
 
 # 5. Family differences ---------------------------------------------------------------------

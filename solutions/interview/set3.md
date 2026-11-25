@@ -210,7 +210,7 @@ varies.
 Changes: forbid `t`, timestamps and cumulative or very long-window features; keep the clock scorer
 in every results table as a leakage probe; state in the report that the benchmark's protocol makes
 this shortcut available. The general name is shortcut learning; scanner, site and session-order
-artefacts in neuroimaging and EEG are the same thing.
+artefacts in medical imaging and biosignals are the same thing.
 
 ## F6
 

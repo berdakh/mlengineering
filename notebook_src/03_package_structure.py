@@ -226,26 +226,25 @@ print("repo root:", REPO_ROOT)
 # Tuesday's build equals Monday's. Your project will be both: a package (loose) and, from
 # week 6, a service image (locked).
 #
-# ### 2.6 Connection to what you already know
+# ### 2.6 Connection to other domains
 #
-# - The feature set is your home ground: **line length** `Σ|x[t+1]−x[t]|` (the classic
-#   seizure/HFO detector feature), **RMS**, and **band power** from a periodogram. A bearing
-#   fault adds narrow-band energy near a characteristic frequency exactly as an HFO adds
-#   energy in 80–250 Hz; `ratio = bp_high / bp_low` is the same normalisation trick as a
-#   relative band power, cancelling the per-unit gain much as it cancels per-channel
-#   impedance differences.
-# - `unit_id` plays the role of *subject*. The script already uses a grouped split — you
-#   would not have let it do otherwise — but look at where it fits the scaler.
+# - The feature set is standard signal processing: **line length** `Σ|x[t+1]−x[t]|` (a
+#   classic feature in EEG seizure detection), **RMS**, and **band power** from a periodogram.
+#   A bearing fault adds narrow-band energy near a characteristic frequency, much as an
+#   oscillation in a biomedical signal adds energy in its band; `ratio = bp_high / bp_low` is
+#   the familiar relative-band-power trick, cancelling the per-unit sensor gain.
+# - `unit_id` plays the role of a *subject* in a medical study or a *machine* in a fleet. The
+#   script already uses a grouped split, but look at where it fits the scaler.
 # - A characterization run is a pilot recording: before changing the rig, record what the
 #   current rig produces, so later differences can be attributed.
 #
 # <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d3_package_structure/figures/pump_signal_spectrum.svg" alt="SYNTHETIC pump data: a healthy and a faulty window of unit P09 in time and frequency; the faulty window has an extra peak at 90 Hz inside the bp_high band" width="100%">
 #
-# *SYNTHETIC data. The features you will move into `pumpwatch.features` are the ones you compute on EEG windows: here `bp_high` picks up the 90 Hz fault component and `bp_low` the shaft rotation near 25 Hz. Regenerate with `python labs/w1d3_package_structure/figures/make_figures.py`.*
+# *SYNTHETIC data. The features you will move into `pumpwatch.features` are standard window features from signal processing: here `bp_high` picks up the 90 Hz fault component and `bp_low` the shaft rotation near 25 Hz. Regenerate with `python labs/w1d3_package_structure/figures/make_figures.py`.*
 #
 # <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d3_package_structure/figures/unit_vs_fault.svg" alt="SYNTHETIC pump data: per-unit strip plots; mean rms per unit ranges from 0.36 to 1.27 while healthy and faulty windows overlap, and the bp_high/bp_low ratio separates the classes within every faulty unit" width="100%">
 #
-# *SYNTHETIC data. Left: mean `rms` per unit runs from 0.36 to 1.27, a wider spread than the healthy-versus-faulty gap (0.81 versus 1.01 on average), which is why the split is by unit, as it is by subject in your work. Right: a ratio of band powers cancels the unit gain.*
+# *SYNTHETIC data. Left: mean `rms` per unit runs from 0.36 to 1.27, a wider spread than the healthy-versus-faulty gap (0.81 versus 1.01 on average), which is why the split is by unit, as it would be by subject in a medical study. Right: a ratio of band powers cancels the unit gain.*
 #
 # ### 2.7 A concrete industry example
 #

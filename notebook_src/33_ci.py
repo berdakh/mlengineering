@@ -240,14 +240,15 @@ print("repo root:", REPO_ROOT)
 #    are git-ignored locally but needed, network, CPU speed, time zone.
 # 4. Reproduce locally with the same commands (the worked example), then fix the cause.
 #
-# ### 2.9 Connection to your research practice
+# ### 2.9 Connection to other domains
 #
-# In research, the equivalent of the gate is "the analysis script runs end to end on a clean checkout",
-# and the equivalent of the scheduled lane is re-running the cross-subject evaluation after a
-# preprocessing change. You already separate "the code is correct" from "the decoder generalises":
-# CI just makes the first one automatic and keeps the second one out of it. A real-time BCI pipeline
-# with a hard latency budget is the closest analogue to the perf lane: you measured latency on the
-# recording machine under realistic load, not in a unit test on a laptop.
+# In a research project, the equivalent of the gate is "the analysis script runs end to end on a clean
+# checkout", and the equivalent of the scheduled lane is re-running the full cross-subject evaluation
+# after a preprocessing change. Good research practice already separates "the code is correct" from "the
+# model generalises": CI makes the first one automatic and keeps the second one out of it. A real-time
+# system with a hard latency budget (a brain-computer interface, a game, a trading engine) is the closest
+# analogue to the perf lane: latency is measured on the target machine under realistic load, not in a
+# unit test on a laptop.
 #
 # ### 2.10 An industry example (illustrative composite, not a documented case)
 #

@@ -95,8 +95,8 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.1 Intuition: a test is a detector, so evaluate it like one
 #
-# You validate an HFO or seizure detector by injecting events with known ground truth and
-# counting what it finds. A test suite is the same kind of object: a detector whose targets
+# A detector (for faults, fraud or seizures) is validated by injecting events with known ground
+# truth and counting what it finds. A test suite is the same kind of object: a detector whose targets
 # are *defects*. Its sensitivity is measured by injecting known defects into correct code and
 # counting how many make at least one test fail. That procedure is **mutation testing**; an
 # injected defect is a **mutant**, a mutant the suite fails on is **killed**, one it passes on
@@ -219,12 +219,12 @@ print("repo root:", REPO_ROOT)
 # Use coverage to find gaps; use mutation (even by hand: break the code, see if a test fails)
 # to judge strength.
 #
-# ### 2.6 Connection to what you already know
+# ### 2.6 Connection to other domains
 #
-# - Synthetic signals with known ground truth are your daily tool for validating detectors;
-#   known-answer tests are that practice made permanent and automatic.
-# - A leak-free cross-subject split is a *structural* property. You have been verifying it by
-#   inspection; `train_units.isdisjoint(test_units)` verifies it on every commit.
+# - Scientists validate detectors on synthetic signals with known ground truth; known-answer
+#   tests are that practice made permanent and automatic.
+# - A leak-free grouped split (by subject, machine or customer) is a *structural* property. It is
+#   usually checked by inspection; `train_units.isdisjoint(test_units)` checks it on every commit.
 # - Reviewer question "is the improvement within noise?" is the statistical-check layer.
 #   Keeping it out of the unit suite is the software form of not confusing a bug with variance.
 #
@@ -496,8 +496,8 @@ check("w1d5")
 #
 # A detector emits one anomaly score per sample. Operations do not page an engineer per
 # sample; they page per *event*. `eventkit.events.detect_events` performs that conversion.
-# It is the same post-processing you know from HFO or seizure detection (threshold, join
-# fragments, enforce a minimum duration), and the portfolio project will use it for
+# It is the same post-processing used in many event detectors, from seismic to clinical (threshold,
+# join fragments, enforce a minimum duration), and the portfolio project will use it for
 # event-level evaluation in Week 3.
 #
 # The file `eventkit/events.py` was written quickly and never tested. It contains defects.
@@ -897,7 +897,7 @@ check("w1d5", challenge=True)
 # any assessment answer you could not justify.
 #
 # **Reflection prompt (5 min, write it down).** Think of the feature-extraction code behind
-# one of your published results. Name one defect that could be present in it today without
+# a result you have reported (a project, thesis, paper or assignment). Name one defect that could be present in it today without
 # having changed the paper's headline metric. Which single test would detect it?
 #
 # **Retrieval practice (answer from memory in ~1 week, before w2d5; answer key is in the solutions file).**

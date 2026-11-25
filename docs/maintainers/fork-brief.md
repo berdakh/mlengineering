@@ -18,7 +18,7 @@ Scope rules
 
 Lesson content (README.md, all eight sections): 1 Purpose (objective, why, prerequisites, time budget:
 2 h essential + optional extension <= 1 h); 2 Conceptual explanation (intuition, precise terms, maths and
-assumptions, link to the learner's EEG/iEEG research background, a concrete industry example, limits and
+assumptions, connection to other domains, a concrete industry example, limits and
 misconceptions); 3 Worked example (complete runnable code in `example/`, data schema, key decisions,
 real output copied from a run, interpretation, how to reproduce); 4 Guided lab (sequential tasks, starter in
 `lab/`, checkpoints, debugging guidance); 5 Independent challenge (transfer, acceptance criteria, no
@@ -26,8 +26,9 @@ solution); 6 Progressive hints (links to hints/hint1_concept.md, hint2_approach.
 7 Assessment (link to assessment.md: reasoning questions, >= 1 design-choice explanation, rubric, one
 10-15 min "interview rep" from the strand named in your task); 8 Reflection (what you can now do alone,
 reflection prompt, a later retrieval question, link to the next unit).
-The learner is an experienced ML researcher (PyTorch, EEG/iEEG time series, cross-subject evaluation)
-moving to industry. Do not explain basics. No padding, no API catalogues.
+The audience is students who can already write Python and train a basic model, and who are learning to
+deliver models as reliable software. Explain new ideas properly; do not re-teach Python basics. No padding,
+no API catalogues.
 
 Checks: pytest, target via `tools.wbcheck.resolve_target("<unit path>", "<part>")`; behaviour and
 contracts, not one implementation; offline, deterministic, fast (< 30 s per suite); never require downloaded

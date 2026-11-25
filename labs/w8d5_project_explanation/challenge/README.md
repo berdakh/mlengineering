@@ -1,8 +1,9 @@
-# w8d5 challenge - your research project, told for an engineering audience
+# w8d5 challenge - a project of your own, told for an engineering audience
 
 **Independent. No hints, no solutions until you have finished.**
 
-Pick one research project you led (an EEG/iEEG or BCI study is ideal). In `challenge/`:
+Pick one project you led or contributed substantially to: a research or thesis project, a course
+project, or work from a job or internship. In `challenge/`:
 
 1. `RESEARCH_WALKTHROUGH.md` - a 5-minute walkthrough with the six beats (Problem, Constraint,
    Decision, Evidence, Limitation, Next step; 550-800 words in those six sections, each at least 40),

@@ -103,8 +103,8 @@ print("repo root:", REPO_ROOT)
 # | Last value, first difference | how much is explained by persistence (time-series forecasting floor) |
 # | One sensor, one threshold | what an operator's alarm limit already achieves |
 #
-# The EEG analogue of the clock baseline: decoding "task versus rest" when every recording has rest
-# first. A classifier can learn slow electrode drift instead of brain state, and a "trial index"
+# An analogue from brain-signal research: decoding "task versus rest" when every recording has rest
+# first. A classifier can learn slow sensor drift instead of the brain state, and a "trial index"
 # baseline exposes it. The same structure appears whenever labels follow a fixed schedule.
 #
 # ### 2.3 Detectors fitted on normal data
@@ -141,9 +141,9 @@ print("repo root:", REPO_ROOT)
 # with $T$ a scaled identity (scikit-learn's `ShrunkCovariance`, and Ledoit-Wolf chooses $\alpha$
 # analytically) or the diagonal of $\hat\Sigma$. The reference solution shrinks the *correlation*
 # matrix towards the identity, which keeps the score unit-free. At $\alpha = 1$ the distance becomes
-# the Euclidean norm of the z-vector: no singularity and no sensitivity to relationships. If you know
-# PCA-based artefact detection or spatial whitening from EEG, this is the same matrix and the same
-# regularisation problem.
+# the Euclidean norm of the z-vector: no singularity and no sensitivity to relationships. If you have met
+# PCA-based artefact removal or spatial whitening (common in multichannel sensor and EEG work), this is
+# the same matrix and the same regularisation problem.
 #
 # <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d6_baselines_metrics/figures/mahalanobis_2d.svg" alt="Max-|z| draws a square alarm boundary and misses a probe that breaks the correlation; Mahalanobis draws an ellipse and flags it" width="100%">
 #
@@ -495,7 +495,7 @@ check("w2d6")
 #
 # What this substitution costs: the data is simulated, so nothing you find is evidence about real
 # customers, realistic effect sizes, or which model family is better. What it keeps: the task is
-# unfamiliar relative to your research domain, the table has missing values, categories, repeated
+# unfamiliar relative to the project's sensor domain, the table has missing values, categories, repeated
 # customers and time order, and the decision logic is the real one. A real-data sitting replaces or
 # supplements this when the dataset's terms have been verified.
 #
@@ -763,8 +763,8 @@ check("w2d6", challenge=True)
 # from costs.
 #
 # **Reflection prompt** (write 5 lines in `progress/notes.md`, e.g. via `python wb.py note w2d6 "..."`):
-# in your EEG/iEEG work, which reported numbers had no floor printed next to them, and which
-# "clock-like" baseline might have explained part of a result?
+# in a paper, report or project you know well, which reported numbers had no floor printed next to
+# them, and which "clock-like" baseline might have explained part of a result?
 #
 # **Retrieval question for later** (answer from memory in the w2d7 review, and again in Week 4): a
 # colleague reports PR-AUC 0.62 on dataset A and 0.48 on dataset B for the same model and concludes it

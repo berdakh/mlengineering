@@ -185,9 +185,10 @@ print("repo root:", REPO_ROOT)
 # Each kind has a different cause and fix: *misses* and *late* detections need a more sensitive signal;
 # *fragments* point at threshold noise (hysteresis or a hold time) or a transient response; *pre-onset*
 # runs are threshold noise, genuine precursors, or label timing; *post-event* runs suggest the reference
-# no longer describes normal after a fault. This is the same vocabulary you use for HFO or seizure
-# detectors (detection latency, fragmented detections, false detections per hour); the difference in
-# industry is that the cost of each kind comes from an operator's alert queue, not a reviewer.
+# no longer describes normal after a fault. Biomedical event detectors (seizure detection in EEG, for
+# example) use the same vocabulary (detection latency, fragmented detections, false detections per hour);
+# the difference in industry is that the cost of each kind comes from an operator's alert queue, not a
+# reviewer.
 #
 # ### 2.6 Ranking: frequency × cost × fixability
 #

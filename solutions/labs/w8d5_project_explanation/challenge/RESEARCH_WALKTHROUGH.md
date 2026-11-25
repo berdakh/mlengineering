@@ -1,4 +1,4 @@
-# 5-minute walkthrough of one of my research projects (reference - FICTIONAL example)
+# 5-minute walkthrough of a project (reference - FICTIONAL example)
 
 **This reference is a made-up study, written only to show the structure.** It does not describe any
 real publication; all numbers are illustrative and labelled as such. Your own version must use your

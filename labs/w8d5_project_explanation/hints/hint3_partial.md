@@ -15,7 +15,7 @@ And the Evidence beat of a 5-minute script:
 > false-alarm events; on development data its PR-AUC was 0.76 [0.68, 0.84], level with the supervised
 > alternative within the interval, at a fraction of the cost.
 
-For the research challenge, the Translation section starts like this:
+For the challenge, if your project was, say, a medical detection study, the Translation section could start like this:
 
 > The same structure is equipment monitoring with few machines: the machine is the patient, a fault
 > is a seizure, the allowed detection delay is the onset tolerance ...

@@ -114,9 +114,9 @@ print("repo root:", REPO_ROOT)
 # - **Order dependence.** Running the cells top to bottom may give a different result from the one the
 #   author saw, and neither run is "the" result.
 #
-# You know this from analysis notebooks on recordings: a filter cell re-run twice, a channel list
-# edited after the epochs were cut. The difference in industry is only that someone else will build on
-# the numbers without having been in the kernel session.
+# Anyone who has used analysis notebooks has seen this: a filter cell re-run twice, a column list edited
+# after the data was split. The difference in industry is only that someone else will build on the
+# numbers without having been in the kernel session.
 #
 # The practical consequence for refactoring: **the notebook's printed output is a claim about the code,
 # not a specification.** You pin it so that you can tell when *you* change something, and you expect
@@ -519,7 +519,7 @@ check("w1d6", challenge=True)
 # 2. **A cleaning step that removes rows without saying how many.** Any line that can drop rows should
 #    make you compare the count before and after, and ask *which* rows went.
 # 3. **An operation over the whole table that only makes sense within a group.** Sorting, differencing
-#    and indexing all have a "per recording" and an "over everything" version. In your EEG work the
+#    and indexing all have a "per recording" and an "over everything" version. In signal analysis the
 #    same mistake is a filter or a baseline computed across a concatenation of sessions.
 # 4. **A name that means different things in different cells.** Find a variable that is assigned in
 #    more than one cell and read every use of it.

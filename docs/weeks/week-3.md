@@ -36,7 +36,7 @@ Six core days of about **2 hours** each (plus an optional hour), and one lighter
 
 **Day 3 — Hyperparameter and threshold selection without fooling yourself.** Select hyperparameters and decision thresholds using only training/validation data; quantify selection optimism with nested validation. *Prerequisites:* w3d2.
 
-**Day 4 — Point-level versus event-level evaluation for detection.** Implement and interpret point-wise metrics, event matching, detection delay and false alarms per hour; explain when each misleads. *Prerequisites:* w3d2 (your HFO event-evaluation experience transfers directly).
+**Day 4 — Point-level versus event-level evaluation for detection.** Implement and interpret point-wise metrics, event matching, detection delay and false alarms per hour; explain when each misleads. *Prerequisites:* w3d2 (experience with event scoring in any detection task transfers directly).
 
 **Day 5 — Uncertainty: cluster bootstrap, paired comparisons, small-n honesty.** Attach defensible intervals to metrics when the independent unit is the experiment, not the sample; compare models with paired resampling. *Prerequisites:* w3d4.
 

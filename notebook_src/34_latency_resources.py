@@ -125,9 +125,10 @@ print("repo root:", REPO_ROOT)
 # closed loop is called **coordinated omission**: the generator coordinates with the server and omits
 # exactly the bad measurements.
 #
-# Your research parallel: a real-time BCI loop is closed (the next decision waits for the last), and you
-# measured per-cycle latency. A prediction service with thousands of independent machines is open: a
-# stalled server does not stop the machines from sending.
+# A parallel from real-time systems: a control loop (a robot controller, a brain-computer interface) is
+# closed, because the next decision waits for the last, so per-cycle latency is the right measure. A
+# prediction service with thousands of independent machines is open: a stalled server does not stop the
+# machines from sending.
 #
 # ### 2.4 Little's law and queues
 #
@@ -568,9 +569,9 @@ check("w6d4", challenge=True)
 # queueing from a fixed delay by how latency depends on load; choose between threads and processes for
 # CPU-bound Python; and size a deployment with a stated utilisation target.
 #
-# **Reflection prompt.** Which latency number from your research systems (an online decoder, an
-# acquisition loop) was measured closed loop, and would the conclusion change if it had been measured
-# open loop?
+# **Reflection prompt.** Think of a latency number you have seen reported (in a paper, a benchmark, or a
+# system you have built or used). Was it measured closed loop, and would the conclusion change if it had
+# been measured open loop?
 #
 # **Later retrieval question (for the w6d7 review).** A service's p50 is 50 ms at 5 requests/s and
 # 50 ms at 100 requests/s, while one request's server-side processing takes 10 ms. List three hypotheses

@@ -136,7 +136,7 @@ Options and when they fit:
 * **CV bullets:** action + concrete outcome + artifact. "Cut API median latency from 52 ms to 9.5 ms
   by diagnosing a TCP Nagle interaction" beats "optimised performance". No adjective the artifact
   cannot back. Academic achievements stay; they are translated, not hidden.
-* **Seniority:** target roles by what your evidence shows, not by your academic title. Strong research
+* **Seniority:** target roles by what your evidence shows, not by titles or degrees. Strong research
   judgement plus one shipped system is a credible applied-scientist or mid-level MLE profile; senior
   engineering roles usually expect evidence of operating systems with a team over time.
 

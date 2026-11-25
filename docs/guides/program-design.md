@@ -73,10 +73,10 @@ classifiers. If the diagnostic contradicts an assumption, a targeted primer is a
 
 One project runs through the course: **`flowguard`**, fault detection on the SKAB water-circulation
 testbed recordings. The brief, provenance, licence, data dictionary and measured dataset facts are in
-[project/README.md](project.md). In your terms: the *experiment* plays the role of the
+[project/README.md](project.md). By analogy with a clinical study: the *experiment* plays the role of the
 *patient* (the independent unit across which generalisation is evaluated), the anomalous segment is an
-*event* as an HFO or a seizure is, and point-level versus event-level scoring is the same distinction
-you already handle in iEEG detection work. What is new is everything around the model.
+*event* as a seizure in an EEG recording is, and point-level versus event-level scoring is the same
+distinction such detection studies make. What is new for most students is everything around the model.
 
 Transfer is probed on tabular business data: in the diagnostic (synthetic), in w2d6 and in w3d6.
 

@@ -14,7 +14,7 @@ The exercise runs on the course's **SYNTHETIC** StreamBox churn snapshots instea
 
 What this substitution costs: the data is simulated, so nothing you find is evidence about real
 customers, realistic effect sizes, or which model family is better. What it keeps: the task is
-unfamiliar relative to your research domain, the table has missing values, categories, repeated
+unfamiliar relative to the time-series project, the table has missing values, categories, repeated
 customers and time order, and the decision logic is the real one. A real-data sitting replaces or
 supplements this when the dataset's terms have been verified.
 

@@ -30,7 +30,7 @@ row-level fold lets the forest look up the neighbours of each test row.
 | (d) one pump retrained monthly | time, within that pump | temporal (walk-forward) on that pump's history. Cross-pump splitting would measure something irrelevant |
 
 *Common incorrect answer:* "always split by group." The unit is derived from the deployment
-situation. (b) and (d) are the cases experienced cross-subject researchers get wrong by reflex.
+situation. (b) and (d) are the cases people used to subject-wise splits get wrong by reflex.
 
 ## Q3
 

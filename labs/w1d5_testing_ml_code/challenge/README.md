@@ -7,7 +7,7 @@
 
 A detector emits one anomaly score per sample. Operations do not page an engineer per
 sample; they page per *event*. `eventkit.events.detect_events` performs that conversion.
-It is the same post-processing you know from HFO or seizure detection (threshold, join
+It is the same post-processing used in many detectors, from seizure detection in EEG to alarm systems (threshold, join
 fragments, enforce a minimum duration), and the portfolio project will use it for
 event-level evaluation in Week 3.
 

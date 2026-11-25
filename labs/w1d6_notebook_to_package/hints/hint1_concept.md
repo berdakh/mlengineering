@@ -7,8 +7,8 @@ No locations, only kinds of fault. The notebook contains at least one of each.
 2. **A cleaning step that removes rows without saying how many.** Any line that can drop rows should
    make you compare the count before and after, and ask *which* rows went.
 3. **An operation over the whole table that only makes sense within a group.** Sorting, differencing
-   and indexing all have a "per recording" and an "over everything" version. In your EEG work the
-   same mistake is a filter or a baseline computed across a concatenation of sessions.
+   and indexing all have a "per recording" and an "over everything" version. In signal processing
+   the same mistake is a filter or a baseline computed across a concatenation of sessions.
 4. **A name that means different things in different cells.** Find a variable that is assigned in
    more than one cell and read every use of it.
 5. **Meaning assigned by column position.** It works until the file changes.

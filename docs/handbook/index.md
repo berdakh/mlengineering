@@ -36,16 +36,17 @@ status. Section ids (`H2.1`) are stable and are what lessons link to.
 All 55 sections are written. Each ends with its sources and verification status; most were
 checked against official documentation sources, and anything written from memory is labelled there.
 
-## Bridges from what you know
+## Bridges between domains
 
-A recurring device in this handbook is to restate a familiar EEG/iEEG idea in another domain, and to
-say where the analogy breaks.
+A recurring device in this handbook is to restate an idea from one field (here, biomedical signals such
+as EEG, where many of these problems were met first) in another domain, and to say where the analogy breaks.
+You do not need any EEG background: each row reads as "the same structure in two settings".
 
-| You already know | Same structure elsewhere | Where the analogy breaks |
+| In biomedical-signal work | Same structure elsewhere | Where the analogy breaks |
 |---|---|---|
 | Subject-wise splits; cross-patient generalisation | Machine-, customer-, store- or site-wise splits | Business groups are often open-ended and changing; new groups appear daily |
-| Line length, band power, RMS on EEG windows | Vibration and current features in equipment monitoring | Sampling rates, sensor bandwidth and physics-based fault frequencies differ |
-| HFO or seizure event detection scored by event overlap and latency | Fault-event detection scored by event recall and detection delay | Industrial events are rarer and labels come from maintenance logs with delays |
+| Line length, band power, RMS on signal windows (e.g. EEG) | Vibration and current features in equipment monitoring | Sampling rates, sensor bandwidth and physics-based fault frequencies differ |
+| Seizure or other event detection scored by event overlap and latency | Fault-event detection scored by event recall and detection delay | Industrial events are rarer and labels come from maintenance logs with delays |
 | Non-stationarity across sessions, electrode drift | Sensor recalibration, seasonal demand, product changes | Drift may be intentional (a price change) and documented outside the data |
 | Artefact rejection | Data-quality rules and input validation at the API boundary | Rejection must be automatic, logged and reversible in production |
-| Real-time BCI loop latency | Online inference latency budgets (p95/p99) | Budgets are contractual; failures need fallbacks rather than a restarted session |
+| Real-time brain-computer-interface loop latency | Online inference latency budgets (p95/p99) | Budgets are contractual; failures need fallbacks rather than a restarted session |

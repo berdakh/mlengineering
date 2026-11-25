@@ -1,6 +1,7 @@
 """Worked example for w2d1: grain, fan-out and NULL semantics on a tiny in-memory database.
 
-SYNTHETIC toy data in a familiar shape: EEG recordings, their channels, and annotated events.
+SYNTHETIC toy data shaped like a small signal-recording study (EEG-style): recordings, their channels,
+and annotated events.
 Every statement the lesson makes about SQL behaviour is executed here, so you can check it
 against your own SQLite build.
 

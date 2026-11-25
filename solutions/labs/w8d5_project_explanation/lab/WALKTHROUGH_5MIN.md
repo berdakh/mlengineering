@@ -12,7 +12,7 @@ running. It is an educational prototype; nothing here is validated on a real pla
 ## Constraint
 
 Three constraints shaped everything. First, there are only thirty-four labelled experiments, so the
-experiment, not the sample, is the unit of evaluation, exactly as the patient is in my EEG work.
+experiment, not the sample, is the unit of evaluation, exactly as the patient is in a clinical study.
 Second, the benchmark leaks its protocol: in most experiments the fault starts around the same row,
 so a detector that only looks at the clock already scores well. Third, files share duplicated rows,
 some with contradictory labels, so a careless split puts the same minute on both sides. On the
