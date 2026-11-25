@@ -1,0 +1,13 @@
+# Study app (app/study_app.py). Local only: bound to this machine, no usage statistics.
+[server]
+address = "127.0.0.1"
+port = 8501
+headless = false
+enableStaticServing = true   # serves app/static/ (bundled Mermaid for diagrams)
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+base = "light"
+primaryColor = "#2a78d6"

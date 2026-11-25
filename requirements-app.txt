@@ -1,0 +1,2 @@
+# Only for the study app:  streamlit run app/study_app.py
+streamlit>=1.40

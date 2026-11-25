@@ -40,5 +40,7 @@ jobs:
         run: |
           python tools/build_course.py
           git diff --exit-code course.json roadmap/SCHEDULE.md
+      - name: Study app helpers
+        run: python -m pytest app/tests -q
       - name: Checks accept reference solutions and reject mutants
         run: python tools/verify_checks.py --all

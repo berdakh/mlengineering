@@ -26,6 +26,16 @@ python -m pip install -r requirements.txt
 python wb.py status          # the whole course with your progress flags
 ```
 
+### Study app (optional, recommended)
+
+A local app for the program: today's session, the schedule, lessons with their diagrams and figures,
+one-click checks, progress flags, notes and the handbook. It uses the same progress files as `wb.py`.
+
+```bash
+pip install -r requirements-app.txt
+streamlit run app/study_app.py        # opens http://localhost:8501 (only on your machine)
+```
+
 ### 2. First two sessions: the diagnostic
 
 Open [diagnostic/README.md](diagnostic/README.md). It is time-boxed and unassisted.
@@ -114,6 +124,7 @@ Passing supplied checks is guided practice. Set `independent` only for work done
 | `interview/` | Recurring interview-practice plan |
 | `progress/` | Your progress flags, notes and the skills ledger |
 | `data/` | Synthetic lab data and its generator; downloaded data lands in `data/raw/` (git-ignored) |
+| `app/` | The study app (`streamlit run app/study_app.py`) |
 | `tools/`, `wb.py` | Small helpers: progress, running checks, verifying the checks themselves |
 | `docs/` | Authoring conventions, tested versions |
 
