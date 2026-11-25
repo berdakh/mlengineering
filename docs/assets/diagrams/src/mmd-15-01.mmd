@@ -1,0 +1,9 @@
+flowchart LR
+    subgraph DEV["development experiments"]
+        TR["training folds: fit parameters"]
+        VA["validation fold: compare candidates, fit threshold"]
+    end
+    TE["test experiments: one evaluation of the final procedure"]
+    TR --> VA
+    VA -->|"choice made here is fitted to VA's noise"| CH["chosen configuration and threshold"]
+    CH --> TE

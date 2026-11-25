@@ -1,0 +1,15 @@
+erDiagram
+    sites ||--o{ machines : "has"
+    sites ||--o{ technicians : "employs (NULL = contractor)"
+    machines ||--o{ work_orders : "receives"
+    machines ||--o{ downtime_events : "suffers"
+    technicians ||--o{ work_orders : "assigned (NULL = nobody)"
+    work_orders ||--o{ parts_used : "consumes"
+    parts ||--o{ parts_used : "appears in"
+    sites { int site_id PK }
+    machines { int machine_id PK }
+    technicians { int tech_id PK }
+    work_orders { int wo_id PK }
+    downtime_events { int event_id PK }
+    parts { int part_id PK }
+    parts_used { int wo_id PK }

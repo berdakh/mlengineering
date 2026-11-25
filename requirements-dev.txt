@@ -1,0 +1,5 @@
+# For running notebooks locally and maintaining the course (not needed in Colab).
+jupyterlab>=4.2
+ipykernel>=6.29
+nbclient>=0.10     # executes notebooks in tests/CI-style runs
+ruff>=0.6

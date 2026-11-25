@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant C as RetryingClient
+    participant S as flowguard API
+    C->>S: POST /predict (Idempotency-Key k1)
+    S-->>C: 429, Retry-After 1 (bulkhead full)
+    Note over C: sleep exactly 1 s
+    C->>S: POST /predict (same key k1)
+    S-->>C: 503, no Retry-After
+    Note over C: sleep uniform(0, min(cap, base x 2)) s
+    C->>S: POST /predict (same key k1)
+    S-->>C: 200 (scores)
+    Note over C,S: a 422 would have been returned to the caller at once, never retried

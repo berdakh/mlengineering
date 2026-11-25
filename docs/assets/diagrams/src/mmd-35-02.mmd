@@ -1,0 +1,11 @@
+sequenceDiagram
+    participant You
+    participant CLI as AWS CLI (profile flowguard-sso)
+    participant IdC as IAM Identity Center
+    participant AWS as AWS APIs
+    You->>CLI: aws sso login --profile flowguard-sso
+    CLI->>IdC: device authorisation (browser sign-in, MFA)
+    IdC-->>CLI: temporary role credentials (expire on their own)
+    You->>CLI: python deploy/aws_deploy.py plan ... --live
+    CLI->>AWS: signed requests with the temporary credentials
+    Note over You,AWS: No key in the repository, in deploy/config.toml, in the image, or in the task definition

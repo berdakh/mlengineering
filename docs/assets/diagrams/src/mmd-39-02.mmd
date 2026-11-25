@@ -1,0 +1,10 @@
+flowchart LR
+    V{"Input valid?<br/>contract checks, per request"} -->|no| R["reject 422, count"]
+    V -->|yes| D{"Input changed?<br/>calibrated drift monitor"}
+    D -->|yes| DI["investigate the input source"]
+    D -->|no| N1["nothing to do for inputs"]
+    V -->|yes| P{"Model still good?<br/>delayed labels, as of today"}
+    P -->|"not enough labels"| U["unknown: collect labels"]
+    P -->|"clearly worse"| E["escalate: concept change, pipeline bug"]
+    P -->|"interval straddles"| I["inconclusive: keep collecting"]
+    P -->|"clearly not worse"| OK["no model action"]

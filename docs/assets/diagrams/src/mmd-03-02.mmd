@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant You
+    participant pip as pip, the build frontend
+    participant st as setuptools, the build backend
+    participant sp as site-packages of the venv
+    You->>pip: pip install -e .
+    pip->>pip: read pyproject.toml, section build-system
+    pip->>st: install the backend in an isolated build environment
+    pip->>st: build an editable wheel
+    st-->>pip: metadata, entry points, a pointer to src
+    pip->>sp: write pumpwatch dist-info and the path pointer
+    pip->>sp: create the console script bin/pumpwatch
+    pip->>sp: install declared dependencies
+    Note over You,sp: Edits under src take effect at once. Changes to dependencies, scripts or version need a reinstall.

@@ -1,0 +1,9 @@
+flowchart LR
+    F["FROM / JOIN"] --> W["WHERE<br/>row filter"]
+    W --> G["GROUP BY"]
+    G --> H["HAVING<br/>group filter"]
+    H --> WIN["window functions<br/>see only surviving rows"]
+    WIN --> S["SELECT list / DISTINCT"]
+    S --> O["ORDER BY"]
+    O --> L["LIMIT"]
+    WIN -. "to filter on a window result,<br/>wrap in a CTE and filter outside" .-> W2["outer WHERE rn = 1"]

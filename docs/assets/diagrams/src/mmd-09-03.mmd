@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant CLI as flowguard ingest
+    participant RAW as data/raw (read only)
+    participant CHK as quality.run_checks
+    participant OUT as out dir
+    CLI->>RAW: read every file with explicit separator and dtypes
+    CLI->>CHK: tidy table, as it arrived (not sorted, not de-duplicated)
+    CHK-->>CLI: list of CheckResult(name, passed, detail, severity)
+    CLI->>OUT: quality_report.json (always)
+    alt any error-severity failure
+        CLI-->>CLI: exit non-zero, table not written
+    else only warnings or all passed
+        CLI->>OUT: skab.csv to a temporary name, then atomic rename
+        CLI->>OUT: provenance.json (source, commit, hashes, row counts, code version)
+    end

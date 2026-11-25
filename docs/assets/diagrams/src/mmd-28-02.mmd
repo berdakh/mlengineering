@@ -1,0 +1,12 @@
+flowchart TD
+    A["request arrives"] --> B{"path and method exist?"}
+    B -- no --> B1["404 / 405"]
+    B -- yes --> C{"JSON parses and matches schema?"}
+    C -- no --> C1["422 validation_error<br/>loc + type per problem"]
+    C -- yes --> D{"model loaded?"}
+    D -- no --> D1["503 not_ready"]
+    D -- yes --> E{"domain rules hold?"}
+    E -- no --> E1["400 invalid_sequence<br/>(challenge: 404, 409)"]
+    E -- yes --> F{"scoring raises?"}
+    F -- yes --> F1["500 internal_error<br/>logged, nothing leaked"]
+    F -- no --> G["200 results"]

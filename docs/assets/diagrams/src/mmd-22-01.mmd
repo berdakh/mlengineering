@@ -1,0 +1,8 @@
+flowchart LR
+    S["sweep spec<br/>(TOML)"] --> E["expand_sweep<br/>resolved configs"]
+    E --> X["execute<br/>one directory per run"]
+    X --> D[("runs/run_id/<br/>config, environment,<br/>metrics, status")]
+    D --> I["build_index<br/>(scan directories)"]
+    I --> C["index.csv<br/>(derived copy)"]
+    I --> A["aggregate<br/>mean, sd over seeds"]
+    D --> R["reproduce run_id<br/>(re-run config, compare)"]

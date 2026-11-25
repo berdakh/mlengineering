@@ -1,0 +1,10 @@
+flowchart LR
+    s["messy_analysis.py<br/>one script, globals"] --> g["Task 1<br/>golden output"]
+    g --> k["Task 2<br/>skeleton + editable install"]
+    k --> f["Tasks 3-4<br/>faithful port:<br/>features, io, split, model"]
+    f --> c["Task 5<br/>CLI + entry point"]
+    c --> w["Task 6<br/>run from another directory"]
+    w --> cmp{"same numbers<br/>as golden?"}
+    cmp -- no --> f
+    cmp -- yes --> fix["Task 7<br/>ONE behaviour change:<br/>scaler inside the pipeline"]
+    fix --> chk["Task 8<br/>checks + refactor log"]

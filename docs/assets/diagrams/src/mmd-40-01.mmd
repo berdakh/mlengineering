@@ -1,0 +1,9 @@
+flowchart LR
+    T["trigger<br/>schedule, measured degradation,<br/>new data or features"] --> C["candidate bundle<br/>registered, immutable version"]
+    C --> G{"offline gate<br/>paired comparison on held-out data,<br/>guardrails, slices"}
+    G -->|reject| X["stop; record why"]
+    G -->|pass| S["shadow<br/>score real inputs, serve nothing"]
+    S -->|"disagreements reviewed"| K{"canary<br/>small share of real decisions,<br/>stopping rule"}
+    K -->|stop| RB["rollback: pointer to previous version"]
+    K -->|promote| P["promote: pointer to candidate, audited"]
+    P -->|"alarm after release"| RB

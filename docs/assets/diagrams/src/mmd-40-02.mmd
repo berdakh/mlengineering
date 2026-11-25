@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant O as Operator
+    participant R as Registry (current, audit.jsonl)
+    participant A as API process
+    O->>R: promote 1.1.0 (checks: registered, checksums, columns)
+    R-->>R: write current atomically, then append audit
+    O->>A: POST /admin/reload (X-Admin-Token)
+    A->>R: resolve current, load_bundle
+    A-->>O: model_version 1.1.0 (old model kept if loading fails)
+    O->>R: rollback (pop last promotion)
+    O->>A: POST /admin/reload
+    A-->>O: model_version 1.0.0, identical responses

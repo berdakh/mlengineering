@@ -1,0 +1,10 @@
+flowchart TD
+    subgraph contracts["Code and data contracts - deterministic - a failure means something is broken"]
+        u["Unit tests<br/>every change, seconds"]
+        i["Integration and smoke tests<br/>every change, tiny fixed data"]
+        dv["Data validation<br/>every data load"]
+    end
+    subgraph quality["Model quality - an estimate with variance"]
+        sp["Statistical performance checks<br/>per trained model, in evaluation,<br/>reported with uncertainty"]
+    end
+    u --> i --> dv --> sp

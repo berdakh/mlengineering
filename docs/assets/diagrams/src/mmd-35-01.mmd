@@ -1,0 +1,12 @@
+flowchart LR
+    dev["your laptop<br/>docker build + push"] -->|"image :git-sha<br/>(short-lived token)"| ecr[("ECR repository<br/>IMMUTABLE tags")]
+    subgraph aws["AWS account, one region"]
+        ecr -->|"pull with the<br/>task execution role"| task
+        subgraph svc["ECS service (desired count 1)"]
+            task["Fargate task<br/>0.25 vCPU, 0.5 GB<br/>health check: /readyz"]
+        end
+        task -->|"stdout JSON lines"| logs[("CloudWatch Logs<br/>/ecs/flowguard, 7 days")]
+        sg{{"security group<br/>inbound: none by default"}} --- task
+        budget["AWS Budgets<br/>e-mail at 50% / 100%"]
+    end
+    you(["you, /32 only,<br/>if you opt in"]) -. "port 8000" .-> sg

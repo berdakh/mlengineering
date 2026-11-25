@@ -1,0 +1,7 @@
+flowchart LR
+    Q["Question"] --> G["Grain of the answer<br/>(one row per ...)"]
+    G --> S["Source tables<br/>and their grains"]
+    S --> A["Pre-aggregate to the<br/>answer's grain before joining"]
+    A --> J["Join: LEFT when every<br/>entity must appear"]
+    J --> W["Window functions for<br/>rank, streak, running value"]
+    W --> V["Verify: row count,<br/>one total by another route"]

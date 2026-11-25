@@ -1,0 +1,4 @@
+flowchart LR
+    T["tidy frame"] --> B["burn_in_z<br/>(given)"] --> C["clip"] --> N["Normaliser<br/>fitted on FIT rows"] --> W["make_windows<br/>(task 1)"]
+    W --> AE["ConvAutoencoder<br/>(given)"] --> E["mean squared error<br/>per window = score(t)"]
+    W --> TR["train_autoencoder<br/>(task 2)"] --> AE

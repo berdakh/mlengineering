@@ -1,0 +1,6 @@
+flowchart TD
+    Q{"Is the target missing?"} -- yes --> RUN["run the recipe"]
+    Q -- no --> N{"Is any prerequisite newer<br/>than the target?"}
+    N -- yes --> RUN
+    N -- no --> SKIP["nothing to do<br/>(make -q exits 0)"]
+    RUN --> PRE["prerequisites are brought<br/>up to date first, recursively"]

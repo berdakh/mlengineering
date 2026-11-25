@@ -1,0 +1,15 @@
+# Exact versions every notebook, lab and check in this course was executed with (Python 3.13, Linux).
+# Use for teaching or when a newer release breaks something:  pip install -r requirements-lock.txt
+# These pin the direct dependencies; pip resolves their own dependencies.
+numpy==2.5.3
+pandas==3.0.5
+scikit-learn==1.9.1
+scipy==1.18.1
+pydantic==2.13.5
+pytest==9.1.1
+PyYAML==6.0.3
+fastapi==0.165.0
+starlette==1.7.0
+uvicorn==0.54.0
+httpx==0.28.1
+matplotlib==3.11.2

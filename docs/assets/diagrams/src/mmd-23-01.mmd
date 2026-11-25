@@ -1,0 +1,10 @@
+flowchart TD
+    A["Fix before results:<br/>MPID, hard constraints,<br/>complexity ranking"] --> B["Development evidence<br/>per candidate"]
+    B --> C{"Meets hard constraints?<br/>e.g. p95 at most 20 ms"}
+    C -- no --> X["Out"]
+    C -- yes --> D{"Any candidate wholly<br/>above +MPID?"}
+    D -- yes --> E["Simplest of the<br/>'better' ones"]
+    D -- no --> F["Simplest candidate<br/>not shown worse"]
+    E --> G["One look at the test set<br/>for the chosen model"]
+    F --> G
+    G --> H["Decision memo"]

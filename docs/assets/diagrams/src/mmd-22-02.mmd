@@ -1,0 +1,7 @@
+stateDiagram-v2
+    [*] --> partial : mkdir, config and environment written
+    partial --> failed : task raised, status says failed with the error
+    partial --> complete : metrics written, then status LAST
+    partial --> partial : process killed, no status file
+    failed --> partial : re-executed, cleared and retried
+    complete --> complete : re-executed, skipped

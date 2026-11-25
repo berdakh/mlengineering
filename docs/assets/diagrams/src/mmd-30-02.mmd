@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant C as Client (curl)
+    participant U as uvicorn (127.0.0.1:8000)
+    participant A as FastAPI app
+    participant V as pydantic validation
+    participant M as ZScoreModel (loaded at startup)
+    C->>U: POST /predict {burn_in, values}
+    U->>A: ASGI request
+    A->>V: PredictRequest
+    alt invalid body
+        V-->>A: errors
+        A-->>C: 422 {loc, msg, type}
+    else valid
+        A->>A: model loaded? values <= 3600?
+        A->>M: score(burn_in, values)
+        M-->>A: scores, flags (score >= threshold)
+        A-->>C: 200 {model_version, threshold, scores, above_threshold}
+    end

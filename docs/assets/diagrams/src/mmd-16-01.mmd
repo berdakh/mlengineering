@@ -1,0 +1,11 @@
+flowchart LR
+    S["scores, one per row"] --> T["threshold"]
+    T --> F["flags, 0/1 per row"]
+    F --> PM["point metrics: P, R, F1 over rows"]
+    F --> M["merge runs separated by at most merge_gap zeros"]
+    M --> D["drop runs shorter than min_duration"]
+    D --> A["alarms: start, end"]
+    L["labels, 0/1 per row"] --> E["true events: start, end"]
+    A --> MA["match alarms to events"]
+    E --> MA
+    MA --> EM["event recall, event precision,<br/>delay per event, false alarms per hour"]

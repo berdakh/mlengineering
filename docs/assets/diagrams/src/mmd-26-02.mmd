@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> Registered: register(bundle)<br/>verified copy, os.replace
+    Registered --> Current: promote(version)
+    Current --> Registered: another version promoted
+    Registered --> Current: promote(older version) = rollback
+    note right of Registered
+        immutable: register refuses
+        an existing version
+    end note

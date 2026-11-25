@@ -1,0 +1,6 @@
+flowchart LR
+    you["curl on your laptop<br/>127.0.0.1:8000"] -->|"-p 127.0.0.1:8000:8000"| nat["docker port forward"]
+    lan["another machine<br/>on your Wi-Fi"] -.->|"only if -p 8000:8000"| nat
+    nat --> c["container eth0:8000"]
+    c --> u["uvicorn --host 0.0.0.0"]
+    c -.-x l["uvicorn --host 127.0.0.1<br/>(container loopback only)"]

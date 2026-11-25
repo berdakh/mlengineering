@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant S as Scheduler
+    participant C as flowguard predict-batch
+    participant D as Detector
+    participant F as out/ directory
+    S->>C: --model-dir --input --out
+    C->>C: load model.json, hash input bytes
+    C->>D: validate_input(rows)
+    alt schema violated
+        D-->>C: SchemaError
+        C-->>S: exit 2, nothing written
+    end
+    C->>F: existing manifest for another input?
+    alt yes and no --force
+        C-->>S: exit 2, nothing changed
+    end
+    loop chunks of runs
+        C->>D: score_batch(chunk)
+        D-->>C: rows with score, alarm, status, and per-run errors
+    end
+    C->>F: predictions.csv (temp file, then os.replace)
+    C->>F: manifest.json (temp file, then os.replace)
+    C-->>S: exit 0, or 3 if some runs failed

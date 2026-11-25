@@ -1,0 +1,17 @@
+flowchart LR
+    subgraph W1["Week 1 diagnostic (StreamBox)"]
+        a1[a1 Python] --- a2[a2 SQL] --- a3[a3 cleaning]
+        b1[b1 baseline] --- b2[b2 leakage] --- b3[b3 tests/API] --- b4[b4 memo]
+    end
+    subgraph W8["Week 8 parallel form (Parcelo)"]
+        f1[f1 Python] --- f2[f2 SQL] --- f3[f3 cleaning]
+        f4[f4 baseline] --- f5[f5 leakage] --- f6[f6 tests/API] --- f7[f7 memo]
+    end
+    a1 -.same rubric rows.-> f1
+    a2 -.-> f2
+    a3 -.-> f3
+    b1 -.-> f4
+    b2 -.-> f5
+    b3 -.-> f6
+    b4 -.-> f7
+    W8 --> t1["t1 transfer task<br/>(TableTop, new problem)"]

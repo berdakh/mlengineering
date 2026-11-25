@@ -1,0 +1,12 @@
+flowchart TB
+    subgraph good["dependencies first"]
+        direction TB
+        g1["FROM python:3.12-slim"] --> g2["COPY requirements.txt"] --> g3["RUN pip install (171 MB, ~13 s)"] --> g4["COPY src/ (70 kB)"] --> g5["COPY models/"]
+    end
+    subgraph bad["COPY . . first"]
+        direction TB
+        b1["FROM python:3.12-slim"] --> b2["COPY . ."] --> b3["RUN pip install (171 MB, ~13 s)"]
+    end
+    edit(["edit one line of src/flowguard/api.py"]) -.->|"invalidates"| g4
+    edit -.->|"invalidates"| b2
+    b2 -.->|"and everything after"| b3

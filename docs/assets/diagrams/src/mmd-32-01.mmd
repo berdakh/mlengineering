@@ -1,0 +1,13 @@
+flowchart LR
+    subgraph moving["resolved on build day"]
+        tag["python:3.12-slim<br/>(a tag: a movable pointer)"]
+        range["pandas>=2.1, fastapi>=0.115 ...<br/>(ranges)"]
+    end
+    subgraph fixed["fixed content"]
+        digest["python:3.12-slim@sha256:5e2b...<br/>(a digest: the content itself)"]
+        lock["requirements.lock<br/>pandas==3.1.1 --hash=sha256:...<br/>+ every transitive dependency"]
+    end
+    tag -->|"docker buildx imagetools inspect"| digest
+    range -->|"uv pip compile --generate-hashes"| lock
+    digest --> build["same image bytes<br/>next month"]
+    lock --> build

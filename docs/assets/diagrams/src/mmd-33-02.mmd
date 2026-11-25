@@ -1,0 +1,11 @@
+flowchart TB
+    subgraph gate["Per-push gate: ci.yml (minutes, deterministic, no data, no secrets)"]
+        L["ruff check"] --> T["pytest: unit + API tests<br/>Python 3.11 and 3.12"]
+        T --> B["build image"] --> SM["run container + smoke test"]
+    end
+    subgraph slow["Scheduled lane: evaluate.yml (nightly/weekly or on demand)"]
+        D["download data<br/>(hash-verified)"] --> EV["evaluate shipped model<br/>on the frozen test set"]
+        EV --> P["pytest -m perf<br/>wall-clock checks"] --> A["upload report artifact"]
+    end
+    gate -. "a red gate blocks the merge" .- M["merge to main"]
+    slow -. "a red run opens an investigation,<br/>not a blocked push" .- O["owner looks at the trend"]

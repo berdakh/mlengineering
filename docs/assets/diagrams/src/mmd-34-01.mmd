@@ -1,0 +1,7 @@
+flowchart LR
+    C["clients<br/>arrival rate lambda"] --> Q["queue<br/>(accept backlog,<br/>event loop, thread pool)"]
+    Q --> W1["worker 1<br/>service time S"]
+    Q --> W2["worker 2<br/>service time S"]
+    W1 --> R["responses<br/>throughput"]
+    W2 --> R
+    Q -. "L = lambda x W<br/>grows without bound<br/>if lambda x S / n >= 1" .-> M["memory, time-outs"]

@@ -1,0 +1,17 @@
+# Isolation forest: number of trees x 3 seeds. The seed changes the forest, so seed spread is real.
+[sweep]
+name = "iforest"
+task = "skab_detector"
+mode = "grid"
+seeds = [0, 1, 2]
+
+[base.data]
+raw_dir = "data/raw/skab"
+manifest = "labs/w4d4_experiment_tracking/lab/splits/v2.json"
+
+[base.detector]
+kind = "iforest"
+burn_in = 200
+
+[grid.detector]
+n_estimators = [50, 200]

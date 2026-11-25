@@ -1,0 +1,11 @@
+flowchart TD
+    Q["Deployment sentence:<br/>WHO is scored, WHEN, under WHICH regime?"] --> U{"Unseen units?"}
+    U -- yes --> T1{"Also later in time?"}
+    U -- no --> T2{"Later in time?"}
+    T1 -- yes --> C1["Grouped AND forward<br/>(challenge)"]
+    T1 -- no --> C2["Grouped K-fold,<br/>leave-one-group-out"]
+    T2 -- yes --> C3["Forward chaining<br/>with a gap"]
+    T2 -- no --> C4["Blocked K-fold with<br/>purge and embargo"]
+    C1 --> R{"Unseen regime possible?"}
+    C2 --> R
+    R -- yes --> S["Add leave-one-category-out<br/>as a stress test"]

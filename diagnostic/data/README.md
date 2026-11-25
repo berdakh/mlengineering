@@ -13,7 +13,7 @@ python diagnostic/data/make_data.py            # regenerate every file
 python diagnostic/data/make_data.py --check    # confirm the files on disk match the generator
 ```
 
-Byte-identical regeneration was confirmed with the versions in `docs/TESTED_VERSIONS.md`; other
+Byte-identical regeneration was confirmed with the versions in `docs/maintainers/tested-versions.md`; other
 NumPy/pandas versions may produce different random streams or float formatting. The committed files
 are the reference.
 

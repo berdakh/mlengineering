@@ -1,0 +1,14 @@
+flowchart TD
+    REQ["POST /predict"] --> V{"schema valid?<br/>finite floats, lengths,<br/>no extra fields"}
+    V -- no --> R422["422 with field paths"]
+    V -- yes --> S["flag values outside<br/>training support<br/>(out_of_support)"]
+    S --> M{"model loaded?"}
+    M -- no --> D1["degraded: model_unavailable"]
+    M -- yes --> B{"bulkhead slot free?"}
+    B -- no --> R429["429 + Retry-After"]
+    B -- yes --> C["model call in worker thread<br/>with deadline"]
+    C -- "exception" --> D2["degraded: model_error"]
+    C -- "too slow" --> D3["degraded: deadline"]
+    C -- "NaN or inf" --> D4["degraded: invalid_scores"]
+    C -- "finite scores" --> OK["200, degraded: false"]
+    D1 & D2 & D3 & D4 --> FB["fallback rule answers<br/>degraded: true, reason,<br/>counter + log event"]

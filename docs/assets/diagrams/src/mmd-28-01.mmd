@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant C as client
+    participant M as request-id middleware
+    participant V as FastAPI + pydantic
+    participant E as /predict
+    participant D as detector (loaded at startup)
+    C->>M: POST /predict (JSON)
+    M->>V: request + request_id
+    alt body does not match the schema
+        V-->>C: 422 validation_error, details with field paths
+    else valid
+        V->>E: PredictRequest object
+        alt model not loaded
+            E-->>C: 503 not_ready
+        else timestamps not increasing
+            E-->>C: 400 invalid_sequence
+        else
+            E->>D: score_batch(frame)
+            D-->>E: scores
+            E-->>C: 200 results + model_version + request_id
+        end
+    end
+    Note over E,C: any unexpected exception becomes 500 internal_error, logged, nothing leaked

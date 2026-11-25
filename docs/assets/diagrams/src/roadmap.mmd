@@ -1,0 +1,10 @@
+flowchart TB
+  subgraph A [" "]
+    direction LR
+    W1["Week 1<br/>diagnostic · package<br/>config · tests"] --> W2["Week 2<br/>SQL · data quality<br/>features · baselines"] --> W3["Week 3<br/>leakage · validation<br/>event metrics · uncertainty"] --> W4["Week 4<br/>detectors · neural<br/>tracking · model choice"]
+  end
+  subgraph B [" "]
+    direction LR
+    W5["Week 5<br/>inference · artifacts<br/>FastAPI · API tests"] --> W6["Week 6<br/>Docker · CI<br/>latency · AWS (gated)"] --> W7["Week 7<br/>logging · drift<br/>rollback · reliability"] --> W8["Week 8<br/>audit · report<br/>design · interviews"]
+  end
+  A --> B

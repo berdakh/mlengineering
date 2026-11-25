@@ -1,6 +1,6 @@
 """Author-side verification that a check suite measures what it claims.
 
-For a unit (e.g. ``lessons/w1d3_package_structure``) and a part (``lab`` or
+For a unit (e.g. ``labs/w1d3_package_structure``) and a part (``lab`` or
 ``challenge``) this script asserts that:
 
   1. the checks PASS against the reference solution  (solutions/<unit>/<part>/)
@@ -10,8 +10,8 @@ A mutant is a plausible incorrect submission, stored as an overlay: the solution
 is copied to a temporary directory and the mutant's files are copied on top.
 A file named DELETE.txt in a mutant lists solution-relative paths to remove.
 
-    python tools/verify_checks.py lessons/w1d3_package_structure
-    python tools/verify_checks.py lessons/w1d3_package_structure --part challenge
+    python tools/verify_checks.py labs/w1d3_package_structure
+    python tools/verify_checks.py labs/w1d3_package_structure --part challenge
     python tools/verify_checks.py --all
 """
 from __future__ import annotations
@@ -77,8 +77,8 @@ def main() -> int:
         # Units still marked Planned in course.json may be half-written; they are not verified.
         planned = {u["path"] for u in json.loads((ROOT / "course.json").read_text())["units"]
                    if u["status"] == "Planned" and u.get("path")}
-        found = {str(c.parent.relative_to(ROOT)) for base in ("diagnostic", "lessons")
-                 for pattern in ("*/checks*", "*/*/checks*")  # nested: lessons/<unit>/<section>/checks
+        found = {str(c.parent.relative_to(ROOT)) for base in ("diagnostic", "labs")
+                 for pattern in ("*/checks*", "*/*/checks*")  # nested: labs/<unit>/<section>/checks
                  for c in (ROOT / base).glob(pattern) if c.is_dir()}
         units = sorted(u for u in found if not any(u == p or u.startswith(p + "/") for p in planned))
     elif args.unit:

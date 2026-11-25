@@ -1,5 +1,5 @@
 # Core course dependencies. PyTorch (lesson w4d3 only) is in requirements-neural.txt.
-# Lower bounds only; the exact versions the material was executed on are in docs/TESTED_VERSIONS.md.
+# Lower bounds only; the exact versions the material was executed on are in docs/maintainers/tested-versions.md.
 numpy>=1.26
 pandas>=2.1
 scikit-learn>=1.4

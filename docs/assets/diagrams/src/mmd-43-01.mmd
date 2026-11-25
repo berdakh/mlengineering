@@ -1,0 +1,8 @@
+flowchart LR
+    REPO["repository URL<br/>+ commit hash"] --> CLONE["git clone<br/>(empty directory)"]
+    CLONE --> SCAN["static scans<br/>absolute paths, pins"]
+    SCAN --> VENV["fresh venv<br/>(no system packages)"]
+    VENV --> INSTALL["pip install -r<br/>requirements.lock"]
+    INSTALL --> STEPS["declared steps:<br/>download by hash, make evaluate"]
+    STEPS --> CMP["compare headline numbers<br/>with expected/results.json"]
+    CMP --> LOG["REPRODUCTION_LOG.md<br/>PASS / FAIL + findings"]

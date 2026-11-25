@@ -1,0 +1,6 @@
+flowchart TD
+    G["gap found"] --> Q1{"does it change a<br/>claim in the report?"}
+    Q1 -->|yes| Q2{"fixable in the<br/>time available?"}
+    Q1 -->|no| D["defer: list it,<br/>say when"]
+    Q2 -->|yes| F["fix now"]
+    Q2 -->|no| S["scope out: weaken<br/>the claim, say so"]

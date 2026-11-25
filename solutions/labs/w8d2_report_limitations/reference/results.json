@@ -1,0 +1,365 @@
+{
+  "data": {
+    "anomalous_percent": 0.3493756851421085,
+    "anomalous_row_fraction": 0.3493756851421085,
+    "clock_test_f1": 0.835,
+    "contradictory_labels": 235.0,
+    "duplicated_rows": 1290.0,
+    "events": 34.0,
+    "experiments": 35,
+    "experiments_by_family": {
+      "anomaly-free": 1,
+      "other": 14,
+      "valve1": 16,
+      "valve2": 4
+    },
+    "onset_550_600": 31.0,
+    "rows": 46806
+  },
+  "decision": {
+    "chosen": "flow-rate |z|",
+    "eligible": [
+      "flow-rate |z|",
+      "Mahalanobis",
+      "logistic (supervised)"
+    ],
+    "reason": "flow-rate |z|: no candidate is shown to be practically better, so the simplest candidate that is not shown to be worse"
+  },
+  "derived": {
+    "chosen_minus_logistic_test": -0.016301418802084022,
+    "dev_logistic_diff": 0.0687953094,
+    "notes": "differences computed here from the source values; neural mean/sd over seeds",
+    "protocol_b_gbt_drop": 0.2838394947981774
+  },
+  "development": [
+    {
+      "budget_met_on_dev": true,
+      "complexity": 0,
+      "diff": 0.0,
+      "diff_hi": 0.0,
+      "diff_lo": 0.0,
+      "dominated_by": "",
+      "events_detected": 11,
+      "events_total": 27,
+      "false_alarms_per_hour": 0.0,
+      "merge_gap": 10,
+      "min_duration": 30,
+      "name": "flow-rate |z|",
+      "pareto": true,
+      "primary": 0.7648100991,
+      "primary_hi": 0.8447424337,
+      "primary_lo": 0.6802983393,
+      "size_bytes": 370,
+      "supervised": false,
+      "threshold": 7.2441307141,
+      "vs_reference": "equivalent"
+    },
+    {
+      "budget_met_on_dev": true,
+      "complexity": 1,
+      "diff": -0.0597842717,
+      "diff_hi": 0.070959524,
+      "diff_lo": -0.2115249657,
+      "dominated_by": "flow-rate |z|",
+      "events_detected": 8,
+      "events_total": 27,
+      "false_alarms_per_hour": 0.0,
+      "merge_gap": 0,
+      "min_duration": 30,
+      "name": "Mahalanobis",
+      "pareto": false,
+      "primary": 0.7050258274,
+      "primary_hi": 0.8002504665,
+      "primary_lo": 0.5968806662,
+      "size_bytes": 920,
+      "supervised": false,
+      "threshold": 34.0783311553,
+      "vs_reference": "inconclusive"
+    },
+    {
+      "budget_met_on_dev": true,
+      "complexity": 2,
+      "diff": -0.202624244,
+      "diff_hi": -0.1197026935,
+      "diff_lo": -0.299048604,
+      "dominated_by": "flow-rate |z|;Mahalanobis;logistic (supervised)",
+      "events_detected": 3,
+      "events_total": 27,
+      "false_alarms_per_hour": 0.0,
+      "merge_gap": 0,
+      "min_duration": 30,
+      "name": "isolation forest",
+      "pareto": false,
+      "primary": 0.5621858551,
+      "primary_hi": 0.6388453274,
+      "primary_lo": 0.4914276734,
+      "size_bytes": 759036,
+      "supervised": false,
+      "threshold": 0.5900616834,
+      "vs_reference": "worse"
+    },
+    {
+      "budget_met_on_dev": true,
+      "complexity": 3,
+      "diff": 0.0687953094,
+      "diff_hi": 0.1283136817,
+      "diff_lo": 0.0220446159,
+      "dominated_by": "",
+      "events_detected": 13,
+      "events_total": 27,
+      "false_alarms_per_hour": 0.0,
+      "merge_gap": 10,
+      "min_duration": 30,
+      "name": "logistic (supervised)",
+      "pareto": true,
+      "primary": 0.8336054085,
+      "primary_hi": 0.8948438798,
+      "primary_lo": 0.7623335332,
+      "size_bytes": 1045,
+      "supervised": true,
+      "threshold": 3.964503467,
+      "vs_reference": "inconclusive"
+    }
+  ],
+  "fallback": {
+    "fallback_detected": 2,
+    "faults": 7,
+    "model_detected": 5
+  },
+  "monitoring": {
+    "alarm_rate_budget": 0.05,
+    "drift_fault_windows_share_a": 0.14,
+    "drift_fault_windows_share_b": 0.2,
+    "drift_threshold": 7.525281299036207,
+    "events": 8,
+    "events_as_expected": 7,
+    "false_alarm_events_labelled": 0,
+    "faults_detected": 1,
+    "faults_labelled": 2,
+    "gate_diff": 0.143,
+    "gate_diff_hi": 0.429,
+    "gate_diff_lo": 0.0,
+    "healthy_psi_max_test": 7.38,
+    "out_of_support_values": 560,
+    "recalibration_psi_hi": 8.9,
+    "recalibration_psi_lo": 6.1,
+    "regression_faults": 20.0,
+    "regression_recall_after": 4.0,
+    "regression_recall_before": 11.0,
+    "server_restarts": 2,
+    "values_scored": 5084
+  },
+  "neural": {
+    "seeds": 5,
+    "test_pr_auc_max": 0.8367169058996127,
+    "test_pr_auc_mean": 0.7537786689686072,
+    "test_pr_auc_min": 0.6821140349304236,
+    "test_pr_auc_sd": 0.06791391277897213,
+    "vs_mahalanobis": {
+      "estimate": -0.0567850118492681,
+      "high": 0.10383105804602966,
+      "level": 0.95,
+      "low": -0.1938247512850244,
+      "n_boot": 2000,
+      "n_clusters": 7,
+      "n_failed": 0
+    }
+  },
+  "parity": {
+    "experiments": 35,
+    "max_abs_diff_evaluation_vs_api": 0.0,
+    "max_abs_diff_evaluation_vs_batch": 0.0,
+    "rows": 46806,
+    "versions": {
+      "api": "0.6.0",
+      "bundle": "0.6.0",
+      "model": "flowrate-z-2026.11",
+      "package": "0.6.0"
+    }
+  },
+  "protocol": {
+    "alert_budget_hours": 8,
+    "burn_in_rows": 100,
+    "dev_clusters": 23,
+    "dev_experiments": 27,
+    "interval_level": 0.95,
+    "mpid": 0.05,
+    "n_boot": 2000,
+    "reference": "flow-rate |z|",
+    "seed": 0,
+    "test_clusters": 7,
+    "test_experiments": [
+      "other/1",
+      "other/14",
+      "valve1/10",
+      "valve1/13",
+      "valve1/5",
+      "valve1/8",
+      "valve2/0"
+    ],
+    "unit": "overlap group"
+  },
+  "protocol_b": {
+    "flow": {
+      "a": 0.886091099187643,
+      "b": 0.6402036481354623,
+      "b_hi": 0.7811161483507026,
+      "b_lo": 0.5270936180128131
+    },
+    "gbt": {
+      "a": 0.9199646072940116,
+      "b": 0.6361251124958343,
+      "b_hi": 0.8357499975270384,
+      "b_lo": 0.4620889206740654
+    },
+    "iforest": {
+      "a": 0.830554630468516,
+      "b": 0.7830342699241812
+    },
+    "pca_t2": {
+      "a": 0.762185867998709,
+      "b": 0.7613896507150343
+    }
+  },
+  "reproduction": {
+    "headline_values": 18,
+    "max_abs_diff": 0.0,
+    "total_seconds": 75.45,
+    "verdict": "PASS"
+  },
+  "schema": "flowguard-technical-report/1",
+  "sources": {
+    "degradation_lesson": "labs/w7d3_drift_vs_degradation/README.md",
+    "demo": "solutions/labs/w7d6_project_milestone_4/example_demo/results.json",
+    "demo_lesson": "labs/w7d6_project_milestone_4/README.md",
+    "drift_lesson": "labs/w7d2_input_monitoring_drift/README.md",
+    "evaluation": "solutions/labs/w4d6_project_milestone_1/example_report/results.json",
+    "fallback": "solutions/labs/w7d5_reliability/drill_log/fallback_vs_model.json",
+    "neural": "labs/w4d3_neural_comparison/figures/neural_vs_classical.json",
+    "parity": "solutions/labs/w5d6_project_milestone_2/example_release/parity.json",
+    "project": "project/README.md",
+    "protocols": "labs/w4d2_classical_detectors/figures/protocols.csv",
+    "reproduction": "solutions/labs/w8d1_project_completion/real_audit/REPRODUCTION_LOG.json",
+    "updates_lesson": "labs/w7d4_model_updates_rollback/README.md"
+  },
+  "test": [
+    {
+      "chosen": true,
+      "events_detected": 5,
+      "events_total": 7,
+      "false_alarms": 0,
+      "false_alarms_per_hour": 0.0,
+      "median_delay_s": 100.0,
+      "name": "flow-rate |z|",
+      "normal_hours": 1.2155555555555557,
+      "pr_auc": 0.8842514082603946,
+      "pr_auc_hi": 0.9278419932827553,
+      "pr_auc_lo": 0.8113569343485438,
+      "recall_hi": 0.9177810759959433,
+      "recall_lo": 0.3589344518326194
+    },
+    {
+      "chosen": false,
+      "events_detected": 1,
+      "events_total": 7,
+      "false_alarms": 0,
+      "false_alarms_per_hour": 0.0,
+      "median_delay_s": null,
+      "name": "Mahalanobis",
+      "normal_hours": 1.2155555555555557,
+      "pr_auc": 0.7590781986762352,
+      "pr_auc_hi": 0.8689098798690782,
+      "pr_auc_lo": 0.6112846195306849,
+      "recall_hi": 0.5131278292743188,
+      "recall_lo": 0.02567962434474355
+    },
+    {
+      "chosen": false,
+      "events_detected": 1,
+      "events_total": 7,
+      "false_alarms": 0,
+      "false_alarms_per_hour": 0.0,
+      "median_delay_s": null,
+      "name": "isolation forest",
+      "normal_hours": 1.2155555555555557,
+      "pr_auc": 0.5466307593828719,
+      "pr_auc_hi": 0.7002724983136303,
+      "pr_auc_lo": 0.39854243700696845,
+      "recall_hi": 0.5131278292743188,
+      "recall_lo": 0.02567962434474355
+    },
+    {
+      "chosen": false,
+      "events_detected": 4,
+      "events_total": 7,
+      "false_alarms": 0,
+      "false_alarms_per_hour": 0.0,
+      "median_delay_s": 186.0,
+      "name": "logistic (supervised)",
+      "normal_hours": 1.2155555555555557,
+      "pr_auc": 0.9005528270624786,
+      "pr_auc_hi": 0.9445381892085692,
+      "pr_auc_lo": 0.8237934640956464,
+      "recall_hi": 0.8417801447485302,
+      "recall_lo": 0.25045836452765724
+    }
+  ],
+  "test_per_experiment": [
+    {
+      "delay_s": 100.0,
+      "detected": 1,
+      "events": 1,
+      "experiment_id": "other/1",
+      "false_alarms": 0,
+      "family": "other"
+    },
+    {
+      "delay_s": 59.0,
+      "detected": 1,
+      "events": 1,
+      "experiment_id": "other/14",
+      "false_alarms": 0,
+      "family": "other"
+    },
+    {
+      "delay_s": 186.0,
+      "detected": 1,
+      "events": 1,
+      "experiment_id": "valve1/10",
+      "false_alarms": 0,
+      "family": "valve1"
+    },
+    {
+      "delay_s": 75.0,
+      "detected": 1,
+      "events": 1,
+      "experiment_id": "valve1/13",
+      "false_alarms": 0,
+      "family": "valve1"
+    },
+    {
+      "delay_s": 91.0,
+      "detected": 1,
+      "events": 1,
+      "experiment_id": "valve1/5",
+      "false_alarms": 0,
+      "family": "valve1"
+    },
+    {
+      "delay_s": null,
+      "detected": 0,
+      "events": 1,
+      "experiment_id": "valve1/8",
+      "false_alarms": 0,
+      "family": "valve1"
+    },
+    {
+      "delay_s": null,
+      "detected": 0,
+      "events": 1,
+      "experiment_id": "valve2/0",
+      "false_alarms": 0,
+      "family": "valve2"
+    }
+  ]
+}

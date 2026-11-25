@@ -1,0 +1,11 @@
+flowchart LR
+    R["data/raw/skab/*.csv<br/>(downloaded, hashed)"] --> I["ingest"]
+    I --> T["data/interim/skab.csv"]
+    T --> E["evaluate"]
+    S["splits/v2.json<br/>(frozen in w3d1)"] --> E
+    E --> J["results/results.json<br/>every number, once"]
+    J --> P["report"]
+    P --> M["reports/evaluation.md<br/>+ reports/figures/*.svg"]
+    C1["data.py, pipeline.py"] -.-> I
+    C2["all src/flowguard/*.py"] -.-> E
+    C3["pipeline.py, svgplot.py"] -.-> P

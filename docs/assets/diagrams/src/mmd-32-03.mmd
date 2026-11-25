@@ -1,0 +1,10 @@
+sequenceDiagram
+    participant T as smoke_test.py
+    participant C as container
+    loop until 200 or timeout
+        T->>C: GET /readyz
+        C-->>T: connection refused / 503 / 200
+    end
+    T->>C: POST /predict (smoke/request.json)
+    C-->>T: 300 results, model_version
+    Note over T: compare with smoke/expected.json<br/>exit 0 pass, 1 wrong, 2 never ready

@@ -13,6 +13,6 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def resolve_target(unit: str, part: str = "lab") -> Path:
-    """``unit`` is a repo-relative path such as ``lessons/w1d3_package_structure``."""
+    """``unit`` is a repo-relative path such as ``labs/w1d3_package_structure``."""
     override = os.environ.get("WB_TARGET_DIR")
     return Path(override).resolve() if override else ROOT / unit / part

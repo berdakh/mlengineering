@@ -1,0 +1,15 @@
+flowchart LR
+    subgraph B["bundle: flowguard-flowrate 1.0.0"]
+        M["model.json<br/>format, format_version, kind<br/>parameters, threshold, input columns"]
+        R["reference.npz<br/>numeric arrays only"]
+        C["card.json<br/>intended use, limitations<br/>training data, evaluation, versions"]
+        K["checksums.json<br/>sha256 of the three files"]
+    end
+    K -. covers .-> M
+    K -. covers .-> R
+    K -. covers .-> C
+    L["load_bundle"] --> V{"bytes match,<br/>no extra files?"}
+    V -- no --> X1["BundleIntegrityError"]
+    V -- yes --> F{"format and<br/>version readable?"}
+    F -- no --> X2["BundleCompatibilityError"]
+    F -- yes --> D["Detector + card + arrays"]

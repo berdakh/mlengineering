@@ -7,7 +7,7 @@
     python wb.py mark <unit> <flag> [off]     # flag: reading | guided | independent | review
     python wb.py note <unit> "text"           # append a dated note to progress/notes.md
 
-<unit> is an id or path, e.g.  w1d3  or  lessons/w1d3_package_structure  or  diagnostic/a1_python
+<unit> is an id or path, e.g.  w1d3  or  labs/w1d3_package_structure  or  diagnostic/a1_python
 
 Progress lives in progress/progress.json (plain JSON, yours to edit and commit).
 The four flags are deliberately separate: passing supplied checks sets nothing by
@@ -74,7 +74,7 @@ def cmd_next(_: argparse.Namespace) -> None:
         if u["status"] != "Planned" and not (p.get("guided") or p.get("independent")):
             print(f"Next: {u['id']} - {u['title']}\nOpen: {u['path']}/README.md")
             return
-    print("All authored units are marked done. See STATUS.md for the next continuation step.")
+    print("All authored units are marked done. See docs/guides/status.md.")
 
 
 def cmd_check(args: argparse.Namespace) -> None:

@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant O as Orchestrator / test
+    participant A as App process
+    participant B as Bundle on disk
+    O->>A: start (lifespan begins)
+    A->>B: load_bundle(model_dir)
+    alt checksums match
+        B-->>A: ZScoreModel
+        O->>A: GET /readyz
+        A-->>O: 200 ready, model_version
+        O->>A: POST /predict
+        A-->>O: 200 scores
+    else missing or tampered
+        B-->>A: BundleError
+        O->>A: GET /readyz
+        A-->>O: 503 not ready, reason
+        O->>A: POST /predict
+        A-->>O: 503 model not loaded
+    end

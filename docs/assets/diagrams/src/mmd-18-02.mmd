@@ -1,0 +1,14 @@
+flowchart TD
+    W["A run of wrong rows"] --> L{"Label of the run"}
+    L -- "anomalous, not flagged" --> E{"Was any row of the<br/>event flagged?"}
+    E -- "no" --> MISS["miss: whole event"]
+    E -- "yes" --> S{"Run starts at<br/>event onset?"}
+    S -- "yes, delay above late_after" --> LATE["late"]
+    S -- "yes, delay within late_after" --> B1["boundary"]
+    S -- "no, after first detection" --> FRAG["fragment: alarm dropped out"]
+    L -- "normal, flagged" --> T{"Short and touching<br/>an event edge?"}
+    T -- "yes" --> B2["boundary"]
+    T -- "no" --> P{"Where?"}
+    P -- "before first event" --> PRE["pre_onset"]
+    P -- "after last event" --> POST["post_event"]
+    P -- "no event / between" --> FA["false_alarm"]

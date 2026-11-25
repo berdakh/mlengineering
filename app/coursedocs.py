@@ -66,7 +66,7 @@ def next_unit(units: list[dict], progress: dict) -> dict | None:
 
 def check_dirs(unit_path: str, root: Path = ROOT) -> list[Path]:
     """Every checks directory belonging to a unit, including nested sections
-    (diagnostic/a1_python/checks, lessons/w8d6_final_assessment/f1_python/checks)."""
+    (diagnostic/a1_python/checks, labs/w8d6_final_assessment/f1_python/checks)."""
     base = root / unit_path
     found = [p for pattern in ("checks*", "*/checks*") for p in base.glob(pattern) if p.is_dir()]
     return sorted(found)
@@ -103,7 +103,17 @@ class Block:
 
 
 FENCE = re.compile(r"^```mermaid[ \t]*\n(.*?)^```[ \t]*$", re.S | re.M)
-IMAGE_LINE = re.compile(r"^!\[([^\]]*)\]\(([^)\s]+)\)\s*$", re.M)
+IMAGE_LINE = re.compile(r"^!\[([^\]]*)\]\(([^)\s]+)\)\s*$|^<img[^>]*?src=\"([^\"]+)\"(?:[^>]*?alt=\"([^\"]*)\")?[^>]*>\s*$", re.M)
+RAW_PREFIX = "https://raw.githubusercontent.com/berdakh/mlengineering-/main/"
+
+
+def local_target(target: str, doc_dir: Path, root: Path = ROOT) -> Path | None:
+    """A local file for an image target: relative paths, or this repository's raw GitHub URLs (works offline)."""
+    if target.startswith(RAW_PREFIX):
+        return root / target[len(RAW_PREFIX):]
+    if target.startswith(("http://", "https://", "data:")):
+        return None
+    return (doc_dir / target).resolve()
 
 
 def split_blocks(markdown: str, doc_dir: Path) -> list[Block]:
@@ -126,11 +136,13 @@ def _split_images(text: str, doc_dir: Path) -> list[Block]:
     out: list[Block] = []
     pos = 0
     for m in IMAGE_LINE.finditer(text):
-        target = m.group(2)
-        if target.startswith(("http://", "https://")):
+        target = m.group(2) or m.group(3)
+        alt = m.group(1) if m.group(2) else (m.group(4) or "")
+        local = local_target(target, doc_dir)
+        if local is None:
             continue
         out.append(Block("markdown", text[pos:m.start()]))
-        out.append(Block("image", str((doc_dir / target).resolve()), alt=m.group(1)))
+        out.append(Block("image", str(local), alt=alt))
         pos = m.end()
     out.append(Block("markdown", text[pos:]))
     return out
@@ -152,13 +164,17 @@ def rewrite_links(markdown: str, doc_path: Path, root: Path = ROOT) -> str:
         if target.startswith(("http://", "https://", "mailto:")):
             return m.group(0)
         resolved = (doc_dir / target).resolve()
+        if resolved.suffix == ".html" and resolved.with_suffix(".md").is_file():
+            resolved = resolved.with_suffix(".md")  # site links: page.html is page.md
+        if resolved.is_dir() and (resolved / "index.md").is_file():
+            resolved = resolved / "index.md"
         try:
             rel = resolved.relative_to(root.resolve())
         except ValueError:
             return label
         if resolved.is_dir() and (resolved / "README.md").is_file():
             rel = rel / "README.md"
-        if rel.suffix == ".md":
+        if rel.suffix in (".md", ".ipynb"):
             return f"[{label}](?doc={rel.as_posix()})"
         return f"{label} (`{rel.as_posix()}`)"
 
@@ -177,18 +193,46 @@ def safe_doc(path_param: str | None, root: Path = ROOT) -> Path | None:
         candidate.relative_to(root.resolve())
     except ValueError:
         return None
-    if candidate.suffix != ".md" or not candidate.is_file():
+    if candidate.suffix not in (".md", ".ipynb") or not candidate.is_file():
         return None
     return candidate
+
+
+def notebook_markdown(path: Path) -> str:
+    """A notebook as one Markdown document: markdown cells as-is, code cells as Python blocks.
+
+    The setup cell and the Colab badge are skipped: in the app you are already inside the repository.
+    """
+    cells = json.loads(path.read_text(encoding="utf-8"))["cells"]
+    parts = []
+    for cell in cells:
+        src = "".join(cell["source"]).strip()
+        if not src or "colab-badge.svg" in src or "--- Setup:" in src:
+            continue
+        parts.append(src if cell["cell_type"] == "markdown" else f"```python\n{src}\n```")
+    return "\n\n".join(parts)
+
+
+def site_to_plain(md: str) -> str:
+    """Strip the site's Jekyll/kramdown markup so a docs/ page renders in Streamlit."""
+    md = re.sub(r"\A---\n.*?\n---\n", "", md, flags=re.S)
+    md = re.sub(r"^1\. TOC\n\{:toc\}\n", "", md, flags=re.M)
+    md = re.sub(r"^\{:[^}]*\}\s*$\n?", "", md, flags=re.M)
+    md = re.sub(r"\)\{:[^}]*\}", ")", md)
+    md = md.replace("{% raw %}\n", "").replace("{% endraw %}\n", "").replace("{% endraw %}", "")
+    # inline $$x$$ (text on the same line) is inline maths; Streamlit wants $x$ for that
+    md = re.sub(r"(?<=\S)( ?)\$\$([^$\n]+?)\$\$|\$\$([^$\n]+?)\$\$(?=\S| \S)",
+                lambda m: (m.group(1) or "") + "$" + (m.group(2) or m.group(3)) + "$", md)
+    return md
 
 
 def handbook_sections(root: Path = ROOT) -> list[tuple[str, str, Path]]:
     """(chapter directory, section title, path) for every handbook section, in numeric order."""
     out = []
-    chapters = sorted((root / "handbook").glob("ch*"), key=lambda p: int(re.findall(r"\d+", p.name)[0]))
+    chapters = sorted((root / "docs" / "handbook").glob("ch*"), key=lambda p: int(re.findall(r"\d+", p.name)[0]))
     for chapter in chapters:
-        files = sorted(chapter.glob("*.md"), key=lambda p: [int(x) for x in re.findall(r"\d+", p.stem)[:2]])
+        files = sorted(chapter.glob("h*.md"), key=lambda p: [int(x) for x in re.findall(r"\d+", p.stem)[:2]])
         for f in files:
-            title = f.read_text().splitlines()[0].lstrip("# ").replace(" — ", " ").strip()
+            title = next(l for l in f.read_text().splitlines() if l.startswith("# ")).lstrip("# ").replace(" — ", " ").strip()
             out.append((chapter.name, title, f))
     return out

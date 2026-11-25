@@ -1,0 +1,9 @@
+flowchart LR
+    d["defaults<br/>in the dataclasses"] --> m(("merge"))
+    f["config file<br/>configs/base.toml"] --> m
+    c["command line<br/>--set section.key=value"] --> m
+    m --> v{"validate:<br/>unknown key? wrong type?<br/>out of range?"}
+    v -- "invalid" --> e["exit non-zero,<br/>message names the key"]
+    v -- "valid" --> cfg["frozen Config object"]
+    cfg --> snap["config.json snapshot<br/>written BEFORE any work"]
+    cfg --> code["library code receives plain values"]

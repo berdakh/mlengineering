@@ -1,0 +1,12 @@
+flowchart LR
+    subgraph Research["Offline evaluation (w4d5)"]
+        A["dev and test tidy tables"] --> E["evaluation code"]
+    end
+    subgraph Production["Serving (this lesson)"]
+        B["raw rows from the plant"] --> V["validate_input<br/>(the contract)"]
+    end
+    E --> D["Detector<br/>calibrate, score, post-process<br/>threshold from model.json"]
+    V --> D
+    D --> M["metrics on labelled data"]
+    D --> P["predictions.csv + manifest.json"]
+    T["parity test in CI"] -. "same synthetic runs,<br/>both paths, 1e-12" .- D

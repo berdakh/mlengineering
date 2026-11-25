@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant S as Service (t = 0)
+    participant L as Prediction log
+    participant M as Maintenance
+    participant I as Inspection
+    participant E as Delayed evaluation
+    S->>L: score and alarm with alarm_id and model_version
+    Note over S,L: drift monitor reads the inputs now
+    M-->>L: verdict for alarm_id, 2-10 days later, may be corrected
+    I-->>L: missed fault report with fault_id, 14-60 days later, only some faults
+    E->>L: join by id, keep labels known by as_of
+    E->>E: precision and recall with intervals, or insufficient data

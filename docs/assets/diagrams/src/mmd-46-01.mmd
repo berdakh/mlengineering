@@ -1,0 +1,13 @@
+flowchart TD
+    A["What does the problem ask for?"] --> B{"Membership, counts,<br/>last seen?"}
+    B -->|yes| HM["Hash map / set<br/>O(n)"]
+    B -->|no| C{"Input sorted, or<br/>can be sorted?"}
+    C -->|"two sequences"| TP["Two pointers"]
+    C -->|"contiguous range<br/>with a condition"| SW["Sliding window<br/>(+ monotonic deque for max/min)"]
+    C -->|no| D{"Best k of many?"}
+    D -->|yes| HP["Heap / partial sort<br/>O(n log k)"]
+    D -->|no| E{"Minimise a maximum,<br/>check is easy?"}
+    E -->|yes| BS["Binary search on the answer"]
+    E -->|no| F{"Dependencies,<br/>reachability?"}
+    F -->|yes| G["Graph: BFS, DFS,<br/>topological sort"]
+    F -->|no| H["Intervals, prefix sums, stacks:<br/>see H16.4"]

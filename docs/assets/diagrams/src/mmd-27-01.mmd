@@ -1,0 +1,8 @@
+stateDiagram-v2
+    [*] --> WarmingUp: first sample
+    WarmingUp --> WarmingUp: accept, Welford update, return score None
+    WarmingUp --> Scoring: n_burn values accumulated, freeze mu and sigma
+    Scoring --> Scoring: accept, return abs(x - mu) / sigma
+    Scoring --> WarmingUp: gap longer than max_gap_s and gap_policy is reset
+    WarmingUp --> WarmingUp: rejected sample, state unchanged
+    Scoring --> Scoring: rejected sample, state unchanged

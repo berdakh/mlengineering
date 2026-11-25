@@ -1,0 +1,5 @@
+flowchart LR
+    U["Unit tests<br/>ZScoreModel.score, load_bundle<br/>(w1d5 style, milliseconds)"] --> A["API tests<br/>TestClient against create_app<br/>status codes, bodies, errors"]
+    A --> I["Integration tests<br/>a real bundle on disk in tmp_path<br/>save -> load -> serve"]
+    I --> C["Contract tests<br/>OpenAPI of the candidate vs<br/>the last release"]
+    C --> S["Smoke test<br/>a real uvicorn process,<br/>after deployment"]

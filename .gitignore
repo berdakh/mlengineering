@@ -25,7 +25,7 @@ runs_example/
 data/interim/
 data/processed/
 data/features/
-lessons/*/lab/results/
-solutions/lessons/*/lab/results/
-lessons/*/challenge/results/
-solutions/lessons/*/challenge/results/
+labs/*/lab/results/
+solutions/labs/*/lab/results/
+labs/*/challenge/results/
+solutions/labs/*/challenge/results/

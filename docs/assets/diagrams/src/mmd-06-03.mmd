@@ -1,0 +1,6 @@
+flowchart LR
+    wt["working tree<br/>files as edited"] -- "git add -p<br/>choose hunks" --> idx["staging area<br/>the commit you are composing"]
+    idx -- "git diff --staged<br/>READ it" --> rev{"one purpose?<br/>nothing accidental?"}
+    rev -- no --> wt
+    rev -- yes --> com["git commit"]
+    com --> hist["history<br/>small, reviewable steps"]

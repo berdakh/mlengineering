@@ -1,0 +1,9 @@
+flowchart LR
+    B["batch of requests"] --> S{"well-formed? finite, in physical limits, columns present"}
+    S -->|"no"| V["schema violation: count, reject or quarantine; owner: data producer"]
+    S -->|"yes"| M{"values present?"}
+    M -->|"NaN"| MI["missingness share per sensor; owner: sensor or pipeline"]
+    M -->|"yes"| D["distribution vs reference: PSI, KS, W1 per sensor and window"]
+    D --> A{"above calibrated threshold?"}
+    A -->|"yes"| AL["drift alert: investigate; NOT proof of a fault or of lower accuracy"]
+    A -->|"no"| OK["no alert"]

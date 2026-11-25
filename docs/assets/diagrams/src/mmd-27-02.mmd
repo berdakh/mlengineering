@@ -1,0 +1,12 @@
+flowchart LR
+    S["sample arrives"] --> V{"valid and finite?"}
+    V -- no --> R1["InvalidSampleError<br/>state unchanged"]
+    V -- yes --> O{"timestamp vs last"}
+    O -- earlier --> R2["OutOfOrderError<br/>state unchanged"]
+    O -- equal --> D{"same value?"}
+    D -- yes --> R3["return previous result<br/>duplicate = True"]
+    D -- no --> R4["ConflictingDuplicateError"]
+    O -- later --> G{"gap over max_gap_s?"}
+    G -- "yes, policy reset" --> W["restart burn-in"]
+    G -- "no, or policy flag" --> U["update state, score"]
+    W --> U

@@ -1,0 +1,8 @@
+flowchart TD
+    O["Observe: what changed, when?<br/>history, status, /version"] --> E["Collect evidence:<br/>logs (not access lines), docker inspect"]
+    E --> H["Write 2-3 hypotheses,<br/>most likely first"]
+    H --> T["Run the ONE test that<br/>separates them"]
+    T -->|"ambiguous"| H
+    T --> F["Fix the cause:<br/>image -> rollback<br/>config -> revert + redeploy same digest"]
+    F --> V["Verify: readiness, health,<br/>history entry 'good'"]
+    V --> W["Write it down:<br/>DEBUG_LOG.md"]

@@ -1,0 +1,8 @@
+flowchart TD
+    A["Raw data + feature availability notes"] --> B["Remove columns not known at prediction time"]
+    B --> C["De-duplicate; find overlap groups"]
+    C --> D["Split FIRST: by unit and by time,<br/>write the manifest, validate it"]
+    D --> E["Training rows only"]
+    E --> F["One estimator object:<br/>impute + encode + scale + select + model"]
+    F --> G["Selection and thresholds<br/>on validation folds"]
+    G --> H["Open the test set once"]

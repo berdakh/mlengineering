@@ -1,0 +1,7 @@
+flowchart TD
+    A["A LEFT JOIN B, plus a condition on a column of B"] --> Q{"Where is the condition?"}
+    Q -->|"in ON"| ON["B is filtered BEFORE matching"]
+    ON --> ON2["every row of A is kept;<br/>unmatched rows get NULLs for B"]
+    Q -->|"in WHERE"| WH["the joined rows are filtered AFTER matching"]
+    WH --> WH2["rows of A with no surviving match have B.col = NULL,<br/>the predicate is UNKNOWN, the row is dropped"]
+    WH2 --> INNER["the LEFT JOIN now behaves like an INNER JOIN"]

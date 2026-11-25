@@ -1,9 +1,0 @@
-# The shipped detector (decision: lessons/w4d5_model_choice, report: w4d6 milestone 1).
-# The operating point was chosen on development experiments of splits/v2.json for an alert budget of
-# 1 false alarm per 8 h. Changing any value here is a model change: bump model_version.
-model_version = "flowrate-z-2026.11"
-sensor = "flow_rate"
-n_burn_in = 100
-threshold = 7.2441307141
-min_duration = 30
-merge_gap = 10

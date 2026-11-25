@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant D as demo runner
+    participant R as registry (CURRENT)
+    participant S1 as service (v 2026.11)
+    participant S2 as service (v 2026.12-rc1)
+    participant S3 as service (v 2026.11)
+    D->>R: promote 2026.12-rc1
+    D->>S1: stop
+    D->>S2: start, wait for /readyz
+    D->>S2: replay normal data
+    S2-->>D: alarm share 0.2446 > budget 0.05
+    D->>R: rollback (CURRENT = 2026.11)
+    D->>S2: stop
+    D->>S3: start, wait for /readyz
+    D->>S3: GET /version = flowrate-z-2026.11
+    D->>S3: replay: alarm share 0.0000

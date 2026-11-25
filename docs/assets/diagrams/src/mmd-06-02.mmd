@@ -1,0 +1,7 @@
+flowchart LR
+    s["behaviour pinned by a<br/>characterization test"] --> r["refactoring commit:<br/>move or rename code"]
+    r --> t1{"golden output<br/>unchanged?"}
+    t1 -- yes --> r2["next refactoring commit"]
+    t1 -- no --> undo["undo: it was not a refactoring"]
+    r2 --> b["behaviour-changing commit:<br/>one fix, golden output updated<br/>in the same diff"]
+    b --> t2["new tests state the intended behaviour"]

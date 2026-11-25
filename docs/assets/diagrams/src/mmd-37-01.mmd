@@ -1,0 +1,6 @@
+flowchart LR
+    Q1["Is the service healthy right now? Is it getting worse?"] --> M["Metrics: numbers aggregated over time, few labels, cheap to keep for months"]
+    Q2["What happened to THIS request, machine or model version?"] --> L["Logs: one structured event per thing that happened, high detail, expensive to keep"]
+    Q3["Where did the time go across several services?"] --> T["Traces: spans of one request across process boundaries"]
+    M -->|"alert fires"| L
+    L -->|"request_id links them"| T

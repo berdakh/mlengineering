@@ -1,0 +1,8 @@
+flowchart TD
+    F["development experiments in folds 0..3"] --> K["for k in 0..3"]
+    K --> IN["inner data = folds other than k"]
+    IN --> GS["grouped search: every candidate, CV over the inner folds"]
+    GS --> SEL["select: max or one-SE rule"]
+    SEL --> RF["refit chosen candidate on all inner folds"]
+    RF --> SC["score fold k"]
+    SC --> AV["mean and SE of the 4 outer scores = estimate of the procedure"]

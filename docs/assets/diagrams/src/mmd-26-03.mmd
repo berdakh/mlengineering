@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant T as Training job
+    participant R as Registry
+    participant S as Service
+    T->>T: build detector on dev data, measure card numbers
+    T->>R: register(bundle) as 1.0.0
+    R->>R: verify checksums, copy, os.replace
+    T->>R: promote 1.0.0
+    S->>R: resolve("current")
+    R-->>S: .../flowguard-flowrate/1.0.0
+    S->>S: load_bundle: verify, check format, build Detector
+    S->>S: log model version with every prediction

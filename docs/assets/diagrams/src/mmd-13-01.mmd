@@ -1,0 +1,13 @@
+flowchart LR
+    L["Information not available<br/>at prediction time"] --> F["in a FEATURE"]
+    L --> R["in which ROWS<br/>are on which side"]
+    L --> P["in a fitted STEP"]
+    L --> S["in a CHOICE"]
+    F --> F1["target / proxy<br/>post-outcome column"]
+    F --> F2["temporal aggregate<br/>uses later rows"]
+    F --> F3["shortcut<br/>id or protocol encodes the label"]
+    R --> R1["group<br/>same unit on both sides"]
+    R --> R2["duplicate<br/>same event twice"]
+    R --> R3["temporal<br/>future rows in training"]
+    P --> P1["preprocessing<br/>fit on all rows"]
+    S --> S1["selection<br/>tuned or picked on test"]

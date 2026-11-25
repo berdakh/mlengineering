@@ -1,0 +1,8 @@
+flowchart LR
+    A["Fix model, threshold, split"] --> B["Unit table:<br/>one row per experiment"]
+    B --> C["Error segments:<br/>classify each run of wrong rows"]
+    B --> D["Pre-specified slices,<br/>with sizes and intervals"]
+    C --> E["Rank failure modes:<br/>frequency x cost x fixability"]
+    D --> E
+    E --> F["One falsifiable experiment<br/>per top mode"]
+    F --> G["Note: also what was<br/>checked and unremarkable"]

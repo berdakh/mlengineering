@@ -1,0 +1,11 @@
+flowchart LR
+    M["frozen manifest v2<br/>27 dev + 7 test experiments"] --> F["FIT: dev folds 0-2<br/>21 experiments"]
+    M --> V["VAL: dev fold 3<br/>6 experiments"]
+    M --> T["TEST: 7 experiments<br/>read once, at the end"]
+    F --> N["train each candidate<br/>(normal rows only)"]
+    V --> ES["early stopping<br/>(reconstruction loss)"]
+    V --> SEL["choose 1 of 4 configs<br/>per family (PR-AUC)"]
+    N --> ES --> SEL
+    SEL --> R["chosen neural config<br/>x 5 seeds"]
+    R --> T
+    C["classical: 4 configs,<br/>no training"] --> SEL

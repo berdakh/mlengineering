@@ -1,0 +1,7 @@
+flowchart LR
+    E["event<br/>push, pull_request,<br/>schedule, workflow_dispatch"] --> W["workflow<br/>.github/workflows/ci.yml"]
+    W --> J1["job: lint<br/>(own VM)"]
+    W --> J2["job: test<br/>matrix 3.11 and 3.12<br/>= 2 VMs"]
+    J1 --> J3["job: image<br/>needs: lint, test"]
+    J2 --> J3
+    J3 --> S["steps in order:<br/>checkout, build,<br/>run container,<br/>smoke test"]

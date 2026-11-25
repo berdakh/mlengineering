@@ -1,0 +1,9 @@
+flowchart TD
+    A["Does a user or system wait for the answer?"] -->|no| B["Is a schedule fresh enough?<br/>(daily, hourly)"]
+    A -->|yes| C["Must it react to events<br/>within seconds to minutes?"]
+    B -->|yes| BATCH["Batch: compute, store, look up<br/>cheapest, easiest to audit"]
+    B -->|no| C
+    C -->|"no, request has the inputs"| ONLINE["Online: score on request<br/>latency budget, fallback"]
+    C -->|"yes, state over a stream"| STREAM["Streaming: stateful scoring<br/>windows, ordering, checkpoints"]
+    ONLINE --> HYB["Often hybrid: batch-precomputed features<br/>+ online model call"]
+    STREAM --> HYB

@@ -1,0 +1,9 @@
+flowchart TD
+    Q1{"Do labelled faults cover the<br/>mechanisms seen in deployment?"} -->|no / unknown| S["semi-supervised<br/>(model of normal)"]
+    Q1 -->|yes| Q2{"Enough independent units<br/>per mechanism?"}
+    Q2 -->|no| S
+    Q2 -->|yes| Q3{"Is the label process<br/>roughly random?"}
+    Q3 -->|no| B["supervised, but validate on the<br/>label process you will deploy into"]
+    Q3 -->|yes| SUP["supervised"]
+    S --> H["often: both, with the semi-supervised<br/>score as a safety net for novel faults"]
+    SUP --> H

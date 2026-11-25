@@ -11,7 +11,8 @@
       "handbook": "-",
       "path": "diagnostic",
       "status": "Execution verified",
-      "has_checks": false
+      "has_checks": false,
+      "notebook": "01_diagnostic_a"
     },
     {
       "id": "w1d2_diagnostic_b",
@@ -24,7 +25,8 @@
       "handbook": "-",
       "path": "diagnostic",
       "status": "Execution verified",
-      "has_checks": false
+      "has_checks": false,
+      "notebook": "02_diagnostic_b"
     },
     {
       "id": "w1d3_package_structure",
@@ -35,9 +37,10 @@
       "deliverable": "Installable `pumpwatch` package + refactoring log with before/after metrics.",
       "prerequisites": "Diagnostic submitted (or explicitly deferred).",
       "handbook": "H2.1",
-      "path": "lessons/w1d3_package_structure",
+      "path": "labs/w1d3_package_structure",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "03_package_structure"
     },
     {
       "id": "w1d4_config_logging",
@@ -48,9 +51,10 @@
       "deliverable": "`pumpwatch` v0.2 producing self-describing run directories; two identical runs shown to match.",
       "prerequisites": "w1d3.",
       "handbook": "H2.2",
-      "path": "lessons/w1d4_config_logging",
+      "path": "labs/w1d4_config_logging",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "04_config_logging"
     },
     {
       "id": "w1d5_testing_ml_code",
@@ -61,9 +65,10 @@
       "deliverable": "A test suite that kills the seeded bugs (mutation-graded) and a one-paragraph note on what it does not establish.",
       "prerequisites": "w1d3 (w1d4 helpful).",
       "handbook": "H9.1",
-      "path": "lessons/w1d5_testing_ml_code",
+      "path": "labs/w1d5_testing_ml_code",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "05_testing_ml_code"
     },
     {
       "id": "w1d6_notebook_to_package",
@@ -74,9 +79,10 @@
       "deliverable": "Project repository skeleton: package, config, tests, README stub, clean commit history.",
       "prerequisites": "w1d3-w1d5.",
       "handbook": "H2.3 (Git workflow, linting), H2.1, H9.1",
-      "path": "lessons/w1d6_notebook_to_package",
+      "path": "labs/w1d6_notebook_to_package",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "06_notebook_to_package"
     },
     {
       "id": "w1d7_review",
@@ -87,9 +93,10 @@
       "deliverable": "Week 1 retrieval sheet answered; interview set 1 (Python + project structure).",
       "prerequisites": "Week 1 units.",
       "handbook": "-",
-      "path": "lessons/w1d7_review",
+      "path": "labs/w1d7_review",
       "status": "Execution verified",
-      "has_checks": false
+      "has_checks": false,
+      "notebook": null
     },
     {
       "id": "w2d1_sql_joins_grain",
@@ -100,9 +107,10 @@
       "deliverable": "Solved query set with a stated grain for every result; fan-out bug report on a broken query.",
       "prerequisites": "Diagnostic a2 reviewed.",
       "handbook": "H3.1",
-      "path": "lessons/w2d1_sql_joins_grain",
+      "path": "labs/w2d1_sql_joins_grain",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "07_sql_joins_grain"
     },
     {
       "id": "w2d2_sql_windows_timeseries",
@@ -113,9 +121,10 @@
       "deliverable": "Query set + pandas equivalence tests; a point-in-time-correct feature query.",
       "prerequisites": "w2d1.",
       "handbook": "H3.2",
-      "path": "lessons/w2d2_sql_windows_timeseries",
+      "path": "labs/w2d2_sql_windows_timeseries",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "08_sql_windows_timeseries"
     },
     {
       "id": "w2d3_data_quality_ingestion",
@@ -126,9 +135,10 @@
       "deliverable": "`flowguard ingest` command, data dictionary, data-quality report, provenance record (source, licence, hashes).",
       "prerequisites": "w1d6; diagnostic a3 reviewed.",
       "handbook": "H3.3, H4.1",
-      "path": "lessons/w2d3_data_quality_ingestion",
+      "path": "labs/w2d3_data_quality_ingestion",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "09_data_quality_ingestion"
     },
     {
       "id": "w2d4_problem_framing_splits",
@@ -139,9 +149,10 @@
       "deliverable": "Problem statement, label definition, `splits/v1.json` manifest with a leakage-safety test.",
       "prerequisites": "w2d3.",
       "handbook": "H1.1, H1.2, H6.1",
-      "path": "lessons/w2d4_problem_framing_splits",
+      "path": "labs/w2d4_problem_framing_splits",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "10_problem_framing_splits"
     },
     {
       "id": "w2d5_feature_pipeline",
@@ -152,9 +163,10 @@
       "deliverable": "Feature pipeline with no-look-ahead tests and content-addressed outputs.",
       "prerequisites": "w2d4, w1d5.",
       "handbook": "H3.4, H7.1",
-      "path": "lessons/w2d5_feature_pipeline",
+      "path": "labs/w2d5_feature_pipeline",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "11_feature_pipeline"
     },
     {
       "id": "w2d6_baselines_metrics",
@@ -165,9 +177,10 @@
       "deliverable": "Baseline table for the project (trivial, threshold, linear); transfer exercise part 1 baseline.",
       "prerequisites": "w2d5; diagnostic b1 reviewed.",
       "handbook": "H5.1, H5.2, H6.2",
-      "path": "lessons/w2d6_baselines_metrics",
+      "path": "labs/w2d6_baselines_metrics",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "12_baselines_metrics"
     },
     {
       "id": "w2d7_review",
@@ -178,9 +191,10 @@
       "deliverable": "Week 2 retrieval sheet; interview set 2 (SQL + pandas, timed).",
       "prerequisites": "Week 2 units.",
       "handbook": "-",
-      "path": "lessons/w2d7_review",
+      "path": "labs/w2d7_review",
       "status": "Execution verified",
-      "has_checks": false
+      "has_checks": false,
+      "notebook": null
     },
     {
       "id": "w3d1_leakage",
@@ -191,9 +205,10 @@
       "deliverable": "Leak hunt report on a seeded dataset with corrected estimates and the mechanism of each leak.",
       "prerequisites": "w2d6; diagnostic b2 reviewed.",
       "handbook": "H6.1",
-      "path": "lessons/w3d1_leakage",
+      "path": "labs/w3d1_leakage",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "13_leakage"
     },
     {
       "id": "w3d2_group_temporal_validation",
@@ -204,9 +219,10 @@
       "deliverable": "Validation design memo + implementation for the project; comparison against a naive random split.",
       "prerequisites": "w3d1.",
       "handbook": "H6.3, H7.2",
-      "path": "lessons/w3d2_group_temporal_validation",
+      "path": "labs/w3d2_group_temporal_validation",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "14_group_temporal_validation"
     },
     {
       "id": "w3d3_hyperparameter_selection",
@@ -217,9 +233,10 @@
       "deliverable": "Tuned baseline with a nested estimate and a frozen-threshold test evaluation.",
       "prerequisites": "w3d2.",
       "handbook": "H6.4",
-      "path": "lessons/w3d3_hyperparameter_selection",
+      "path": "labs/w3d3_hyperparameter_selection",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "15_hyperparameter_selection"
     },
     {
       "id": "w3d4_point_vs_event_evaluation",
@@ -230,9 +247,10 @@
       "deliverable": "Tested `flowguard.evaluation` module; point vs event results table with interpretation.",
       "prerequisites": "w3d2 (your HFO event-evaluation experience transfers directly).",
       "handbook": "H6.5, H7.3",
-      "path": "lessons/w3d4_point_vs_event_evaluation",
+      "path": "labs/w3d4_point_vs_event_evaluation",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "16_point_vs_event_evaluation"
     },
     {
       "id": "w3d5_uncertainty",
@@ -243,9 +261,10 @@
       "deliverable": "Confidence intervals and a paired comparison for the baselines, with a stated unit of resampling.",
       "prerequisites": "w3d4.",
       "handbook": "H6.6",
-      "path": "lessons/w3d5_uncertainty",
+      "path": "labs/w3d5_uncertainty",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "17_uncertainty"
     },
     {
       "id": "w3d6_error_analysis_transfer",
@@ -256,9 +275,10 @@
       "deliverable": "Project error-analysis note; transfer exercise part 2 submission.",
       "prerequisites": "w3d1-w3d5.",
       "handbook": "H6.7",
-      "path": "lessons/w3d6_error_analysis_transfer",
+      "path": "labs/w3d6_error_analysis_transfer",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "18_error_analysis_transfer"
     },
     {
       "id": "w3d7_review",
@@ -269,9 +289,10 @@
       "deliverable": "Week 3 retrieval sheet; interview set 3 (validation, leakage, ML fundamentals, spoken answers).",
       "prerequisites": "Week 3 units.",
       "handbook": "-",
-      "path": "lessons/w3d7_review",
+      "path": "labs/w3d7_review",
       "status": "Execution verified",
-      "has_checks": false
+      "has_checks": false,
+      "notebook": null
     },
     {
       "id": "w4d1_timeseries_fundamentals",
@@ -282,9 +303,10 @@
       "deliverable": "Residual-based detector evaluated with the Week 3 protocol.",
       "prerequisites": "Week 3.",
       "handbook": "H7.1, H7.4",
-      "path": "lessons/w4d1_timeseries_fundamentals",
+      "path": "labs/w4d1_timeseries_fundamentals",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "19_timeseries_fundamentals"
     },
     {
       "id": "w4d2_classical_detectors",
@@ -295,9 +317,10 @@
       "deliverable": "Comparison table with intervals; note on which framing the labels support.",
       "prerequisites": "w4d1.",
       "handbook": "H5.3, H7.5",
-      "path": "lessons/w4d2_classical_detectors",
+      "path": "labs/w4d2_classical_detectors",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "20_classical_detectors"
     },
     {
       "id": "w4d3_neural_comparison",
@@ -308,9 +331,10 @@
       "deliverable": "Neural result with seed variance in the comparison table; GPU optional.",
       "prerequisites": "w4d2; PyTorch (demonstrated in research).",
       "handbook": "H7.6",
-      "path": "lessons/w4d3_neural_comparison",
+      "path": "labs/w4d3_neural_comparison",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "21_neural_comparison"
     },
     {
       "id": "w4d4_experiment_tracking",
@@ -321,9 +345,10 @@
       "deliverable": "`flowguard sweep` + results table generated from run directories (MLflow as an optional extension).",
       "prerequisites": "w1d4, w4d2.",
       "handbook": "H8.1, H8.2",
-      "path": "lessons/w4d4_experiment_tracking",
+      "path": "labs/w4d4_experiment_tracking",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "22_experiment_tracking"
     },
     {
       "id": "w4d5_model_choice",
@@ -334,9 +359,10 @@
       "deliverable": "One-page decision memo choosing the model to ship.",
       "prerequisites": "w4d3, w4d4, w3d5.",
       "handbook": "H5.4, H16.1",
-      "path": "lessons/w4d5_model_choice",
+      "path": "labs/w4d5_model_choice",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "23_model_choice"
     },
     {
       "id": "w4d6_project_milestone_1",
@@ -347,9 +373,10 @@
       "deliverable": "`make evaluate` regenerates the comparison report; submit for review.",
       "prerequisites": "w4d5.",
       "handbook": "-",
-      "path": "lessons/w4d6_project_milestone_1",
+      "path": "labs/w4d6_project_milestone_1",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "24_project_milestone_1"
     },
     {
       "id": "w4d7_review",
@@ -360,9 +387,10 @@
       "deliverable": "Week 4 retrieval sheet; interview set 4 (explain your evaluation in 5 minutes, recorded).",
       "prerequisites": "Week 4 units.",
       "handbook": "-",
-      "path": "lessons/w4d7_review",
+      "path": "labs/w4d7_review",
       "status": "Execution verified",
-      "has_checks": false
+      "has_checks": false,
+      "notebook": null
     },
     {
       "id": "w5d1_inference_pipeline",
@@ -373,9 +401,10 @@
       "deliverable": "`flowguard predict-batch` with a training/serving parity test.",
       "prerequisites": "w4d6.",
       "handbook": "H10.1",
-      "path": "lessons/w5d1_inference_pipeline",
+      "path": "labs/w5d1_inference_pipeline",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "25_inference_pipeline"
     },
     {
       "id": "w5d2_artifacts_versioning",
@@ -386,9 +415,10 @@
       "deliverable": "Versioned artifact bundle + load-time compatibility checks + model card draft.",
       "prerequisites": "w5d1.",
       "handbook": "H10.2",
-      "path": "lessons/w5d2_artifacts_versioning",
+      "path": "labs/w5d2_artifacts_versioning",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "26_artifacts_versioning"
     },
     {
       "id": "w5d3_online_inference",
@@ -399,9 +429,10 @@
       "deliverable": "Streaming scorer with batch/online parity tests and documented warm-up behaviour.",
       "prerequisites": "w5d1, w2d5.",
       "handbook": "H10.3",
-      "path": "lessons/w5d3_online_inference",
+      "path": "labs/w5d3_online_inference",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "27_online_inference"
     },
     {
       "id": "w5d4_fastapi_validation",
@@ -412,9 +443,10 @@
       "deliverable": "`/predict`, `/healthz`, `/readyz` with pydantic schemas and documented error model.",
       "prerequisites": "w5d2; diagnostic b3 reviewed.",
       "handbook": "H11.1, H11.2",
-      "path": "lessons/w5d4_fastapi_validation",
+      "path": "labs/w5d4_fastapi_validation",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "28_fastapi_validation"
     },
     {
       "id": "w5d5_api_testing",
@@ -425,9 +457,10 @@
       "deliverable": "API and integration test suite running without a network.",
       "prerequisites": "w5d4, w1d5.",
       "handbook": "H9.2, H11.3",
-      "path": "lessons/w5d5_api_testing",
+      "path": "labs/w5d5_api_testing",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "29_api_testing"
     },
     {
       "id": "w5d6_project_milestone_2",
@@ -438,9 +471,10 @@
       "deliverable": "Tagged project release candidate; submit for review.",
       "prerequisites": "w5d1-w5d5.",
       "handbook": "-",
-      "path": "lessons/w5d6_project_milestone_2",
+      "path": "labs/w5d6_project_milestone_2",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "30_project_milestone_2"
     },
     {
       "id": "w5d7_review",
@@ -451,9 +485,10 @@
       "deliverable": "Week 5 retrieval sheet; ML system design rep 1 (45 min, rubric after).",
       "prerequisites": "Week 5 units.",
       "handbook": "-",
-      "path": "lessons/w5d7_review",
+      "path": "labs/w5d7_review",
       "status": "Execution verified",
-      "has_checks": false
+      "has_checks": false,
+      "notebook": null
     },
     {
       "id": "w6d1_docker_basics",
@@ -464,9 +499,10 @@
       "deliverable": "Local container serving predictions; image build is repeatable.",
       "prerequisites": "w5d6; Docker Engine installed on Pop!_OS.",
       "handbook": "H12.1",
-      "path": "lessons/w6d1_docker_basics",
+      "path": "labs/w6d1_docker_basics",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "31_docker_basics"
     },
     {
       "id": "w6d2_docker_reproducibility",
@@ -477,9 +513,10 @@
       "deliverable": "Multi-stage image with lockfile and an automated container smoke test.",
       "prerequisites": "w6d1.",
       "handbook": "H12.2",
-      "path": "lessons/w6d2_docker_reproducibility",
+      "path": "labs/w6d2_docker_reproducibility",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "32_docker_reproducibility"
     },
     {
       "id": "w6d3_ci",
@@ -490,9 +527,10 @@
       "deliverable": "Green CI workflow on the project repository with caching.",
       "prerequisites": "w6d2, w1d6.",
       "handbook": "H14.1",
-      "path": "lessons/w6d3_ci",
+      "path": "labs/w6d3_ci",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "33_ci"
     },
     {
       "id": "w6d4_latency_resources",
@@ -503,9 +541,10 @@
       "deliverable": "Load-test report with method, percentiles and one evidence-based optimisation.",
       "prerequisites": "w6d1.",
       "handbook": "H10.4, H15.1",
-      "path": "lessons/w6d4_latency_resources",
+      "path": "labs/w6d4_latency_resources",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "34_latency_resources"
     },
     {
       "id": "w6d5_cloud_deployment",
@@ -516,9 +555,10 @@
       "deliverable": "Deployment runbook; either a deployed endpoint (with explicit authorisation and teardown) or a local dry-run with the same configuration.",
       "prerequisites": "w6d2; AWS account decisions made by you; cost briefing read.",
       "handbook": "H13.1, H13.2",
-      "path": "lessons/w6d5_cloud_deployment",
+      "path": "labs/w6d5_cloud_deployment",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "35_cloud_deployment"
     },
     {
       "id": "w6d6_cd_ops_debugging",
@@ -529,9 +569,10 @@
       "deliverable": "Debugging log for three seeded failures + rollback demonstration.",
       "prerequisites": "w6d3, w6d5.",
       "handbook": "H14.2, H15.2",
-      "path": "lessons/w6d6_cd_ops_debugging",
+      "path": "labs/w6d6_cd_ops_debugging",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "36_cd_ops_debugging"
     },
     {
       "id": "w6d7_review",
@@ -542,9 +583,10 @@
       "deliverable": "Week 6 retrieval sheet; interview set 6 (debugging narrative + Python, timed).",
       "prerequisites": "Week 6 units.",
       "handbook": "-",
-      "path": "lessons/w6d7_review",
+      "path": "labs/w6d7_review",
       "status": "Execution verified",
-      "has_checks": false
+      "has_checks": false,
+      "notebook": null
     },
     {
       "id": "w7d1_service_logging_metrics",
@@ -555,9 +597,10 @@
       "deliverable": "Structured logs + metrics endpoint; a query that answers 'what happened to request X'.",
       "prerequisites": "w5d6, w1d4.",
       "handbook": "H15.1",
-      "path": "lessons/w7d1_service_logging_metrics",
+      "path": "labs/w7d1_service_logging_metrics",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "37_service_logging_metrics"
     },
     {
       "id": "w7d2_input_monitoring_drift",
@@ -568,9 +611,10 @@
       "deliverable": "Drift monitor with a measured false-alarm rate on stable data.",
       "prerequisites": "w7d1, w3d5.",
       "handbook": "H15.3",
-      "path": "lessons/w7d2_input_monitoring_drift",
+      "path": "labs/w7d2_input_monitoring_drift",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "38_input_monitoring_drift"
     },
     {
       "id": "w7d3_drift_vs_degradation",
@@ -581,9 +625,10 @@
       "deliverable": "Replay experiment showing drift without degradation and degradation without flagged drift.",
       "prerequisites": "w7d2.",
       "handbook": "H15.4",
-      "path": "lessons/w7d3_drift_vs_degradation",
+      "path": "labs/w7d3_drift_vs_degradation",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "39_drift_vs_degradation"
     },
     {
       "id": "w7d4_model_updates_rollback",
@@ -594,9 +639,10 @@
       "deliverable": "Update and rollback procedure exercised locally with two model versions.",
       "prerequisites": "w5d2, w7d3.",
       "handbook": "H15.5",
-      "path": "lessons/w7d4_model_updates_rollback",
+      "path": "labs/w7d4_model_updates_rollback",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "40_model_updates_rollback"
     },
     {
       "id": "w7d5_reliability",
@@ -607,9 +653,10 @@
       "deliverable": "Failure-injection test suite and a short incident note.",
       "prerequisites": "w5d5, w7d1.",
       "handbook": "H15.6",
-      "path": "lessons/w7d5_reliability",
+      "path": "labs/w7d5_reliability",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "41_reliability"
     },
     {
       "id": "w7d6_project_milestone_4",
@@ -620,9 +667,10 @@
       "deliverable": "Monitoring demo + runbook; submit for review.",
       "prerequisites": "w7d1-w7d5.",
       "handbook": "-",
-      "path": "lessons/w7d6_project_milestone_4",
+      "path": "labs/w7d6_project_milestone_4",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "42_project_milestone_4"
     },
     {
       "id": "w7d7_review",
@@ -633,9 +681,10 @@
       "deliverable": "Week 7 retrieval sheet; ML system design rep 2 (45 min, spoken).",
       "prerequisites": "Week 7 units.",
       "handbook": "-",
-      "path": "lessons/w7d7_review",
+      "path": "labs/w7d7_review",
       "status": "Execution verified",
-      "has_checks": false
+      "has_checks": false,
+      "notebook": null
     },
     {
       "id": "w8d1_project_completion",
@@ -646,9 +695,10 @@
       "deliverable": "Clean-clone reproduction log; gap list closed or explicitly scoped out.",
       "prerequisites": "Milestones 1-4.",
       "handbook": "H8.3",
-      "path": "lessons/w8d1_project_completion",
+      "path": "labs/w8d1_project_completion",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "43_project_completion"
     },
     {
       "id": "w8d2_report_limitations",
@@ -659,9 +709,10 @@
       "deliverable": "4-page report, model card, limitations.",
       "prerequisites": "w8d1.",
       "handbook": "H16.2",
-      "path": "lessons/w8d2_report_limitations",
+      "path": "labs/w8d2_report_limitations",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "44_report_limitations"
     },
     {
       "id": "w8d3_system_design",
@@ -672,9 +723,10 @@
       "deliverable": "Two written designs scored against the rubric.",
       "prerequisites": "Weeks 5-7.",
       "handbook": "H16.3",
-      "path": "lessons/w8d3_system_design",
+      "path": "labs/w8d3_system_design",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "45_system_design"
     },
     {
       "id": "w8d4_coding_interviews",
@@ -685,9 +737,10 @@
       "deliverable": "Timed set results and an error log by pattern.",
       "prerequisites": "Recurring interview reps.",
       "handbook": "H16.4",
-      "path": "lessons/w8d4_coding_interviews",
+      "path": "labs/w8d4_coding_interviews",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "46_coding_interviews"
     },
     {
       "id": "w8d5_project_explanation",
@@ -698,9 +751,10 @@
       "deliverable": "Recorded walkthrough + written answers to ten hard questions.",
       "prerequisites": "w8d2.",
       "handbook": "H16.2",
-      "path": "lessons/w8d5_project_explanation",
+      "path": "labs/w8d5_project_explanation",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "47_project_explanation"
     },
     {
       "id": "w8d6_final_assessment",
@@ -711,9 +765,10 @@
       "deliverable": "Final assessment submission.",
       "prerequisites": "All previous weeks.",
       "handbook": "-",
-      "path": "lessons/w8d6_final_assessment",
+      "path": "labs/w8d6_final_assessment",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": "48_final_assessment"
     },
     {
       "id": "w8d7_retrospective",
@@ -724,9 +779,10 @@
       "deliverable": "Evidence portfolio index and personal next-steps plan.",
       "prerequisites": "w8d6.",
       "handbook": "-",
-      "path": "lessons/w8d7_retrospective",
+      "path": "labs/w8d7_retrospective",
       "status": "Execution verified",
-      "has_checks": true
+      "has_checks": true,
+      "notebook": null
     }
   ]
 }

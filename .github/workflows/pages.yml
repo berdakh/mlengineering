@@ -1,0 +1,53 @@
+name: Deploy course site
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - "docs/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+# Allow GITHUB_TOKEN to deploy to Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; don't cancel a run that is mid-deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # NOTE: Pages must be switched on ONCE by a repository admin:
+      #   Settings -> Pages -> Source: "GitHub Actions"
+      # This cannot be automated. `enablement: true` on this step calls the
+      # "create a Pages site" API, which requires admin permission; the
+      # workflow's GITHUB_TOKEN cannot be granted that (`pages: write` covers
+      # deploying to an existing site, not creating one), so it fails with
+      # "Resource not accessible by integration". See PR #2.
+      - uses: actions/configure-pages@v5
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./docs
+          destination: ./_site
+
+      - uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

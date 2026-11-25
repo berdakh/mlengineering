@@ -1,0 +1,9 @@
+flowchart LR
+    R["1 Requirements<br/>decision, users, constraints"] --> E["2 Estimates<br/>volume, latency, data, labels"]
+    E --> D["3 Data and labels<br/>sources, delay, bias"]
+    D --> M["4 Target and model<br/>baseline first"]
+    M --> V["5 Evaluation<br/>offline protocol, launch criteria"]
+    V --> S["6 Serving<br/>batch, online or streaming; failure"]
+    S --> O["7 Monitoring<br/>inputs, health, delayed performance"]
+    O --> I["8 Iteration<br/>retraining, gates, rollout"]
+    I -. "new evidence" .-> R

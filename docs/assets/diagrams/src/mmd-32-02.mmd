@@ -1,0 +1,10 @@
+flowchart LR
+    subgraph builder["stage 1: builder (discarded)"]
+        b1["FROM python:3.12-slim@sha256:..."] --> b2["python -m venv --without-pip /opt/venv"]
+        b2 --> b3["COPY requirements.lock"] --> b4["pip --python /opt/venv/bin/python<br/>install --require-hashes -r ..."]
+    end
+    subgraph runtime["stage 2: runtime (the image)"]
+        r1["FROM python:3.12-slim@sha256:..."] --> r2["COPY --from=builder /opt/venv /opt/venv"]
+        r2 --> r3["COPY src/ models/"] --> r4["USER app, LABELs, HEALTHCHECK, CMD"]
+    end
+    b4 -.->|"only /opt/venv crosses"| r2

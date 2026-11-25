@@ -1,0 +1,11 @@
+flowchart TD
+    A["config.toml + environment"] --> B{"load_config:<br/>valid?"}
+    B -- "no" --> E2["exit 2: message names the key"]
+    B -- "yes" --> C["deploy / teardown script<br/>(printed = dry run)"]
+    C --> D{"--live ?"}
+    D -- "no" --> OK["exit 0, nothing executed"]
+    D -- "yes" --> S{"SIGNOFF.md all ticked?<br/>(public boxes if allow_public)"}
+    S -- "no" --> E3["exit 3: refused"]
+    S -- "yes" --> P{"placeholders left?"}
+    P -- "yes" --> E3
+    P -- "no" --> R["bash runs exactly the printed script"]

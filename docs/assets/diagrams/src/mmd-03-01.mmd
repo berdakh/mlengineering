@@ -1,0 +1,10 @@
+flowchart TD
+    imp["import pumpwatch"] --> cache{"already in<br/>sys.modules?"}
+    cache -- yes --> done["reuse the loaded module"]
+    cache -- no --> p0["sys.path entry 0:<br/>the script's directory, or the<br/>current directory for python -m / -c"]
+    p0 -- found --> load["load and cache it"]
+    p0 -- not found --> std["standard library directories"]
+    std -- not found --> site["site-packages of the<br/>ACTIVE environment"]
+    site -- found --> load
+    site -- not found --> err["ModuleNotFoundError"]
+    note["An editable install adds your src/ directory<br/>to the search through site-packages"] -.-> site

@@ -1,0 +1,8 @@
+flowchart LR
+    RUN["make evaluate<br/>(audited in w8d1)"] --> RES[("results.json")]
+    RES --> GEN["generated tables,<br/>figures, sentences"]
+    GEN --> REP["TECHNICAL_REPORT.md"]
+    RES --> CHK{"check_report.py<br/>numbers, intervals,<br/>sections, limitations"}
+    REP --> CHK
+    CHK -->|"PASS"| REV["human reviewer:<br/>are the claims right?"]
+    CHK -->|"FAIL"| GEN

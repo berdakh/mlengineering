@@ -1,0 +1,10 @@
+flowchart LR
+    R["tidy SKAB rows"] --> F["window_features<br/>40 causal features per row"]
+    F --> D["development rows<br/>(27 experiments, 4 folds)"]
+    F --> T["test rows<br/>(7 frozen experiments)"]
+    D --> O["out-of-fold scores for<br/>3 configs per detector"]
+    O --> C["choose config (OOF PR-AUC)<br/>and threshold (OOF best F1)"]
+    C --> FIT["refit on all development rows"]
+    FIT --> T
+    T --> E["PR-AUC + cluster bootstrap,<br/>events, false alarms per hour"]
+    D --> B["protocol B: train on valve1 + valve2,<br/>score the `other` family"]

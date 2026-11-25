@@ -1,0 +1,8 @@
+flowchart LR
+    Q["Question being asked"] --> A{"About this fitted model<br/>or about the method?"}
+    A -- "this artifact on new experiments" --> T["Test-set sampling:<br/>cluster bootstrap of the test set,<br/>Wilson interval for event counts"]
+    A -- "the method" --> M["Also training-set sampling<br/>and seed noise:<br/>refit on resampled clusters, several seeds"]
+    A -- "the method incl. tuning and model choice" --> S["Also selection:<br/>nested validation (w3d3),<br/>one untouched test set"]
+    T --> R["Report: estimate, interval,<br/>unit of resampling, number of clusters"]
+    M --> R
+    S --> R

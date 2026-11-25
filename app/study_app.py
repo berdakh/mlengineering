@@ -55,13 +55,18 @@ def render_mermaid(source: str) -> None:
 
 
 def render_document(path: Path) -> None:
-    text = cd.rewrite_links(path.read_text(), path)
+    raw = cd.notebook_markdown(path) if path.suffix == ".ipynb" else cd.site_to_plain(path.read_text())
+    text = cd.rewrite_links(raw, path)
     for block in cd.split_blocks(text, path.parent):
         if block.kind == "mermaid":
             render_mermaid(block.text)
         elif block.kind == "image":
             img = Path(block.text)
-            if img.is_file():
+            if img.is_file() and img.suffix == ".svg":
+                # Diagram SVGs start with a source-hash comment; Streamlit needs the text to start at <svg.
+                svg = img.read_text(encoding="utf-8")
+                st.image(svg[svg.find("<svg"):], caption=block.alt or None, width="stretch")
+            elif img.is_file():
                 st.image(str(img), caption=block.alt or None, width="stretch")
             else:
                 st.caption(f"(missing figure: {block.alt})")
@@ -72,7 +77,10 @@ def render_document(path: Path) -> None:
 def unit_doc(unit: dict) -> Path | None:
     if not unit.get("path"):
         return None
-    p = cd.ROOT / unit["path"] / "README.md"
+    if unit.get("notebook"):
+        p = cd.ROOT / "notebooks" / f"{unit['notebook']}.ipynb"
+    else:
+        p = cd.ROOT / "docs" / "weeks" / f"week-{unit['week']}.md"
     return p if p.is_file() else None
 
 
@@ -113,7 +121,7 @@ def page_today(units: list[dict], progress: dict) -> None:
 
     st.subheader("Next session")
     if nxt is None:
-        st.success("Every session is marked done. See STATUS.md and the retrospective (w8d7).")
+        st.success("Every session is marked done. See the status guide and the retrospective (w8d7).")
     else:
         with st.container(border=True):
             st.markdown(f"**`{nxt['id']}`** — {nxt['title']}  \nWeek {nxt['week']}, day {nxt['day']}")
@@ -184,7 +192,7 @@ def page_unit(units: list[dict], progress: dict, unit_id: str) -> None:
         for h in hints:
             with st.expander(f"Hint: {h.stem.replace('_', ' ')}"):
                 render_document(h)
-        extra = [p for p in (base / "assessment.md", base / "challenge" / "README.md") if base and p.is_file()]
+        extra = [p for p in (base / "challenge" / "README.md",) if base and p.is_file()]
         for p in extra:
             with st.expander(p.relative_to(base).as_posix()):
                 render_document(p)
@@ -262,9 +270,9 @@ def main() -> None:
     elif page == "progress":
         page_progress(units, progress)
     elif page == "project":
-        page_doc(cd.ROOT / "project" / "README.md")
+        page_doc(cd.ROOT / "docs" / "guides" / "project.md")
     elif page == "status":
-        page_doc(cd.ROOT / "STATUS.md")
+        page_doc(cd.ROOT / "docs" / "guides" / "status.md")
     else:
         page_today(units, progress)
 

@@ -1,0 +1,12 @@
+flowchart LR
+    P["1 Problem and<br/>stakeholder"] --> D["2 Data and<br/>provenance"]
+    D --> PR["3 Protocol and<br/>leakage controls"]
+    PR --> R["4 Results<br/>(intervals, one test look)"]
+    R --> E["5 Error<br/>analysis"]
+    E --> DE["6 Decision"]
+    DE --> S["7 Serving and<br/>monitoring"]
+    S --> L["8 Limitations"]
+    L --> RE["9 Reproducibility"]
+    RES[("results.json")] -.->|"every number"| R
+    RES -.-> E
+    RES -.-> L

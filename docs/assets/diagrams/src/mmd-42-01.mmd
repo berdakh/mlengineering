@@ -1,0 +1,12 @@
+flowchart LR
+    RAW["data/raw/skab"] --> CAL["calibrate drift monitor<br/>on DEVELOPMENT experiments"]
+    MAN["splits/v2.json"] --> CAL
+    CFG["configs/model.toml"] --> REG["registry: shipped model<br/>+ bad candidate"]
+    REG --> SVC["service on 127.0.0.1<br/>(CURRENT version)"]
+    SCN["scenarios/demo.toml"] --> RUN["replay events in order"]
+    RUN -->|"/predict"| SVC
+    SVC -->|"answers, logs, /metrics"| RUN
+    CAL --> RUN
+    RUN -->|"promote / rollback:<br/>switch CURRENT, restart"| REG
+    RUN --> RES["results.json<br/>(every number)"]
+    RES --> REP["monitoring_demo.md<br/>(generated, never edited)"]

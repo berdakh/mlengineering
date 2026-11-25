@@ -1,0 +1,9 @@
+flowchart LR
+    a["logger pumpwatch.features<br/>log.debug / log.info"] --> p["logger pumpwatch"]
+    b["logger pumpwatch.model"] --> p
+    c["logger pumpwatch.cli"] --> p
+    p -- "propagate" --> r["root logger<br/>handlers attached ONCE<br/>at the entry point"]
+    r --> h1["StreamHandler to stderr<br/>level from config"]
+    r --> h2["FileHandler in the run directory<br/>level DEBUG"]
+    h1 --> f1["Formatter"]
+    h2 --> f2["Formatter"]

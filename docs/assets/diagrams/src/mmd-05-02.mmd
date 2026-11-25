@@ -1,0 +1,9 @@
+flowchart LR
+    t["your tests/"] --> r0["run on the CORRECT package"]
+    r0 --> ok{"all pass?"}
+    ok -- no --> bad["suite is wrong or flaky:<br/>fix the tests first"]
+    ok -- yes --> loop["for each of 14 defective<br/>copies of the package"]
+    loop --> r1["run your tests"]
+    r1 --> k{"any test fails?"}
+    k -- yes --> killed["defect detected"]
+    k -- no --> surv["defect survived:<br/>a missing or too-loose test"]

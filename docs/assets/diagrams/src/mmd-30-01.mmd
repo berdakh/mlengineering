@@ -1,0 +1,14 @@
+flowchart LR
+    RAW["data/raw/skab<br/>(not committed)"] --> BM["make model<br/>flowguard build-model"]
+    CFG["configs/model.toml<br/>operating point from w4d5"] --> BM
+    SPL["splits/v2.json<br/>frozen in w3d1"] --> BM
+    BM --> BUN["models/current/<br/>model.json + MANIFEST.json"]
+    BUN --> EV["evaluation path<br/>experiment_scores()"]
+    BUN --> BA["batch path<br/>flowguard predict-batch"]
+    BUN --> AP["API path<br/>POST /predict"]
+    SC["ZScoreModel.score<br/>(the only formula)"] -.-> EV
+    SC -.-> BA
+    SC -.-> AP
+    EV --> PAR{"parity test<br/>max diff <= 1e-9"}
+    BA --> PAR
+    AP --> PAR

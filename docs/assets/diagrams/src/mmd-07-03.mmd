@@ -1,0 +1,7 @@
+flowchart LR
+    W["Write down the grain<br/>of the result"] --> K["Assert the key is unique<br/>(GROUP BY key HAVING COUNT(*) > 1 returns nothing)"]
+    K --> R["Row-count invariant:<br/>rows after each join = rows expected at that grain"]
+    R --> T["Reconcile totals against<br/>a single-table SUM"]
+    T --> S["Spot-check one entity by hand"]
+    R -. "count grew" .-> F["fan-out: pre-aggregate the child"]
+    T -. "total differs" .-> F

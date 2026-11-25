@@ -1,0 +1,6 @@
+flowchart TD
+    A["an alarm, by its start row s"] --> Q1{"s inside a true event,<br/>or at most early_tolerance rows before it?"}
+    Q1 -- no --> FA["false alarm"]
+    Q1 -- yes --> Q2{"is it the earliest such alarm<br/>for that event?"}
+    Q2 -- yes --> H["hit: delay = s plus confirmation minus event start,<br/>never negative"]
+    Q2 -- no --> R["redundant: neither TP nor FA"]

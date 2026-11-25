@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant C as Client
+    participant SE as ServerErrorMiddleware (Starlette, outermost)
+    participant OB as observability_middleware (yours)
+    participant EX as ExceptionMiddleware (422, 404, ApiError handlers)
+    participant H as /predict handler
+    C->>SE: POST /predict, X-Request-ID: r1
+    SE->>OB: request
+    OB->>OB: request_id, in_flight += 1, start timer
+    OB->>EX: call_next(request)
+    EX->>H: route and validate
+    alt validation fails
+        EX-->>OB: 422 response
+    else handler raises RuntimeError
+        H--xOB: exception propagates OUT of call_next
+        OB->>OB: finally: count status 500, observe latency, in_flight -= 1, access log
+        OB--xSE: exception re-raised
+        SE-->>C: 500 from the Exception handler (no traceback in the body)
+    end
+    OB->>OB: finally: count, observe, in_flight -= 1, access log
+    OB-->>C: response + X-Request-ID

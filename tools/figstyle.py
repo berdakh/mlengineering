@@ -5,7 +5,7 @@
     apply()
     fig, ax = plt.subplots(figsize=(7, 3.6))
     ax.plot(x, y, color=SERIES[0], label="causal window")
-    save(fig, "lessons/<unit>/figures/<name>.svg")
+    save(fig, "labs/<unit>/figures/<name>.svg")
 
 Rules the style cannot enforce (follow them in the figure script):
   * Pick the form from the data's job; a single number is a sentence or a table, not a chart.

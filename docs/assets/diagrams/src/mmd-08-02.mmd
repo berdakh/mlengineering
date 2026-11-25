@@ -1,0 +1,8 @@
+flowchart LR
+    subgraph DIM["calibration rows for one device (valid_from)"]
+        direction LR
+        V1["v1"] --> V2["v2"] --> V3["v3"]
+    end
+    R1["reading at t, with v2 <= t < v3"] -->|"as-of: latest valid_from <= t"| V2
+    R1 -. "wrong: current row" .-> V3
+    R0["reading at t < v1"] -->|"LEFT JOIN keeps it"| N["NULL calibration"]

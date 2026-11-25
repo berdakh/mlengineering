@@ -1,0 +1,6 @@
+flowchart LR
+    code["commit 1a2b3c4d5e6f"] -->|"build once"| img["image<br/>flowguard:1a2b3c4d5e6f"]
+    img -->|"push"| reg[("registry<br/>digest sha256:...")]
+    reg -->|"deploy by digest"| stg["staging<br/>env: staging.env"]
+    stg -->|"ready? then promote<br/>the SAME digest"| prd["production<br/>env: production.env"]
+    prd -. "rollback:<br/>previous good digest" .-> prd

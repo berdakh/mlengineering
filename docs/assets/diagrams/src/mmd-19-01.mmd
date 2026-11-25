@@ -1,0 +1,9 @@
+flowchart LR
+    A["burn-in rows of one experiment<br/>(first 100, assumed normal)"] --> B["fit forecaster<br/>per sensor"]
+    B --> C["one-step forecasts<br/>for every row"]
+    C --> D["standardised residual<br/>z = (x - x_hat) / sigma_e"]
+    D --> E["score: max over sensors of abs z"]
+    D --> F["CUSUM per sensor,<br/>max over sensors"]
+    E --> G["threshold chosen on<br/>development experiments"]
+    F --> G
+    G --> H["test: point PR-AUC + interval,<br/>event recall, false alarms per hour"]

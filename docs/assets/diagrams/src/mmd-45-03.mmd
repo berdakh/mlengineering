@@ -1,0 +1,7 @@
+flowchart LR
+    DEF["one feature definition"] --> OFF["offline: point-in-time join<br/>for training rows"]
+    DEF --> ON["online: low-latency lookup<br/>at request time"]
+    OFF --> TR["training set"]
+    ON --> SV["serving"]
+    SV -. "log served feature values" .-> PAR["parity check: logged online<br/>vs recomputed offline"]
+    OFF -.-> PAR

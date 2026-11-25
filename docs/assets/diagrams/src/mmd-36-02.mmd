@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant D as docker run --env-file
+    participant S as flowguard.serve
+    participant V as load_settings
+    participant A as app lifespan
+    D->>S: start (FLOWGUARD_* variables)
+    S->>V: validate names and formats
+    alt invalid (typo, bad value)
+        V-->>S: SettingsError naming the variable
+        S-->>D: one JSON log line, exit status 2 (container stops)
+    else valid
+        S->>A: create_app(model_dir, release, env)
+        A->>A: load_bundle(model_dir)
+        alt bundle missing or corrupt
+            A-->>S: ERROR model_not_loaded, /readyz 503, /healthz 200
+        else loaded
+            A-->>S: INFO model_loaded, /readyz 200
+        end
+    end

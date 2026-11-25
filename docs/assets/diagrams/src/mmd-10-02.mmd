@@ -1,0 +1,10 @@
+flowchart TD
+    S["a sensor stream and a need"] --> Q1{"Does the decision depend on<br/>a future VALUE of the signal?"}
+    Q1 -->|"yes"| F["forecasting"]
+    Q1 -->|"no"| Q2{"Do labelled examples exist for every<br/>fault form you expect to meet?"}
+    Q2 -->|"yes, enough episodes"| CL["supervised classification"]
+    Q2 -->|"no: rare, varied or novel faults"| Q3{"Is verified-normal data available,<br/>and is 'normal' stable?"}
+    Q3 -->|"yes"| AD["anomaly detection<br/>(labels used only to evaluate)"]
+    Q3 -->|"no"| R["rules, or collect labels first"]
+    F -. "residuals can feed" .-> AD
+    CL -. "test its weak point:<br/>hold out a fault family" .-> PB["protocol B"]

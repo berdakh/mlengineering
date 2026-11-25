@@ -1,0 +1,10 @@
+flowchart TD
+    cmd["pumpwatch train --config ... --set ... --run-dir runs"] --> dir["runs/RUN_ID/"]
+    dir --> c["config.json<br/>resolved config, after overrides"]
+    dir --> l["a .log file<br/>DEBUG and above"]
+    dir --> m["metrics.json"]
+    dir --> e["environment.json<br/>python, package versions,<br/>git commit, data sha256"]
+    c -. "answers: with what settings?" .-> q["Can this result be<br/>explained and re-run?"]
+    e -. "answers: with what code, data, libraries?" .-> q
+    m -. "answers: what came out?" .-> q
+    l -. "answers: what happened on the way?" .-> q

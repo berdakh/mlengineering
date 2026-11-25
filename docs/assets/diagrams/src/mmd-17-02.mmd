@@ -1,0 +1,9 @@
+flowchart TB
+    D["Test set: rows tagged with<br/>cluster id (overlap group)"] --> P["Per-cluster table:<br/>scores, labels, frozen threshold"]
+    P --> L{"Repeat B times"}
+    L --> R1["Draw G cluster ids<br/>with replacement"]
+    R1 --> R2["Concatenate all rows<br/>of the drawn clusters"]
+    R2 --> R3["Recompute the metric<br/>exactly as on the real data"]
+    R3 --> L
+    L --> Q["2.5th and 97.5th percentiles<br/>= percentile interval"]
+    R3 -. "no positives in a resample" .-> X["drop and count it;<br/>report the count"]

@@ -1,0 +1,11 @@
+flowchart LR
+    R["raw SKAB<br/>35 files"] --> S["split manifest v1<br/>by experiment"]
+    S --> D["dev experiments<br/>25"]
+    S --> T["test experiments<br/>9"]
+    S --> N["reference normal<br/>anomaly-free"]
+    N -->|"fit: global reference"| SC["scorer"]
+    B["first 100 rows<br/>of each experiment"] -->|"fit: burn-in"| SC
+    SC --> DS["dev scores"] --> TH["best-F1 threshold<br/>chosen on dev"]
+    TH -->|"frozen"| TS["test scores"]
+    SC --> TS
+    TS --> M["test P, R, F1<br/>and PR-AUC"]

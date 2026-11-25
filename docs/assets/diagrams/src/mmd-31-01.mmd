@@ -1,0 +1,11 @@
+flowchart LR
+    subgraph host["your laptop"]
+        ctx["build context<br/>(lab/ minus .dockerignore)"]
+        df["Dockerfile"]
+    end
+    ctx --> builder
+    df --> builder["builder (BuildKit)<br/>runs each instruction"]
+    builder --> img["image flowguard:0.6.0<br/>layers + metadata"]
+    img -->|"docker run"| c1["container 1<br/>PID 1 = uvicorn"]
+    img -->|"docker run"| c2["container 2"]
+    c1 -->|"docker stop: SIGTERM, then SIGKILL after 10 s"| gone["exited"]
