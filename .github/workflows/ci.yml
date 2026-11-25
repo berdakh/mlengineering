@@ -1,21 +1,32 @@
-# Course self-check: the checks must accept every reference solution and reject every mutant,
-# on each supported Python version. This verifies the course material, not the learner.
+# Course self-check: the checks must accept every reference solution and reject every mutant.
+# This verifies the course material, not the learner.
+#
+# A full run takes about 30 minutes per Python version, so pushes run one version and the
+# three-version matrix runs weekly and on demand (Actions tab -> course-checks -> Run workflow).
 name: course-checks
 
 on:
   push:
   pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1"   # Mondays 03:17 UTC
 
 permissions:
   contents: read
 
+concurrency:
+  group: course-checks-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11", "3.12", "3.13"]
+        python-version: ${{ fromJSON((github.event_name == 'push' || github.event_name == 'pull_request') && '["3.12"]' || '["3.11", "3.12", "3.13"]') }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
