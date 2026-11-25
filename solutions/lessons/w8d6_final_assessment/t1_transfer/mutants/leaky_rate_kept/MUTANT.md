@@ -1,0 +1,1 @@
+Declares an honest FEATURES list but the model reads customer_no_show_rate, a mean over the guest's whole history including this and future reservations. Caught by scrambling and by beating the generator.
