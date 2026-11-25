@@ -112,10 +112,10 @@ numbers; analysts will rerun the batch path over history. If the three disagree,
 model nobody runs. The fix is structural, not procedural: **one function computes the score, and every
 path calls it.** The parity test then guards the structure against future edits.
 
-Your research analogue: an offline decoder evaluated in MATLAB or Python and a real-time decoder
-reimplemented in C for the BCI loop. If the online filter is causal and the offline one zero-phase, or
-the online normalisation uses a different window, the published offline accuracy is not the accuracy
-of the system the participant used.
+An analogue from research systems: a model evaluated offline in Python and re-implemented in another
+language for a real-time device. If the online filter is causal and the offline one zero-phase, or the
+online normalisation uses a different window, the published offline accuracy is not the accuracy of
+the system people actually used.
 
 ### 2.2 Training/serving skew, and why parity must cover all three paths
 
@@ -471,8 +471,9 @@ yourself or say it aloud without notes; then score it with the checklist in the 
 computation; write a three-way parity test and choose its tolerance; build an artifact that records
 where it came from; single-source a version; write a README whose commands are tested.
 
-**Reflection prompt.** In your research code, where did the "offline" and "online" versions of a
-computation live, and what would a parity test between them have looked like? (`python wb.py note w5d6 "..."`)
+**Reflection prompt.** In a project you have worked on, where did the "offline" and "online" (or
+"notebook" and "production") versions of a computation live, and what would a parity test between them
+have looked like? (`python wb.py note w5d6 "..."`)
 
 **Retrieval question (in a week).** Your API and your batch job disagree by a constant factor of 1.0541
 on every row. What is the burn-in size, what is the likely cause, and which of the two is consistent

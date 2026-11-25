@@ -61,7 +61,7 @@ Solutions live in `solutions/labs/w3d2_group_temporal_validation/`; open them af
 to estimate, then build the grouped, temporal or combined scheme that estimates it, with purging and
 embargo where windows overlap a split boundary.
 
-**Why an applied ML engineer needs it.** You already split by subject. In a product the question is
+**Why an applied ML engineer needs it.** Splitting by subject or by user is a familiar first step. In a product the question is
 wider and nobody states it for you: will the model meet new machines, the future of known machines, a
 fault type it never saw, or all three? Each has its own validation scheme and each gives a different
 number for the same model. On the project data, in this session, the same random forest scores a
@@ -152,11 +152,12 @@ information of about 125, and the honest count is closer to the number of experi
 binomial standard error on row-level accuracy is meaningless here. The remedy is to resample groups,
 not rows (w3d5).
 
-**Connection to what you know.** This is leave-one-subject-out, and you already distrust
-within-subject shuffled splits. What transfers less obviously: (i) in EEG the group is given by the
-recording protocol; in industry you must *find* it (customer, device, site, batch, session, firmware
-version), and there are often several nested ones; (ii) within-subject non-stationarity across
-sessions has an exact counterpart, the recording day, and the project data has it (section 4, task 7).
+**Connection to other domains.** In studies on people (EEG decoding, wearable sensors, speech) this is
+leave-one-subject-out, and within-subject shuffled splits are rightly distrusted. What transfers less
+obviously: (i) in a study the group is given by the recording protocol; in industry you must *find* it
+(customer, device, site, batch, session, firmware version), and there are often several nested ones;
+(ii) within-subject non-stationarity across sessions has an exact counterpart, the recording day, and
+the project data has it (section 4, task 7).
 
 ### 2.3 Grouped schemes
 

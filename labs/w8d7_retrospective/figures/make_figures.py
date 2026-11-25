@@ -2,7 +2,7 @@
 
     python labs/w8d7_retrospective/figures/make_figures.py
 
-Parses the "What the course is for" table of ROADMAP.md (capability, evidence artifact, weeks) and
+Parses the "What the course is for" table of docs/guides/program-design.md (capability, evidence artifact, weeks) and
 draws a capability-by-week grid. It shows where evidence *can* come from, not what you produced.
 """
 from __future__ import annotations
@@ -21,7 +21,7 @@ from tools.figstyle import INK, SERIES, apply, save  # noqa: E402
 apply()
 import matplotlib.pyplot as plt  # noqa: E402
 
-text = (ROOT / "ROADMAP.md").read_text()
+text = (ROOT / "docs" / "guides" / "program-design.md").read_text()
 section = text.split("## What the course is for")[1].split("##")[0]
 rows = []
 for line in section.splitlines():
@@ -58,7 +58,7 @@ import textwrap
 ax.set_yticks(np.arange(len(rows)) + 0.5, [f"{n}. " + textwrap.shorten(c, 46, placeholder=" ...") for n, c, _ in rows], fontsize=8)
 ax.grid(False)
 ax.tick_params(length=0)
-ax.set_title("Where each target capability's evidence is produced (from ROADMAP.md)")
+ax.set_title("Where each target capability's evidence is produced (from the program design)")
 fig.text(0.01, 0.01, "A filled cell is an opportunity for evidence, not evidence. Your portfolio says what you produced.",
          fontsize=7.5, color=INK["muted"])
 save(fig, HERE / "capability_weeks.svg")

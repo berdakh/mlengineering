@@ -211,4 +211,4 @@ pandera and expectation-suite tools in H4.1.7; the missingness terminology (MCAR
 Rubin, "Inference and missing data", Biometrika 63(3), 1976, and Little & Rubin, *Statistical
 Analysis with Missing Data* (cited from memory; not opened). "Simpson's paradox" is used in its
 standard sense. Dataset: Katser & Kozitsin, *Skoltech Anomaly Benchmark (SKAB)*, Kaggle, 2020,
-DOI 10.34740/KAGGLE/DSV/1693952 (upstream README and LICENSE opened; see `project/README.md`).
+DOI 10.34740/KAGGLE/DSV/1693952 (upstream README and LICENSE opened; see `docs/guides/project.md`).

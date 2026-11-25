@@ -73,7 +73,7 @@ classifiers. If the diagnostic contradicts an assumption, a targeted primer is a
 
 One project runs through the course: **`flowguard`**, fault detection on the SKAB water-circulation
 testbed recordings. The brief, provenance, licence, data dictionary and measured dataset facts are in
-[project/README.md](project.md). By analogy with a clinical study: the *experiment* plays the role of the
+[docs/guides/project.md](project.md). By analogy with a clinical study: the *experiment* plays the role of the
 *patient* (the independent unit across which generalisation is evaluated), the anomalous segment is an
 *event* as a seizure in an EEG recording is, and point-level versus event-level scoring is the same
 distinction such detection studies make. What is new for most students is everything around the model.

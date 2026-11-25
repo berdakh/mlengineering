@@ -25,4 +25,4 @@ deliberately uncomfortable; most are about the places where the project did *not
 | Q17 | What does this dataset not let you claim about a real plant? |
 | Q18 | Why split by experiment rather than by row? What did it cost you? |
 | Q19 | Why resample experiments, not samples, for your intervals? |
-| Q20 | Isn't this just your EEG work with a different dataset? What is actually new? |
+| Q20 | Isn't this just a textbook modelling exercise with a different dataset? What is actually new? |

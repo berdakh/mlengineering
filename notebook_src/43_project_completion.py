@@ -142,12 +142,11 @@ print("repo root:", REPO_ROOT)
 # | Unseeded randomness or thread-dependent results | different numbers on a repeat of the same commit | seeds in config; `OMP_NUM_THREADS=1` where it matters |
 # | Results committed but code changed after | mismatch | regenerate and commit together; record the commit in provenance |
 #
-# ### 2.5 Connection to your research practice
+# ### 2.5 Connection to other domains
 #
-# You have reviewed papers whose results could not be rerun and you have probably written one or two. In EEG
-# work the hidden state is usually a preprocessed `.mat` file made by a script that no longer exists, or an
-# artefact-rejection step done by eye. The industry version is the same, but the cost is paid by a colleague
-# three months later instead of a reviewer. The cure is identical: make the raw-to-result path a command, then
+# Many published results cannot be rerun. In lab research the hidden state is usually a preprocessed data file
+# made by a script that no longer exists, or a cleaning step done by eye. The industry version is the same, but the cost is paid by a colleague
+# three months later instead of a reader. The cure is identical: make the raw-to-result path a command, then
 # prove it runs somewhere else.
 #
 # ### 2.6 An industry example
@@ -242,7 +241,7 @@ print("repo root:", REPO_ROOT)
 #    `pip freeze` inside a fresh venv where you installed only your direct dependencies, copy the results file
 #    your report was generated from to `expected/results.json`, commit, and run
 #    `python labs/w8d1_project_completion/lab/audit/clean_clone_check.py <your repo> --log <your repo>/audit/REPRODUCTION_LOG.md`.
-# 6. Fill in `lab/DELIVERABLES.md` against the checklist in [project/README.md](../docs/guides/project.md).
+# 6. Fill in `lab/DELIVERABLES.md` against the checklist in [docs/guides/project.md](../docs/guides/project.md).
 #
 # **Debugging guidance.**
 # * *`git clone` of a local path fails:* the source must be a git repository with at least one commit; uncommitted
@@ -434,7 +433,7 @@ check("w8d1", challenge=True)
 # write a fully pinned lock; declare a project's reproduction steps and headline values in a file a tool can
 # read; read an audit log and tell a root cause from a consequence; and scope the remaining work in writing.
 #
-# **Reflection prompt.** Pick one of your published papers. Which step from raw recording to figure would fail a
+# **Reflection prompt.** Pick one of your own projects (a thesis, report or paper). Which step from raw data to figure would fail a
 # clean-clone audit today, and what would it take to fix it?
 #
 # **Retrieval question (for the w8d7 retrospective).** Your audit passes on Python 3.13 and fails on 3.11 with a

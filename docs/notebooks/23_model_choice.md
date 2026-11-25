@@ -192,14 +192,14 @@ object header: it reports a few hundred bytes for a model that holds a 1.6 MB ar
 retraining needs. A model that needs new labelled faults to retrain cannot be retrained on a
 schedule.
 
-### 2.6 Connection to what you know
+### 2.6 Connection to other domains
 
-In BCI papers you choose between a CSP+LDA pipeline and a CNN. The usual argument is a per-subject
-accuracy table and a Wilcoxon test. Two of today's ideas change that argument:
+Research papers often choose between a classical pipeline and a deep network (in EEG decoding, CSP+LDA
+against a CNN). The usual argument is a per-subject accuracy table and a Wilcoxon test. Two of today's ideas change that argument:
 
-* "Significantly better" is not "better by enough to justify the GPU, the calibration session and
+* "Significantly better" is not "better by enough to justify the GPU, the extra calibration and
   the opaque features".
-* The per-subject paired comparison you already know is the cluster-level paired bootstrap here.
+* A per-subject paired comparison is the cluster-level paired bootstrap here.
   The overlap group (`other/2-3-4`) plays the role of a subject recorded in several sessions.
 
 ### 2.7 Industry example

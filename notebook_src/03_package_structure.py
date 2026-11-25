@@ -378,8 +378,8 @@ print("repo root:", REPO_ROOT)
 # python -m pip install numpy pandas scikit-learn pytest
 # ```
 #
-# If the repository already has a `.venv` from the course setup, reuse it. On Pop!_OS
-# 22.04 the system interpreter is 3.10: see H2.1 § "Getting a newer interpreter"
+# If the repository already has a `.venv` from the course setup, reuse it. On Ubuntu
+# 22.04 and its derivatives the system interpreter is 3.10: see H2.1 § "Getting a newer interpreter"
 # (`uv python install 3.12` then `uv venv --python 3.12 .venv` is the shortest route;
 # if `python3 -m venv` complains about `ensurepip`, install `python3-venv` with apt).
 #

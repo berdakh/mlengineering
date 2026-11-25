@@ -207,7 +207,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.5 Gaps and islands: from samples to events
 #
-# You have written this many times in NumPy: `np.diff` on a thresholded detector output, pair up
+# In NumPy this is a familiar pattern: `np.diff` on a thresholded detector output, pair up
 # rising and falling edges, get events with onset and offset. The SQL form has the same two steps.
 #
 # 1. **Mark starts.** A row starts an island if it is flagged and the previous row *of the same

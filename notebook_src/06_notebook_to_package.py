@@ -37,7 +37,7 @@ print("repo root:", REPO_ROOT)
 
 # %% [markdown]
 # **Unit id:** `w1d6` · **Week 1, core day 6** · **Handbook:** [H2.3 Git workflow and refactoring discipline](../docs/handbook/ch02_maintainable_python/h2_3_git_workflow_refactoring.md)
-# **Data:** real SKAB recordings for the lab (`python project/get_skab.py`, see [project/README.md](../docs/guides/project.md));
+# **Data:** real SKAB recordings for the lab (`python project/get_skab.py`, see [docs/guides/project.md](../docs/guides/project.md));
 # SYNTHETIC SKAB-format files for all checks and for the worked example.
 #
 # > Commands are run from the course repository root unless a step says otherwise.

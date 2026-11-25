@@ -183,12 +183,12 @@ print("repo root:", REPO_ROOT)
 # *Diagram 2. The order of the rules in `update`. The order matters: an out-of-order sample that is
 # also invalid is reported as invalid, and a duplicate is never treated as a gap.*
 #
-# ### 2.5 Connection to what you already know
+# ### 2.5 Connection to other domains
 #
-# You have built this before under a different name. An online BCI decoder filters EEG with a causal
+# Real-time signal processing has the same problem under a different name. An online decoder filters a signal with a causal
 # IIR filter whose internal state (`zi` in `scipy.signal.lfilter`) must be carried from one chunk to the
 # next; forgetting it produces a transient at every chunk boundary. The offline analysis that chose the
-# pipeline probably used zero-phase `filtfilt`, which a real-time system cannot run. The classic BCI bug
+# pipeline probably used zero-phase `filtfilt`, which a real-time system cannot run. The classic real-time bug
 # is a decoder that is excellent offline and worse online because the two paths compute different
 # features. Here the "filter" is a burn-in calibration and the "chunk" is one sample, but the
 # discipline is identical: carry state explicitly, and test the online path against the offline one.
@@ -615,8 +615,8 @@ check("w5d3", challenge=True)
 #   a gap, and defend each decision to a colleague;
 # * write a parity test between a batch function and its streaming twin, with a stated tolerance.
 #
-# **Reflection prompt (5 minutes, in `progress/notes.md`).** Think of a real-time system you built in
-# your research (a BCI loop, an online artefact detector). Which of the five decisions in section 2.4
+# **Reflection prompt (5 minutes, in `progress/notes.md`).** Think of a real-time system you have built or
+# used (a sensor loop, a live dashboard, an online detector). Which of the five decisions in section 2.4
 # did it make explicitly, which implicitly, and which would have failed on a network that duplicates and
 # reorders messages?
 #

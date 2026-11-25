@@ -121,7 +121,7 @@ Raw is immutable because it is the only layer you cannot regenerate. Every other
 function of raw plus code, which is what makes "delete `interim/` and rebuild" a safe sentence. The
 moment someone opens a raw file and corrects a value by hand, the function has a hidden argument.
 
-You have lived this rule already: the acquisition file (`.edf`, `.vhdr`, BIDS `sourcedata/`) is
+Careful labs already live by this rule: the acquisition file (`.edf`, `.vhdr`, BIDS `sourcedata/`) is
 never overwritten by the filtered version, and a derivative is always traceable to it. Ingestion is
 the same discipline applied to tables.
 
@@ -246,7 +246,7 @@ quality report says nothing about leakage or generalisation.
 
 Exploration at ingestion has one acceptance test: *each finding ends in a decision or it is cut.*
 Section 3.2 does this on the real data. The habit to drop is the notebook of forty plots; the habit
-to keep from your research is looking at raw traces before trusting a summary.
+to keep from good lab practice is looking at raw traces before trusting a summary.
 
 ### 2.8 From hand-written checks to tools
 
@@ -273,9 +273,11 @@ lines of this lesson: a uniqueness check on `(shipment_id)` with severity *error
 writes (idempotence), and input hashes in a provenance record so the duplicated delivery is visible
 as "same file, second time".
 
-### 2.10 Bridge from EEG, and where it breaks
+### 2.10 Bridge from lab practice, and where it breaks
 
-| Your practice | Ingestion equivalent |
+A multichannel recording lab (EEG is a typical example) already runs most of these checks by hand:
+
+| Lab practice | Ingestion equivalent |
 |---|---|
 | Checking the montage and channel count before analysis | Required-columns and dtype checks |
 | Flat-line / saturated channel detection | Stuck-sensor run length; plausibility range |
@@ -364,7 +366,7 @@ is fine when you also check the resulting dtypes; the text-first route makes eac
 !python labs/w2d3_data_quality_ingestion/example/explore_skab.py
 ```
 
-**Data:** SKAB v0.9, 35 files; schema in [`project/README.md`](../guides/project.html) and, after
+**Data:** SKAB v0.9, 35 files; schema in [`docs/guides/project.md`](../guides/project.html) and, after
 renaming, in [`docs/maintainers/flowguard-spec.md`](../maintainers/flowguard-spec.html). The script uses the reference
 loader. Output, abridged only where marked:
 
@@ -439,7 +441,7 @@ flow_rate            0.57    0.94    1.00
    written in `DATA_NOTES.md` rather than "cleaned".
 4. **Experiments have their own baselines.** For both accelerometers, thermocouple and flow rate the
    spread of experiment means is 60–200 times the within-experiment spread during normal operation.
-   This is the between-subject offset you know from EEG. **Decision:** a global threshold on raw
+   This is the between-subject offset familiar from any study with repeated measurements per person. **Decision:** a global threshold on raw
    values mostly identifies the experiment. Features need a per-experiment causal reference (w2d5),
    and any model must be evaluated on experiments it has not seen (w2d4).
 5. **The fault signature differs by family.** Within an experiment, flow rate drops by about 4 SD in
@@ -689,8 +691,8 @@ Open one hint at a time, only after a real attempt.
 
 1. *A check is a statement about rows together, per experiment.* Anything involving "previous row"
    (`diff`, duplicates, runs) is computed inside a `groupby("experiment_id")`. The first row of one
-   experiment has nothing to do with the last row of another. You know this as "never filter or
-   epoch across a subject boundary".
+   experiment has nothing to do with the last row of another. Signal analysts know this as "never filter
+   or cut windows across a recording boundary".
 2. *The checker describes; the caller decides.* `run_checks` returns results for everything it
    looked at. `ingest` reads the severities and decides whether a table gets written. If you find
    yourself sorting, dropping or raising inside `run_checks`, the two roles have merged.

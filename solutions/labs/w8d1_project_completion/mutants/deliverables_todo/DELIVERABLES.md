@@ -1,6 +1,6 @@
 # Deliverables audit: <your project>
 
-Audited <date> against the checklist in `project/README.md`. For each deliverable choose a status:
+Audited <date> against the checklist in `docs/guides/project.md`. For each deliverable choose a status:
 `done` (evidence: a `path` in your repository or a URL a reviewer can open), `partial` or `scoped out`
 (say why in 8 or more words, and what a reviewer should take from that). Do not delete rows: a missing
 deliverable is information.

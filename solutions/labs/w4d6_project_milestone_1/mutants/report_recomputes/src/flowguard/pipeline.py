@@ -286,7 +286,7 @@ def render(results: dict, out: str | Path) -> Path:
          "| Quantity | Value |", "|---|---|",
          f"| Rows | {dt['rows']} |", f"| Experiments | {dt['experiments']} |",
          f"| Anomalous fraction of labelled rows | {_n(dt['anomalous_row_fraction'])} |", "",
-         f"Experiments by family: {fam}. Source, licence and hashes: `project/README.md` and `data/raw/skab/MANIFEST.json`.", "",
+         f"Experiments by family: {fam}. Source, licence and hashes: `docs/guides/project.md` and `data/raw/skab/MANIFEST.json`.", "",
          "## Protocol", "",
          "| Setting | Value |", "|---|---|",
          f"| Split | frozen manifest `{pv['splits_file']}`: {pr['dev_experiments']} development experiments, "
@@ -331,7 +331,7 @@ def render(results: dict, out: str | Path) -> Path:
           f"* {pr['test_clusters']} independent test clusters: test intervals are wide, and no comparison between candidates "
           "is made on test data.",
           "* One laboratory testbed and three fault families; nothing here is evidence about other equipment.",
-          "* Labels mark whole anomalous segments; some duplicated rows carry contradictory labels (project/README.md).",
+          "* Labels mark whole anomalous segments; some duplicated rows carry contradictory labels (docs/guides/project.md).",
           "* Latency and size are host-dependent and are reported in the w4d5 decision memo, not here, so that this report rebuilds byte for byte.",
           "", "## Provenance", "",
           "| Item | Value |", "|---|---|",

@@ -192,10 +192,10 @@ warning.
 > the alternatives are private subnets with VPC endpoints for ECR and Logs, or a NAT gateway, both of
 > which add hourly cost.
 
-### 2.6 Connection to what you already know
+### 2.6 Connection to other domains
 
-Your real-time BCI systems already had all of these concerns, just on one lab machine: which build of
-the decoder is running (the image tag), whether it initialised correctly before the session started (the
+A real-time system in a research lab has all of these concerns, just on one lab machine: which build of
+the model is running (the image tag), whether it initialised correctly before the session started (the
 readiness probe), where its logs go (CloudWatch), who may connect to its socket (the security group),
 and switching it off at the end of the session (teardown). The cloud makes each of these explicit and
 billable. The analogy breaks on cost and exposure: a lab machine left on costs electricity and is
@@ -657,8 +657,8 @@ anything billable; keep a service unreachable by default; run the exact containe
 dry-run-first deployment whose live mode is gated.
 
 **Reflection prompt (5 minutes, in `progress/notes.md`).** Which of the five classic mistakes (stored key,
-public bucket, open port, mutable tag, no teardown) would you have made in your first research-lab cloud
-project, and what would have caught it?
+public bucket, open port, mutable tag, no teardown) would be easiest to make in a first cloud
+project (yours or a team's you know), and what would have caught it?
 
 **Retrieval question for later (w7d7).** *A task is running, `/healthz` answers 200, and the service is
 marked healthy, but every prediction is wrong. Which of this lesson's controls could have detected it, and

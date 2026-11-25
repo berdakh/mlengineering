@@ -1,6 +1,6 @@
 # Hint 2 - approach
 
-1. List your artifacts first (`project/README.md`, your report, decision table, test outputs). For each
+1. List your artifacts first (`docs/guides/project.md`, your report, decision table, test outputs). For each
    of the twenty questions, write the artifact path before the answer. A question with no artifact is
    a gap: say what you would need, do not fill it with confidence.
 2. Draft the 5-minute script at about 100 words per beat, then cut to fit 550-800 words. Run

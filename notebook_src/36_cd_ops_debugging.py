@@ -135,14 +135,14 @@ print("repo root:", REPO_ROOT)
 # service's own startup log lines identify the change within a minute; most wasted time in real incidents is
 # spent changing things before reading what already happened.
 #
-# ### 2.5 Connection to what you already know
+# ### 2.5 Connection to other domains
 #
-# In a real-time BCI session you never re-compiled the decoder between the dry run and the session with the
-# participant: you ran the binary you had tested. That is promotion by digest. When a session failed, you
-# checked what changed since the last good session (the montage file, the amplifier settings, the decoder
-# build) before touching anything: that is reading the release history first. And you separated "the decoder
-# is wrong" from "the configuration is wrong" before deciding between going back to the last decoder and
-# fixing a settings file: that is the rollback-versus-revert decision of this lesson.
+# A well-run lab experiment never rebuilds its software between the dry run and the real session: it runs
+# the build that was tested. That is promotion by digest. When a session fails, a careful experimenter
+# checks what changed since the last good session (the settings file, the hardware configuration, the
+# software build) before touching anything: that is reading the release history first. And they separate
+# "the software is wrong" from "the configuration is wrong" before deciding between going back to the last
+# build and fixing a settings file: that is the rollback-versus-revert decision of this lesson.
 #
 # ### 2.6 An industry example
 #
@@ -529,7 +529,7 @@ check("w6d6", challenge=True)
 # > "Tell me about a time a system you were responsible for failed in a way that was hard to diagnose. What
 # > did you see first, what did you think it was, what did you check, and what was it really?"
 #
-# Answer with one of this lab's incidents (or a real one from your research systems) in the structure
+# Answer with one of this lab's incidents (or a real one from a system you have worked on) in the structure
 # symptom - first hypothesis - the test that changed your mind - cause - fix - what you changed afterwards.
 # Speak for 5 minutes, then answer the follow-up "how would you make sure it cannot happen again?" for 2
 # minutes. Score yourself with the rubric in the answers file afterwards.

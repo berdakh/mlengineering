@@ -100,12 +100,13 @@ without hints.
 
 ## 2. Conceptual explanation
 
-### 2.1 Intuition: you already do this, with different names
+### 2.1 Intuition: the same data at several resolutions
 
-In your EEG work the same recording exists at several resolutions: one row per **sample**, per
-**window**, per **channel × window**, per **recording**, per **subject**. You would never average
-subject age over windows and call it the cohort's mean age, because subjects with longer recordings
-would count more. You would also never let windows from one subject fall on both sides of a split.
+Any recorded signal exists at several resolutions. In a study with wearable sensors, for instance,
+there is one row per **sample**, per **window**, per **channel × window**, per **recording**, per
+**subject**. You would not average subject age over windows and call it the cohort's mean age, because
+subjects with longer recordings would count more. Nor would you let windows from one subject fall on
+both sides of a split.
 Both instincts are statements about *grain*: what one row represents, and what the independent unit is.
 
 SQL bugs in industry are the same mistake made with a join. A per-recording metadata table joined to

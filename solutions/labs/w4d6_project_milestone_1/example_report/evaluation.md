@@ -14,7 +14,7 @@ Raise an alarm soon after the SKAB water-circulation testbed leaves normal opera
 | Experiments | 35 |
 | Anomalous fraction of labelled rows | 0.349 |
 
-Experiments by family: anomaly-free 1, other 14, valve1 16, valve2 4. Source, licence and hashes: `project/README.md` and `data/raw/skab/MANIFEST.json`.
+Experiments by family: anomaly-free 1, other 14, valve1 16, valve2 4. Source, licence and hashes: `docs/guides/project.md` and `data/raw/skab/MANIFEST.json`.
 
 ## Protocol
 
@@ -84,7 +84,7 @@ Rule fixed in advance: among the candidates, the simplest one shown practically 
 
 * 7 independent test clusters: test intervals are wide, and no comparison between candidates is made on test data.
 * One laboratory testbed and three fault families; nothing here is evidence about other equipment.
-* Labels mark whole anomalous segments; some duplicated rows carry contradictory labels (project/README.md).
+* Labels mark whole anomalous segments; some duplicated rows carry contradictory labels (docs/guides/project.md).
 * Latency and size are host-dependent and are reported in the w4d5 decision memo, not here, so that this report rebuilds byte for byte.
 
 ## Provenance

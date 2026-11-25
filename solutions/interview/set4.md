@@ -12,7 +12,7 @@ under 1 s; the shipped stub fails all 12; each wrong answer fails at least one t
 end). Numbers marked *(simulated)* or *(computed)* were produced by running code in that session.
 
 **Where the project facts come from.** Every dataset fact and reference number below is copied from
-`project/README.md` and the Week 2-4 lessons, which report runs on the real SKAB files. From Week 3 on,
+`docs/guides/project.md` and the Week 2-4 lessons, which report runs on the real SKAB files. From Week 3 on,
 all of them use the frozen split v2 (`w3d1`): **7 test and 27 development experiments**, test
 prevalence 0.373. Aligned with the final Week 4 lessons on 2026-11-22. A strong answer still says what
 has not been measured. If your own project has different numbers, use yours.

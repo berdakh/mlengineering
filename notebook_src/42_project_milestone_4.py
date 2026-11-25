@@ -436,8 +436,8 @@ check("w7d6", challenge=True)
 # report whose numbers cannot drift from the results; complete a rollback including the restart and the
 # version check; and write a runbook entry someone else can follow.
 #
-# **Reflection prompt.** Which of your BCI or iEEG pipelines had a "proxy" you trusted in place of a label,
-# such as signal quality or a classifier's confidence? When did it mislead you?
+# **Reflection prompt.** Which pipeline or project you know had a "proxy" trusted in place of a label,
+# such as signal quality or a classifier's confidence? When did it mislead?
 #
 # **Retrieval question (for the w7d7 review).** The demo showed drift without a change in alarms (E3) and a
 # missed fault without any signal (E5). For each, which signal would have revealed the problem, and when?

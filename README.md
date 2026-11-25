@@ -56,7 +56,7 @@ jupyter lab notebooks/01_diagnostic_a.ipynb
 ```
 
 **No install at all?** Click any *Colab* badge below: the first cell clones the repository and installs
-everything. See [docs/guides/colab.md](docs/guides/colab.md). Full setup, including Pop!_OS notes:
+everything. See [docs/guides/colab.md](docs/guides/colab.md). Full setup for Linux, macOS and Windows:
 **[docs/guides/setup.md](docs/guides/setup.md)**.
 
 ---

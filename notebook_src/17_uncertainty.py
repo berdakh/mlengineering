@@ -65,10 +65,9 @@ print("repo root:", REPO_ROOT)
 #
 # **Prerequisites.** [w2d6](12_baselines_metrics.ipynb) (baseline scorers, point-level metrics;
 # the lab ships snapshots), the split manifest idea from [w2d4](10_problem_framing_splits.ipynb),
-# and the overlap groups described in [project/README.md](../docs/guides/project.md). Event-level
+# and the overlap groups described in [docs/guides/project.md](../docs/guides/project.md). Event-level
 # metrics (w3d4) are *not* required; one table uses a simple event count as a preview.
-# Assumed: you know what a sampling distribution and a p-value are, and you have reported
-# per-subject statistics in papers.
+# Assumed: you know what a sampling distribution and a p-value are.
 #
 # **Time budget (2 h essential).**
 #
@@ -126,9 +125,9 @@ print("repo root:", REPO_ROOT)
 # *Formula, no data. The same 1,200 rows arranged as 30, 10 or 7 clusters: at an ICC of 0.2 they are
 # worth about 136, 48 and 34 independent observations. Source: `handbook/figures/h6_6/make_figures.py`.*
 #
-# You know this structure. Windows from one subject share electrode placement, impedance, skull
-# thickness, medication and state; epochs are not independent trials of "a human". In an EEG decoding
-# paper the subject is the random effect and the test is across subjects. On SKAB the experiment is
+# The same structure appears across fields. In a brain-signal study, windows from one subject share
+# sensor placement, physiology and state; they are not independent trials of "a human". In such a
+# study the subject is the random effect and the test is across subjects. On SKAB the experiment is
 # the unit for the same reason: one valve setting, one fill level, one day's temperature, one
 # labelling decision. In a churn model it is the customer; in demand forecasting, the store-week block.
 #

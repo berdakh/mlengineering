@@ -34,8 +34,8 @@ with the newest package versions that satisfy `requirements.txt`. Runs passed on
 
 ## Not tested
 
-* Pop!_OS itself (the authoring environment is a Linux container, not your machine).
+* A desktop Linux distribution, macOS or Windows (the authoring environment is a Linux container).
 * Python 3.10 and older: unsupported, because the labs use `tomllib` (standard library from 3.11).
-  Pop!_OS 22.04 ships Python 3.10; lesson w1d3 explains how to obtain a newer interpreter.
+  Ubuntu 22.04 and its derivatives ship Python 3.10; lesson w1d3 explains how to obtain a newer interpreter.
 * GPU execution (w4d3 ran on CPU only).
 * AWS: no AWS call was ever made; deployment content is verified only against CLI example sources and API models.

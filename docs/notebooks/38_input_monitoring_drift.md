@@ -204,14 +204,15 @@ can collapse with no input drift (the label meaning changes). Section 4, task 4,
 on SKAB the drift monitor misses most of the labelled faults that the w4d5 detector catches, because a
 calibrated drift monitor is tuned to tolerate exactly the kind of variation that separates experiments.
 
-### 2.7 Connection to your research
+### 2.7 Connection to other domains
 
-You have seen all three failures in EEG: electrode impedance creeping up over a session (slow drift in
-amplitude and line-noise power), a channel dropping out (missingness), an amplifier saturating at its
-rail (a schema violation masquerading as a huge signal), and session-to-session shift between recording
-days that breaks a classifier trained on day one. Your practice of re-referencing and per-session
-normalisation is the "per-unit reference" row of section 2.5; cross-session transfer studies are the
-"training data" row.
+Biomedical recordings show all three failures. In EEG, for example: electrode impedance creeping up over
+a session (slow drift in amplitude and line-noise power), a channel dropping out (missingness), an
+amplifier saturating at its rail (a schema violation masquerading as a huge signal), and
+session-to-session shift between recording days that breaks a classifier trained on day one. The common
+practice of per-session normalisation there is the "per-unit reference" row of section 2.5;
+cross-session transfer studies are the "training data" row. A fitness tracker shows the same pattern
+when a strap loosens or a firmware update rescales a sensor.
 
 ### 2.8 An industry example (illustrative composite, not a documented case)
 

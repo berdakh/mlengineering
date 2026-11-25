@@ -188,7 +188,7 @@ metric with a tolerance. A match is evidence that config + code + data + environ
 regenerate the number; a mismatch means one of them is not captured (or the task is non-deterministic).
 Comparing the stored metrics with themselves, or with a cached copy, proves nothing.
 
-### 2.8 Connection to your research, an industry example, misconceptions
+### 2.8 Connection to other domains, an industry example, misconceptions
 
 **From research.** A results table in a paper is an aggregate over runs; a reviewer asking for "the
 exact configuration of row 3" is asking for a registry. Many research codebases keep results in

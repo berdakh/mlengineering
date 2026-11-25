@@ -119,9 +119,9 @@ answers a different question and has a different cost.
 * **Smoke tests** run against the deployed process (`curl /readyz` after a deploy). They belong to the
   delivery pipeline (w6d3, w6d6), not to the unit suite, because they need a running server.
 
-Your research analogue: unit tests are checking a filter's impulse response; API tests are checking
-what the acquisition software hands to the classifier; integration tests replay a recorded session
-file end to end; a smoke test is the first minute of a live BCI session.
+An analogue from signal-processing systems: unit tests are checking a filter's impulse response; API
+tests are checking what the acquisition software hands to the classifier; integration tests replay a
+recorded session file end to end; a smoke test is the first minute of a live session.
 
 ### 2.2 The contract is the specification, not the code
 
@@ -654,9 +654,9 @@ of a request schema including non-finite numbers; test startup failure and readi
 that creates concurrency and checks isolation; explain which changes to an OpenAPI document break
 clients.
 
-**Reflection prompt.** Think of the real-time BCI or acquisition code you have written. Which state
-was shared between the acquisition thread and the processing thread, and how did you know it was
-safe? Write three sentences in `progress/notes.md` (`python wb.py note w5d5 "..."`).
+**Reflection prompt.** Think of concurrent code you have written or used (a GUI with a worker thread,
+a data-acquisition loop, a web handler). Which state was shared between threads, and how did you know
+it was safe? Write three sentences in `progress/notes.md` (`python wb.py note w5d5 "..."`).
 
 **Retrieval question (answer in a week, from memory).** A readiness probe returns 200 and `/predict`
 returns 500 for every request. Name two different defects that produce exactly this picture, and the

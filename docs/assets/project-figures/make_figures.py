@@ -1,4 +1,4 @@
-"""Figures for project/README.md, from the REAL SKAB files.
+"""Figures for docs/guides/project.md, from the REAL SKAB files.
 
     python project/get_skab.py                  # once
     python project/figures/make_figures.py      # rewrites project/figures/*.svg and prints the numbers

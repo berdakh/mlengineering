@@ -74,7 +74,7 @@ Units covered: `w3d1` leakage, `w3d2` group and temporal validation, `w3d3` hype
 threshold selection, `w3d4` point versus event evaluation, `w3d5` uncertainty, `w3d6` error analysis
 and the timed transfer exercise; the amendments at the end of
 [`docs/maintainers/flowguard-spec.md`](../maintainers/flowguard-spec.html) and the findings in
-[`project/README.md`](../guides/project.html).
+[`docs/guides/project.md`](../guides/project.html).
 
 **Alignment.** The questions and the key were checked against the final Week 3 lessons and handbook
 sections H6.1, H6.3-H6.7, H7.2 and H7.3 on 2026-11-22. Every project number quoted comes from those

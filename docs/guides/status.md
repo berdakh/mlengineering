@@ -71,7 +71,7 @@ These came out of running the material on the real data; lessons report them as 
    review. Treat explanations as carefully drafted, and report anything that looks wrong.
 2. **Python versions.** Material was executed on Python 3.13. Python 3.11 and 3.12 were covered by CI for the
    checks verification of Weeks 1-3 only; Weeks 4-8 have not run on 3.11 or 3.12 (see "CI result").
-3. **Not run on Pop!_OS.** The authoring environment is a Linux container. Pop!_OS-specific statements (system
+3. **Not run on a student laptop.** The authoring environment is a Linux container. Distribution-specific statements (system
    Python 3.10, installing Docker Engine) are from documentation sources or memory and labelled. Some timing
    checks use Unix signals and would not work on Windows.
 4. **Documentation access.** Rendered documentation sites (docs.python.org, AWS docs and pricing, RFC pages and

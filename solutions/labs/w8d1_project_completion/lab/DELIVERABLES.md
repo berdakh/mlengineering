@@ -1,13 +1,13 @@
 # Deliverables audit: reference flowguard (course solutions)
 
-Audited 2026-11-22 against the checklist in `project/README.md`. Evidence paths are relative to the course
+Audited 2026-11-22 against the checklist in `docs/guides/project.md`. Evidence paths are relative to the course
 repository, because the reference project is assembled from the milestone solutions; in your own
 repository they point at your files. Status: `done`, `partial` or `scoped out`.
 
 | Deliverable | Status | Evidence or reason |
 |---|---|---|
 | Problem statement and stakeholder needs | done | `solutions/labs/w2d4_problem_framing_splits/lab/PROBLEM_STATEMENT.md` |
-| Dataset provenance and data dictionary | done | `project/README.md` (licence, pinned commit, data dictionary) and `project/get_skab.py` (SHA-256 manifest) |
+| Dataset provenance and data dictionary | done | `docs/guides/project.md` (licence, pinned commit, data dictionary) and `project/get_skab.py` (SHA-256 manifest) |
 | Versioned split definitions | done | `solutions/labs/w3d1_leakage/lab/splits/v2.json` (frozen; supersedes v1 for the reason in w3d1) |
 | Reproducible preprocessing | done | `solutions/labs/w4d6_project_milestone_1/lab/Makefile` (`make evaluate` rebuilds the tidy table) |
 | Simple baseline | done | `solutions/labs/w2d6_baselines_metrics/lab/` and the constant / clock rows in the w2d6 lesson |

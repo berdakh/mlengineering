@@ -479,7 +479,7 @@ check("w8d4", challenge=True)
 # | SQL expected results | pandas oracle in `checks/oracle.py` | Written independently of the reference SQL; agrees on two seeds |
 #
 # Not verified: the time boxes (not trialled by a learner); behaviour on Windows (the large-input checks use
-# `signal.setitimer`, which is Unix-only, as is the course's target platform, Pop!_OS).
+# `signal.setitimer`, which is Unix-only, as are Linux and macOS; on Windows use WSL).
 
 # %% [markdown]
 # ## Record your progress

@@ -13,7 +13,7 @@ the vocabulary, the project, and interview practice.
 |---|---|
 | [Before you start](before-you-start.html) | What you need, what the course assumes, and the first session |
 | [Full schedule](schedule.html) | All 56 sessions with objective, deliverable and prerequisites |
-| [Setup](setup.html) | Local install on Linux (Pop!_OS), macOS or Windows; optional extras |
+| [Setup](setup.html) | Local install on Linux, macOS or Windows; optional extras |
 | [Colab](colab.html) | Running any notebook with no install |
 | [Cheat sheet](cheatsheet.html) | The commands you use every day |
 | [Troubleshooting](troubleshooting.html) | The failures people actually hit, and their fixes |

@@ -9,7 +9,7 @@ Contract (the checks rely on it)
 * ``score(features)`` returns one finite float per row; HIGHER = MORE anomalous. A row's score depends
   only on that row and on what ``fit`` learned, never on the other rows being scored.
 * No detector accepts a column that identifies time, the unit or the label (``FORBIDDEN``): such a
-  column lets a model learn the experimental protocol (see the elapsed-time finding in project/README.md).
+  column lets a model learn the experimental protocol (see the elapsed-time finding in docs/guides/project.md).
 """
 from __future__ import annotations
 

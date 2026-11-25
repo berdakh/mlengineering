@@ -108,7 +108,7 @@ unit("w3d3_hyperparameter_selection", "Hyperparameter and threshold selection wi
 unit("w3d4_point_vs_event_evaluation", "Point-level versus event-level evaluation for detection",
      "Implement and interpret point-wise metrics, event matching, detection delay and false alarms per hour; explain when each misleads.",
      "Tested `flowguard.evaluation` module; point vs event results table with interpretation.",
-     "w3d2 (your HFO event-evaluation experience transfers directly).", "H6.5, H7.3", path="labs/w3d4_point_vs_event_evaluation", status="Execution verified", has_checks=True)
+     "w3d2.", "H6.5, H7.3", path="labs/w3d4_point_vs_event_evaluation", status="Execution verified", has_checks=True)
 unit("w3d5_uncertainty", "Uncertainty: cluster bootstrap, paired comparisons, small-n honesty",
      "Attach defensible intervals to metrics when the independent unit is the experiment, not the sample; compare models with paired resampling.",
      "Confidence intervals and a paired comparison for the baselines, with a stated unit of resampling.",
@@ -132,7 +132,7 @@ unit("w4d2_classical_detectors", "Classical detectors: PCA/T2-Q, isolation fores
 unit("w4d3_neural_comparison", "A neural comparison, where it is justified",
      "Train a small 1D-CNN or LSTM autoencoder (PyTorch, CPU) with a fair tuning budget and multiple seeds; report seed variance.",
      "Neural result with seed variance in the comparison table; GPU optional.",
-     "w4d2; PyTorch (demonstrated in research).", "H7.6", path="labs/w4d3_neural_comparison", status="Execution verified", has_checks=True)
+     "w4d2; basic PyTorch (a training loop).", "H7.6", path="labs/w4d3_neural_comparison", status="Execution verified", has_checks=True)
 unit("w4d4_experiment_tracking", "Experiment tracking and reproducibility at the experiment level",
      "Manage many runs: sweep configs, registry of runs, aggregate results table, reproduce any row from its run id.",
      "`flowguard sweep` + results table generated from run directories (MLflow as an optional extension).",

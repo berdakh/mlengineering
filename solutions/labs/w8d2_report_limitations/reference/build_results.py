@@ -28,11 +28,11 @@ SRC = {
     "fallback": "solutions/labs/w7d5_reliability/drill_log/fallback_vs_model.json",
     "demo": "solutions/labs/w7d6_project_milestone_4/example_demo/results.json",
     "reproduction": "solutions/labs/w8d1_project_completion/real_audit/REPRODUCTION_LOG.json",
-    "project": "project/README.md",
-    "drift_lesson": "labs/w7d2_input_monitoring_drift/README.md",
-    "degradation_lesson": "labs/w7d3_drift_vs_degradation/README.md",
-    "updates_lesson": "labs/w7d4_model_updates_rollback/README.md",
-    "demo_lesson": "labs/w7d6_project_milestone_4/README.md",
+    "project": "docs/guides/project.md",
+    "drift_lesson": "docs/notebooks/38_input_monitoring_drift.md",
+    "degradation_lesson": "docs/notebooks/39_drift_vs_degradation.md",
+    "updates_lesson": "docs/notebooks/40_model_updates_rollback.md",
+    "demo_lesson": "docs/notebooks/42_project_milestone_4.md",
 }
 
 

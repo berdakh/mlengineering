@@ -170,7 +170,7 @@ Score one point each (max 6):
 **Typical first attempts and what they miss**
 
 - Shuffling *row indices* and cutting at `test_fraction` — a row split, not a group
-  split; fails criterion 1. (With your background you will not do this, but it is the
+  split; fails criterion 1. (Anyone used to grouped data will avoid this, but it is the
   single most common answer.)
 - `list(set(groups))` then shuffle — passes on one run and fails criterion 3 on another
   process because string hashing is randomised per process unless `PYTHONHASHSEED` is fixed.
@@ -1493,7 +1493,7 @@ row-level fold lets the forest look up the neighbours of each test row.
 | (d) one pump retrained monthly | time, within that pump | temporal (walk-forward) on that pump's history. Cross-pump splitting would measure something irrelevant |
 
 *Common incorrect answer:* "always split by group." The unit is derived from the deployment
-situation. (b) and (d) are the cases experienced cross-subject researchers get wrong by reflex.
+situation. (b) and (d) are the cases people used to subject-wise splits get wrong by reflex.
 
 ### Q3
 

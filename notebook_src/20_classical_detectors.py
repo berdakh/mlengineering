@@ -197,12 +197,12 @@ print("repo root:", REPO_ROOT)
 # A comparison that tunes one model for a week and runs the other with defaults compares the effort, not
 # the models. So does one that gives a detector access to a feature the others lack.
 #
-# ### 2.6 Connection to your EEG work
+# ### 2.6 Connection to other domains
 #
-# PCA/ICA artefact removal is the same geometry: components that capture the usual co-variation of
-# channels, and a residual that carries what does not fit. Cross-subject decoding is protocol B: a
+# PCA/ICA artefact removal in multichannel recordings (EEG is the textbook case) is the same geometry: components that capture the usual co-variation of
+# channels, and a residual that carries what does not fit. Cross-subject decoding in such studies is protocol B: a
 # classifier trained on some subjects' patterns of a condition may not transfer to a new subject's, and
-# you would not report within-subject accuracy as the cross-subject result. What is new is treating the
+# within-subject accuracy must not be reported as the cross-subject result. What is new is treating the
 # *fault mechanism* as the unit of generalisation, alongside the experiment.
 #
 # ### 2.7 Industry example
@@ -617,8 +617,9 @@ check("w4d2", challenge=True)
 # * design and run a comparison that holds features, budget, threshold rule and evaluation equal;
 # * argue from a second protocol whether labels support a supervised framing.
 #
-# **Reflection prompt** (5 minutes, in `progress/notes.md`). Think of a cross-subject result in your
-# research. If you had reported only the within-subject number, which decision would have been wrong?
+# **Reflection prompt** (5 minutes, in `progress/notes.md`). Think of a result that had to generalise to new
+# people, machines or sites. If only the within-group number had been reported, which decision would have
+# been wrong?
 # What is the "protocol B" of the system you most want to build next?
 #
 # **Retrieval question for later** (review day): a PCA detector with `k` chosen to keep 99% of the

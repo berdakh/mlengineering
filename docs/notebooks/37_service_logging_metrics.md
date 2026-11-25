@@ -256,11 +256,11 @@ writing this section; 422 and 404 *do* come back as responses, because their han
 worker, so counters look halved with two workers. `prometheus_client` has a multiprocess mode for this;
 it is not used here, and the extension asks you to observe the effect.
 
-### 2.7 Connection to your research
+### 2.7 Connection to other domains
 
-Your BCI and iEEG recordings already follow the right pattern at a different scale: each trial or
-recording carries a metadata record (subject, session, montage, paradigm, software version) that is stored
-next to the signal and is what you filter on later. A trial id that links stimulus log, amplifier stream
+Well-run lab experiments already follow the right pattern at a different scale: each trial or
+recording carries a metadata record (subject, session, settings, protocol, software version) that is stored
+next to the data and is what you filter on later. A trial id that links stimulus log, sensor stream
 and classifier output is a correlation id. What changes in a service: events arrive continuously from
 many sources, nobody reads them unless something is wrong, and the volume forces summaries (metrics)
 rather than complete records.
@@ -655,7 +655,7 @@ gauge whose bookkeeping survives unhandled exceptions; keep label cardinality bo
 quantile from buckets and say when it is exact; and turn an SLO into an error budget and a multi-window
 paging rule.
 
-**Reflection prompt.** In your last research system, which question about a past run could you not
+**Reflection prompt.** In the last system or project you worked on, which question about a past run could you not
 answer because nothing recorded it? Which of the fields in this lesson's prediction event would have
 answered it?
 

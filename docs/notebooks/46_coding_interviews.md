@@ -486,7 +486,7 @@ Executed on 2026-11-25, Python 3.13.18, SQLite 3.53.1, pandas 3.0.5, matplotlib 
 | SQL expected results | pandas oracle in `checks/oracle.py` | Written independently of the reference SQL; agrees on two seeds |
 
 Not verified: the time boxes (not trialled by a learner); behaviour on Windows (the large-input checks use
-`signal.setitimer`, which is Unix-only, as is the course's target platform, Pop!_OS).
+`signal.setitimer`, which is Unix-only, as are Linux and macOS; on Windows use WSL).
 
 ## Record your progress
 

@@ -31,7 +31,7 @@ should trust the numbers."*
 3. Use your own project's numbers if you have them by heart. If you have not yet produced a number,
    say so in the answer ("I have not measured X yet") rather than leaving it out. The course's
    reference numbers (frozen split v2: 7 test, 27 development experiments) are in the Week 3-4
-   lessons and in `project/README.md`; quoting those is acceptable, as long as you say they are the
+   lessons and in `docs/guides/project.md`; quoting those is acceptable, as long as you say they are the
    reference runs and not yours.
 4. Listen to the recording once, with the rubric in `solutions/interview/set4.md` (part A, E1) in
    front of you, and tick what you actually said. Score what is on the recording, not what you meant.

@@ -14,7 +14,7 @@ import pandas as pd
 
 REFERENCE_FAMILY = "anomaly-free"
 
-# Connected components of "these two files contain identical rows" on SKAB v0.9 (project/README.md).
+# Connected components of "these two files contain identical rows" on SKAB v0.9 (docs/guides/project.md).
 SKAB_OVERLAP_GROUPS: tuple[frozenset[str], ...] = (
     frozenset({"anomaly-free/anomaly-free", "other/5"}),
     frozenset({"other/12", "other/13"}),

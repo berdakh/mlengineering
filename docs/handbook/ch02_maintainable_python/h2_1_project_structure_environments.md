@@ -334,10 +334,10 @@ python -c "import sys; print(sys.prefix != sys.base_prefix, sys.executable)"
 Use `python -m pip …` rather than bare `pip …`. `pip` on your `PATH` may belong to a
 different interpreter than `python` on your `PATH`; `python -m pip` cannot.
 
-### 4.2 Getting a newer interpreter (Pop!_OS / Ubuntu)
+### 4.2 Getting a newer interpreter (Ubuntu and derivatives)
 
 The course packages declare `requires-python = ">=3.11"` (they use `tomllib` from the
-standard library). Pop!_OS 22.04, like Ubuntu 22.04, ships Python 3.10 as `python3`.
+standard library). Ubuntu 22.04 and derivatives built on it (for example Pop!_OS or Mint 21) ship Python 3.10 as `python3`.
 Never replace or upgrade the system interpreter — the OS depends on it. Add another one:
 
 - **uv (shortest route).** uv downloads standalone CPython builds into your home
@@ -593,7 +593,7 @@ official documents** were read from their GitHub repositories:
 
 **Not re-verified this session (stated from prior knowledge — check before relying on them):**
 
-- Pop!_OS 22.04 shipping Python 3.10 as the system interpreter; the `python3-venv`
+- Ubuntu 22.04 (and derivatives) shipping Python 3.10 as the system interpreter; the `python3-venv`
   package requirement on Debian/Ubuntu; the deadsnakes PPA as a source of newer
   interpreters.
 - The `externally-managed-environment` error (PEP 668) and on which distribution

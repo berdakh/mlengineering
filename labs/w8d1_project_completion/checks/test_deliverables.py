@@ -1,4 +1,4 @@
-"""lab/DELIVERABLES.md must account for every deliverable in project/README.md."""
+"""lab/DELIVERABLES.md must account for every deliverable in docs/guides/project.md."""
 from __future__ import annotations
 
 import re
@@ -11,7 +11,7 @@ STATUSES = {"done", "partial", "scoped out"}
 
 
 def project_deliverables() -> list[str]:
-    text = (ROOT / "project" / "README.md").read_text()
+    text = (ROOT / "docs" / "guides" / "project.md").read_text()
     section = text.split("## Deliverables checklist", 1)[1].split("\n## ", 1)[0]
     rows = [r for r in section.splitlines() if r.startswith("|")][2:]
     return [r.split("|")[1].strip() for r in rows]

@@ -103,7 +103,7 @@ def main(argv=None) -> int:
             "Assumes the first 100 rows of a run are normal; a run that starts faulty becomes its own baseline.",
             "At the 1-per-8-h alert budget it detected 5 of 7 test faults; silence is not proof of health.",
         ],
-        "training_data": {"source": "SKAB v0.9 (GPL-3.0), see project/README.md", "manifest": "splits/v2.json",
+        "training_data": {"source": "SKAB v0.9 (GPL-3.0), see docs/guides/project.md", "manifest": "splits/v2.json",
                           "manifest_sha256": hashlib.sha256(MANIFEST.read_bytes()).hexdigest(),
                           "development_experiments": int(dev["experiment_id"].nunique())},
         "evaluation": {

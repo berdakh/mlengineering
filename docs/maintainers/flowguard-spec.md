@@ -53,7 +53,7 @@ Config and run directories follow lesson w1d4 (`configs/*.toml`, `runs/<run_id>/
 
 ## Amendments after Week 2 (binding for Week 3 onward)
 
-Facts found on the real files (see `project/README.md`, "Findings from the Week 1-2 lessons"):
+Facts found on the real files (see `docs/guides/project.md`, "Findings from the Week 1-2 lessons"):
 
 * Five pairs of files share identical rows (1,290 rows, 235 with contradictory labels). Overlap groups
   (connected components): `{anomaly-free/anomaly-free, other/5}`, `{other/12, other/13}`,

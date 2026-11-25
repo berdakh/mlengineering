@@ -92,9 +92,9 @@ print("repo root:", REPO_ROOT)
 # structurally blind to the bug. Only a guard that compares raw values with the range seen in development
 # data notices it.
 #
-# You already know this distinction from iEEG work: a disconnected electrode is "down", a saturated
-# amplifier is "silently wrong", and an artefact-rejection stage that marks epochs rather than deleting them
-# is the research equivalent of `out_of_support`.
+# Any measurement system shows this distinction: a disconnected sensor is "down", a saturated amplifier is
+# "silently wrong", and a quality-control stage that flags bad segments rather than deleting them is the
+# lab equivalent of `out_of_support`.
 #
 # ### 2.2 Defensive layers, from the edge inwards
 #
@@ -595,8 +595,8 @@ check("w7d5", challenge=True)
 # bounded, jittered, honours `Retry-After`, keeps one idempotency key and never retries 4xx; and prove each
 # behaviour with a failure-injection test.
 #
-# **Reflection prompt.** In your own past real-time BCI or acquisition systems, which failure was "silently
-# wrong" rather than "down"? What guard would have made it visible within a minute?
+# **Reflection prompt.** In a system you have built or used (an app, a sensor setup, a data pipeline), which
+# failure was "silently wrong" rather than "down"? What guard would have made it visible within a minute?
 #
 # **Retrieval question (for the w7d7 review).** A colleague's service returns `500` when its model raises,
 # its client retries every non-2xx response three times with a fixed 1 s delay, and `/healthz` loads the

@@ -79,7 +79,7 @@ dependencies on every commit, or bakes in a `.env` file. Each of those mistakes 
 * [w5d6](30_project_milestone_2.html): the API and the model bundle. This lab ships a
   snapshot of the Week 5 service (`flowguard` 0.6.0) so it runs even if your milestone is unfinished.
 * [w1d4](04_config_logging.html): configuration through the environment; secrets never in files.
-* For the live parts: Docker Engine on your laptop (section 4.0 has the Pop!_OS notes). Without
+* For the live parts: Docker Engine on your laptop (section 4.0 has the Linux install notes). Without
   Docker you can still do the whole guided lab: the checks are static.
 
 **Time budget (2 h essential + optional extension up to 1 h).**
@@ -203,14 +203,14 @@ to show a smoke test failing). Configuration that differs between environments g
 variables (w1d4). **Secrets never go into the Dockerfile, the context or an `ENV`**: anyone who can
 pull the image can read every layer and `docker image inspect` shows every `ENV`.
 
-### 2.8 Connection to what you already know
+### 2.8 Connection to other domains
 
 A container is the deployment-time version of a frozen research environment: the conda environment
-and the exact analysis code behind a paper figure. What changes is the bar. A reviewer of a paper
-reruns your analysis once; an orchestrator starts, stops and replaces your container hundreds of
+and the exact analysis code behind a paper figure. What changes is the bar. Someone checking a paper
+reruns the analysis once; an orchestrator starts, stops and replaces your container hundreds of
 times, and expects it to start in seconds, stop on request, report readiness and contain nothing it
-does not need. Real-time BCI work is the closest analogue you have: a process that must start and stop
-cleanly on command and must not hold the amplifier when killed. SIGTERM handling is that, for servers.
+does not need. Real-time lab software is a close analogue: a process that must start and stop cleanly
+on command and must not keep hold of its hardware when killed. SIGTERM handling is that, for servers.
 
 ### 2.9 An industry example
 
@@ -390,13 +390,13 @@ builds `COPY . /ctx` into a busybox image and lists what arrived. The lab's chec
 Work in `labs/w6d1_docker_basics/lab/`. It already contains the Week 5 service snapshot; you write
 `Dockerfile`, `.dockerignore` and `run_container.sh` (table in `lab/README.md`).
 
-### 4.0 Docker on Pop!_OS (once; skip if `docker info` works)
+### 4.0 Installing Docker Engine on Linux (once; skip if `docker info` works)
 
-Docker's documentation installs Docker Engine on Ubuntu from Docker's own `apt` repository. Pop!_OS is
-an Ubuntu derivative, which that page says is "not officially supported (though it may work)"; its
-repository snippet uses `UBUNTU_CODENAME`, which Pop!_OS sets, so the Ubuntu instructions are the ones
+Docker's documentation installs Docker Engine on Ubuntu from Docker's own `apt` repository. For derivatives such as Pop!_OS or Mint
+that page says they are "not officially supported (though it may work)"; its
+repository snippet uses `UBUNTU_CODENAME`, which most derivatives set, so the Ubuntu instructions are the ones
 to follow: <https://docs.docker.com/engine/install/ubuntu/>, then the post-installation page for
-running `docker` without `sudo`. Not verified on Pop!_OS by the course author. Read the warning at the
+running `docker` without `sudo`. Not verified on every distribution by the course author. Read the warning at the
 top of that page: ports published by Docker bypass `ufw`. Podman (`sudo apt install podman`) is a
 daemonless alternative that reads the same Dockerfiles; the commands here use `docker`.
 
@@ -747,8 +747,8 @@ cache-friendly layer order, an unprivileged user, exec-form command, healthcheck
 a root-anchored `.dockerignore`; publish a port on loopback only; and diagnose "exits immediately",
 "not reachable", "not ready" and "slow to stop" from `docker logs`, `docker ps` and `docker inspect`.
 
-**Reflection prompt (5 minutes, in `progress/notes.md`).** Which of your research environments could
-you rebuild exactly today, from files alone? What would a Dockerfile for your last paper's analysis
+**Reflection prompt (5 minutes, in `progress/notes.md`).** Which of your project environments could
+you rebuild exactly today, from files alone? What would a Dockerfile for your last project's analysis
 have needed to contain, and what would it still not have captured?
 
 **Retrieval question for later (answer in w6d7 without looking).** A colleague's container takes 10 s
@@ -784,7 +784,7 @@ uvicorn 0.54.0, pydantic 2.13.5, NumPy 2.5.3, pandas 3.0.5 inside the image.
 * Docker behaviour was checked against the Dockerfile reference (moby/buildkit
   `frontend/dockerfile/docs/reference.md`) and docker/docs (build context, best practices, Ubuntu
   install); pages listed in H12.1.
-* Not verified: Pop!_OS itself, Podman, Docker Desktop, Python 3.11/3.12 for running the checks
+* Not verified: Ubuntu derivatives such as Pop!_OS or Mint, Podman, Docker Desktop, Python 3.11/3.12 for running the checks
   locally, the time budget.
 
 ## Record your progress

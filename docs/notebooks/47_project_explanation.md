@@ -59,10 +59,10 @@ adversarial questions about evaluation, limitations and alternatives with eviden
 reassurance.
 
 **Why an applied ML engineer needs it.** In most interview loops the project discussion is where a
-candidate with research experience wins or loses. Interviewers rarely ask "what is a z-score?"; they
+candidate wins or loses. Interviewers rarely ask "what is a z-score?"; they
 ask "why didn't you ship the model with the best test score?" and listen for whether you know where
-your evidence ends. At work the same skill decides whether your recommendation is adopted. You have
-given many conference talks; the difference here is the listener: an engineer or manager who wants
+your evidence ends. At work the same skill decides whether your recommendation is adopted. Compared with a
+class presentation or a conference talk, the difference is the listener: an engineer or manager who wants
 the decision, the cost and the risk in five minutes, then pushes on the weakest point.
 
 **Deliverable.** In `lab/`: written answers to twenty hard questions (`ANSWERS.md`), a 30-second
@@ -74,7 +74,7 @@ scored in `SELF_SCORE.md`.
 * `python wb.py check w8d5` passes (structure: all answers present, spoken length, cited artifacts exist).
 * One recording of the 5-minute walkthrough, self-scored against the rubric in assessment.md (section 7 of this notebook).
 * Independent skill: `python wb.py check w8d5 --challenge` passes for a walkthrough of one of *your
-  own* research projects and five adversarial answers, written without opening the hints.
+  own* projects and five adversarial answers, written without opening the hints.
 
 **Prerequisites.** [w8d2](44_report_limitations.html) (technical report and limitations) and
 the project milestones; the numbers you quote must come from your own runs. Assumed: you can present;
@@ -158,12 +158,12 @@ experiments, the test set was looked at once, and the chosen model is clearly ab
 * **Adversarial question** - one aimed at a real weakness; distinct from a clarifying question, which
   you answer directly.
 
-### 2.5 Connection to what you know
+### 2.5 Connection to other domains
 
-Your conference talks follow a related arc (motivation, methods, results, discussion), but reviewers
+Academic talks and theses follow a related arc (motivation, methods, results, discussion), but reviewers
 reward novelty and a significant result, while an engineering audience rewards a correct decision
 under constraints and a clear account of risk. Two habits transfer directly: stating the unit of
-analysis (patients there, experiments here) and reporting per-unit results. One habit must be
+analysis (participants in a study, experiments here) and reporting per-unit results. One habit must be
 dropped: leading with the method. In industry the method is the third thing you mention, after the
 problem and the constraint.
 
@@ -260,10 +260,10 @@ check("w8d5")
 
 ## 5. Independent challenge
 
-Translate one of **your own** research projects (a study you led; EEG/iEEG or other) into the same
-structure, plus a translation to industry, and answer five adversarial questions about it. Details
+Translate one of **your own** projects (a thesis, course or research project, or a work project) into
+the same structure, plus a translation to industry, and answer five adversarial questions about it. Details
 and acceptance criteria: [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d5_project_explanation/challenge/README.md). Do not use numbers you cannot
-source; where your paper reported no interval, say so.
+source; where your report gave no interval, say so.
 
 
 ### The challenge brief
@@ -271,7 +271,8 @@ source; where your paper reported no interval, say so.
 
 **Independent. No hints, no solutions until you have finished.**
 
-Pick one research project you led (an EEG/iEEG or BCI study is ideal). In `challenge/`:
+Pick one project you led or contributed to substantially (a thesis, course or research project, or a
+work project). In `challenge/`:
 
 1. `RESEARCH_WALKTHROUGH.md` - a 5-minute walkthrough with the six beats (Problem, Constraint,
    Decision, Evidence, Limitation, Next step; 550-800 words in those six sections, each at least 40),
@@ -283,7 +284,7 @@ Pick one research project you led (an EEG/iEEG or BCI study is ideal). In `chall
    `## A5`), each answered with lines starting `Question:`, `Concede:`, `Quantify:`, `Redirect:`;
    each answer at most 120 words.
 
-Rules: use only numbers you can source from your paper or data. If the study reported no interval,
+Rules: use only numbers you can source from your report or data. If the project reported no interval,
 write "no interval" and why, rather than inventing one. Do not include unpublished or confidential
 details you would not say in an interview.
 
@@ -328,13 +329,13 @@ true part first is not weakness - it is what makes the rest of your answer credi
 <summary><b>Hint 2 approach</b></summary>
 
 
-1. List your artifacts first (`project/README.md`, your report, decision table, test outputs). For each
+1. List your artifacts first (`docs/guides/project.md`, your report, decision table, test outputs). For each
    of the twenty questions, write the artifact path before the answer. A question with no artifact is
    a gap: say what you would need, do not fill it with confidence.
 2. Draft the 5-minute script at about 100 words per beat, then cut to fit 550-800 words. Run
    `example/script_lint.py` and look at the Evidence warnings: every number needs its comparison and
    uncertainty nearby.
-3. For the research challenge, map the study onto flowguard's vocabulary: unit of independence,
+3. For your own project, map it onto flowguard's vocabulary: unit of independence,
    event, error costs, decision. Then list what an engineering role adds: packaging, serving,
    monitoring, updates, rollback, on-call.
 4. Record before polishing. The first recording shows where you hesitate; those are the beats to
@@ -361,10 +362,10 @@ And the Evidence beat of a 5-minute script:
 > false-alarm events; on development data its PR-AUC was 0.76 [0.68, 0.84], level with the supervised
 > alternative within the interval, at a fraction of the cost.
 
-For the research challenge, the Translation section starts like this:
+For your own project, the Translation section starts like this (example for a medical-signal study):
 
 > The same structure is equipment monitoring with few machines: the machine is the patient, a fault
-> is a seizure, the allowed detection delay is the onset tolerance ...
+> is a clinical event, the allowed detection delay is the onset tolerance ...
 
 </details>
 

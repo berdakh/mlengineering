@@ -18,9 +18,9 @@ nav_order: 3
 python3 --version
 ```
 
-Pop!_OS 22.04 ships Python 3.10, which is too old (the labs use `tomllib`, added in 3.11). Options,
+Ubuntu 22.04 and the distributions built on it ship Python 3.10, which is too old (the labs use `tomllib`, added in 3.11). Options,
 explained in [handbook H2.1](../handbook/ch02_maintainable_python/h2_1_project_structure_environments.html):
-upgrade to Pop!_OS 24.04 (Python 3.12), install a newer interpreter with `uv python install 3.12`,
+upgrade to a release that ships 3.11+ (for example Ubuntu 24.04, Python 3.12), install a newer interpreter with `uv python install 3.12`,
 or use a distribution package for a newer Python. Everything here was executed on Python 3.13.
 
 ## 2. Clone and install
@@ -55,7 +55,7 @@ SKAB is GPL-3.0; it is downloaded from its source and never committed to this re
 | For | Install |
 |---|---|
 | Notebook 21 (neural comparison) | `pip install -r requirements-neural.txt` (CPU-only PyTorch is enough) |
-| Notebooks 31-36 (containers, CI, delivery) | Docker Engine: follow Docker's official instructions for Ubuntu, which Pop!_OS is based on |
+| Notebooks 31-36 (containers, CI, delivery) | Docker Engine: follow Docker's official instructions for your system (Docker Desktop on macOS and Windows) |
 | Notebook 35 live step (optional) | An AWS account, the AWS CLI v2, and the notebook's cost and credential briefing first |
 | The study app | `pip install -r requirements-app.txt`, then `streamlit run app/study_app.py` |
 

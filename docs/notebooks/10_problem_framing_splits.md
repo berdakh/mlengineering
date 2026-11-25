@@ -76,12 +76,12 @@ freeze the evaluation splits for the portfolio project in a versioned manifest t
 **Why an applied ML engineer needs it.** Most failed ML projects fail before any model is trained:
 the wrong thing is predicted, at a time when it cannot be acted on, measured by a number nobody's
 decision depends on. In interviews, "how would you approach X?" is this lesson; candidates who jump
-to architectures are marked down for it. For you specifically: your research gave you the task
+to architectures are marked down for it. Coursework and research usually hand you the task
 pre-framed (a benchmark, a label file, a community-standard metric). In industry you write the frame.
 
 **Prerequisites.** [W2D3](09_data_quality_ingestion.html) (ingestion; the lab ships the `flowguard.data`
 snapshot it needs, so you can proceed without it) and the downloaded SKAB files. From Week 1: a
-src-layout package and pytest. Your subject-wise evaluation experience is assumed, not re-taught.
+src-layout package and pytest. Grouped evaluation is introduced here and deepened in Week 3.
 
 **Time budget — essential path 2 h**
 
@@ -177,9 +177,11 @@ most a means). Protocol B in the split exists precisely to test the classificati
 <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-10-02.svg" alt="Diagram 2 of notebook 10" style="max-width:100%">
 
 
-### 2.5 From EEG to equipment, and where the analogy breaks
+### 2.5 From medical event detection to equipment, and where the analogy breaks
 
-| Seizure / HFO detection | Fault detection on SKAB | Where it breaks |
+A well-studied neighbour is seizure detection in EEG recordings. Comparing the two frames:
+
+| Seizure detection (EEG) | Fault detection on SKAB | Where it breaks |
 |---|---|---|
 | Patient is the unit of generalisation | Experiment (recording) is the unit | All SKAB recordings come from *one* testbed. There is no analogue of "new patient": cross-installation generalisation cannot be tested at all |
 | Expert annotation of onset, with inter-rater disagreement | Label marks when the experimenter applied the cause | The protocol timestamp precedes the visible effect; early "positives" may be undetectable in principle |
@@ -743,7 +745,7 @@ it with the data they already have, and which direction the reported number woul
 in 15 minutes; name the unit of generalisation and derive the split from it; explain why a manifest
 beats a seed; say what the test set of your project can and cannot resolve.
 
-**Reflection (3 minutes, in `progress/notes.md`).** Take one of your published studies. What was the
+**Reflection (3 minutes, in `progress/notes.md`).** Take one study or project you know well. What was the
 decision it supported, and what would a product manager say was missing from its evaluation?
 
 **Retrieval question (answer on the Week 2 review day, from memory).** A recording has 1,100 samples

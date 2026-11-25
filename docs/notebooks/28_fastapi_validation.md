@@ -68,7 +68,7 @@ another language, can use it correctly without reading your code: a published sc
 constraints, status codes that tell the client what to do next, one error body for every failure, a
 model loaded once at startup, and endpoints that let a load balancer tell "alive" from "ready".
 
-**Why an applied ML engineer needs it.** The API is a trust boundary. Inside your research code every
+**Why an applied ML engineer needs it.** The API is a trust boundary. Inside a notebook or a research script every
 input came from you; behind an API it comes from anyone, including a client that sends flow in m³/s
 instead of L/min, a sentinel value of -9999, `NaN`, a field name with a typo, or ten million rows.
 Every one of those becomes either a precise 4xx that the client can act on, or a silently wrong
@@ -177,15 +177,15 @@ Sanity limits are not the training distribution. `flow_rate` must be in [0, 500]
 outside is a unit error or a broken sensor, not an anomaly. Values that are physically possible but
 unlike training data are the detector's business (that is what it scores) and monitoring's (week 7).
 
-### 2.5 Connection to what you already know
+### 2.5 Connection to other domains
 
-In a closed-loop BCI, the acquisition software, the decoder and the feedback display trust each other:
-you wrote all three, and a malformed packet is a bug you fix in the lab. An API removes that trust.
-The closest research analogue is a shared dataset in BIDS format: a validator rejects files that do
+Inside one program, the components trust each other: the same person wrote all of them, and a malformed
+value is a bug fixed on the spot. An API removes that trust. A familiar analogue is a shared dataset
+with a published format (for example BIDS in neuroimaging, or a CSV schema in a data team): a validator rejects files that do
 not match the specification before anyone analyses them, and its messages name the file and field.
 `extra="forbid"` is the equivalent of rejecting an unknown sidecar key instead of silently ignoring
 it. And the difference between "the recording is malformed" (422) and "the recording is valid but the
-event markers are out of order" (400) is one you already make when curating data.
+event markers are out of order" (400) is one every careful data curator makes.
 
 ### 2.6 An industry example
 
@@ -670,8 +670,8 @@ The rubric and a model answer are in the answers file.
   internals;
 * test all of it in process with `TestClient`, and smoke-test it with uvicorn bound to localhost.
 
-**Reflection prompt (5 minutes, in `progress/notes.md`).** Which input errors did your research
-pipelines catch, and where (at acquisition, at analysis, never)? Which of them would become a 422, a
+**Reflection prompt (5 minutes, in `progress/notes.md`).** Which input errors did a data pipeline you
+have built or used catch, and where (at acquisition, at analysis, never)? Which of them would become a 422, a
 400 or a silent wrong answer behind this API?
 
 **Retrieval question for later (answer in w5d7 without looking).** A load balancer keeps sending

@@ -68,8 +68,8 @@ part of that standard.
 **Why an applied ML engineer needs it.** Most of the value of an evaluation is lost between the results file and
 the reader. Reviewers, managers and interviewers read the report, not the code. The habits that make a report
 trustworthy (generated numbers, intervals with their unit, claims no stronger than the evidence, limitations with
-consequences) are also the ones that are easiest to drop under time pressure. You already know this from peer
-review; the industry difference is that the reader often cannot ask a follow-up question before acting.
+consequences) are also the ones that are easiest to drop under time pressure. Peer review teaches the same
+habits; the industry difference is that the reader often cannot ask a follow-up question before acting.
 
 **Deliverables.**
 * `report/check_report.py` (lab), passing `python wb.py check w8d2`.
@@ -177,12 +177,12 @@ analysis, so its numbers come from the same results file.
 
 The checker is a linter. The rubric and a human reviewer judge the rest; the challenge practises being that reviewer.
 
-### 2.7 Connection to your research background
+### 2.7 Connection to other domains
 
 The structure is a paper's, compressed: problem, data, methods, results, discussion. The differences are the
 reader (a decision-maker, not a referee), the decision section (what to do now), the serving and monitoring
 section (the model keeps running after the report), and the expectation that a reader can regenerate every number.
-Your instinct for limitations from cross-subject EEG work transfers directly: "evaluated on 7 recordings from one
+The limitations sections of clinical and scientific papers transfer directly: "evaluated on 7 recordings from one
 testbed" is the same sentence as "evaluated on 9 patients from one centre".
 
 ### 2.8 An industry example

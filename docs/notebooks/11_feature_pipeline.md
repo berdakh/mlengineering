@@ -81,7 +81,7 @@ parameters?" has to be answerable without re-reading the code.
 **Prerequisites.** [w2d4](10_problem_framing_splits.html) split manifest (a snapshot of
 `flowguard.splits` is in the lab starter); [w1d5](05_testing_ml_code.html) for the
 metamorphic-test idea used throughout; [w1d4](04_config_logging.html) for provenance.
-You have computed sliding-window features on EEG for years; that is assumed, not taught.
+Basic sliding-window statistics (mean, standard deviation) are assumed; their pitfalls are taught here.
 
 **Time budget — essential path 2 h**
 
@@ -113,10 +113,10 @@ the value used at time *t* can depend only on `x[..t]`. A feature that satisfies
 averages, zero-phase filtering, whole-recording z-scoring, interpolation across a gap,
 `df[col].rolling(w)` on a table holding several recordings.
 
-You already hold the two halves of this idea. Offline EEG analysis uses `filtfilt`
+Signal processing has the two halves of this idea. Offline analysis often uses `filtfilt`
 (zero-phase, non-causal: each output sample depends on the whole recording), while a real-time
-BCI loop must use a causal filter and accept its group delay. An offline pipeline evaluated
-with `filtfilt` features overstates what the online decoder will do. Rolling features on
+system must use a causal filter and accept its group delay. An offline pipeline evaluated
+with `filtfilt` features overstates what the online system will do. Rolling features on
 sensor data are the same problem with a different name, and in industry the "online loop" is
 the normal case rather than the special one.
 
@@ -167,7 +167,7 @@ latency. Two corrections matter in practice:
    window holds roughly `w(1-φ)/(1+φ)` *effective* samples. With φ = 0.9 a 60-sample window is
    worth about three independent samples (measured in the worked example: 3.7). Equation (2)
    then overstates the noise suppression badly. This is the same effective-sample-size
-   reasoning you apply when overlapping EEG epochs are not independent trials.
+   reasoning that applies whenever overlapping windows are treated as independent trials.
 2. **Centred windows.** Shifting the window `w/2` into the future changes (1) to
    `w·θ/Δ − w/2`. For θ < Δ/2 that is *negative*: the alert precedes the fault. Offline this
    reads as an excellent detector. It is a detector that cannot be built.
@@ -227,7 +227,7 @@ accelerometer and flow rate). The reference recording was taken at a different o
 point. A z-score against it mostly measures "which recording is this". Fitting on the normal rows of
 *training experiments* is the defensible default for a split by experiment; per-recording
 calibration on an initial normal period is another option with its own assumptions (it is what
-a BCI session calibration does). Choosing among them is evaluation work for
+a per-session calibration does in many sensor systems). Choosing among them is evaluation work for
 [w2d6](12_baselines_metrics.html) and Week 3. What this unit fixes is the mechanism, so the
 choice is one argument to `fit` and not a property scattered through the code.
 
@@ -774,8 +774,8 @@ tradeoff with equations (1) and (2) and say when (2) is wrong; separate fitting 
 feature statistics; give a feature table an identity.
 
 **Reflection prompt (5 min, write it in `python wb.py note w2d5 "..."`).** Think of one feature
-pipeline from your own EEG work. Which step was non-causal? Did the evaluation that used it
-correspond to something that could run online, and did the paper say so?
+pipeline you have built or read about. Which step was non-causal? Did the evaluation that used it
+correspond to something that could run online, and did the write-up say so?
 
 **Retrieval question for the review day (answer from memory):** A colleague's rolling z-score
 "improves a lot" when computed with `df.groupby("unit").transform(lambda s: (s - s.mean()) / s.std())`.

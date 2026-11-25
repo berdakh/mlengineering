@@ -176,7 +176,7 @@ than data accumulates.
 
 | Claim or content | Source | Status |
 |---|---|---|
-| SKAB structure used in the examples (labels, families, fault-free recording) | upstream README and data at commit `b2c0d46`; measured facts in `project/README.md` | opened and computed this session |
+| SKAB structure used in the examples (labels, families, fault-free recording) | upstream README and data at commit `b2c0d46`; measured facts in `docs/guides/project.md` | opened and computed this session |
 | Grouped and time-ordered data violate the i.i.d. assumption behind plain cross-validation | scikit-learn user guide, "Cross-validation" (`doc/modules/cross_validation.rst`, read from the GitHub source) | opened this session |
 | Goodhart's law (phrasing commonly attributed to Strathern's restatement) | general knowledge | from memory, not re-verified |
 | Uplift modelling as the causal target behind retention | standard marketing-analytics literature | from memory; no specific citation given deliberately |

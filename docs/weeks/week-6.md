@@ -31,7 +31,7 @@ Six core days of about **2 hours** each (plus an optional hour), and one lighter
 
 ## What each day is for
 
-**Day 1 — Docker I: images, layers and a correct Dockerfile.** Explain what an image and container are; write a Dockerfile for the API (non-root, .dockerignore, cache-friendly layer order) and run it locally. *Prerequisites:* w5d6; Docker Engine installed on Pop!_OS.
+**Day 1 — Docker I: images, layers and a correct Dockerfile.** Explain what an image and container are; write a Dockerfile for the API (non-root, .dockerignore, cache-friendly layer order) and run it locally. *Prerequisites:* w5d6; Docker Engine installed (Linux, macOS or Windows).
 
 **Day 2 — Docker II: pinned dependencies, multi-stage builds, smoke tests.** Make the environment reproducible (lockfile, pinned base image digest), reduce image size, and smoke-test the container. *Prerequisites:* w6d1.
 

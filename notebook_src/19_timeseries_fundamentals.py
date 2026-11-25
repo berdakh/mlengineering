@@ -68,8 +68,8 @@ print("repo root:", REPO_ROOT)
 # **Prerequisites.** Week 3, in particular the frozen split manifest from
 # [w3d1](13_leakage.ipynb), event-level metrics from [w3d4](16_point_vs_event_evaluation.ipynb)
 # and the cluster bootstrap from [w3d5](17_uncertainty.ipynb). The lab ships snapshots of all
-# three, plus the w2d6 baselines. Assumed: you have fitted AR models or used prediction-error methods on
-# EEG, and you know least squares.
+# three, plus the w2d6 baselines. Assumed: you know least squares; autoregressive models are introduced
+# here.
 #
 # **Time budget (2 h essential).**
 #
@@ -237,11 +237,11 @@ print("repo root:", REPO_ROOT)
 # one, and that is exactly why it detects the shift). Do not frame this project as forecasting: the
 # labels and the stakeholder need do not support it (w2d4).
 #
-# ### 2.7 Connection to your EEG work
+# ### 2.7 Connection to other domains
 #
-# AR models are old friends in EEG: AR spectral estimation, AR coefficients as features for BCI
-# classification, prediction-error and adaptive-filter approaches to seizure onset, and
-# "non-linear prediction error" measures. Two differences matter here. First, EEG models are usually
+# AR models are standard in signal processing and econometrics: AR spectral estimation, AR coefficients as
+# features for classification, and prediction-error methods for detecting onsets (in biomedical signals,
+# speech, seismology). Two differences matter here. First, such models are often
 # refitted continuously on sliding windows, which turns the detector into a change detector (the naive
 # case above). Second, the clinical question is often onset, where change detection is what you want;
 # the plant reliability question is often state ("is it still faulty?"), where the model must not adapt.
@@ -682,8 +682,8 @@ check("w4d1", challenge=True)
 # * set up a CUSUM chart and explain the roles of `k`, `h` and `ARL₀`;
 # * report a forecast-residual detector under the Week 3 protocol and interpret the result honestly.
 #
-# **Reflection prompt** (5 minutes, in `progress/notes.md`). In your EEG work, did your models adapt
-# continuously (sliding-window refits)? Which kind of event could they therefore not see, and did the
+# **Reflection prompt** (5 minutes, in `progress/notes.md`). In a time-series model you have built or used,
+# did the model adapt continuously (sliding-window refits)? Which kind of event could they therefore not see, and did the
 # evaluation reveal it?
 #
 # **Retrieval question for later** (review day): a sensor has lag-1 autocorrelation 0.8 and you have

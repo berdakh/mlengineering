@@ -10,7 +10,7 @@ MAX_SAMPLES = 5000            # one SKAB run has 745-1,327 rows; a full hour at 
 MACHINE_ID_PATTERN = r"^[A-Za-z0-9][A-Za-z0-9_./-]{0,63}$"
 
 # Sanity limits: physically plausible for the testbed, much wider than the training data
-# (see the data dictionary in project/README.md and the lesson). They reject broken inputs
+# (see the data dictionary in docs/guides/project.md and the lesson). They reject broken inputs
 # (unit errors, sentinel values such as -9999, sign errors), not unusual ones: deciding what is
 # unusual is the detector's job, and distribution checks belong to monitoring (week 7).
 SENSOR_LIMITS: dict[str, tuple[float, float]] = {

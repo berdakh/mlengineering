@@ -69,7 +69,7 @@ beat (baselines, metrics). Today you find out which of those you can produce wit
 
 Units covered: `w2d1` SQL I, `w2d2` SQL II, `w2d3` ingestion and data quality, `w2d4` framing and
 splits, `w2d5` causal features, `w2d6` baselines and metrics; the project conventions in
-[`docs/maintainers/flowguard-spec.md`](../maintainers/flowguard-spec.html) and [`project/README.md`](../guides/project.html).
+[`docs/maintainers/flowguard-spec.md`](../maintainers/flowguard-spec.html) and [`docs/guides/project.md`](../guides/project.html).
 
 The questions were re-aligned with the final Week 2 lessons on 2026-11-21; numbers quoted from the
 project data are the ones those lessons report.
@@ -226,7 +226,7 @@ Checklist
 - [ ] `review` flags and the spaced-review list updated
 - [ ] Project check: `splits/v1.json` exists in your project and has not been edited since it was
       frozen; if you changed it, bump the version instead. (`w3d1` supersedes it with a `v2` that keeps
-      experiments sharing duplicated rows together; see `project/README.md`.)
+      experiments sharing duplicated rows together; see `docs/guides/project.md`.)
 
 Next: Week 3 starts with `w3d1` (leakage: a taxonomy and prevention by construction); see
 [roadmap/SCHEDULE.md](../guides/schedule.html).

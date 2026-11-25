@@ -78,7 +78,7 @@ they are not answered at all. Interviewers probe this directly ("how would you r
 trained six months ago?").
 
 **Prerequisites.** [W1D3](03_package_structure.html): the `pumpwatch` package in a `src/`
-layout with a `train` command. You have used `argparse` and `print`-debugging for years; no prior
+layout with a `train` command. Familiarity with `argparse` and `print`-debugging is enough; no prior
 use of `logging` or TOML is assumed.
 
 **Time budget — essential path 2 h**
@@ -240,8 +240,8 @@ hyperparameters — executed for this lesson with the reference solution. So:
   makes that comparison scriptable).
 - Choosing the seed that gives the best number is hyperparameter tuning on the test set.
 
-This is the same phenomenon as the fold-to-fold spread you know from leave-subjects-out EEG
-evaluation: with few groups, *which* subjects are held out dominates the variance.
+This is the same phenomenon as the fold-to-fold spread in any leave-groups-out evaluation (subjects
+in a medical study, stores in retail): with few groups, *which* subjects are held out dominates the variance.
 
 **Practical rules.** (1) No global seeding in library code — pass `seed` (or a
 `numpy.random.Generator`) as an argument; scikit-learn's own guidance is that an integer
@@ -268,12 +268,12 @@ rather than a claim of determinism.
 |---|---|---|---|---|---|---|---|---|---|---|
 | test F1 | 0.914 | 0.914 | 0.870 | 0.870 | 0.778 | 0.930 | 0.882 | 0.909 | 0.853 | 0.873 |
 
-### 2.6 Connection to what you already know
+### 2.6 Connection to other domains
 
-Your experiments already have configs — they live in argparse defaults, notebook cells and file
+Most experiments already have configs — they live in argparse defaults, notebook cells and file
 names like `run_lr1e-3_seed2_FINAL`. Encoding settings in file names is a run directory without a
-schema. The subject-level bookkeeping you do for cross-patient evaluation (which patients were in
-which fold) is provenance; today generalises it to the whole run.
+schema. The bookkeeping a careful study does for grouped evaluation (which participants were in which
+fold) is provenance; today generalises it to the whole run.
 
 ### 2.7 Industry example
 
@@ -883,9 +883,9 @@ Specific requirements for a 3:
 - say what a seed fixes, what it does not, and how you would report run-to-run variation;
 - list what a run must record for someone else to regenerate it.
 
-**Reflection prompt (5 min, in your journal).** Pick one result from a paper of yours. Which of the
+**Reflection prompt (5 min, in your journal).** Pick one result from a project, report or paper of yours. Which of the
 five arguments of `f` could you recover exactly today, and which only approximately? What is the
-cheapest change to your research workflow that would close the largest gap?
+cheapest change to your workflow that would close the largest gap?
 
 **Retrieval practice (answer on the W1 review day, from memory).** A colleague's `--set split.seed=3`
 run and yours with seed 7 differ by 0.04 F1 and they conclude their feature change helped. State two

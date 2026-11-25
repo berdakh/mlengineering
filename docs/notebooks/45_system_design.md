@@ -166,13 +166,13 @@ delay, a 30-day window holds 100 labels; you need about 36 days just to reach 38
 *Figure 2 (formula).* Slopes are −1/2 on log-log axes: every halving of the interval costs four times
 the labels. Rare outcomes (p = 0.01) have narrow absolute intervals but huge relative ones.
 
-### 2.4 Connection to what you already know
+### 2.4 Connection to other domains
 
-Designing a BCI study already follows this structure: the user and task (requirements), sampling rate
-and channel count (estimates), the paradigm that yields labels and their timing relative to the signal
-(labels), cross-subject evaluation (evaluation matching deployment), the real-time loop and its latency
-(serving), artefact detection during sessions (monitoring) and recalibration between sessions
-(iteration). The new parts are the scale of traffic, money as a constraint, and that nobody re-runs the
+Designing any experimental study follows this structure. A brain-computer-interface study, for example,
+fixes the user and task (requirements), sampling rate and channel count (estimates), the paradigm that
+yields labels and their timing (labels), evaluation on new participants (evaluation matching deployment),
+the real-time loop and its latency (serving), artefact detection during sessions (monitoring) and
+recalibration between sessions (iteration). The new parts are the scale of traffic, money as a constraint, and that nobody re-runs the
 experiment if the system breaks at 3 a.m.
 
 ### 2.5 Choosing batch, online or streaming
