@@ -11,27 +11,39 @@ adding or revising material (by hand or with an assistant).
 
 ## Unit layout
 
-A *unit* is one study session's material. Lessons live in `labs/<id>/`, the
-diagnostic sections in `diagnostic/<id>/`. Solutions mirror the same relative
-path under `solutions/`, so a learner never opens a solution by accident.
+A *unit* is one study session. Each core session is **one notebook**, and its exercise material lives in
+`labs/<id>/`. Solutions mirror the same relative path under `solutions/`, so a learner never opens a
+solution by accident. Review days live on their week page (`docs/weeks/week-N.md`, "Day 7").
 
 ```
+notebook_src/NN_slug.py   THE LESSON (source of truth): percent-format Python, all eight template
+                          sections, Colab badge, setup cell, runnable worked examples, check cells,
+                          hints in <details>, assessment questions. Build with `make notebooks`.
+notebooks/NN_slug.ipynb   generated from notebook_src/ - never edit by hand
+docs/notebooks/NN_slug.md generated site page (`make pages`) - never edit by hand
 labs/<id>/
-  README.md            the lesson: all eight template sections; links to hints, never inlines them
-  example/             worked example - complete, runnable from the repo root
+  README.md            short pointer to the notebook and a map of this folder
+  example/             worked-example scripts the notebook runs, from the repository root
   lab/                 guided-lab starter code; the learner works HERE
   challenge/           independent challenge: README.md (task + acceptance criteria) and any starter
-  hints/               hint1_concept.md, hint2_approach.md, hint3_partial.md
-  assessment.md        reasoning questions + rubric (answers are in solutions/)
+  hints/               hint1_concept.md, hint2_approach.md, hint3_partial.md (also inlined in the notebook)
   checks/              pytest checks for the lab         (grades lab/)
   checks_challenge/    pytest checks for the challenge   (grades challenge/)
+  figures/             make_figures.py and the SVGs it writes
 solutions/labs/<id>/
   lab/                 reference solution for the lab
   challenge/           reference solution for the challenge
   mutants/             plausible WRONG lab submissions (overlay dirs), each with a MUTANT.md
   mutants_challenge/   same, for the challenge
   assessment_answers.md   model answers, common incorrect answers and why they fail
+solutions/exercises.md, checkpoints.md   collected references and answers, in notebook order
 ```
+
+Notebook rules: every command cell runs from the repository root (the setup cell moves there); only
+`python`/`pytest` commands whose paths exist become code cells (servers, installs, `--live`, progress
+marks stay as text); diagrams are Mermaid sources in `docs/assets/diagrams/src/`, rendered to SVG with
+`make diagrams` and embedded through their raw GitHub URL so they also show in Colab; inline maths is
+`$x$` in notebooks and `$$x$$` on site pages (the page generator converts).
 
 ## Checks
 
