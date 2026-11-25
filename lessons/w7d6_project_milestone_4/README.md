@@ -291,7 +291,7 @@ such as signal quality or a classifier's confidence? When did it mislead you?
 **Retrieval question (for the w7d7 review).** The demo showed drift without a change in alarms (E3) and a
 missed fault without any signal (E5). For each, which signal would have revealed the problem, and when?
 
-**Next.** w7d7 review, then Week 8: [the completion audit](../../roadmap/SCHEDULE.md) starts by reproducing
+**Next.** [w7d7 review](../w7d7_review/README.md), then Week 8: [the completion audit](../w8d1_project_completion/README.md) starts by reproducing
 this report and the milestone 1 evaluation from a clean clone.
 
 ## Verification record

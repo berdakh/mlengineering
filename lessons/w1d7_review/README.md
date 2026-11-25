@@ -179,3 +179,5 @@ Next: Week 2 starts with `w2d1` (SQL I: grain, joins, aggregation and NULL seman
 *Content status and verification: see `STATUS.md`. Interview set 1's reference answers and tests were
 executed (details in `solutions/interview/set1.md`). The retrieval answers are prose and were
 checked against handbook sections H2.1, H2.2 and H9.1; the SQL statements in answer 10 were executed.*
+
+**Next session:** [w2d1_sql_joins_grain](../w2d1_sql_joins_grain/README.md).

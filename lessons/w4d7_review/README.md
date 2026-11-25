@@ -213,8 +213,7 @@ Checklist
       resampling unit of every interval, and includes the elapsed-time baseline
 
 **Next:** Week 5 starts with `w5d1` (research experimentation versus production inference: one inference
-pipeline for training and serving). Its material is not written yet; its objective, deliverable and
-prerequisites are in [roadmap/SCHEDULE.md](../../roadmap/SCHEDULE.md).
+pipeline for training and serving): [w5d1](../w5d1_inference_pipeline/README.md).
 
 ---
 
@@ -222,3 +221,5 @@ prerequisites are in [roadmap/SCHEDULE.md](../../roadmap/SCHEDULE.md).
 Week 4 lessons on 2026-11-22; every number quoted is copied from those lessons' authoring runs on the
 frozen v2 manifest. Interview set 4's coding reference was executed against its tests and deliberately
 wrong answers were rejected (details in `solutions/interview/set4.md`).*
+
+**Next session:** [w5d1_inference_pipeline](../w5d1_inference_pipeline/README.md).

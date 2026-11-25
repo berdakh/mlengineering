@@ -4,9 +4,10 @@ A portable, local course for Berdakh Abibullaev: developing, evaluating and deli
 reliable software. Markdown lessons, runnable Python labs, automated checks, an original handbook,
 and one time-series portfolio project.
 
-**Honest state of the material:** the roadmap, the diagnostic and the first three lessons are written.
-The other sessions have objectives, deliverables and prerequisites only. [STATUS.md](STATUS.md) says
-exactly what is authored, what was executed, and what is planned.
+**State of the material:** all 56 sessions (8 weeks x 7 days) have complete material: lessons, worked
+examples, labs with checks, challenges, hints, assessments, solutions and 55 handbook sections. Every check
+suite has been verified against its reference solution and against plausible wrong submissions.
+[STATUS.md](STATUS.md) records what was executed, what was not, and the known limitations.
 
 ## Start here
 
@@ -43,13 +44,26 @@ The starters fail their checks by design. Do not open `solutions/` before submit
 session). The plan for Weeks 1-3 is adapted only after that submission has been reviewed; until
 then nothing in this repository claims to know your results.
 
-### 3. Then: the first three lessons
+### 3. Then: one session a day
 
-| Session | Lesson | Handbook |
+`python wb.py next` always names the next session and the file to open. The full plan with objectives,
+deliverables and prerequisites is [roadmap/SCHEDULE.md](roadmap/SCHEDULE.md); the design behind it is
+[ROADMAP.md](ROADMAP.md).
+
+| Week | Theme | First session |
 |---|---|---|
-| w1d3 | [From script to installable package](lessons/w1d3_package_structure/README.md) | [H2.1](handbook/ch02_maintainable_python/h2_1_project_structure_environments.md) |
-| w1d4 | [Configuration, logging and reproducible runs](lessons/w1d4_config_logging/README.md) | [H2.2](handbook/ch02_maintainable_python/h2_2_configuration_logging_runs.md) |
-| w1d5 | [Testing ML code with pytest](lessons/w1d5_testing_ml_code/README.md) | [H9.1](handbook/ch09_testing_ml_systems/h9_1_unit_testing_ml_code.md) |
+| 1 | From research code to software | [w1d3 script to package](lessons/w1d3_package_structure/README.md) (after the diagnostic) |
+| 2 | SQL, pandas, data quality, features, baselines | [w2d1 SQL I](lessons/w2d1_sql_joins_grain/README.md) |
+| 3 | Leakage, validation, selection, event metrics, uncertainty | [w3d1 leakage](lessons/w3d1_leakage/README.md) |
+| 4 | Time-series detectors, neural comparison, tracking, model choice | [w4d1 time-series fundamentals](lessons/w4d1_timeseries_fundamentals/README.md) |
+| 5 | Inference pipeline, artifacts, streaming, FastAPI, API tests | [w5d1 inference pipeline](lessons/w5d1_inference_pipeline/README.md) |
+| 6 | Docker, CI, latency, AWS (gated), delivery and debugging | [w6d1 Docker basics](lessons/w6d1_docker_basics/README.md) |
+| 7 | Logging, drift, delayed labels, updates, reliability | [w7d1 logging and metrics](lessons/w7d1_service_logging_metrics/README.md) |
+| 8 | Reproduction audit, report, system design, interviews, final assessment | [w8d1 completion audit](lessons/w8d1_project_completion/README.md) |
+
+Every seventh day is a lighter review day with a retrieval sheet and a timed interview set
+([interview/README.md](interview/README.md)). Extra installs by week: Week 4's neural lesson needs
+`pip install -r requirements-neural.txt`; Week 6 needs Docker Engine (lessons explain the install).
 
 Each lesson has a 2-hour essential path, an optional extension of up to 1 hour, a worked example, a
 guided lab with checks, an independent challenge with three levels of hints, and an assessment.

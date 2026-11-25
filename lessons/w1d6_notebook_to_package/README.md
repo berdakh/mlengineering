@@ -483,3 +483,5 @@ project continues in w2d3 (ingestion and data-quality checks).
 | Worked example replay | six commits, tests pass after each (output quoted above) |
 | `python tools/verify_checks.py lessons/w1d6_notebook_to_package` | reference passes both parts; 7 lab mutants and 4 challenge mutants rejected |
 | Shipped `lab/` against the checks | fails (no project there by design) |
+
+**Next session:** [w1d7_review](../w1d7_review/README.md).

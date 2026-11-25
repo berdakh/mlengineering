@@ -325,7 +325,7 @@ computation live, and what would a parity test between them have looked like? (`
 on every row. What is the burn-in size, what is the likely cause, and which of the two is consistent
 with the evaluation report?
 
-**Next.** Week 6 puts this release candidate in a container ([w6d1 Docker I](../../roadmap/SCHEDULE.md)),
+**Next.** Week 6 puts this release candidate in a container ([w6d1 Docker I](../w6d1_docker_basics/README.md)),
 reproducibly, and then into CI and one cloud deployment.
 
 ## Verification record

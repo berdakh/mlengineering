@@ -37,7 +37,7 @@ nobody prompts them.
   skill). The report is then read against the scoring guidance in the solutions tree.
 
 **Prerequisites.** [w2d6](../w2d6_baselines_metrics/README.md) (the flow-rate baseline, point
-metrics; its challenge was transfer part 1), w3d1 (leak audit; see [roadmap/SCHEDULE.md](../../roadmap/SCHEDULE.md) if its page is not yet written),
+metrics; its challenge was transfer part 1), w3d1 ([leak audit](../w3d1_leakage/README.md)),
 [w3d2](../w3d2_group_temporal_validation/README.md) (splits that match deployment),
 [w3d5](../w3d5_uncertainty/README.md) (cluster intervals). Event matching from
 [w3d4](../w3d4_point_vs_event_evaluation/README.md) helps but is not required: the lab classifies

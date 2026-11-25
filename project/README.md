@@ -1,6 +1,7 @@
 # Portfolio project: `flowguard` - fault detection on a water-circulation testbed
 
-Status: **brief written and dataset access verified; project work starts in w1d6.**
+Status: **brief and dataset verified; every deliverable below has a lesson, and each milestone lesson
+(w4d6, w5d6, w6d6, w7d6, w8d1-w8d2) has a verified reference implementation in `solutions/`.**
 Everything below marked "decision" is a starting position you are expected to challenge in w2d4.
 
 ## Why this dataset
@@ -137,10 +138,10 @@ this project must report intervals (w3d5) and must not claim small differences b
 
 ## Deliverables checklist
 
-| Deliverable | Session | Done |
+| Deliverable | Session | Your progress |
 |---|---|---|
 | Problem statement and stakeholder needs | w2d4 | [ ] |
-| Dataset provenance and data dictionary | this file, extended in w2d3 | [~] |
+| Dataset provenance and data dictionary | this file, extended in w2d3 | [ ] |
 | Versioned split definitions | w2d4 | [ ] |
 | Reproducible preprocessing | w2d3, w2d5 | [ ] |
 | Simple baseline | w2d6 | [ ] |

@@ -475,7 +475,7 @@ in your EEG/iEEG work, which reported numbers had no floor printed next to them,
 colleague reports PR-AUC 0.62 on dataset A and 0.48 on dataset B for the same model and concludes it
 is better on A. What two numbers do you ask for, and why does ROC AUC not have this problem?
 
-**Next.** [w2d7 review](../w2d7_review/README.md), then Week 3: [w3d1 leakage](../../roadmap/SCHEDULE.md)
+**Next.** [w2d7 review](../w2d7_review/README.md), then Week 3: [w3d1 leakage](../w3d1_leakage/README.md)
 takes the clock baseline seriously as a leakage finding, w3d4 replaces row-level metrics with
 event-level ones, and w3d5 puts intervals on today's table.
 

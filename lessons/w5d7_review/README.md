@@ -219,3 +219,5 @@ Its objective, deliverable and prerequisites are in [roadmap/SCHEDULE.md](../../
 Week 5 lessons on 2026-11-22; every number quoted is copied from those lessons' authoring runs.
 Interview set 5's coding reference was executed against its tests and deliberately wrong answers were
 rejected (details in `solutions/interview/set5.md`).*
+
+**Next session:** [w6d1_docker_basics](../w6d1_docker_basics/README.md).

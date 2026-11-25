@@ -191,3 +191,5 @@ against the checker and deliberately wrong answers were rejected (details in
 `solutions/interview/set2.md`). The retrieval answers are prose; SQL semantics quoted in them
 (NULL handling in aggregates, default window frame under ties) were confirmed by execution in SQLite
 3.53.1. Project numbers are quoted from the Week 2 lessons, which report runs on the real SKAB files.*
+
+**Next session:** [w3d1_leakage](../w3d1_leakage/README.md).

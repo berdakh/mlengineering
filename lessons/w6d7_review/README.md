@@ -228,3 +228,5 @@ prerequisites are in [roadmap/SCHEDULE.md](../../roadmap/SCHEDULE.md).
 Week 6 lessons on 2026-11-22; every number quoted is copied from those lessons' authoring runs. Interview set
 6's coding reference was executed against its tests, and six deliberately wrong answers were rejected
 (details in `solutions/interview/set6.md`).*
+
+**Next session:** [w7d1_service_logging_metrics](../w7d1_service_logging_metrics/README.md).

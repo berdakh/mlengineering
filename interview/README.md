@@ -1,8 +1,22 @@
 # Interview practice: short, recurring, with fading assistance
 
-Status: sets 1 and 2 are written and their reference answers executed
-([set 1: Python and project structure](set1_python_structure.md), [set 2: SQL and pandas](set2_sql_pandas.md));
-later sets are authored week by week. Every authored lesson also contains one "interview rep" in its `assessment.md`.
+Status: all seven sets are written; every coding prompt's reference answer was executed against its tests
+and plausible wrong answers are rejected. Every lesson also ends with one short "interview rep" in its `assessment.md`.
+
+| Set | Review day | Focus |
+|---|---|---|
+| [1](set1_python_structure.md) | w1d7 | Python coding, project structure |
+| [2](set2_sql_pandas.md) | w2d7 | SQL and pandas (`python interview/set2_check.py`) |
+| [3](set3_validation_fundamentals.md) | w3d7 | Validation, leakage, ML fundamentals (spoken) |
+| [4](set4_explain_evaluation.md) | w4d7 | Explaining your evaluation in 5 minutes |
+| [5](set5_system_design.md) | w5d7 | ML system design rep 1 + API contract coding |
+| [6](set6_debugging.md) | w6d7 | Debugging narratives + log-analysis coding |
+| [7](set7_system_design.md) | w7d7 | ML system design rep 2 (operating a model) + retry coding |
+
+Week 8 adds full timed sessions: [system design](../lessons/w8d3_system_design/README.md),
+[coding and SQL](../lessons/w8d4_coding_interviews/README.md) and
+[project explanation](../lessons/w8d5_project_explanation/README.md). Rubrics and worked answers are in
+`solutions/interview/`; attempt first.
 
 ## Cadence
 

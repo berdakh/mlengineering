@@ -246,3 +246,5 @@ clean clone). Its objective, deliverable and prerequisites are in
 Week 7 lessons on 2026-11-22; every number quoted is copied from those lessons' authoring runs. Interview
 set 7's coding reference was executed against its tests, and ten deliberately wrong answers were rejected
 (details in `solutions/interview/set7.md`).*
+
+**Next session:** [w8d1_project_completion](../w8d1_project_completion/README.md).

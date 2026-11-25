@@ -356,7 +356,7 @@ first piece of evidence that, in hindsight, already contained the answer?
 the first four things you look at, and for each say which kind of cause it would reveal or rule out.*
 
 **Next.** w6d7: the week's review day (retrieval sheet and a timed debugging interview set); then week 7,
-[service logging and metrics](../../roadmap/SCHEDULE.md), which adds the signals that would have caught the
+[service logging and metrics](../w7d1_service_logging_metrics/README.md), which adds the signals that would have caught the
 challenge's incident.
 
 ---

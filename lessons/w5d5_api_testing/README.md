@@ -34,7 +34,7 @@ mutations are the defects above.
 **Prerequisites.**
 [w1d5](../w1d5_testing_ml_code/README.md) (fixtures, tolerance, mutation grading),
 [w5d4](../w5d4_fastapi_validation/README.md) (FastAPI, pydantic schemas, 422 vs 503),
-w5d2 (checksummed bundles; see [the schedule](../../roadmap/SCHEDULE.md)). The lab ships its own snapshot of
+w5d2 (checksummed bundles; see [w5d2](../w5d2_artifacts_versioning/README.md)). The lab ships its own snapshot of
 the service, so you can start even if your own w5d4 service differs.
 
 **Time budget (2 h essential).**

@@ -219,3 +219,5 @@ were simulated or computed (details in `solutions/interview/set3.md`). The retri
 prose checked against the final lesson texts; the SQL behaviour in answer 12 was confirmed on the
 `w2d1` database and the numerical facts in answers 7 and 9 by execution or from the lessons' recorded
 runs.*
+
+**Next session:** [w4d1_timeseries_fundamentals](../w4d1_timeseries_fundamentals/README.md).
