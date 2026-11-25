@@ -41,15 +41,7 @@ store them in object storage or a warehouse. The contract between layers is the 
 For sensor recordings: one row per (experiment, timestamp). Identifiers that lived in file paths
 (`valve1/3.csv`) become columns, because a path is not queryable and is lost at the first `concat`.
 
-```mermaid
-flowchart LR
-    SRC["source<br/>(pinned commit, sha256 per file)"] --> RAW[("data/raw<br/>immutable")]
-    RAW --> ING["ingest<br/>explicit parse + checks"]
-    ING -->|"no error-severity failure"| INT[("data/interim/skab.csv<br/>declared schema")]
-    ING --> REP["quality_report.json<br/>provenance.json"]
-    ING -. "any error" .-> STOP["exit non-zero<br/>no table written"]
-    INT --> FEAT["features (w2d5)"] --> PROC[("data/processed<br/>tied to a split manifest")]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch03-sql-data-pipelines-h3-3-ingestion-schemas-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 
 ## H3.3.3 Parsing: the decisions a CSV forces on you
@@ -172,23 +164,7 @@ failures (a file missing, a file doubled) visible at a glance. Code and library 
 claim: byte-identical regeneration is promised for the same environment only, since a different
 library version may render a float differently.
 
-```mermaid
-sequenceDiagram
-    participant CLI as flowguard ingest
-    participant RAW as data/raw (read only)
-    participant CHK as quality.run_checks
-    participant OUT as out dir
-    CLI->>RAW: read every file with explicit separator and dtypes
-    CLI->>CHK: tidy table, as it arrived (not sorted, not de-duplicated)
-    CHK-->>CLI: list of CheckResult(name, passed, detail, severity)
-    CLI->>OUT: quality_report.json (always)
-    alt any error-severity failure
-        CLI-->>CLI: exit non-zero, table not written
-    else only warnings or all passed
-        CLI->>OUT: skab.csv to a temporary name, then atomic rename
-        CLI->>OUT: provenance.json (source, commit, hashes, row counts, code version)
-    end
-```
+<img src="../../assets/diagrams/mmd-handbook-ch03-sql-data-pipelines-h3-3-ingestion-schemas-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 
 ## H3.3.6 Practical decisions and tradeoffs

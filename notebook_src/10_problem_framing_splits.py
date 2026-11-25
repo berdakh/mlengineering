@@ -102,7 +102,7 @@ print("repo root:", REPO_ROOT)
 # does not mimic deployment makes the metric meaningless, a metric that ignores costs makes model
 # selection arbitrary, and so on back to "nobody needed this".
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-10-01.svg" alt="Diagram 1 of notebook 10" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-10-01.svg" alt="Diagram 1 of notebook 10" style="max-width:100%">
 #
 #
 # ### 2.2 The worksheet, with precise terms
@@ -162,7 +162,7 @@ print("repo root:", REPO_ROOT)
 # (so learning "normal" is supported). There is no future quantity anyone wants (so forecasting is at
 # most a means). Protocol B in the split exists precisely to test the classification framing's weak point.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-10-02.svg" alt="Diagram 2 of notebook 10" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-10-02.svg" alt="Diagram 2 of notebook 10" style="max-width:100%">
 #
 #
 # ### 2.5 From EEG to equipment, and where the analogy breaks
@@ -443,7 +443,7 @@ print("repo root:", REPO_ROOT)
 #
 # Fill in `lab/PROBLEM_STATEMENT.md`. One page, ten sections, positions rather than descriptions,
 # assumptions marked. The automated check verifies completeness only. Then score yourself with the
-# rubric in [assessment.md](../labs/w2d4_problem_framing_splits/assessment.md) and compare with the reference statement in the solutions tree.
+# rubric in assessment.md (section 7 of this notebook) and compare with the reference statement in the solutions tree.
 #
 # **Completion criteria for the lab.** `python wb.py check w2d4` passes; `splits/v1.json` is committed
 # in your project repository; your problem statement scores no zero on *Decision*, *Label* or *Splits*.
@@ -661,7 +661,7 @@ check("w2d4", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w2d4_problem_framing_splits/assessment.md): five reasoning questions (Q5 is the design-choice explanation), the
+# assessment.md (section 7 of this notebook): five reasoning questions (Q5 is the design-choice explanation), the
 # rubric for the written problem statement, and one interview rep on validation and leakage. Automated
 # checks cover the split code; the rubric covers the writing. Model answers and common incorrect answers:
 # `solutions/labs/w2d4_problem_framing_splits/assessment_answers.md`.

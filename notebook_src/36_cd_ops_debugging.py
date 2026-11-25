@@ -88,7 +88,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.1 Intuition: build once, move the same bytes
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-36-01.svg" alt="Diagram 1 of notebook 36" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-36-01.svg" alt="Diagram 1 of notebook 36" style="max-width:100%">
 #
 # The image is the unit of release. Staging and production run **the same digest** with different
 # environment files. If production ran a rebuild of the same commit instead, "tested in staging" would be a
@@ -119,7 +119,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.3 Configuration: validate format at startup, existence by readiness
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-36-02.svg" alt="Diagram 2 of notebook 36" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-36-02.svg" alt="Diagram 2 of notebook 36" style="max-width:100%">
 #
 # Two layers, on purpose. A **typo** in a variable name or a malformed value is a configuration bug that
 # can never fix itself: stop at once, with the variable's name in the error. A **missing or corrupt model**
@@ -129,7 +129,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.4 The debugging method
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-36-03.svg" alt="Diagram 3 of notebook 36" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-36-03.svg" alt="Diagram 3 of notebook 36" style="max-width:100%">
 #
 # The habit that matters most is the first box. In each incident of this lab, `fgops.py history` and the
 # service's own startup log lines identify the change within a minute; most wasted time in real incidents is
@@ -490,7 +490,7 @@ check("w6d6", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w6d6_cd_ops_debugging/assessment.md): reasoning questions, one design-choice explanation, a rubric, and a 10-15
+# assessment.md (section 7 of this notebook): reasoning questions, one design-choice explanation, a rubric, and a 10-15
 # minute debugging-narrative interview rep. Model answers: `solutions/labs/w6d6_cd_ops_debugging/assessment_answers.md`.
 #
 # ---

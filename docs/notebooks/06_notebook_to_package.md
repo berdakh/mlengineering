@@ -134,7 +134,7 @@ The practical consequence for refactoring: **the notebook's printed output is a 
 not a specification.** You pin it so that you can tell when *you* change something, and you expect
 to overturn parts of it.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-01.svg" alt="Diagram 1 of notebook 06" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-01.svg" alt="Diagram 1 of notebook 06" style="max-width:100%">
 
 *Hidden state: the same cell gives different results depending on which cells ran before it, and the file on disk does not record which did.*
 
@@ -164,7 +164,7 @@ wrong in ways that make it worthless to preserve. In today's lab the notebook's 
 last kind for several cells, which is why the lab asks for a discrepancy table instead of a golden
 file.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-02.svg" alt="Diagram 2 of notebook 06" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-02.svg" alt="Diagram 2 of notebook 06" style="max-width:100%">
 
 *Two kinds of commit. In a refactoring the golden file must not move; in a behaviour change it must, visibly.*
 
@@ -207,7 +207,7 @@ Commit size is governed by one rule: **a commit should be describable in one sen
 word "and"**, and the project should work after it. That makes `git bisect` usable later (every
 commit is a valid state to test) and makes review cheap.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-03.svg" alt="Diagram 3 of notebook 06" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-03.svg" alt="Diagram 3 of notebook 06" style="max-width:100%">
 
 *The staging area is where you review yourself before anyone else does.*
 
@@ -293,7 +293,7 @@ d991c63 Extract mean_kwh and peak_days, replace cells with main() (no behaviour 
 c6808c8 Add notebook export and sample data as found
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-04.svg" alt="Diagram 4 of notebook 06" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-04.svg" alt="Diagram 4 of notebook 06" style="max-width:100%">
 
 *The six commits of the worked example. Only the highlighted one changes what the program prints (3.603 to 1.949).*
 
@@ -663,7 +663,7 @@ What remains is the strict comparison, assembling the result columns, the empty 
 
 ## 7. Assessment
 
-[`assessment.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d6_notebook_to_package/assessment.md): five reasoning questions (one asks you to defend a design choice),
+`assessment.md` (section 7 of this notebook): five reasoning questions (one asks you to defend a design choice),
 the commit-hygiene self-review rubric, and a 10-15 minute **debugging** interview rep. Write your
 answers before opening `solutions/labs/w1d6_notebook_to_package/assessment_answers.md`.
 

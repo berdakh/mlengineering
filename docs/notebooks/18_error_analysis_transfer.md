@@ -128,7 +128,7 @@ and found unremarkable. Three rules make it analysis rather than storytelling:
 3. **Quantify, and stay at the unit of independence.** Slices are compared by per-experiment
    (per-customer) values with their sizes, not by pooled rows.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-18-01.svg" alt="Diagram 1 of notebook 18" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-18-01.svg" alt="Diagram 1 of notebook 18" style="max-width:100%">
 
 ### 2.2 The unit table and the two kinds of average
 
@@ -192,7 +192,7 @@ comparisons are not driven by rows nobody can get right.
 Per-row errors in event detection are not independent: they come in runs, and the run's position
 relative to the labelled event says what went wrong. The lab classifies each run of wrong rows:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-18-02.svg" alt="Diagram 2 of notebook 18" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-18-02.svg" alt="Diagram 2 of notebook 18" style="max-width:100%">
 
 Each kind has a different cause and fix: *misses* and *late* detections need a more sensitive signal;
 *fragments* point at threshold noise (hysteresis or a hold time) or a transient response; *pre-onset*
@@ -625,7 +625,7 @@ interval, the slice, and the report. The full reference is in
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d6_error_analysis_transfer/assessment.md): seven reasoning questions (five on the lab, two on the challenge,
+assessment.md (section 7 of this notebook): seven reasoning questions (five on the lab, two on the challenge,
 answer those after your sitting), one design-choice explanation (how to choose a hysteresis rule
 without fooling yourself), a rubric, and an interview rep on the **debugging** strand: a fraud model
 whose AUC drops from 0.97 to 0.71 after launch, narrated aloud. Model answers and common incorrect

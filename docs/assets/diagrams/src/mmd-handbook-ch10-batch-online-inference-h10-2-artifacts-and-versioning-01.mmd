@@ -1,0 +1,9 @@
+flowchart TD
+    Q["What is the model's state?"] --> S{"small and well defined?<br/>(linear weights, thresholds, statistics)"}
+    S -- yes --> J["JSON + numeric npz<br/>store the mathematics<br/>own the loader"]
+    S -- no --> K{"which framework?"}
+    K -- "scikit-learn" --> SK["skops (allow-listed types)<br/>pin scikit-learn version"]
+    K -- "PyTorch" --> PT["state_dict + architecture in code<br/>torch.load weights_only"]
+    K -- "serve outside Python<br/>or optimise" --> OX["ONNX graph + runtime"]
+    Q --> P{"same process, same version,<br/>never shared?"}
+    P -- yes --> PK["pickle is acceptable<br/>(a cache, not an artifact)"]

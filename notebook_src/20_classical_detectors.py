@@ -107,7 +107,7 @@ print("repo root:", REPO_ROOT)
 # mechanisms (leaks, rotor imbalance, cavitation, temperature). Protocol B in the lab measures what that
 # means in numbers.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-20-01.svg" alt="Diagram 1 of notebook 20" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-20-01.svg" alt="Diagram 1 of notebook 20" style="max-width:100%">
 #
 # ### 2.2 PCA detector: T² and Q
 #
@@ -276,7 +276,7 @@ print("repo root:", REPO_ROOT)
 # Work in `lab/src/flowguard/detectors.py`. `windowfeatures.py` (the 40 features) and the Week 3
 # modules are given. Checks: `python wb.py check w4d2`. The starter fails all of them.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-20-02.svg" alt="Diagram 2 of notebook 20" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-20-02.svg" alt="Diagram 2 of notebook 20" style="max-width:100%">
 #
 # **Task 1 — `check_columns` (5 min).** Return the column names; raise `ValueError` naming every
 # forbidden one (identifiers, labels, anything naming elapsed time). Every detector calls it in `fit`.
@@ -544,7 +544,7 @@ check("w4d2", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w4d2_classical_detectors/assessment.md): reasoning questions, a design-choice explanation, a rubric and a
+# assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, a rubric and a
 # 10-15 minute interview rep on trees and ensembles. Answers in
 # `solutions/labs/w4d2_classical_detectors/assessment_answers.md`.
 #

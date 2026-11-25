@@ -92,15 +92,7 @@ Accuracy is the only benefit; the costs come in many currencies. A useful invent
 Most of these are certain, while the accuracy gain is uncertain. That asymmetry is what justifies
 defaulting to the simpler option when the evidence is inconclusive.
 
-```mermaid
-flowchart LR
-    M["More complex model"] --> A["Uncertain benefit:<br/>accuracy gain, read as an interval"]
-    M --> C1["Certain costs:<br/>latency, size, dependencies"]
-    M --> C2["Ownership costs:<br/>retraining inputs, re-validation,<br/>debugging, explaining alarms"]
-    A --> D{"Gain shown to exceed<br/>the MPID?"}
-    D -- yes --> E["Pay for it, if within<br/>hard constraints"]
-    D -- no --> F["Keep the simpler model;<br/>state what evidence would change this"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch05-classical-ml-baselines-h5-4-complexity-versus-evidence-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H5.4.4 Dominance and the Pareto front
 

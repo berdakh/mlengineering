@@ -80,11 +80,7 @@ config = build_and_validate(merged)       # defaults filled in by the dataclasse
 Validating each layer separately duplicates rules and lets a later layer introduce an invalid value
 unchecked. Validating once, last, guarantees that what you validated is what runs.
 
-```mermaid
-flowchart LR
-    d["code defaults"] --> f["config file"] --> env["environment variables<br/>deployment-specific values and secrets"] --> cli["command-line overrides"]
-    cli --> r["resolved configuration<br/>validated, frozen, snapshotted"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch02-maintainable-python-h2-2-configuration-logging-runs-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *Layers from least to most specific. Each later layer overrides the earlier ones; secrets enter only through the environment and are never written to the snapshot.*
 
@@ -180,17 +176,7 @@ With no configuration, a record that passes the level test but finds no handler 
 "handler of last resort": stderr, `WARNING` and above, message only. That is why un-configured
 scripts show warnings but never `info`.
 
-```mermaid
-flowchart LR
-    rec["LogRecord<br/>created by logger.info"] --> lv{"logger level<br/>allows it?"}
-    lv -- no --> drop["discarded"]
-    lv -- yes --> own["this logger's handlers"]
-    own --> prop{"propagate?"}
-    prop -- yes --> parent["parent logger's handlers,<br/>up to root"]
-    parent --> hl{"handler level<br/>allows it?"}
-    hl -- yes --> fmt["Formatter"] --> out["stream / file / collector"]
-    hl -- no --> drop
-```
+<img src="../../assets/diagrams/mmd-handbook-ch02-maintainable-python-h2-2-configuration-logging-runs-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 *The life of a log record: two level checks (logger, then each handler) and propagation up the dotted-name hierarchy.*
 

@@ -49,16 +49,7 @@ prediction two days ahead, per slot; phoning needs it a week ahead, per patient,
 patients who would respond to a call. These are two different targets with different horizons and
 different labels of success. "Predict no-shows" was not yet a problem statement.
 
-```mermaid
-flowchart LR
-    N["need<br/>(who is hurt by what)"] --> D["decision<br/>(who acts, when, with what options)"]
-    D --> P["prediction that would<br/>change the decision"]
-    P --> LB["label that defines 'right'<br/>(source, delay, noise)"]
-    LB --> C["costs of each error"]
-    C --> M["metric that tracks the costs"]
-    M --> E["evaluation that<br/>mimics deployment"]
-    E -. "audit: read right to left" .-> N
-```
+<img src="../../assets/diagrams/mmd-handbook-ch01-problem-formulation-h1-1-stakeholder-need-to-prediction-target-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 
 ## H1.1.3 Choosing the task family
@@ -95,18 +86,7 @@ regression. Survival analysis can be reduced to classification at a fixed horizo
 days"), at the cost of discarding ordering information and of introducing censoring problems
 (H1.2.3). State the reduction; do not let it be implicit.
 
-```mermaid
-flowchart TD
-    S["a sensor stream and a need"] --> Q1{"Does the decision depend on<br/>a future VALUE of the signal?"}
-    Q1 -->|"yes"| F["forecasting"]
-    Q1 -->|"no"| Q2{"Do labelled examples exist for every<br/>fault form you expect to meet?"}
-    Q2 -->|"yes, enough episodes"| CL["supervised classification"]
-    Q2 -->|"no: rare, varied or novel faults"| Q3{"Is verified-normal data available,<br/>and is 'normal' stable?"}
-    Q3 -->|"yes"| AD["anomaly detection<br/>(labels used only to evaluate)"]
-    Q3 -->|"no"| R["rules, or collect labels first"]
-    F -. "residuals can feed" .-> AD
-    CL -. "test its weak point:<br/>hold out a fault family" .-> PB["protocol B"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch01-problem-formulation-h1-1-stakeholder-need-to-prediction-target-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 
 ## H1.1.4 Proxy targets and the metric chain

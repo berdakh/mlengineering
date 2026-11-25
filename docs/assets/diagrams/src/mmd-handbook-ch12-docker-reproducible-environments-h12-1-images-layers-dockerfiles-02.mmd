@@ -1,0 +1,6 @@
+flowchart LR
+    start(["docker run"]) --> s["health: starting"]
+    s -->|"check passes"| h["healthy"]
+    s -->|"fails during start-period: not counted"| s
+    h -->|"retries consecutive failures"| u["unhealthy"]
+    u -->|"one success"| h

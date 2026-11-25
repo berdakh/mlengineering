@@ -1,0 +1,8 @@
+flowchart LR
+    L["w3d1 leakage<br/>what must not reach the model"] --> V["w3d2 validation design<br/>which estimand, which split"]
+    V --> S["w3d3 selection<br/>choices fitted on dev only"]
+    S --> E["w3d4 point vs event<br/>what is counted"]
+    E --> U["w3d5 uncertainty<br/>how sure, per experiment"]
+    U --> A["w3d6 error analysis<br/>what to fix next"]
+    A -. "new hypotheses, tested on dev" .-> S
+    L -. "frozen manifest v2" .-> U

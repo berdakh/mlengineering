@@ -117,7 +117,7 @@ between calls, exactly the information that the batch function would have read f
 The design rule that follows: **state is O(1) in the length of the stream**. A detector that monitors
 a pump for a year must not hold a year of samples.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-27-01.svg" alt="Diagram 1 of notebook 27" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-27-01.svg" alt="Diagram 1 of notebook 27" style="max-width:100%">
 
 *Diagram 1. The life of one machine's stream. Rejections (invalid, out of order, conflicting
 duplicate) never change the state; that is what makes a rejection safe to retry.*
@@ -190,7 +190,7 @@ exist for, and one of the mutants the checks are validated against.
    model version, because combining one model's calibration with another model's threshold is silent
    nonsense.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-27-02.svg" alt="Diagram 2 of notebook 27" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-27-02.svg" alt="Diagram 2 of notebook 27" style="max-width:100%">
 
 *Diagram 2. The order of the rules in `update`. The order matters: an out-of-order sample that is
 also invalid is reported as invalid, and a duplicate is never treated as a gap.*
@@ -559,7 +559,7 @@ return self._alarm
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d3_online_inference/assessment.md): reasoning questions, a design-choice explanation, a rubric, and a
+assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, a rubric, and a
 12-minute interview rep (Python: a sliding-window median over a stream).
 
 ---

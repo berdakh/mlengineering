@@ -100,7 +100,7 @@ print("repo root:", REPO_ROOT)
 # investigate the alarms that look worst). Each of these bends the numbers you can compute, always in a
 # known direction once you write down how labels are produced.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-39-01.svg" alt="Diagram 1 of notebook 39" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-39-01.svg" alt="Diagram 1 of notebook 39" style="max-width:100%">
 #
 # ### 2.2 Precise terms
 #
@@ -292,7 +292,7 @@ print("repo root:", REPO_ROOT)
 # infer one answer from the other.
 # *Checkpoint:* all 17 checks pass.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-39-02.svg" alt="Diagram 2 of notebook 39" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-39-02.svg" alt="Diagram 2 of notebook 39" style="max-width:100%">
 #
 # **Task 6: replay on real data.** With your module in place:
 #
@@ -518,7 +518,7 @@ check("w7d3", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w7d3_drift_vs_degradation/assessment.md): reasoning questions, a design-choice explanation, a rubric, and a
+# assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, a rubric, and a
 # 15-minute interview rep on delayed labels. Model answers are in the solutions folder.
 #
 # ---

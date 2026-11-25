@@ -67,7 +67,7 @@ print("repo root:", REPO_ROOT)
 # **Completion criteria.**
 # * `python wb.py check w8d2`: the checker passes a sound SYNTHETIC report and fails each of six broken ones for
 #   the right reason only.
-# * Your report passes the checker and is scored against the rubric in [assessment.md](../labs/w8d2_report_limitations/assessment.md).
+# * Your report passes the checker and is scored against the rubric in assessment.md (section 7 of this notebook).
 # * `python wb.py check w8d2 --challenge` passes.
 #
 # **Prerequisites.** [w8d1](43_project_completion.ipynb) (the numbers are reproducible);
@@ -89,7 +89,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.1 The structure of a short technical report
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-44-01.svg" alt="Diagram 1 of notebook 44" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-44-01.svg" alt="Diagram 1 of notebook 44" style="max-width:100%">
 #
 # Each section answers a question a sceptical reader will ask, in the order they will ask it: what is this for, what
 # data, how could the evaluation have fooled you, what did you find, where does it fail, what did you decide, how
@@ -102,7 +102,7 @@ print("repo root:", REPO_ROOT)
 #   it). A typed number drifts the first time the analysis is rerun. The w4d6 and w7d6 milestones already did this
 #   for tables; the checker extends it to prose.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-44-02.svg" alt="Diagram 2 of notebook 44" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-44-02.svg" alt="Diagram 2 of notebook 44" style="max-width:100%">
 # * **Every estimate has an interval and its unit.** "0.884 [0.811, 0.928]" means little until the reader knows
 #   the interval came from a cluster bootstrap over 7 test recordings. The unit of resampling is the claim about
 #   what generalises.
@@ -359,7 +359,7 @@ check("w8d2", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w8d2_report_limitations/assessment.md): the report rubric, reasoning questions, a design-choice explanation, and the
+# assessment.md (section 7 of this notebook): the report rubric, reasoning questions, a design-choice explanation, and the
 # interview rep "explain a limitation to a non-technical stakeholder".
 #
 #

@@ -360,7 +360,7 @@ Work in `labs/w2d6_baselines_metrics/lab/`. Given and complete: `src/flowguard/d
 
 The protocol every row of the table follows:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-12-01.svg" alt="Diagram 1 of notebook 12" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-12-01.svg" alt="Diagram 1 of notebook 12" style="max-width:100%">
 
 Check at any time (offline, synthetic frames, about 10 s):
 
@@ -702,7 +702,7 @@ Full reference solutions: `solutions/labs/w2d6_baselines_metrics/lab/` and `.../
 
 ## 7. Assessment
 
-[`assessment.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d6_baselines_metrics/assessment.md): six reasoning questions, one design-choice explanation, a rubric,
+`assessment.md` (section 7 of this notebook): six reasoning questions, one design-choice explanation, a rubric,
 and one interview rep (ML fundamentals). Automated checks: `checks/` (36 tests) and
 `checks_challenge/` (11 tests). Both were validated against the reference solution and against nine
 plausible wrong submissions; passing them means the contracts hold, not that your reading of the

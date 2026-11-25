@@ -1,0 +1,9 @@
+flowchart LR
+    rec["LogRecord<br/>created by logger.info"] --> lv{"logger level<br/>allows it?"}
+    lv -- no --> drop["discarded"]
+    lv -- yes --> own["this logger's handlers"]
+    own --> prop{"propagate?"}
+    prop -- yes --> parent["parent logger's handlers,<br/>up to root"]
+    parent --> hl{"handler level<br/>allows it?"}
+    hl -- yes --> fmt["Formatter"] --> out["stream / file / collector"]
+    hl -- no --> drop

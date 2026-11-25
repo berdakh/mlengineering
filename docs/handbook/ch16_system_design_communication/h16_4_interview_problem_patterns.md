@@ -21,16 +21,7 @@ that respects their dependencies (graph traversal). SQL rounds have their own ca
 joins and window functions. This section lists the patterns with their complexity, the signal in a problem
 statement that points to each, and the mistakes that most often cost a pass.
 
-```mermaid
-flowchart LR
-    BF["Brute force<br/>(state it first)"] --> W{"What work is repeated?"}
-    W -->|"re-scanning the past"| HM["remember it:<br/>hash map, set, counter"]
-    W -->|"restarting a scan"| TP["move forward:<br/>two pointers, sliding window"]
-    W -->|"re-sorting everything"| HP["keep the best k:<br/>heap"]
-    W -->|"constructing many answers"| BS["test a guess:<br/>binary search on the answer"]
-    W -->|"re-summing ranges"| PS["precompute:<br/>prefix sums"]
-    W -->|"exploring dependencies"| GR["traverse once:<br/>BFS, DFS, topological sort"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch16-system-design-communication-h16-4-interview-problem-patterns-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H16.4.2 The Python pattern catalogue
 

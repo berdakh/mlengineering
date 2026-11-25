@@ -21,9 +21,6 @@ search:
   previews: 3
 heading_anchors: true
 
-# Handbook pages keep their Mermaid diagrams as code blocks; the theme renders them.
-mermaid:
-  version: "11.4.1"
 
 aux_links:
   "Notebooks on GitHub":

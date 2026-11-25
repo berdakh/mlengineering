@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> Starting: process starts
+    Starting --> Ready: bundle loaded
+    Starting --> Degraded: load failed
+    Ready --> Ready: /predict 200
+    Degraded --> Degraded: /predict 503, /readyz 503 with reason
+    Ready --> Stopping: shutdown signal
+    Degraded --> Stopping: shutdown signal
+    Stopping --> [*]

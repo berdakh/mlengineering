@@ -153,7 +153,7 @@ is reproducible too (log-uniform for scale parameters, H6.4).
 
 ### 2.4 The registry: directories are the truth, the index is derived
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-22-01.svg" alt="Diagram 1 of notebook 22" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-22-01.svg" alt="Diagram 1 of notebook 22" style="max-width:100%">
 
 The index (here a CSV; in larger systems SQLite or a server) is a *cache*. It is rebuilt from the run
 directories every time it is needed and never read back as the source of truth. That way deleting a bad
@@ -163,7 +163,7 @@ the database is authoritative. The trade-off is discussed in H8.1.
 
 ### 2.5 The life of a run
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-22-02.svg" alt="Diagram 2 of notebook 22" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-22-02.svg" alt="Diagram 2 of notebook 22" style="max-width:100%">
 
 Writing `status.json` last, and atomically (write a temporary file, then `os.replace`), means a reader
 never mistakes a half-finished run for a finished one. "`metrics.json` exists" is not a completion
@@ -551,7 +551,7 @@ diffs = [va[k] - vb[k] for k in shared]
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d4_experiment_tracking/assessment.md): reasoning questions, a design-choice explanation, a rubric, and a 15-minute
+assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, a rubric, and a 15-minute
 Python interview rep on nested dict and JSON manipulation. Model answers:
 `solutions/labs/w4d4_experiment_tracking/assessment_answers.md`.
 

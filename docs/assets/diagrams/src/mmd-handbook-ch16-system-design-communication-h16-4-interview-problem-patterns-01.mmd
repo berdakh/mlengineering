@@ -1,0 +1,8 @@
+flowchart LR
+    BF["Brute force<br/>(state it first)"] --> W{"What work is repeated?"}
+    W -->|"re-scanning the past"| HM["remember it:<br/>hash map, set, counter"]
+    W -->|"restarting a scan"| TP["move forward:<br/>two pointers, sliding window"]
+    W -->|"re-sorting everything"| HP["keep the best k:<br/>heap"]
+    W -->|"constructing many answers"| BS["test a guess:<br/>binary search on the answer"]
+    W -->|"re-summing ranges"| PS["precompute:<br/>prefix sums"]
+    W -->|"exploring dependencies"| GR["traverse once:<br/>BFS, DFS, topological sort"]

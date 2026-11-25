@@ -1,0 +1,6 @@
+flowchart LR
+    D[("data")] --> F["step F"]
+    P["parameters"] --> F
+    C["code version"] --> F
+    F --> O[("output, named by<br/>hash(data, parameters, code)")]
+    H["hidden inputs:<br/>clock, random state, row order,<br/>environment, files edited by hand"] -. "must be zero" .-x F

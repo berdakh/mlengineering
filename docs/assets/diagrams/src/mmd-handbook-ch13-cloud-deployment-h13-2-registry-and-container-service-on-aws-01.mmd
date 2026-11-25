@@ -1,0 +1,11 @@
+flowchart TB
+    td["task definition (family flowguard, revision N)<br/>image, cpu 256, memory 512, port 8000,<br/>env, healthCheck /readyz, awslogs"]
+    svc["service flowguard-svc<br/>desired count 1, launch type FARGATE"]
+    cl["cluster flowguard-cluster"]
+    net["network: subnet + security group<br/>assignPublicIp (see note)"]
+    role["task execution role<br/>AmazonECSTaskExecutionRolePolicy"]
+    td --> svc
+    cl --> svc
+    net --> svc
+    role --> td
+    svc -->|"keeps 1 task running,<br/>replaces unhealthy tasks"| task(("task"))

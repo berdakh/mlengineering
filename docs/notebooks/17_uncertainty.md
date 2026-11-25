@@ -117,7 +117,7 @@ Today's intervals condition on the fitted model: they describe **test-set sampli
 the right quantity for "how well does *this* artifact do on new experiments like these". It is the
 wrong quantity for "how good is this *method*", which also needs the second and third rows.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-17-01.svg" alt="Diagram 1 of notebook 17" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-17-01.svg" alt="Diagram 1 of notebook 17" style="max-width:100%">
 
 ### 2.2 Why rows are the wrong unit
 
@@ -159,7 +159,7 @@ were what got sampled, so **experiments are what get redrawn**:
 3. Recompute the metric exactly as on the real data.
 4. Repeat `B` times. The 2.5th and 97.5th percentiles of the `B` values are the **percentile interval**.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-17-02.svg" alt="Diagram 2 of notebook 17" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-17-02.svg" alt="Diagram 2 of notebook 17" style="max-width:100%">
 
 Decisions hidden in "recompute the metric exactly":
 
@@ -811,7 +811,7 @@ Full reference: `solutions/labs/w3d5_uncertainty/lab/src/flowguard/uncertainty.p
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d5_uncertainty/assessment.md): six reasoning questions, one design-choice explanation, the rubric,
+assessment.md (section 7 of this notebook): six reasoning questions, one design-choice explanation, the rubric,
 and a 10-15 minute interview rep (ML fundamentals / statistics). Model answers and common incorrect
 answers are in `solutions/labs/w3d5_uncertainty/assessment_answers.md`.
 

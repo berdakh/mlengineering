@@ -20,5 +20,5 @@ Sessions are ordinal, not dated: if you miss a day, continue where you are.
 | [7](week-7.html) | Operating a model | [`37_service_logging_metrics`](../notebooks/37_service_logging_metrics.html) |
 | [8](week-8.html) | Finish, document, explain | [`43_project_completion`](../notebooks/43_project_completion.html) |
 
-<img src="../assets/diagrams/roadmap.svg" alt="The eight-week roadmap" width="100%">
+<img src="../assets/diagrams/roadmap.svg" alt="The eight-week roadmap" style="max-width:100%">
 

@@ -96,16 +96,7 @@ per defect.
 results; the caller decides. A checker that sorts first cannot detect disorder. A checker that
 raises on the first unparseable value reports one problem, as a traceback, and hides the rest.
 
-```mermaid
-flowchart TD
-    C["a check fails"] --> Q1{"Would a later step silently compute<br/>something false if we continued?"}
-    Q1 -->|"yes"| E["ERROR<br/>stop, write the report, write no table"]
-    Q1 -->|"no"| Q2{"Does a modelling decision<br/>depend on this fact?"}
-    Q2 -->|"yes"| W["WARNING<br/>record in the report, continue, review"]
-    Q2 -->|"no"| D["not a check: drop it,<br/>or keep it as a note in exploration"]
-    E --> X["examples: missing column, unparseable value,<br/>duplicate key, label outside 0/1, rows out of order"]
-    W --> Y["examples: sampling gap, stuck sensor,<br/>implausible range, not exactly one event"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch04-data-quality-eda-h4-1-quality-checks-and-eda-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 
 ## H4.1.5 Validation, testing, evaluation, monitoring

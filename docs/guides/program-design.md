@@ -54,50 +54,11 @@ Sessions are ordinal (`w3d2`), not tied to calendar dates, so the plan survives 
 
 ## Prerequisite structure
 
-```mermaid
-flowchart TD
-    D["Diagnostic<br/>w1d1-w1d2"] -. "decides how much of<br/>Weeks 1-3 is compressed" .-> W1
-    W1["Week 1 - research code to software<br/>package, config and logging, tests,<br/>independent refactor = project skeleton"]
-    W2["Week 2 - data<br/>SQL I and II, ingestion and quality,<br/>framing and splits, features, baselines"]
-    W3["Week 3 - evaluation<br/>leakage, validation design, selection,<br/>point vs event metrics, uncertainty, error analysis"]
-    W4["Week 4 - time-series modelling<br/>classical detectors, neural comparison,<br/>tracking, model choice, report"]
-    W5["Week 5 - inference and API<br/>pipeline, artifacts, online scoring,<br/>FastAPI, API tests"]
-    W6["Week 6 - containers and delivery<br/>Docker, CI, latency, cloud - gated"]
-    W7["Week 7 - operating a model<br/>logging, drift, delayed labels,<br/>updates and rollback, reliability"]
-    W8["Week 8 - finish and explain<br/>audit, report, system design,<br/>timed interviews, final assessment"]
-    W1 --> W2 --> W3 --> W4 --> W5 --> W6 --> W7 --> W8
-    W2 -- "split manifest w2d4" --> W3
-    W4 -- "chosen model w4d5" --> W5
-    W5 -- "API" --> W6
-    W6 -- "running service" --> W7
-```
+<img src="../assets/diagrams/mmd-guides-program-design-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *Prerequisite structure. Labelled edges are the hard dependencies.*
 
-```mermaid
-gantt
-    title Eight weeks, six core days and one light day each
-    dateFormat X
-    axisFormat Day %s
-    section Foundations
-    Week 1 research code to software    :w1, 0, 7
-    section Data and evaluation
-    Week 2 data and baselines           :w2, 7, 14
-    Week 3 evaluation                   :w3, 14, 21
-    Week 4 modelling and model choice   :w4, 21, 28
-    section Delivery
-    Week 5 inference and API            :w5, 28, 35
-    Week 6 containers, CI, cloud        :w6, 35, 42
-    Week 7 operating a model            :w7, 42, 49
-    section Communicate
-    Week 8 finish and explain           :w8, 49, 56
-    section Project milestones
-    Skeleton w1d6                       :milestone, 6, 0
-    Evaluation report w4d6              :milestone, 27, 0
-    API release candidate w5d6          :milestone, 34, 0
-    Container and delivery w6d6         :milestone, 41, 0
-    Monitoring demo w7d6                :milestone, 48, 0
-```
+<img src="../assets/diagrams/mmd-guides-program-design-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 *Sessions are ordinal, not calendar dates: "Day 27" is the 27th session you complete.*
 

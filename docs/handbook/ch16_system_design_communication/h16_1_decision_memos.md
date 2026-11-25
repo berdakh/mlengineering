@@ -32,14 +32,7 @@ followed from evidence that was available at the time. Three properties make tha
 
 Six sections, in this order, on one page:
 
-```mermaid
-flowchart TD
-    C["Context<br/>decision, owner, deadline,<br/>what was fixed in advance"] --> O["Options<br/>including 'do nothing'<br/>and one nobody proposed"]
-    O --> E["Evidence<br/>one table: intervals, unit of resampling,<br/>costs, constraints"]
-    E --> D["Decision<br/>the choice and the rule<br/>that produced it"]
-    D --> R["Risks<br/>specific, each with<br/>how we would notice"]
-    R --> W["What would change the decision<br/>measurable conditions"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch16-system-design-communication-h16-1-decision-memos-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 | Section | Must contain | Common weakness |
 |---|---|---|
@@ -90,20 +83,7 @@ evaluation (leakage? shift?) to investigate, not a licence to pick another optio
 
 ## H16.1.5 The review conversation
 
-```mermaid
-sequenceDiagram
-    participant P as Proposer
-    participant O as Decision owner
-    participant R as Reviewer (peer engineer)
-    O->>P: question, deadline, MPID, constraints
-    P->>R: rule and complexity ranking (before results)
-    R-->>P: agreed, or amended
-    P->>P: development evidence, then one test look
-    P->>O: memo
-    O->>R: does the decision follow from the table?
-    R-->>O: yes, or the gaps
-    O->>P: decision recorded, change conditions owned
-```
+<img src="../../assets/diagrams/mmd-handbook-ch16-system-design-communication-h16-1-decision-memos-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 Sending the rule to a reviewer *before* the results is the cheapest guard against fitting the rule
 to the outcome. In a research group this is a pre-registration; in a company it is usually a short

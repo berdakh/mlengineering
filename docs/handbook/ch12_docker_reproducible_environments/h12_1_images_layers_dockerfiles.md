@@ -40,22 +40,7 @@ initialisation), the container can only run binaries for the host's kernel and a
 root inside the container is root on the shared kernel, held back only by namespaces and dropped
 capabilities. That last point is why images should run as an unprivileged user.
 
-```mermaid
-flowchart TB
-    subgraph image["image flowguard:0.6.0 (read-only layers)"]
-        direction TB
-        L1["python:3.12-slim layers: Debian + CPython (~178 MB)"]
-        L2["RUN pip install: numpy, pandas, fastapi ... (171 MB)"]
-        L3["COPY src/ (70 kB)"]
-        L4["COPY models/ (29 kB)"]
-        L5["RUN useradd (70 kB)"]
-        L1 --> L2 --> L3 --> L4 --> L5
-    end
-    meta["config: USER app, ENV FLOWGUARD_MODEL_DIR=..., EXPOSE 8000,<br/>HEALTHCHECK, CMD [uvicorn ...]"]
-    L5 --- meta
-    L5 --> W1["container A: writable layer"]
-    L5 --> W2["container B: writable layer"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch12-docker-reproducible-environments-h12-1-images-layers-dockerfiles-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H12.1.3 Layers and the build cache
 
@@ -177,14 +162,7 @@ runs inside the container and cannot detect a wrong `--host` or a wrong port map
 such as Kubernetes ignore `HEALTHCHECK` and use their own liveness/readiness probes (the same two
 endpoints).
 
-```mermaid
-flowchart LR
-    start(["docker run"]) --> s["health: starting"]
-    s -->|"check passes"| h["healthy"]
-    s -->|"fails during start-period: not counted"| s
-    h -->|"retries consecutive failures"| u["unhealthy"]
-    u -->|"one success"| h
-```
+<img src="../../assets/diagrams/mmd-handbook-ch12-docker-reproducible-environments-h12-1-images-layers-dockerfiles-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 ## H12.1.7 Practical decisions and tradeoffs
 

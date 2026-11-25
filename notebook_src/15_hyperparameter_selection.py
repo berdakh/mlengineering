@@ -83,7 +83,7 @@ print("repo root:", REPO_ROOT)
 # that data is optimistic. The difference is only one of scale: a threshold is a one-parameter model fitted
 # to dev scores; choosing among 24 configurations is a model with 24 discrete options.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-15-01.svg" alt="Diagram 1 of notebook 15" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-15-01.svg" alt="Diagram 1 of notebook 15" style="max-width:100%">
 #
 # The quantity worth reporting is the performance of the **procedure** (search, select, refit, threshold)
 # on new experiments, not the dev score of the configuration it happened to pick.
@@ -110,7 +110,7 @@ print("repo root:", REPO_ROOT)
 # select, refit the selected candidate on those folds, and score fold k. Fold k never fitted a model, never
 # scored a candidate, never moved a threshold.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-15-02.svg" alt="Diagram 2 of notebook 15" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-15-02.svg" alt="Diagram 2 of notebook 15" style="max-width:100%">
 #
 # What it estimates is a property of the procedure. Different outer folds may pick different candidates;
 # that is information, not a malfunction: it says the search cannot separate the candidates with this data.
@@ -521,7 +521,7 @@ check("w3d3", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [`assessment.md`](../labs/w3d3_hyperparameter_selection/assessment.md): six reasoning questions, one design-choice explanation, a rubric, and an
+# `assessment.md` (section 7 of this notebook): six reasoning questions, one design-choice explanation, a rubric, and an
 # interview rep (ML fundamentals: regularisation and bias-variance). Automated checks: `checks/` (40 tests)
 # and `checks_challenge/` (16 tests), validated against the reference solution and against nine plausible
 # wrong submissions.

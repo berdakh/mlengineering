@@ -80,17 +80,7 @@ use, `w6d5` one cloud deployment on AWS (authorisation-gated), `w6d6` delivery a
 
 The week in one picture. Each arrow is a question the next lesson answers.
 
-```mermaid
-flowchart LR
-    RC["w5d6: release candidate<br/>evaluation = batch = API"] --> D1["w6d1 image<br/>layer order, .dockerignore,<br/>exec form, 0.0.0.0 inside,<br/>127.0.0.1 outside"]
-    D1 --> D2["w6d2 same behaviour next month<br/>lock + hashes, base digest,<br/>multi-stage, smoke test 0/1/2"]
-    D2 --> D3["w6d3 CI<br/>gate = deterministic,<br/>slow lane = data and time,<br/>least privilege"]
-    D2 --> D4["w6d4 latency under load<br/>open loop, percentiles,<br/>Little's law, workers vs threads"]
-    D3 --> D5["w6d5 one cloud route<br/>SSO credentials, budget first,<br/>private by default, teardown"]
-    D4 --> D5
-    D5 --> D6["w6d6 delivery and debugging<br/>same digest everywhere,<br/>rollback vs revert,<br/>evidence before action"]
-    D3 -.-> D6
-```
+<img src="../assets/diagrams/mmd-weeks-week-6-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 All numbers below come from the Week 6 lessons' authoring runs (2026-11-22) on the authoring machine
 (Docker Engine 29.10, 4 cores). They describe that machine; your own measurements will differ, and the

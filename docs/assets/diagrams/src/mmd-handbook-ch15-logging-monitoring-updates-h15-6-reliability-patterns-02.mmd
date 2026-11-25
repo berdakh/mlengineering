@@ -1,0 +1,6 @@
+stateDiagram-v2
+    [*] --> Closed
+    Closed --> Open: N consecutive failures
+    Open --> HalfOpen: reset timeout elapsed
+    HalfOpen --> Closed: trial call succeeds
+    HalfOpen --> Open: trial call fails (timeout restarts)

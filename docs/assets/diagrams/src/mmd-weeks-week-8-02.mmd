@@ -1,0 +1,9 @@
+flowchart TD
+    G[Gaps in the ledger] --> Q1{Gap is about shipping<br/>or operating?}
+    Q1 -- yes --> A[Option: deploy for real, operate, write incidents]
+    Q1 -- no --> Q2{Gap is about breadth<br/>or transfer?}
+    Q2 -- yes --> B[Option: a second project in a new domain]
+    Q2 -- no --> C[Option: interview-loop practice, open-source contributions]
+    A --> D[Pick by criteria: closes gaps, fits target roles, cost, risk]
+    B --> D
+    C --> D

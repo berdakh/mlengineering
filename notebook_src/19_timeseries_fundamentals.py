@@ -322,7 +322,7 @@ print("repo root:", REPO_ROOT)
 # earlier lessons; you do not need to edit it. Checks: `python wb.py check w4d1` (or
 # `python -m pytest labs/w4d1_timeseries_fundamentals/checks -q`). The starter fails all of them.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-19-01.svg" alt="Diagram 1 of notebook 19" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-19-01.svg" alt="Diagram 1 of notebook 19" style="max-width:100%">
 #
 # **Task 1 — `acf(x, nlags)` (8 min).** Mean-removed, one denominator for all lags. *Checkpoint:*
 # `test_acf_*` pass; on an AR(1) with mean 40 the estimate must still be close to `0.8^k`.
@@ -610,7 +610,7 @@ check("w4d1", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w4d1_timeseries_fundamentals/assessment.md): reasoning questions, one design-choice explanation, a rubric, and a
+# assessment.md (section 7 of this notebook): reasoning questions, one design-choice explanation, a rubric, and a
 # 10-15 minute interview rep (time-series fundamentals). Answers in
 # `solutions/labs/w4d1_timeseries_fundamentals/assessment_answers.md` — write yours first.
 #

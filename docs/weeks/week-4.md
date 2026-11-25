@@ -76,17 +76,7 @@ milestone 1 (evaluation report).
 
 The week in one picture. Each arrow is a question the next lesson answers.
 
-```mermaid
-flowchart LR
-    TS["w4d1 time-series basics<br/>ACF, stationarity,<br/>forecast residuals, CUSUM"] --> CD["w4d2 classical detectors<br/>PCA T2 and Q, isolation forest,<br/>boosted trees; protocols A and B"]
-    CD --> NN["w4d3 neural comparison<br/>same protocol, 5 seeds,<br/>cost reported"]
-    CD --> TR["w4d4 experiment tracking<br/>run id = config hash,<br/>registry, reproduce"]
-    NN --> TR
-    TR --> MC["w4d5 model choice<br/>MPID, interval reading,<br/>Pareto, simplest not worse"]
-    MC --> RP["w4d6 milestone 1<br/>make evaluate,<br/>byte-identical report"]
-    W3["Week 3: frozen v2 split,<br/>event metrics, cluster bootstrap"] -.-> CD
-    W3 -.-> MC
-```
+<img src="../assets/diagrams/mmd-weeks-week-4-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 All real-data numbers in this week's lessons, and in the questions below, come from the frozen
 manifest v2 (`w3d1`): **7 test and 27 development experiments**, test prevalence 0.373.

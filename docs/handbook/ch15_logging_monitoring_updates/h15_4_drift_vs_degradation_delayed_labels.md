@@ -26,21 +26,7 @@ The central claim of this section is that questions 2 and 3 are logically indepe
 leave performance untouched, and performance can collapse while every input statistic is still. A
 monitoring design that infers one from the other will retrain working models and keep broken ones.
 
-```mermaid
-flowchart TB
-    subgraph S["What changed?"]
-        CV["covariate shift<br/>P(x) changes, P(y|x) fixed"]
-        PR["prior shift<br/>P(y) changes, P(x|y) fixed"]
-        CO["concept shift<br/>P(y|x) changes"]
-        PI["pipeline change<br/>code, config, upstream join"]
-    end
-    CV -->|"drift monitor sees it"| D["input drift flag"]
-    PR -->|"drift monitor may see it"| D
-    CO -->|"often invisible to input statistics"| L["only labels see it"]
-    PI -->|"invisible if inputs are logged before the bug"| L
-    CV -->|"harmless if the model is invariant or extrapolates well"| OK["performance unchanged"]
-    CV -->|"harmful otherwise"| L
-```
+<img src="../../assets/diagrams/mmd-handbook-ch15-logging-monitoring-updates-h15-4-drift-vs-degradation-delayed-labels-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## Deeper explanation
 

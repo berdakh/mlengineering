@@ -1,0 +1,8 @@
+flowchart TD
+    V["variance of a reported metric"] --> A["evaluation data<br/>which units are in the test set"]
+    V --> B["training data<br/>which units / rows were used to fit"]
+    V --> C["algorithmic randomness<br/>initialisation, data order, dropout,<br/>subsampling, random features"]
+    V --> D["numerical non-determinism<br/>thread scheduling, GPU kernels,<br/>library versions, hardware"]
+    V --> E["selection<br/>which configuration, seed or epoch was reported"]
+    C --> C1["controlled by seeds"]
+    D --> D1["not controlled by seeds;<br/>record the environment"]

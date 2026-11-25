@@ -1,0 +1,7 @@
+flowchart LR
+    X["row x (d sensors)"] --> S["standardise with<br/>normal-data mean and SD"]
+    S --> P["project on k retained components:<br/>t = x P"]
+    P --> T2["T2 = sum t_j^2 / lambda_j<br/>extreme but consistent states"]
+    P --> R["reconstruct: x_hat = t P^T"]
+    R --> Q["Q = squared norm of (x - x_hat)<br/>broken relationships"]
+    Q --> C["contributions per sensor:<br/>(x_i - x_hat_i)^2"]

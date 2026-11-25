@@ -1,0 +1,11 @@
+flowchart TB
+    R["request with X-Request-ID"] --> MW["middleware: id, timer, in-flight"]
+    MW --> H["handler: validate, score"]
+    H --> PE["prediction event: version, counts, max score"]
+    MW --> AE["access event: route, status, duration"]
+    MW --> MC["metrics: counter, histogram, gauge"]
+    PE --> LS["log store: queried by request_id, machine_id"]
+    AE --> LS
+    MC --> TS["time-series store: dashboards, SLO alerts"]
+    TS -->|"alert"| ON["on-call engineer"]
+    ON -->|"query by id or time"| LS

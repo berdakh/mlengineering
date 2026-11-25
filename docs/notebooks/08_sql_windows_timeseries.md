@@ -142,7 +142,7 @@ with a stated grain, exactly as you would name intermediate DataFrames.
 
 The same order as a diagram, with the place where each kind of filter can live:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-08-01.svg" alt="Diagram 1 of notebook 08" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-08-01.svg" alt="Diagram 1 of notebook 08" style="max-width:100%">
 
 
 ### 2.3 Frames, and the default that bites
@@ -289,7 +289,7 @@ There is one more that no query can detect: a row whose *timestamp* is in the pa
 Point-in-time correctness is about when information became available, which needs an ingestion
 time. Today's data has only `reading_id` as a proxy for arrival order; H3.2.5 discusses this.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-08-02.svg" alt="Diagram 2 of notebook 08" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-08-02.svg" alt="Diagram 2 of notebook 08" style="max-width:100%">
 
 On the lab database, device D01 changes calibration four times in three days. Each reading is corrected
 with the offset, and compared with the threshold, that were in force when it was measured:
@@ -747,7 +747,7 @@ inside the CTE.
 
 ## 7. Assessment
 
-[`assessment.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d2_sql_windows_timeseries/assessment.md): five short reasoning questions, one design-choice explanation,
+`assessment.md` (section 7 of this notebook): five short reasoning questions, one design-choice explanation,
 the rubric, and a 10–15 minute SQL interview rep. Write your answers before opening
 `solutions/labs/w2d2_sql_windows_timeseries/assessment_answers.md`.
 

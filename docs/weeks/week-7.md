@@ -80,18 +80,7 @@ rollback, `w7d5` reliability and failure handling, `w7d6` the monitoring demonst
 
 The week in one picture. Each box is a question; the dotted arrows are the traps the week measured.
 
-```mermaid
-flowchart LR
-    W6["w6d6: a deployed service<br/>same digest everywhere,<br/>rollback by digest"] --> L1["w7d1 does it answer?<br/>JSON logs + request id,<br/>golden signals, SLO burn rate"]
-    L1 --> L2["w7d2 has the input changed?<br/>violations vs missingness vs drift,<br/>thresholds by calibration"]
-    L2 --> L3["w7d3 is the model still good?<br/>delayed, partial, biased labels,<br/>as-of evaluation, power"]
-    L3 --> L4["w7d4 replace it safely<br/>paired gate, shadow, canary,<br/>rollback = pointer + reload"]
-    L1 --> L5["w7d5 when parts fail<br/>guards, deadline, bulkhead,<br/>jittered retries, degraded=true"]
-    L4 --> L6["w7d6 milestone 4<br/>one command, 8 scripted events,<br/>runbook, report the miss"]
-    L5 --> L6
-    L2 -.->|"drift is not degradation"| L3
-    L5 -.->|"scale-invariant model is blind<br/>to a units bug"| L2
-```
+<img src="../assets/diagrams/mmd-weeks-week-7-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 All numbers below come from the Week 7 lessons' authoring runs (2026-11-22): real SKAB recordings on the
 frozen v2 manifest (7 test, 27 development experiments) unless a lesson marked them SYNTHETIC. They

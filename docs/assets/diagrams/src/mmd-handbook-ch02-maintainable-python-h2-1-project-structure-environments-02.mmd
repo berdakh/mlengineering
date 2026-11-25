@@ -1,0 +1,6 @@
+flowchart LR
+    src["source tree<br/>pyproject.toml + src/"] -- "build backend" --> wheel["wheel<br/>a zip of code + metadata"]
+    wheel -- "installer" --> env["environment<br/>site-packages + bin/"]
+    src -. "editable install:<br/>metadata + pointer, no copy" .-> env
+    idx["package index"] -- "dependencies" --> env
+    env --> run["import pumpwatch<br/>and the pumpwatch command"]

@@ -112,7 +112,7 @@ ECR** (the registry), one **ECS service** that keeps one **Fargate task** (a con
 compute) running, logs to **CloudWatch Logs**, and a **security group** as the firewall. No load
 balancer, no NAT gateway, no database.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-35-01.svg" alt="Diagram 1 of notebook 35" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-35-01.svg" alt="Diagram 1 of notebook 35" style="max-width:100%">
 
 Everything else in the lesson is about making each arrow safe: who may push (identity), what is pushed
 (an immutable, scanned image), who may connect (no one by default), what it costs (budget first), and
@@ -166,7 +166,7 @@ reminder, and why the teardown is part of the deliverable.
 
 ### 2.4 Credentials: what goes where
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-35-02.svg" alt="Diagram 2 of notebook 35" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-35-02.svg" alt="Diagram 2 of notebook 35" style="max-width:100%">
 
 The rules, in order of how often they are broken: never commit credentials (the lab's checks scan for
 key-shaped strings and 12-digit account ids); never bake them into an image (anyone who can pull it
@@ -302,7 +302,7 @@ Work in `labs/w6d5_cloud_deployment/lab/`. All commands run from that directory 
 Files you edit: `deploy/aws_deploy.py` (tasks 3-6) and `deploy/taskdef.template.json` (task 4).
 Everything else is given; read it.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-35-03.svg" alt="Diagram 3 of notebook 35" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-35-03.svg" alt="Diagram 3 of notebook 35" style="max-width:100%">
 
 **Task 1 - Run the container locally (10 min).**
 
@@ -591,7 +591,7 @@ def signoff_status(path, need_public=False):
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d5_cloud_deployment/assessment.md): reasoning questions, one design-choice explanation, a rubric, and a
+assessment.md (section 7 of this notebook): reasoning questions, one design-choice explanation, a rubric, and a
 10-15 minute system-design interview rep ("deploy this model service"). Model answers are in
 `solutions/labs/w6d5_cloud_deployment/assessment_answers.md`.
 

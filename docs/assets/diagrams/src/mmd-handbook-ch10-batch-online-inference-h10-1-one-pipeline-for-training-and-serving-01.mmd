@@ -1,0 +1,7 @@
+flowchart TD
+    S["Skew: served function differs from evaluated function"] --> R["Re-implemented preprocessing<br/>(ddof, smoothing, rounding)"]
+    S --> D["Different defaults<br/>(burn-in length, fill value, clip)"]
+    S --> O["Feature order or naming<br/>(right shape, wrong columns)"]
+    S --> T["Statistics at the wrong time<br/>(stale, or recomputed on the batch)"]
+    S --> P["Parsing and types<br/>(units, decimal comma, time zone, float parser)"]
+    S --> C["Configuration<br/>(threshold, model version actually loaded)"]

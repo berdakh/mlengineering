@@ -1,0 +1,7 @@
+flowchart LR
+    wt["Working tree<br/>what your editor shows"] -- "git add" --> idx["Index / staging area<br/>the next commit, being composed"]
+    idx -- "git commit" --> repo["Repository<br/>immutable snapshots"]
+    repo -- "git restore --staged" --> idx
+    repo -- "git restore, git switch" --> wt
+    wt -. "git diff" .- idx
+    idx -. "git diff --staged" .- repo

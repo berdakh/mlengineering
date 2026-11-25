@@ -1,0 +1,10 @@
+flowchart TD
+    R["response received"] --> A{"status family"}
+    A -- 2xx --> OK["use the result"]
+    A -- 4xx --> B{"which"}
+    B -- "400 / 422" --> FIX["fix the payload; do not retry unchanged"]
+    B -- "404 / 409" --> STATE["check the resource and its state"]
+    B -- "429" --> WAIT["wait Retry-After, then retry"]
+    A -- 5xx --> C{"which"}
+    C -- "503" --> RETRY["retry later or on another instance"]
+    C -- "500" --> REPORT["retry only if idempotent; report the request id"]

@@ -86,7 +86,7 @@ print("repo root:", REPO_ROOT)
 # column written after the outcome); recognising a pattern in new clothes is exactly the transferable
 # skill.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-48-01.svg" alt="Diagram 1 of notebook 48" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-48-01.svg" alt="Diagram 1 of notebook 48" style="max-width:100%">
 #
 # *Each Week 8 section is scored with the same rubric rows as its Week 1 counterpart; t1 has no Week 1
 # counterpart and is compared with the w3d6 transfer sitting instead.*

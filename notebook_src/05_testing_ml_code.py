@@ -202,7 +202,7 @@ print("repo root:", REPO_ROOT)
 # probability of the wrong class" (AUC ≈ 0) and "labels misaligned with features" (AUC ≈ 0.5).
 # Real performance thresholds belong in the evaluation stage, with uncertainty attached.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-05-01.svg" alt="Diagram 1 of notebook 05" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-05-01.svg" alt="Diagram 1 of notebook 05" style="max-width:100%">
 #
 # *The line that matters runs between the two boxes: above it a red result is a defect, below it a red result may be an unlucky split.*
 #
@@ -337,7 +337,7 @@ print("repo root:", REPO_ROOT)
 # - `checks/bugs.py` lists the defects. Reading it first turns this lab into guided
 #   practice — your call, but record it honestly in the workbench.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-05-02.svg" alt="Diagram 2 of notebook 05" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-05-02.svg" alt="Diagram 2 of notebook 05" style="max-width:100%">
 #
 # *How the lab grades you: your tests are the detector, the injected defects are the ground truth.*
 #
@@ -783,7 +783,7 @@ check("w1d5", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# - Questions, design-choice explanation, rubric and the interview rep: [`assessment.md`](../labs/w1d5_testing_ml_code/assessment.md).
+# - Questions, design-choice explanation, rubric and the interview rep: `assessment.md` (section 7 of this notebook).
 # - Model answers and common incorrect answers: `solutions/labs/w1d5_testing_ml_code/assessment_answers.md`.
 # - Automated checks: `checks/` (lab) and `checks_challenge/` (challenge). They grade
 #   behaviour of your *suite* (passes on correct code, fails on defective code, fast,

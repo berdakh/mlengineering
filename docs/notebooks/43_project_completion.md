@@ -118,7 +118,7 @@ ordinary machine can regenerate it without asking you anything. Each word exclud
 | **Generated numbers** | a number typed or "rounded up" in a report | w4d6, w7d6: reports built from `results.json` |
 | **Deterministic execution** | unseeded randomness, thread counts, iteration order | w1d4 (seeds), w4d3 and w4d5 (thread pinning), w5d1 (CSV `float_precision`) |
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-43-01.svg" alt="Diagram 1 of notebook 43" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-43-01.svg" alt="Diagram 1 of notebook 43" style="max-width:100%">
 
 ### 2.2 Precise terms
 
@@ -177,7 +177,7 @@ An audit always finds gaps. The professional move is to decide, in writing, what
 what to drop, with the time you actually have. A deliberate "out of scope, because..." reads as judgement; a
 silent half-finished deliverable reads as a mistake.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-43-02.svg" alt="Diagram 2 of notebook 43" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-43-02.svg" alt="Diagram 2 of notebook 43" style="max-width:100%">
 
 ### 2.8 Limitations and misconceptions
 
@@ -398,7 +398,7 @@ def compare_headline(produced, expected, values):
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d1_project_completion/assessment.md): reasoning questions, a design-choice explanation, the milestone rubric, and the
+assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, the milestone rubric, and the
 interview rep "how do I know your numbers are real?".
 
 

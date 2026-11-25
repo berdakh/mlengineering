@@ -1,0 +1,8 @@
+flowchart TD
+    Q["A field changed between releases"] --> W{"request or response?"}
+    W -->|request| R1{"newly required, or no longer accepted,<br/>or constraint tightened?"}
+    R1 -->|yes| B1["breaking"]
+    R1 -->|no| OK1["compatible"]
+    W -->|response| R2{"removed, no longer required,<br/>or may now hold a new type such as null?"}
+    R2 -->|yes| B2["breaking"]
+    R2 -->|no| OK2["compatible"]

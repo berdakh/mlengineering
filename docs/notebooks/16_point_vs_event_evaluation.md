@@ -97,7 +97,7 @@ per row, and point metrics (precision, recall, F1, PR-AUC) count rows. But fault
 SKAB each labelled experiment contains exactly one contiguous anomalous segment of 188 to 586 rows.
 The operator does not act on rows either; they act on *alarms*, which are runs of flags.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-16-01.svg" alt="Diagram 1 of notebook 16" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-16-01.svg" alt="Diagram 1 of notebook 16" style="max-width:100%">
 
 Everything after the flags is part of the detector, not of the metric: `merge_gap` and
 `min_duration` are hyperparameters, chosen on development data like the threshold (w3d3).
@@ -152,7 +152,7 @@ at delay zero. The tolerance exists because onsets are labelled imprecisely: SKA
 `changepoint`, and maintenance logs in industry lag the true onset. A tolerance must be set from
 what is known about label timing, stated, and kept fixed.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-16-02.svg" alt="Diagram 2 of notebook 16" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-16-02.svg" alt="Diagram 2 of notebook 16" style="max-width:100%">
 
 ### 2.5 The event-level metrics
 
@@ -614,7 +614,7 @@ confirmation wait, `delay_summary` with infinite delays, `normal_hours` from tim
 
 ## 7. Assessment
 
-[`assessment.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d4_point_vs_event_evaluation/assessment.md): six reasoning questions, one design-choice explanation, a rubric,
+`assessment.md` (section 7 of this notebook): six reasoning questions, one design-choice explanation, a rubric,
 and one interview rep (Python: interval merging and overlap). Automated checks: `checks/` (54 tests)
 and `checks_challenge/` (13 tests), validated against the reference solution and against eleven
 plausible wrong submissions. Passing them means your functions follow the conventions; it does not

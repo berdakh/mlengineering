@@ -47,17 +47,7 @@ Why not load at import or in `create_app`? Import-time loading makes every `impo
 and failure-prone (tests, tooling, documentation builds), and binds the model path at import. Loading in
 the lifespan ties the model to the running process, which is what readiness reports on.
 
-```mermaid
-stateDiagram-v2
-    [*] --> Starting: process starts
-    Starting --> Ready: bundle loaded
-    Starting --> Degraded: load failed
-    Ready --> Ready: /predict 200
-    Degraded --> Degraded: /predict 503, /readyz 503 with reason
-    Ready --> Stopping: shutdown signal
-    Degraded --> Stopping: shutdown signal
-    Stopping --> [*]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch11-fastapi-input-validation-h11-3-lifecycle-and-concurrency-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 **Liveness and readiness** are different questions. Liveness (`/healthz`): is the process able to answer at
 all? If not, restart it. Readiness (`/readyz`): should it receive traffic now? If not, route elsewhere and

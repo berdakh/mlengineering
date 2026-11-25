@@ -85,7 +85,7 @@ HTTP facts, without logging the payload.
   cardinality, the query tool).
 * `lab/replay_demo.py` runs against real SKAB data and you can read its output (task 5).
 * `python wb.py check w7d1 --challenge` passes, and your `SLO.md` survives the rubric in
-  [assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d1_service_logging_metrics/assessment.md).
+  assessment.md (section 7 of this notebook).
 * You can explain, without notes, why a request id must never be a metric label, and why the access log
   of a request that crashed the handler is written by code that runs *after* the exception.
 
@@ -111,7 +111,7 @@ formatters), [w5d4](28_fastapi_validation.html) (the service and its request-id 
 
 ### 2.1 Three kinds of telemetry, three different questions
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-37-01.svg" alt="Diagram 1 of notebook 37" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-37-01.svg" alt="Diagram 1 of notebook 37" style="max-width:100%">
 
 * **Metrics** are pre-aggregated numbers: counts, sums, bucketed distributions, current values. They
   answer "how much and how often" and they are what alerts are written on. Their cost grows with the
@@ -242,7 +242,7 @@ quality needs labels, which arrive late (w7d3); input change needs distribution 
 
 ### 2.6 How a request flows through the service, and where the exception goes
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-37-02.svg" alt="Diagram 2 of notebook 37" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-37-02.svg" alt="Diagram 2 of notebook 37" style="max-width:100%">
 
 The non-obvious part: in Starlette, a handler registered for `Exception` runs in `ServerErrorMiddleware`,
 which sits **outside** your middleware. So when the endpoint raises, `call_next` does not return a 500
@@ -446,7 +446,7 @@ who depends on the service, the SLIs and what counts as valid, targets with rati
 an alerting policy, and what the SLOs do not cover.
 
 Acceptance: `python wb.py check w7d1 --challenge` (known-answer arithmetic, which events are excluded,
-both-windows paging, a filled document) and the SLO rubric in [assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d1_service_logging_metrics/assessment.md).
+both-windows paging, a filled document) and the SLO rubric in assessment.md (section 7 of this notebook).
 
 
 ### The challenge brief
@@ -598,7 +598,7 @@ def burn_rate(bad, valid, target):
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d1_service_logging_metrics/assessment.md): reasoning questions, a design-choice explanation, the rubrics and a
+assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, the rubrics and a
 system-design interview rep on observability.
 
 

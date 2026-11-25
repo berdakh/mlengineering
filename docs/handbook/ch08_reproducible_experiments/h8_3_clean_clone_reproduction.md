@@ -19,20 +19,7 @@ empty directory, create an environment from pinned dependencies, obtain the data
 procedure, run the declared commands, and compare the headline numbers with the committed ones under stated
 tolerances. Whatever fails points at hidden state: something the result depended on that is not in the commit.
 
-```mermaid
-flowchart TB
-    subgraph committed["in the commit"]
-        CODE["code"] --- LOCK["requirements.lock<br/>(direct + transitive, ==)"]
-        LOCK --- MAN["data manifest<br/>(URL, commit, SHA-256)"]
-        MAN --- SPLIT["frozen split"]
-        SPLIT --- SPEC["REPRODUCE.toml<br/>(steps, headline values, tolerances)"]
-        SPEC --- EXP["expected results"]
-    end
-    subgraph not["NOT in the commit (must not be needed)"]
-        WT["untracked files, caches"] --- ENV["your installed packages"]
-        ENV --- HAND["numbers typed by hand"]
-    end
-```
+<img src="../../assets/diagrams/mmd-handbook-ch08-reproducible-experiments-h8-3-clean-clone-reproduction-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H8.3.2 Three levels of "same result"
 

@@ -52,15 +52,7 @@ it, a commit is "whatever I happened to have changed".
 `git diff --staged` compares index to the last commit: *what I am about to commit*.
 Reading the second one before every commit is the cheapest code review available.
 
-```mermaid
-flowchart LR
-    wt["Working tree<br/>what your editor shows"] -- "git add" --> idx["Index / staging area<br/>the next commit, being composed"]
-    idx -- "git commit" --> repo["Repository<br/>immutable snapshots"]
-    repo -- "git restore --staged" --> idx
-    repo -- "git restore, git switch" --> wt
-    wt -. "git diff" .- idx
-    idx -. "git diff --staged" .- repo
-```
+<img src="../../assets/diagrams/mmd-handbook-ch02-maintainable-python-h2-3-git-workflow-refactoring-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *Three places a file's content can be, the commands that move it, and the two diffs that compare neighbours.*
 
@@ -255,16 +247,7 @@ So there are three distinct states, with three distinct remedies:
 | File already tracked | `git rm --cached <path>` (removes from the index only, keeps the working file), plus the pattern | does not remove it from earlier commits |
 | File in history that must not be there (large data, licence problem, secret) | rewrite history; the Git documentation itself recommends `git filter-repo` over `git filter-branch`. Then force-push and have every collaborator re-clone | does not un-leak anything: copies exist in every clone and possibly in caches |
 
-```mermaid
-flowchart TD
-    f["A file in the project directory"] --> q1{"Can a command<br/>regenerate it?"}
-    q1 -- "yes: data, features, models, runs" --> ig["ignore it; commit the command<br/>and a hash or manifest"]
-    q1 -- no --> q2{"Is it a secret or<br/>machine-specific?"}
-    q2 -- yes --> env["keep out of Git:<br/>environment variables, local config"]
-    q2 -- no --> q3{"Is it large or binary?"}
-    q3 -- yes --> ext["external storage with a pointer"]
-    q3 -- no --> commit["commit it: code, config,<br/>tests, docs, small fixtures"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch02-maintainable-python-h2-3-git-workflow-refactoring-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 *Deciding what belongs in the repository.*
 
@@ -335,16 +318,7 @@ no value), when output is not deterministic, or when the inputs you can run do n
 are changing. Then construct small inputs with known answers and test those (H9.1), and document
 disagreements with the old output explicitly.
 
-```mermaid
-flowchart TD
-    a["Untested code whose current output<br/>people already rely on"] --> b["Run it; save the output as a golden file"]
-    b --> c["Characterization test:<br/>output must equal the golden file"]
-    c --> d["Refactor in small steps"]
-    d --> e{"test still green?"}
-    e -- yes --> d
-    e -- no --> f["revert the step, or admit it changed behaviour"]
-    d --> g["Replace the golden-file test with tests<br/>that state intended behaviour"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch02-maintainable-python-h2-3-git-workflow-refactoring-03.svg" alt="Diagram 3 of this page" style="max-width:100%">
 
 *A characterization test is scaffolding: it pins what the code does, right or wrong, so structure can change safely.*
 

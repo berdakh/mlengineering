@@ -91,18 +91,7 @@ as `dedup -> gaps -> numbered -> summary` can be tested stage by stage by select
 CTEs are a readability device; whether the engine materialises them or inlines them is an
 optimiser detail that differs between engines and versions.
 
-```mermaid
-flowchart LR
-    F["FROM / JOIN"] --> W["WHERE"] --> G["GROUP BY"] --> H["HAVING"]
-    H --> WIN["window functions"]
-    WIN --> S["SELECT / DISTINCT"] --> O["ORDER BY"] --> L["LIMIT"]
-    subgraph OVER["OVER ( ... ) for one row"]
-        direction TB
-        P["PARTITION BY<br/>which rows are comparable"] --> OB["ORDER BY<br/>their sequence; ties make peers"]
-        OB --> FR["frame<br/>ROWS = physical rows, RANGE = key values"]
-    end
-    WIN --- OVER
-```
+<img src="../../assets/diagrams/mmd-handbook-ch03-sql-data-pipelines-h3-2-window-functions-timeseries-sql-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 
 ---

@@ -1,0 +1,8 @@
+flowchart LR
+    subgraph b["builder"]
+        b1["base@digest"] --> b2["venv without pip"] --> b3["pip --python venv install<br/>--require-hashes -r lock"]
+    end
+    subgraph r["runtime"]
+        r1["base@digest"] --> r2["COPY --from=builder /opt/venv"] --> r3["code, model, user,<br/>labels, healthcheck, CMD"]
+    end
+    b3 -.->|"/opt/venv only"| r2

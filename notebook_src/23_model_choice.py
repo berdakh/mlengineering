@@ -60,7 +60,7 @@ print("repo root:", REPO_ROOT)
 #
 # * `python wb.py check w4d5` passes (guided practice).
 # * `lab/DECISION_MEMO.md` is complete, its numbers come from your own run of `lab/decision_table.py`,
-#   and it scores at least "meets" on every row of the rubric in [assessment.md](../labs/w4d5_model_choice/assessment.md).
+#   and it scores at least "meets" on every row of the rubric in assessment.md (section 7 of this notebook).
 # * Independent skill: `python wb.py check w4d5 --challenge` passes and `challenge/MEMO.md` is
 #   written without opening the hints.
 #
@@ -211,7 +211,7 @@ print("repo root:", REPO_ROOT)
 # * **"Test results decide between candidates."** That is selection on the test set (w3d3). The choice
 #   is made on development data; the test set confirms the chosen model once.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-23-01.svg" alt="Diagram 1 of notebook 23" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-23-01.svg" alt="Diagram 1 of notebook 23" style="max-width:100%">
 
 # %% [markdown]
 # ## 3. Worked example: a demand-forecasting choice
@@ -364,7 +364,7 @@ print("repo root:", REPO_ROOT)
 # **Task 6. The memo (20 min).** Fill in `lab/DECISION_MEMO.md` from your run, using the template's
 # headings: context, options, evidence table with intervals, decision and the rule that produced it,
 # risks, and what would change the decision. One page. Grade it against the rubric in
-# [assessment.md](../labs/w4d5_model_choice/assessment.md).
+# assessment.md (section 7 of this notebook).
 
 # %%
 # Run the automated checks on your guided lab.
@@ -550,7 +550,7 @@ check("w4d5", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w4d5_model_choice/assessment.md): reasoning questions, a design-choice explanation, the memo rubric
+# assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, the memo rubric
 # and a 10-15 minute interview rep ("why didn't you ship the bigger model?"). Model answers are in
 # `solutions/labs/w4d5_model_choice/assessment_answers.md`.
 #

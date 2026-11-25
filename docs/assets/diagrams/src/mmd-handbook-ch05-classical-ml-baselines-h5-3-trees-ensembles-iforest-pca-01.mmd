@@ -1,0 +1,5 @@
+flowchart LR
+    T["single decision tree<br/>low bias, high variance"] --> BAG["bagging<br/>average trees on bootstrap samples:<br/>variance down"]
+    BAG --> RF["random forest<br/>+ random feature subsets per split:<br/>trees decorrelated, variance down more"]
+    T --> BOOST["gradient boosting<br/>shallow trees fitted to the current errors:<br/>bias down, needs shrinkage"]
+    T --> IF["isolation forest<br/>random splits, no labels:<br/>short paths = anomalous"]

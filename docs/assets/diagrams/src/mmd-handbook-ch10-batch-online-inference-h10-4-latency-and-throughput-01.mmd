@@ -1,0 +1,5 @@
+flowchart TB
+    G["open-loop generator<br/>request i scheduled at t0 + i/lambda"] --> N["network / loopback"]
+    N --> A["accept queue<br/>(kernel)"] --> EL["event loop<br/>HTTP parse"] --> TP["thread pool<br/>def endpoint"]
+    TP --> V["validate JSON<br/>(pydantic)"] --> M["model<br/>score"] --> RB["build + serialise<br/>response"]
+    RB --> N2["network"] --> G2["generator records<br/>finish - scheduled"]

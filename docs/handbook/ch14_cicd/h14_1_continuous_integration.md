@@ -34,14 +34,7 @@ them. A job is a list of **steps**: `uses:` runs a versioned, reusable **action*
 script in the checkout. A **matrix** expands one job definition into several (one per Python version,
 for instance). **Expressions** `${{ ... }}` are evaluated by GitHub before the step starts.
 
-```mermaid
-flowchart LR
-    PR["pull request opened<br/>or updated"] --> CI["ci.yml runs<br/>lint, test matrix, image"]
-    CI -->|all required checks green| R["review"] --> M["merge to main"]
-    CI -->|any required check red| F["fix and push again<br/>(superseded run cancelled)"] --> CI
-    M --> P["push to main runs ci.yml again"]
-    S["schedule / manual"] --> EV["evaluate.yml<br/>data, metrics, perf"] --> REP["report artifact<br/>read by an owner"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch14-cicd-h14-1-continuous-integration-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 The gate only blocks merges if the repository makes it: **branch protection** on `main` with the CI
 jobs as **required status checks**. That is a repository setting, not part of the workflow file.

@@ -1,0 +1,12 @@
+flowchart LR
+    subgraph FIT["fit: once, on designated rows only"]
+        TR["reference rows<br/>(training experiments, normal operation)"] --> ST["ReferenceStats<br/>mean, sd per feature"]
+    end
+    ST --> SAVE[("saved with the model")]
+    subgraph APPLY["transform: everywhere, with the stored state"]
+        A1["training rows"] --> Z["z = (x - mean) / sd"]
+        A2["validation / test rows"] --> Z
+        A3["one live row in the service"] --> Z
+    end
+    SAVE --> Z
+    TE["test rows"] -. "never reach fit" .-x ST

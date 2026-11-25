@@ -151,7 +151,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.4 A fair comparison protocol
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-21-01.svg" alt="Diagram 1 of notebook 21" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-21-01.svg" alt="Diagram 1 of notebook 21" style="max-width:100%">
 #
 # What "fair" means here, item by item:
 #
@@ -329,7 +329,7 @@ print("repo root:", REPO_ROOT)
 !python wb.py check w4d3
 
 # %% [markdown]
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-21-02.svg" alt="Diagram 2 of notebook 21" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-21-02.svg" alt="Diagram 2 of notebook 21" style="max-width:100%">
 #
 # ### Task 1 — `make_windows(x, window)` (10 min)
 #
@@ -634,7 +634,7 @@ check("w4d3", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w4d3_neural_comparison/assessment.md): reasoning questions, a design-choice explanation, a rubric, and a
+# assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, a rubric, and a
 # 15-minute debugging interview rep. Model answers are in
 # `solutions/labs/w4d3_neural_comparison/assessment_answers.md` (open after attempting).
 #

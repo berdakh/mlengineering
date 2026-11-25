@@ -1,0 +1,12 @@
+flowchart LR
+    subgraph offline ["Offline (evaluation, w2-w4)"]
+        T["recorded run<br/>(table)"] --> B["score_batch(run)"]
+    end
+    subgraph online ["Online (serving, w5)"]
+        M["one sample<br/>per call"] --> U["update(state, x)"]
+        U --> ST[("state<br/>O(1)")]
+        ST --> U
+    end
+    B --> P{"parity test<br/>in CI"}
+    U --> P
+    P -- "|diff| <= tol" --> OK["streaming computes<br/>the evaluated function"]

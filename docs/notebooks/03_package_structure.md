@@ -139,7 +139,7 @@ Consequences you have certainly met:
 *Installing* a package means making it findable through step 4, which is the only step
 that does not depend on where you are standing or how you started Python.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-03-01.svg" alt="Diagram 1 of notebook 03" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-03-01.svg" alt="Diagram 1 of notebook 03" style="max-width:100%">
 
 *An import is a search over `sys.path`, in order. "Works from the repo root, fails elsewhere" means entry 0 found your code and nothing else would have.*
 
@@ -214,7 +214,7 @@ dependencies or entry points in `pyproject.toml`, re-run `pip install -e .`. An 
 install is a development convenience, not a deployment mechanism — images and servers get
 a regular install (week 6).
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-03-02.svg" alt="Diagram 2 of notebook 03" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-03-02.svg" alt="Diagram 2 of notebook 03" style="max-width:100%">
 
 *What an editable install does. The frontend orchestrates; the backend knows how to build your project.*
 
@@ -375,7 +375,7 @@ Workspace: [`lab/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d
 **Result to produce:** an installed `pumpwatch` command that reproduces the script's
 metrics from any directory, with the scaler leakage removed as a separate logged change.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-03-03.svg" alt="Diagram 3 of notebook 03" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-03-03.svg" alt="Diagram 3 of notebook 03" style="max-width:100%">
 
 *The lab in one picture: preserve behaviour first and prove it, then change behaviour once, on purpose.*
 
@@ -780,7 +780,7 @@ challenge from an empty directory tomorrow.
 
 ## 7. Assessment
 
-[`assessment.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d3_package_structure/assessment.md): six short reasoning questions (one is a design-choice
+`assessment.md` (section 7 of this notebook): six short reasoning questions (one is a design-choice
 explanation), the rubric for open answers, and one timed interview rep. Write your
 answers in `lab/ASSESSMENT_ANSWERS.md` *before* opening
 `solutions/labs/w1d3_package_structure/assessment_answers.md`, which also lists the

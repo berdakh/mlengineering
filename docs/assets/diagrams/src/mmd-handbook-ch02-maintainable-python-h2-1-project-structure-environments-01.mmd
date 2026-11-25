@@ -1,0 +1,7 @@
+flowchart TD
+    start["python script.py / python -m pkg / an entry-point script"] --> p0["sys.path 0<br/>script directory, or current directory"]
+    p0 --> pp["PYTHONPATH entries, if set"]
+    pp --> std["standard library"]
+    std --> site["site-packages of the interpreter in use"]
+    site --> pth["extra paths added by .pth files<br/>this is how an editable install is found"]
+    pth --> miss["ModuleNotFoundError if nothing matched"]

@@ -95,7 +95,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.1 Three questions, three owners
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-38-01.svg" alt="Diagram 1 of notebook 38" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-38-01.svg" alt="Diagram 1 of notebook 38" style="max-width:100%">
 #
 # * A **schema violation** (a `-9999` sentinel, an infinity, a pressure of 9,000 bar) is a broken input.
 #   It must be counted and kept **out** of the distribution statistics: one sentinel value moves a
@@ -505,7 +505,7 @@ check("w7d2", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w7d2_input_monitoring_drift/assessment.md): reasoning questions, a design-choice explanation, the rubric and an ML
+# assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, the rubric and an ML
 # fundamentals interview rep on two-sample tests.
 #
 #

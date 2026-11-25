@@ -23,22 +23,7 @@ next, one error format, health and readiness endpoints, request ids, and limits.
 
 ## H11.1.2 Anatomy of one prediction request
 
-```mermaid
-sequenceDiagram
-    participant C as client
-    participant P as reverse proxy / load balancer
-    participant U as ASGI server (uvicorn)
-    participant A as app (FastAPI)
-    C->>P: POST /predict, TLS, JSON body
-    P->>P: TLS termination, body size limit (413), rate limit (429)
-    P->>U: forwards to a ready instance
-    U->>A: ASGI call (scope, receive, send)
-    A->>A: middleware (request id), routing (404/405), validation (422)
-    A->>A: domain checks (400/409), model, response model
-    A-->>U: status, headers, JSON
-    U-->>P: response
-    P-->>C: response (+ X-Request-ID)
-```
+<img src="../../assets/diagrams/mmd-handbook-ch11-fastapi-input-validation-h11-1-http-for-ml-engineers-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *Diagram H11.1-1. Several components can answer before your code runs; a 413 or 429 may never reach
 your logs. That is why the request id should be generated as early as possible and echoed.*
@@ -78,18 +63,7 @@ Distinctions that come up in every API review:
 * **500** means the server has a bug or an unhandled condition. The body should say nothing about
   internals; the logs should say everything, keyed by the request id.
 
-```mermaid
-flowchart TD
-    R["response received"] --> A{"status family"}
-    A -- 2xx --> OK["use the result"]
-    A -- 4xx --> B{"which"}
-    B -- "400 / 422" --> FIX["fix the payload; do not retry unchanged"]
-    B -- "404 / 409" --> STATE["check the resource and its state"]
-    B -- "429" --> WAIT["wait Retry-After, then retry"]
-    A -- 5xx --> C{"which"}
-    C -- "503" --> RETRY["retry later or on another instance"]
-    C -- "500" --> REPORT["retry only if idempotent; report the request id"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch11-fastapi-input-validation-h11-1-http-for-ml-engineers-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 *Diagram H11.1-2. What a well-behaved client does with each answer. A service whose codes do not match
 this table forces every client to special-case it.*

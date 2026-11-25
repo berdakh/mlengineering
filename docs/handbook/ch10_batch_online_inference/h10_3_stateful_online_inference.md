@@ -45,20 +45,7 @@ A non-causal batch computation (a centred window, a whole-recording normalisatio
 filtering) **has no exact streaming twin**. Either the batch version is changed to a causal one before
 it is evaluated, or the streaming version is accepted as a different model and evaluated as such.
 
-```mermaid
-flowchart LR
-    subgraph offline ["Offline (evaluation, w2-w4)"]
-        T["recorded run<br/>(table)"] --> B["score_batch(run)"]
-    end
-    subgraph online ["Online (serving, w5)"]
-        M["one sample<br/>per call"] --> U["update(state, x)"]
-        U --> ST[("state<br/>O(1)")]
-        ST --> U
-    end
-    B --> P{"parity test<br/>in CI"}
-    U --> P
-    P -- "|diff| <= tol" --> OK["streaming computes<br/>the evaluated function"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch10-batch-online-inference-h10-3-stateful-online-inference-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *Diagram H10.3-1. The offline numbers are evidence about the streaming service only if a parity test
 ties the two code paths together.*
@@ -155,21 +142,7 @@ serialised to a durable store and restored on start. Practical rules:
 * Concurrency: two requests for the same machine must not update its state at the same time. Use one
   lock per stream (or route each stream to one worker); a global lock serialises the whole service.
 
-```mermaid
-sequenceDiagram
-    participant G as gateway
-    participant S as scoring service
-    participant K as checkpoint store
-    G->>S: sample(P07, t=60)
-    S->>S: update state of P07
-    S-->>G: score None, warming_up
-    S->>K: snapshot every N samples or seconds
-    Note over S: deployment restarts the process
-    S->>K: load latest snapshots
-    K-->>S: P07 state at t=60
-    G->>S: sample(P07, t=61)
-    S-->>G: warm-up continues where it stopped
-```
+<img src="../../assets/diagrams/mmd-handbook-ch10-batch-online-inference-h10-3-stateful-online-inference-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 *Diagram H10.3-2. A restart in the middle of a burn-in continues from the checkpoint instead of
 silently starting a new calibration.*

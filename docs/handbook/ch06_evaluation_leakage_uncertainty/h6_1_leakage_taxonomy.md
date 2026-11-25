@@ -27,14 +27,7 @@ the correct behaviour is the default and violations raise errors.
 Every leakage judgement is relative to a moment: the time at which, in deployment, the model receives
 its input and must produce a prediction. Draw it before anything else.
 
-```mermaid
-timeline
-    title One invoice, seen from the moment it is issued
-    Before issue : customer history up to last month : terms, amount, segment
-    Issue - the prediction moment : model scores the invoice
-    Due date : outcome becomes knowable
-    After due date : reminders sent : collections re-keys late invoices : export taken, aggregates computed
-```
+<img src="../../assets/diagrams/mmd-handbook-ch06-evaluation-leakage-uncertainty-h6-1-leakage-taxonomy-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 A feature is legitimate if its value, **as it will be computed in production**, is known at the
 prediction moment. That requires two facts, and data exports usually record neither: when the
@@ -120,21 +113,7 @@ people who produce the data.
 
 ## H6.1.6 Prevention by construction
 
-```mermaid
-flowchart LR
-    subgraph Data
-      A["Feature contract:<br/>availability time per column"] --> B["Drop unavailable columns"]
-      B --> C["De-duplicate;<br/>find overlap groups"]
-    end
-    subgraph Split
-      C --> D["Manifest by unit and time;<br/>validated against data"]
-    end
-    subgraph Fit
-      D --> E["Pipeline: impute, encode,<br/>scale, select, model"]
-      E --> F["Choices on validation folds only"]
-    end
-    F --> G["Test opened once, logged"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch06-evaluation-leakage-uncertainty-h6-1-leakage-taxonomy-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 Practical rules that make the correct version the default:
 

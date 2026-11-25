@@ -1,0 +1,10 @@
+stateDiagram-v2
+    [*] --> Starting
+    Starting --> Ready: bundle loaded and verified
+    Starting --> Degraded: bundle missing or invalid
+    Ready --> Degraded: model raises, NaN, deadline (per request)
+    Degraded --> Ready: next request succeeds
+    Ready: healthz 200, readyz 200
+    Ready: answers from the model
+    Degraded: healthz 200, readyz 503 if no model
+    Degraded: answers from the fallback, degraded true

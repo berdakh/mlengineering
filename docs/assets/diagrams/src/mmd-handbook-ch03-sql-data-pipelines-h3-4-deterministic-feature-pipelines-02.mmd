@@ -1,0 +1,7 @@
+flowchart LR
+    D["input data<br/>sha256 of file bytes"] --> K
+    P["parameters<br/>canonical JSON, sorted"] --> K
+    C["code identity<br/>FEATURE_VERSION"] --> K
+    K["cache key = hash(data, parameters, code)"] --> Q{"entry with this key<br/>and its metadata file exists?"}
+    Q -->|"yes"| HIT["reuse: no computation"]
+    Q -->|"no"| RUN["compute features"] --> W["write table, then metadata LAST<br/>(metadata present = entry complete)"]

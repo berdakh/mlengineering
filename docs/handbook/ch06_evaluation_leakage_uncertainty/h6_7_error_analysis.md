@@ -35,19 +35,7 @@ Three properties separate it from looking at bad examples:
 
 ## H6.7.2 The workflow
 
-```mermaid
-flowchart TD
-    A[Fix the object: model, threshold, split] --> B[Unit table: one row per experiment or customer]
-    B --> C[Sample errors, stratified and capped per unit]
-    C --> D[Annotate with a small closed label set]
-    D --> E{Other bucket above one fifth?}
-    E -- yes --> D
-    E -- no --> F[Quantify by pre-specified slices, with sizes]
-    F --> G[Rank: frequency x cost x fixability]
-    G --> H[One falsifiable experiment per top mode]
-    H --> I[Note, including what was checked and unremarkable]
-    I -- next model version --> A
-```
+<img src="../../assets/diagrams/mmd-handbook-ch06-evaluation-leakage-uncertainty-h6-7-error-analysis-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 **Step 0. Fix the object of study.** One model, one threshold, one dataset split, written down. Error
 analysis of a moving target produces a list that describes no system.

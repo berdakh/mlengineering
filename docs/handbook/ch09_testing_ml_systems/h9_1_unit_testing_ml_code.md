@@ -125,16 +125,7 @@ job: pinning behaviour while you restructure code. Replace it with a real oracle
 
 ---
 
-```mermaid
-flowchart TD
-    q["What is the correct output?"] --> a{"Can it be derived<br/>by hand or from theory?"}
-    a -- yes --> ka["Known-answer test<br/>sine RMS, Parseval, ramp line length"]
-    a -- no --> b{"Is there a transformation of the input<br/>with a predictable effect on the output?"}
-    b -- yes --> inv["Invariance / metamorphic test<br/>scale, shift, permute, pad"]
-    b -- no --> c{"Is there a slow, obviously<br/>correct implementation?"}
-    c -- yes --> diff["Differential test<br/>fast code against the slow reference"]
-    c -- no --> con["Contract tests only<br/>shapes, types, ranges, errors raised"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch09-testing-ml-systems-h9-1-unit-testing-ml-code-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *Choosing an oracle. Work down the list; the earlier kinds detect more.*
 

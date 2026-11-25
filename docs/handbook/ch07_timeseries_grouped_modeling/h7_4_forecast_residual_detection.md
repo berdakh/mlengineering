@@ -23,17 +23,7 @@ and the alarm rule's false-alarm rate depends on assumptions (independent, corre
 that real data rarely meets. This section collects the definitions, the equations needed to reason
 about both, and the decisions that matter in practice.
 
-```mermaid
-flowchart LR
-    A["normal data<br/>(burn-in, reference period)"] --> B["fit forecaster<br/>x_hat_t = f(x_{t-1}, ...)"]
-    B --> C["residual e_t = x_t - x_hat_t"]
-    C --> D["standardise: z_t = e_t / sigma_e<br/>(sigma_e from fit data)"]
-    D --> E{"alarm rule"}
-    E -->|"spikes"| F["threshold on abs z_t"]
-    E -->|"small persistent offsets"| G["CUSUM / EWMA"]
-    F --> H["operating point from an<br/>alarm budget (H6.5)"]
-    G --> H
-```
+<img src="../../assets/diagrams/mmd-handbook-ch07-timeseries-grouped-modeling-h7-4-forecast-residual-detection-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H7.4.2 Autocorrelation and what it implies
 

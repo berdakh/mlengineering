@@ -1,0 +1,14 @@
+flowchart TB
+    subgraph image["image flowguard:0.6.0 (read-only layers)"]
+        direction TB
+        L1["python:3.12-slim layers: Debian + CPython (~178 MB)"]
+        L2["RUN pip install: numpy, pandas, fastapi ... (171 MB)"]
+        L3["COPY src/ (70 kB)"]
+        L4["COPY models/ (29 kB)"]
+        L5["RUN useradd (70 kB)"]
+        L1 --> L2 --> L3 --> L4 --> L5
+    end
+    meta["config: USER app, ENV FLOWGUARD_MODEL_DIR=..., EXPOSE 8000,<br/>HEALTHCHECK, CMD [uvicorn ...]"]
+    L5 --- meta
+    L5 --> W1["container A: writable layer"]
+    L5 --> W2["container B: writable layer"]

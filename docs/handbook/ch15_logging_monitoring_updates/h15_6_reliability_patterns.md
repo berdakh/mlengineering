@@ -45,18 +45,7 @@ belongs outside the model: compare raw values with the range seen in development
 
 ## H15.6.3 Liveness, readiness and degradation
 
-```mermaid
-stateDiagram-v2
-    [*] --> Starting
-    Starting --> Ready: bundle loaded and verified
-    Starting --> Degraded: bundle missing or invalid
-    Ready --> Degraded: model raises, NaN, deadline (per request)
-    Degraded --> Ready: next request succeeds
-    Ready: healthz 200, readyz 200
-    Ready: answers from the model
-    Degraded: healthz 200, readyz 503 if no model
-    Degraded: answers from the fallback, degraded true
-```
+<img src="../../assets/diagrams/mmd-handbook-ch15-logging-monitoring-updates-h15-6-reliability-patterns-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 * **Liveness** answers "restart me?". It should fail only when a restart can help: a deadlock, a wedged
   event loop. The Kubernetes documentation puts it as "liveness probes determine when to restart a
@@ -133,14 +122,7 @@ the result under the key and returns it for repeats.
 A circuit breaker wraps a dependency that keeps failing, so that callers fail fast instead of each waiting
 for a timeout.
 
-```mermaid
-stateDiagram-v2
-    [*] --> Closed
-    Closed --> Open: N consecutive failures
-    Open --> HalfOpen: reset timeout elapsed
-    HalfOpen --> Closed: trial call succeeds
-    HalfOpen --> Open: trial call fails (timeout restarts)
-```
+<img src="../../assets/diagrams/mmd-handbook-ch15-logging-monitoring-updates-h15-6-reliability-patterns-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 Choices that matter: count *consecutive* failures (or a failure rate over a window), not a lifetime
 total; let exactly one trial through in half-open; read time through an injectable clock so the logic is

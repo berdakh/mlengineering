@@ -1,0 +1,8 @@
+flowchart TB
+    subgraph process["one Python process, no network"]
+        U["Unit<br/>scoring, loader"] --> A["API<br/>TestClient(app)"]
+        A --> I["Integration<br/>real artifact on disk"]
+    end
+    C["Contract<br/>OpenAPI candidate vs last release"]
+    S["Smoke<br/>deployed process, curl /readyz"]
+    I --> C --> S

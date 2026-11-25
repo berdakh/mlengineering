@@ -105,7 +105,7 @@ which port. A **container** is a running process started from that image, with i
 filesystem, its own process tree and its own network interface, plus a thin writable layer that is
 thrown away with the container.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-31-01.svg" alt="Diagram 1 of notebook 31" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-31-01.svg" alt="Diagram 1 of notebook 31" style="max-width:100%">
 
 The image is built once and run many times, identically: on your laptop, in CI, in the cloud. That is
 the whole point, and it is also why everything that *differs* between those places (the model
@@ -131,7 +131,7 @@ Each instruction produces a layer, and a layer is valid only as long as every la
 Change the input of one instruction and that layer *and every layer after it* is rebuilt. So order
 instructions from "changes rarely" to "changes often":
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-31-02.svg" alt="Diagram 2 of notebook 31" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-31-02.svg" alt="Diagram 2 of notebook 31" style="max-width:100%">
 
 If the cost of a layer is *c<sub>i</sub>* and a change hits layer *k*, the rebuild costs
 Σ<sub>i ≥ k</sub> *c<sub>i</sub>*. Putting the expensive, stable step (dependency install) before the
@@ -169,7 +169,7 @@ Two things decide whether your server shuts down cleanly in that window:
   handler and shuts down gracefully; a plain Python script must install its own (section 3.1 shows
   both cases).
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-31-03.svg" alt="Diagram 3 of notebook 31" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-31-03.svg" alt="Diagram 3 of notebook 31" style="max-width:100%">
 
 With exec form the same sequence is: SIGTERM to uvicorn, uvicorn stops accepting connections, finishes
 in-flight requests, runs the lifespan shutdown, exits 0. In an orchestrator that restarts or scales
@@ -188,7 +188,7 @@ listens on every host interface, so anyone on your Wi-Fi can call your model; Do
 documentation also warns that published ports bypass `ufw` firewall rules. On a laptop, publish on
 loopback only: `-p 127.0.0.1:8000:8000`.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-31-04.svg" alt="Diagram 4 of notebook 31" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-31-04.svg" alt="Diagram 4 of notebook 31" style="max-width:100%">
 
 ### 2.7 Where the model and the configuration live
 
@@ -683,7 +683,7 @@ The start of an allow-list `.dockerignore`:
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d1_docker_basics/assessment.md): six reasoning questions, one design-choice explanation, a rubric, and
+assessment.md (section 7 of this notebook): six reasoning questions, one design-choice explanation, a rubric, and
 a 12-minute interview rep (debugging: "the container exits immediately").
 
 ---

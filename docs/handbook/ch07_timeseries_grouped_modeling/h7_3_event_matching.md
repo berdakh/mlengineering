@@ -40,14 +40,7 @@ The course's rule (lab `flowguard.evaluation`): an alarm detects event `k` if it
 are redundant; every other alarm is a false alarm; delay is measured to the alarm's *raise* time (start
 plus confirmation rows), floored at zero.
 
-```mermaid
-flowchart TD
-    A["alarm start c"] --> Q1{"c within tau_early rows before event k,<br/>or inside it, for some k?"}
-    Q1 -- no --> FA["false alarm"]
-    Q1 -- yes --> Q2{"first alarm to detect event k?"}
-    Q2 -- yes --> HIT["hit: delay = max 0, t raise minus t a_k"]
-    Q2 -- no --> RED["redundant: reported as operator load, not TP or FA"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch07-timeseries-grouped-modeling-h7-3-event-matching-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## 7.3.4 The cases that decide a rule
 

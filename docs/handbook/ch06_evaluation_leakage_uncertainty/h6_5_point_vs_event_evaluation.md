@@ -40,19 +40,7 @@ event at most one hit with raise time `r_k`. Then
   upper percentile over all `k`
 * false-alarm rate `λ̂ = FA / H`, where `H` is hours of normal operation computed from timestamps.
 
-```mermaid
-flowchart LR
-    R["rows: y_t and s_t"] --> P1["point view<br/>TP, FP, FN over rows"]
-    R --> TH["flags at threshold"]
-    TH --> PP["post-processing<br/>merge gap g, min duration m"]
-    PP --> AL["alarms"]
-    R --> EV["true events"]
-    AL --> MT["matching rule M"]
-    EV --> MT
-    MT --> E1["event recall and precision"]
-    MT --> E2["delay per event, censored"]
-    MT --> E3["false alarms per hour of normal time"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch06-evaluation-leakage-uncertainty-h6-5-point-vs-event-evaluation-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## 6.5.3 How the point view misleads
 

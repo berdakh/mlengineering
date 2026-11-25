@@ -58,22 +58,7 @@ failures that depend on the configuration are results.
 
 ## H8.1.4 Completion: write the status last, atomically
 
-```mermaid
-sequenceDiagram
-    participant S as sweep
-    participant D as run directory
-    participant T as task
-    S->>D: mkdir, config.json, environment.json
-    S->>T: run(config)
-    alt task raises
-        T-->>S: exception
-        S->>D: status.json = failed (error, traceback)
-    else task returns
-        T-->>S: metrics
-        S->>D: metrics.json
-        S->>D: status.json = complete (last)
-    end
-```
+<img src="../../assets/diagrams/mmd-handbook-ch08-reproducible-experiments-h8-1-run-registries-and-sweeps-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 Each file is written to a temporary name and renamed into place (`os.replace`), which is atomic on POSIX
 filesystems for a rename within one filesystem, so a reader sees either the old file or the new one,
@@ -111,14 +96,7 @@ and the number of excluded (failed or partial) runs. When different sweeps have 
 each run is missing values in the other sweeps' columns; grouping must treat "missing" as a value or the
 rows vanish (pandas `groupby` drops NaN keys by default).
 
-```mermaid
-flowchart LR
-    A["run directories<br/>(immutable)"] -->|scan| B["index<br/>one row per run"]
-    B -->|"filter status == complete"| C["group by config"]
-    B -->|"status != complete"| E["excluded counts"]
-    C --> D["results table<br/>n, mean, sd, min, max"]
-    E --> D
-```
+<img src="../../assets/diagrams/mmd-handbook-ch08-reproducible-experiments-h8-1-run-registries-and-sweeps-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 ## H8.1.7 Reproducing a row
 

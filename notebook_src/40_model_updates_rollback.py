@@ -93,7 +93,7 @@ print("repo root:", REPO_ROOT)
 # output. A canary answers the rest with bounded risk: a small share of real decisions comes from the
 # candidate. Rollback makes every step reversible in seconds.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-40-01.svg" alt="Diagram 1 of notebook 40" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-40-01.svg" alt="Diagram 1 of notebook 40" style="max-width:100%">
 #
 # ### 2.2 Precise terms
 #
@@ -259,7 +259,7 @@ print("repo root:", REPO_ROOT)
 # *Checkpoint:* all 16 checks pass, including `test_rollback_through_the_api_restores_exact_scores`, which
 # promotes, reloads the API with a token, rolls back, reloads again and compares responses byte for byte.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-40-02.svg" alt="Diagram 2 of notebook 40" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-40-02.svg" alt="Diagram 2 of notebook 40" style="max-width:100%">
 #
 # The admin token is read from `FLOWGUARD_ADMIN_TOKEN` at request time and compared with
 # `hmac.compare_digest`. Set it in the shell that starts the server
@@ -499,7 +499,7 @@ check("w7d4", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w7d4_model_updates_rollback/assessment.md): reasoning questions, a design-choice explanation, a rubric and a 15-minute
+# assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, a rubric and a 15-minute
 # system-design interview rep on safe rollout.
 #
 # ---

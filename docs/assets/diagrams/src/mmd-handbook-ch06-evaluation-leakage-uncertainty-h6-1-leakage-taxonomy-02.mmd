@@ -1,0 +1,13 @@
+flowchart LR
+    subgraph Data
+      A["Feature contract:<br/>availability time per column"] --> B["Drop unavailable columns"]
+      B --> C["De-duplicate;<br/>find overlap groups"]
+    end
+    subgraph Split
+      C --> D["Manifest by unit and time;<br/>validated against data"]
+    end
+    subgraph Fit
+      D --> E["Pipeline: impute, encode,<br/>scale, select, model"]
+      E --> F["Choices on validation folds only"]
+    end
+    F --> G["Test opened once, logged"]

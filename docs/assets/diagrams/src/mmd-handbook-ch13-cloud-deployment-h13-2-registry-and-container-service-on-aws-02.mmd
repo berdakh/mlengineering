@@ -1,0 +1,9 @@
+flowchart LR
+    subgraph create["create (top to bottom)"]
+        direction TB
+        c0["identity check"] --> c1["budget"] --> c2["ECR repo + lifecycle"] --> c3["build, push :sha"] --> c4["log group + retention"] --> c5["execution role + policy"] --> c6["cluster"] --> c7["task definition"] --> c8["security group (+ rule)"] --> c9["service; wait stable"]
+    end
+    subgraph delete["delete (top to bottom)"]
+        direction TB
+        d1["service: scale 0, delete, wait inactive"] --> d2["cluster"] --> d3["task definition revisions"] --> d4["security group"] --> d5["log group"] --> d6["ECR repo --force"] --> d7["detach policy, delete role"] --> d8["budget (or keep)"]
+    end

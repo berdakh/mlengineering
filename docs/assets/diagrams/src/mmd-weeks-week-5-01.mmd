@@ -1,0 +1,9 @@
+flowchart LR
+    W4["w4d5: the model to ship<br/>flow-rate |z|, threshold 7.2441"] --> P1["w5d1 one Detector<br/>skew, input contract,<br/>predict-batch, parity 1e-12"]
+    P1 --> P2["w5d2 artifact bundle<br/>checksums, format version,<br/>model card, registry"]
+    P2 --> P3["w5d3 streaming twin<br/>Welford, warm-up = None,<br/>late, duplicate, gap, snapshot"]
+    P2 --> P4["w5d4 HTTP contract<br/>422 / 400 / 503 / 500,<br/>healthz vs readyz, lifespan"]
+    P3 --> P4
+    P4 --> P5["w5d5 tests at the boundary<br/>status and content,<br/>concurrency, OpenAPI contract"]
+    P5 --> P6["w5d6 release candidate<br/>evaluation = batch = API,<br/>provenance, one version"]
+    P1 -.-> P6

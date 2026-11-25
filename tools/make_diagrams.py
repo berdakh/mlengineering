@@ -57,6 +57,18 @@ const fs = require('fs');
 """
 
 
+def natural_size(svg: str) -> str:
+    """Give the root <svg> a pixel width/height from its viewBox, so an <img> shows it at natural size
+    (Mermaid emits width="100%", which stretches small diagrams and blows tall ones up)."""
+    m = re.search(r'viewBox="[-\d.]+ [-\d.]+ ([\d.]+) ([\d.]+)"', svg)
+    if not m:
+        return svg
+    w, h = (round(float(v)) for v in m.groups())
+    head_end = svg.index(">")
+    head = re.sub(r'\swidth="100%"', f' width="{w}" height="{h}"', svg[:head_end], count=1)
+    return head + svg[head_end:]
+
+
 def digest(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
 
@@ -104,7 +116,7 @@ def main() -> int:
         for job in jobs:
             out = Path(job["out"])
             if out.is_file():
-                svg = out.read_text(encoding="utf-8")
+                svg = natural_size(out.read_text(encoding="utf-8"))
                 (OUT / f"{job['name']}.svg").write_text(
                     f"<!-- source-sha256: {digest(job['text'])} -->\n{svg}\n", encoding="utf-8")
     print(f"rendered {len(todo)} diagram(s)")

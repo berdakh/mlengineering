@@ -219,7 +219,7 @@ print("repo root:", REPO_ROOT)
 # [w2d6](12_baselines_metrics.ipynb) and Week 3. What this unit fixes is the mechanism, so the
 # choice is one argument to `fit` and not a property scattered through the code.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-11-01.svg" alt="Diagram 1 of notebook 11" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-11-01.svg" alt="Diagram 1 of notebook 11" style="max-width:100%">
 #
 #
 # ### 2.6 Determinism and content-addressed caching
@@ -249,7 +249,7 @@ print("repo root:", REPO_ROOT)
 # (`set`, `groupby` on unsorted keys with `sort=False` and changing input order), parallel
 # reductions, and float formatting differences between library versions.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-11-02.svg" alt="Diagram 2 of notebook 11" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-11-02.svg" alt="Diagram 2 of notebook 11" style="max-width:100%">
 #
 #
 # ### 2.7 Industry example
@@ -690,7 +690,7 @@ check("w2d5", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w2d5_feature_pipeline/assessment.md): six reasoning questions (one asks you to defend a design
+# assessment.md (section 7 of this notebook): six reasoning questions (one asks you to defend a design
 # choice), the rubric, and a 15-minute Python interview rep. Model answers and common incorrect
 # answers are in `solutions/labs/w2d5_feature_pipeline/assessment_answers.md`.
 #

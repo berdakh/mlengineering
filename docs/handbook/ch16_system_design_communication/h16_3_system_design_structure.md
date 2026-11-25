@@ -23,21 +23,7 @@ judged by whether the links in this chain are explicit and consistent, not by th
 single link. This section gives a structure, the arithmetic that supports it, the main choices with
 their trade-offs, and the ways designs (and candidates) typically fail.
 
-```mermaid
-flowchart TD
-    DEC["Decision supported<br/>who acts, on what, when"] --> PT["Prediction time<br/>and latency budget"]
-    PT --> DATA["Data available at prediction time"]
-    PT --> LAB["Label definition, source, delay, bias"]
-    LAB --> EVAL["Evaluation protocol<br/>and launch criteria"]
-    DATA --> MOD["Target, baseline, model"]
-    LAB --> MOD
-    MOD --> SERVE["Serving pattern<br/>batch, online, streaming"]
-    PT --> SERVE
-    SERVE --> MON["Monitoring<br/>inputs, health, delayed performance"]
-    LAB --> MON
-    MON --> UPD["Updates<br/>retraining, gate, shadow, canary, rollback"]
-    EVAL --> UPD
-```
+<img src="../../assets/diagrams/mmd-handbook-ch16-system-design-communication-h16-3-system-design-structure-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H16.3.2 The structure in detail
 

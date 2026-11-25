@@ -19,18 +19,7 @@ It succeeds when that reader knows what the system is for, how it was evaluated,
 uncertainty*, what was decided and why, how it runs, what not to use it for, and how to check every number. Four
 pages suffice for a small system when tables carry the numbers and prose carries the reasoning.
 
-```mermaid
-flowchart TB
-    Q1["What is it for?"] --> S1["Problem and stakeholder"]
-    Q2["Can I trust the data?"] --> S2["Data and provenance"]
-    Q3["Could the evaluation fool you?"] --> S3["Protocol and leakage controls"]
-    Q4["How good, how sure?"] --> S4["Results with intervals"]
-    Q5["Where does it fail?"] --> S5["Error analysis"]
-    Q6["What now?"] --> S6["Decision"]
-    Q7["How does it run and how will we know it fails?"] --> S7["Serving and monitoring"]
-    Q8["What must I not conclude?"] --> S8["Limitations"]
-    Q9["Can I check it?"] --> S9["Reproducibility"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch16-system-design-communication-h16-2-reports-and-limitations-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H16.2.2 Results without self-deception
 

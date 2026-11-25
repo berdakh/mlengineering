@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant S as sweep
+    participant D as run directory
+    participant T as task
+    S->>D: mkdir, config.json, environment.json
+    S->>T: run(config)
+    alt task raises
+        T-->>S: exception
+        S->>D: status.json = failed (error, traceback)
+    else task returns
+        T-->>S: metrics
+        S->>D: metrics.json
+        S->>D: status.json = complete (last)
+    end

@@ -1,0 +1,5 @@
+flowchart LR
+    in["requirements.in<br/>(ranges, edited by you)"] -->|"uv pip compile --generate-hashes<br/>--python-version 3.12 --python-platform linux"| lock["requirements.lock<br/>(closure, ==, hashes; committed)"]
+    lock -->|"pip install --require-hashes -r"| image["image"]
+    lock -->|"diff in the pull request"| review["review: what changed?"]
+    sched(["weekly / on advisory"]) -->|"recompile"| lock

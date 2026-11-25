@@ -1,0 +1,33 @@
+classDiagram
+    class PredictRequest {
+        machine_id: str pattern
+        samples: list~Sample~ 1..5000
+        extra = forbid
+    }
+    class Sample {
+        timestamp: datetime
+        8 sensors: float finite, in range
+        extra = forbid
+    }
+    class PredictResponse {
+        request_id: str
+        model_version: str
+        machine_id: str
+        threshold: float
+        n_samples: int
+        results: list~SampleResult~
+    }
+    class SampleResult {
+        timestamp: datetime
+        score: float or null
+        status: warming_up or ok
+        exceeds_threshold: bool or null
+    }
+    class ErrorResponse {
+        error.code: str
+        error.message: str
+        error.request_id: str
+        error.details: list or null
+    }
+    PredictRequest "1" o-- "1..5000" Sample
+    PredictResponse "1" o-- "*" SampleResult

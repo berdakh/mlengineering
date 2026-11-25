@@ -125,7 +125,7 @@ You have lived this rule already: the acquisition file (`.edf`, `.vhdr`, BIDS `s
 never overwritten by the filtered version, and a derivative is always traceable to it. Ingestion is
 the same discipline applied to tables.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-09-01.svg" alt="Diagram 1 of notebook 09" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-09-01.svg" alt="Diagram 1 of notebook 09" style="max-width:100%">
 
 
 ### 2.2 Parsing is a set of decisions; make each one in code
@@ -205,7 +205,7 @@ and defensible; put judgement calls in warnings and review them.
 recur. If a repair is ever adopted (say, "keep the last of duplicated rows"), it is a separate,
 named, tested transformation with its own line in the report: how many rows it touched.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-09-02.svg" alt="Diagram 2 of notebook 09" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-09-02.svg" alt="Diagram 2 of notebook 09" style="max-width:100%">
 
 
 ### 2.5 Idempotence and provenance
@@ -225,7 +225,7 @@ version. It answers "which files produced this table?" without anyone's memory. 
 limit: byte-identical output is guaranteed within one environment; a different pandas version may
 format a float differently, which is why the code and library versions are part of the record.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-09-03.svg" alt="Diagram 3 of notebook 09" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-09-03.svg" alt="Diagram 3 of notebook 09" style="max-width:100%">
 
 
 ### 2.6 Data validation is not model evaluation
@@ -816,7 +816,7 @@ defensible answers; pick one and say which in your report.
 
 ## 7. Assessment
 
-[`assessment.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d3_data_quality_ingestion/assessment.md): five reasoning questions (one is a design-choice defence), a
+`assessment.md` (section 7 of this notebook): five reasoning questions (one is a design-choice defence), a
 rubric, and a 10–15 minute interview rep on missingness mechanisms. Automated checks: 19 for the
 lab, 22 for the challenge. Passing them earns `guided`; set `independent` only if the challenge was
 done without hints.

@@ -110,7 +110,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.2 Three stages, two files between them
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-24-01.svg" alt="Diagram 1 of notebook 24" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-24-01.svg" alt="Diagram 1 of notebook 24" style="max-width:100%">
 #
 # Splitting "compute" from "format" buys three things:
 #
@@ -143,7 +143,7 @@ print("repo root:", REPO_ROOT)
 # Tools such as DVC or Snakemake track content hashes. Make is enough to learn the idea, and it is
 # installed everywhere.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-24-02.svg" alt="Diagram 2 of notebook 24" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-24-02.svg" alt="Diagram 2 of notebook 24" style="max-width:100%">
 #
 # ### 2.4 The report's structure
 #
@@ -457,7 +457,7 @@ check("w4d6", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w4d6_project_milestone_1/assessment.md): reasoning questions, a design-choice explanation, the milestone
+# assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, the milestone
 # rubric, and an interview rep (a 5-minute evaluation walkthrough). Answers:
 # `solutions/labs/w4d6_project_milestone_1/assessment_answers.md`.
 #

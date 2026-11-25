@@ -1,0 +1,7 @@
+flowchart LR
+    I["incoming rows"] --> V{"schema valid?"}
+    V -- no --> E["refuse whole input<br/>SchemaError / exit 2"]
+    V -- yes --> Q{"per-entity data usable?<br/>(enough rows, no gap in the used sensor)"}
+    Q -- no --> F["mark that run as error<br/>score the others / exit 3"]
+    Q -- yes --> S["score"]
+    S --> M["monitoring (Week 7):<br/>is valid data still plausible?"]

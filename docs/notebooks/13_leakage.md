@@ -114,7 +114,7 @@ Two things follow from the definition and are worth holding on to.
 
 ### 2.2 The taxonomy, each kind with a test that detects it
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-13-01.svg" alt="Diagram 1 of notebook 13" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-13-01.svg" alt="Diagram 1 of notebook 13" style="max-width:100%">
 
 | Kind | Mechanism | Detection probe | Prevention by construction |
 |---|---|---|---|
@@ -177,7 +177,7 @@ develops this into nested validation.
 
 ### 2.5 Prevention by construction
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-13-02.svg" alt="Diagram 2 of notebook 13" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-13-02.svg" alt="Diagram 2 of notebook 13" style="max-width:100%">
 
 The common thread: make the leaky version *harder to write than the correct one*. A `Pipeline` makes
 "fit the scaler on the test rows" impossible without deliberately breaking it; a manifest that
@@ -188,7 +188,7 @@ forbidden-feature list makes `t` impossible to slip in.
 
 Found on the real SKAB files in Week 2 and now made into code:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-13-03.svg" alt="Diagram 3 of notebook 13" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-13-03.svg" alt="Diagram 3 of notebook 13" style="max-width:100%">
 
 **Duplicate leakage.** Five pairs of files share 1,290 identical rows (timestamp and all eight sensors);
 the connected components are the four overlap groups above. A split that puts `other/12` in test and
@@ -632,7 +632,7 @@ imputer (new customers have no history).
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d1_leakage/assessment.md): reasoning questions, a design-choice explanation, a rubric and an
+assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, a rubric and an
 interview rep (validation and leakage). Model answers and common incorrect answers:
 `solutions/labs/w3d1_leakage/assessment_answers.md`.
 

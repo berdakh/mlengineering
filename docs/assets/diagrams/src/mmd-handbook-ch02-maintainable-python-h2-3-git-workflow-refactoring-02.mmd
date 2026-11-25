@@ -1,0 +1,8 @@
+flowchart TD
+    f["A file in the project directory"] --> q1{"Can a command<br/>regenerate it?"}
+    q1 -- "yes: data, features, models, runs" --> ig["ignore it; commit the command<br/>and a hash or manifest"]
+    q1 -- no --> q2{"Is it a secret or<br/>machine-specific?"}
+    q2 -- yes --> env["keep out of Git:<br/>environment variables, local config"]
+    q2 -- no --> q3{"Is it large or binary?"}
+    q3 -- yes --> ext["external storage with a pointer"]
+    q3 -- no --> commit["commit it: code, config,<br/>tests, docs, small fixtures"]

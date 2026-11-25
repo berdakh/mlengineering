@@ -20,16 +20,7 @@ report them.
 
 ## H8.2.2 Sources of variation
 
-```mermaid
-flowchart TD
-    V["variance of a reported metric"] --> A["evaluation data<br/>which units are in the test set"]
-    V --> B["training data<br/>which units / rows were used to fit"]
-    V --> C["algorithmic randomness<br/>initialisation, data order, dropout,<br/>subsampling, random features"]
-    V --> D["numerical non-determinism<br/>thread scheduling, GPU kernels,<br/>library versions, hardware"]
-    V --> E["selection<br/>which configuration, seed or epoch was reported"]
-    C --> C1["controlled by seeds"]
-    D --> D1["not controlled by seeds;<br/>record the environment"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch08-reproducible-experiments-h8-2-seeds-and-variance-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 | Source | Repeatable with a seed? | Measured by |
 |---|---|---|

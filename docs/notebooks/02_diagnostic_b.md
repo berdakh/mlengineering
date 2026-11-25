@@ -72,7 +72,7 @@ submissions are reviewed.
 Session A totals 110 minutes, session B 115. Use the remaining minutes of each session to fill in
 [`SUBMISSION.md`](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/SUBMISSION.md).
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-02-01.svg" alt="Diagram 1 of notebook 02" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-02-01.svg" alt="Diagram 1 of notebook 02" style="max-width:100%">
 
 *The path through the diagnostic. Nothing is adapted until the submission has been reviewed.*
 

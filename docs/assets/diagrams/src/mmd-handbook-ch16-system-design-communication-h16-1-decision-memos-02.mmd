@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant P as Proposer
+    participant O as Decision owner
+    participant R as Reviewer (peer engineer)
+    O->>P: question, deadline, MPID, constraints
+    P->>R: rule and complexity ranking (before results)
+    R-->>P: agreed, or amended
+    P->>P: development evidence, then one test look
+    P->>O: memo
+    O->>R: does the decision follow from the table?
+    R-->>O: yes, or the gaps
+    O->>P: decision recorded, change conditions owned

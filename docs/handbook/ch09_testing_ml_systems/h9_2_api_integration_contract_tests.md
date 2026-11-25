@@ -32,16 +32,7 @@ checks every status code in the contract kills 7; a single smoke test kills none
 
 ## H9.2.2 Layers
 
-```mermaid
-flowchart TB
-    subgraph process["one Python process, no network"]
-        U["Unit<br/>scoring, loader"] --> A["API<br/>TestClient(app)"]
-        A --> I["Integration<br/>real artifact on disk"]
-    end
-    C["Contract<br/>OpenAPI candidate vs last release"]
-    S["Smoke<br/>deployed process, curl /readyz"]
-    I --> C --> S
-```
+<img src="../../assets/diagrams/mmd-handbook-ch09-testing-ml-systems-h9-2-api-integration-contract-tests-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 | Layer | Exercises | Can claim | Cannot claim | Runs |
 |---|---|---|---|---|
@@ -100,16 +91,7 @@ $$\text{request: } T_{\text{old}} \subseteq T_{\text{new}} \qquad \text{response
 where $$T$$ is the set of values a field may take (its type signature together with its constraints).
 The server may accept more and return less variety; it may not accept less or return something new.
 
-```mermaid
-flowchart TD
-    Q["A field changed between releases"] --> W{"request or response?"}
-    W -->|request| R1{"newly required, or no longer accepted,<br/>or constraint tightened?"}
-    R1 -->|yes| B1["breaking"]
-    R1 -->|no| OK1["compatible"]
-    W -->|response| R2{"removed, no longer required,<br/>or may now hold a new type such as null?"}
-    R2 -->|yes| B2["breaking"]
-    R2 -->|no| OK2["compatible"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch09-testing-ml-systems-h9-2-api-integration-contract-tests-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 Practical points:
 

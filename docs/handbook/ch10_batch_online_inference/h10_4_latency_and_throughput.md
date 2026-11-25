@@ -84,13 +84,7 @@ The measured counterpart from lesson w6d4: one worker at about 12 ms per request
 
 ## H10.4.5 Measuring correctly
 
-```mermaid
-flowchart TB
-    G["open-loop generator<br/>request i scheduled at t0 + i/lambda"] --> N["network / loopback"]
-    N --> A["accept queue<br/>(kernel)"] --> EL["event loop<br/>HTTP parse"] --> TP["thread pool<br/>def endpoint"]
-    TP --> V["validate JSON<br/>(pydantic)"] --> M["model<br/>score"] --> RB["build + serialise<br/>response"]
-    RB --> N2["network"] --> G2["generator records<br/>finish - scheduled"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch10-batch-online-inference-h10-4-latency-and-throughput-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 * **Open loop, latency from the scheduled time.** A closed-loop generator (N users, each waiting for its
   response) stops sending when the server stalls, so the stall's victims are never measured

@@ -27,18 +27,7 @@ could not, with a cheap way back at every point:
 | Promote | Make it current | atomic pointer move, audit entry | |
 | Rollback | Undo, quickly and exactly | pointer move to the previous verified version | |
 
-```mermaid
-stateDiagram-v2
-    [*] --> Registered: register (immutable version)
-    Registered --> Rejected: gate fails
-    Registered --> Shadow: gate passes
-    Shadow --> Rejected: disagreement review or operational failure
-    Shadow --> Canary: reviewed
-    Canary --> RolledBack: stopping rule fires
-    Canary --> Current: promote (pointer + audit)
-    Current --> RolledBack: alarm after release
-    RolledBack --> Current: previous version made current again
-```
+<img src="../../assets/diagrams/mmd-handbook-ch15-logging-monitoring-updates-h15-5-updates-and-rollback-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## Deeper explanation
 

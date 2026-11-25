@@ -21,15 +21,7 @@ into two parts: where it sits inside the space normal data occupies (Hotelling's
 from that space (Q, the squared prediction error). The split is useful because the two parts catch
 different faults and suggest different explanations.
 
-```mermaid
-flowchart LR
-    X["row x (d sensors)"] --> S["standardise with<br/>normal-data mean and SD"]
-    S --> P["project on k retained components:<br/>t = x P"]
-    P --> T2["T2 = sum t_j^2 / lambda_j<br/>extreme but consistent states"]
-    P --> R["reconstruct: x_hat = t P^T"]
-    R --> Q["Q = squared norm of (x - x_hat)<br/>broken relationships"]
-    Q --> C["contributions per sensor:<br/>(x_i - x_hat_i)^2"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch07-timeseries-grouped-modeling-h7-5-multivariate-detectors-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H7.5.2 From Mahalanobis distance to T² and Q
 

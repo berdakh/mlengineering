@@ -1,0 +1,3 @@
+flowchart LR
+    d["code defaults"] --> f["config file"] --> env["environment variables<br/>deployment-specific values and secrets"] --> cli["command-line overrides"]
+    cli --> r["resolved configuration<br/>validated, frozen, snapshotted"]

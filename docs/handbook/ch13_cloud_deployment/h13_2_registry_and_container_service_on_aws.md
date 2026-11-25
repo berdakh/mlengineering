@@ -48,19 +48,7 @@ with a health check and logs, so the local container and the cloud container are
 
 ## H13.2.4 The service: ECS on Fargate
 
-```mermaid
-flowchart TB
-    td["task definition (family flowguard, revision N)<br/>image, cpu 256, memory 512, port 8000,<br/>env, healthCheck /readyz, awslogs"]
-    svc["service flowguard-svc<br/>desired count 1, launch type FARGATE"]
-    cl["cluster flowguard-cluster"]
-    net["network: subnet + security group<br/>assignPublicIp (see note)"]
-    role["task execution role<br/>AmazonECSTaskExecutionRolePolicy"]
-    td --> svc
-    cl --> svc
-    net --> svc
-    role --> td
-    svc -->|"keeps 1 task running,<br/>replaces unhealthy tasks"| task(("task"))
-```
+<img src="../../assets/diagrams/mmd-handbook-ch13-cloud-deployment-h13-2-registry-and-container-service-on-aws-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 * **Task definition.** A versioned JSON document: one or more container definitions (image, port mappings,
   environment, health check, log configuration) plus task-level `cpu` and `memory` (required on Fargate, in
@@ -88,17 +76,7 @@ flowchart TB
 
 ## H13.2.5 Order of creation and deletion
 
-```mermaid
-flowchart LR
-    subgraph create["create (top to bottom)"]
-        direction TB
-        c0["identity check"] --> c1["budget"] --> c2["ECR repo + lifecycle"] --> c3["build, push :sha"] --> c4["log group + retention"] --> c5["execution role + policy"] --> c6["cluster"] --> c7["task definition"] --> c8["security group (+ rule)"] --> c9["service; wait stable"]
-    end
-    subgraph delete["delete (top to bottom)"]
-        direction TB
-        d1["service: scale 0, delete, wait inactive"] --> d2["cluster"] --> d3["task definition revisions"] --> d4["security group"] --> d5["log group"] --> d6["ECR repo --force"] --> d7["detach policy, delete role"] --> d8["budget (or keep)"]
-    end
-```
+<img src="../../assets/diagrams/mmd-handbook-ch13-cloud-deployment-h13-2-registry-and-container-service-on-aws-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 Deletion is not the reverse of the creation *lines*: it is the reverse of the *dependencies*. A cluster
 cannot be deleted while it has an active service; a security group cannot be deleted while a network

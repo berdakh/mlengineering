@@ -112,7 +112,7 @@ questions that person will ask:
 | Are these the bytes that were saved? | `checksums.json`: SHA-256 of every other file |
 | Can this code interpret them? | `format` and `format_version` in `model.json` |
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-26-01.svg" alt="Diagram 1 of notebook 26" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-26-01.svg" alt="Diagram 1 of notebook 26" style="max-width:100%">
 
 *Figure 1. Bundle anatomy and the two refusals that come before any interpretation.*
 
@@ -168,7 +168,7 @@ Four things version independently, and the bundle records all of them:
 
 ### 2.5 A local registry
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-26-02.svg" alt="Diagram 2 of notebook 26" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-26-02.svg" alt="Diagram 2 of notebook 26" style="max-width:100%">
 
 *Figure 2. The life of a version. Only the pointer moves.*
 
@@ -189,7 +189,7 @@ one, never an empty file. Rollback is a promote of the previous version: no rebu
 MLflow's model registry, SageMaker's and Vertex AI's registries implement the same ideas (immutable
 versions, movable aliases or stages) with a database and access control around them.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-26-03.svg" alt="Diagram 3 of notebook 26" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-26-03.svg" alt="Diagram 3 of notebook 26" style="max-width:100%">
 
 *Figure 3. One release. The service never chooses a file; it resolves a name.*
 
@@ -505,7 +505,7 @@ Challenge: the decision function of a fitted binary `LogisticRegression` is
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d2_artifacts_versioning/assessment.md): reasoning questions, a design-choice explanation, a rubric and a
+assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, a rubric and a
 10-15 minute ML system design rep ("design the model registry for a team of 15"). Model answers are in
 `solutions/labs/w5d2_artifacts_versioning/assessment_answers.md`.
 

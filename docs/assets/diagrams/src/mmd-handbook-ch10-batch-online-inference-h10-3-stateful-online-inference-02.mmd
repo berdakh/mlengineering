@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant G as gateway
+    participant S as scoring service
+    participant K as checkpoint store
+    G->>S: sample(P07, t=60)
+    S->>S: update state of P07
+    S-->>G: score None, warming_up
+    S->>K: snapshot every N samples or seconds
+    Note over S: deployment restarts the process
+    S->>K: load latest snapshots
+    K-->>S: P07 state at t=60
+    G->>S: sample(P07, t=61)
+    S-->>G: warm-up continues where it stopped

@@ -93,7 +93,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.1 Three paths that must agree
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-30-01.svg" alt="Diagram 1 of notebook 30" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-30-01.svg" alt="Diagram 1 of notebook 30" style="max-width:100%">
 #
 # The numbers in the milestone-1 report came from the evaluation path. Operators will act on the API's
 # numbers; analysts will rerun the batch path over history. If the three disagree, the report describes a
@@ -168,7 +168,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.5 A request end to end
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-30-02.svg" alt="Diagram 2 of notebook 30" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-30-02.svg" alt="Diagram 2 of notebook 30" style="max-width:100%">
 #
 # **Long recordings.** The API accepts at most 3,600 values per request (one hour at 1 Hz). The
 # `anomaly-free` recording has 9,405 rows, so a client sends it in chunks, each with the same burn-in; the
@@ -312,7 +312,7 @@ check("w5d6")
 # evidence, and push both.
 #
 # **Acceptance criteria.** `python wb.py check w5d6 --challenge` passes (structure only); the reviewer
-# scores quality with the rubric in [assessment.md](../labs/w5d6_project_milestone_2/assessment.md).
+# scores quality with the rubric in assessment.md (section 7 of this notebook).
 #
 #
 # ### The challenge brief
@@ -413,7 +413,7 @@ check("w5d6", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w5d6_project_milestone_2/assessment.md): the milestone rubric, reasoning questions, and an interview rep (walk a
+# assessment.md (section 7 of this notebook): the milestone rubric, reasoning questions, and an interview rep (walk a
 # request through the system end to end, 10 minutes, spoken).
 #
 #

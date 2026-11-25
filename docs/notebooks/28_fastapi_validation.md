@@ -114,7 +114,7 @@ Only then does the model run. If anything fails *after* that point, it is the se
 and the client is told so without being told internals. If the model is not loaded, the honest
 answer is 503: "try again later or elsewhere".
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-28-01.svg" alt="Diagram 1 of notebook 28" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-28-01.svg" alt="Diagram 1 of notebook 28" style="max-width:100%">
 
 *Diagram 1. Every path through the service ends in one of a small set of documented answers.*
 
@@ -154,7 +154,7 @@ answer is 503: "try again later or elsewhere".
 The rule of thumb: **4xx means "change your request", 5xx means "it is not your fault".** A client
 retries 503 and 429, fixes and resends 400/422, and reports 500 with the request id.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-28-02.svg" alt="Diagram 2 of notebook 28" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-28-02.svg" alt="Diagram 2 of notebook 28" style="max-width:100%">
 
 *Diagram 2. The decision order the lab implements. The order is part of the contract: a request to a
 service without a model gets 422 if its body is invalid, because validation runs first.*
@@ -605,7 +605,7 @@ def stream_sample(sample: Sample, request: Request, machine_id: str = Path(patte
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d4_fastapi_validation/assessment.md): reasoning questions, a design-choice explanation, a rubric, and a
+assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, a rubric, and a
 12-minute interview rep on API concepts.
 
 ---

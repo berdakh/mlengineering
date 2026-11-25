@@ -1,0 +1,13 @@
+flowchart LR
+    raw["raw SKAB files<br/>downloaded, immutable"] --> ing["ingest + quality checks<br/>w2d3"]
+    ing --> spl["split manifest<br/>by experiment, w2d4 / w3d1"]
+    spl --> feat["causal features<br/>w2d5"]
+    feat --> base["baselines<br/>w2d6"]
+    base --> evalp["evaluation protocol<br/>point + event metrics,<br/>intervals, Week 3"]
+    evalp --> models["model comparison<br/>and choice, Week 4"]
+    models --> art["versioned artifact +<br/>inference pipeline, Week 5"]
+    art --> api["FastAPI service<br/>Week 5"]
+    api --> img["container + CI<br/>Week 6"]
+    img --> dep["deployment<br/>authorisation-gated"]
+    dep --> mon["logging, drift and<br/>performance monitoring, Week 7"]
+    mon -. "retrain / roll back" .-> models

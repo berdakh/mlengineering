@@ -1,0 +1,12 @@
+flowchart TD
+    subgraph CHASM["Chasm: two children of one parent"]
+        P1["parent<br/>(one row per machine)"] --> C1["child A<br/>(work orders, owns labour)"]
+        P1 --> C2["child B<br/>(downtime events, owns hours)"]
+    end
+    subgraph FAN["Fan: a measure on the parent, joined down to a child"]
+        P2["parent<br/>(work order, owns labour)"] --> C3["child<br/>(part lines)"]
+    end
+    CHASM --> X1["joined rows = a x b per parent<br/>labour x b, hours x a"]
+    FAN --> X2["joined rows = m per parent<br/>labour x m"]
+    X1 --> FIX["pre-aggregate every child to the join grain, then join"]
+    X2 --> FIX

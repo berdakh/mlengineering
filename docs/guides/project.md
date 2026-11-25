@@ -31,21 +31,7 @@ and remaining-useful-life regression does not exercise event-level detection); U
 condition monitoring (per-cycle classification, little temporal structure between cycles);
 physiological datasets (too close to your existing expertise to demonstrate transfer).
 
-```mermaid
-flowchart LR
-    raw["raw SKAB files<br/>downloaded, immutable"] --> ing["ingest + quality checks<br/>w2d3"]
-    ing --> spl["split manifest<br/>by experiment, w2d4 / w3d1"]
-    spl --> feat["causal features<br/>w2d5"]
-    feat --> base["baselines<br/>w2d6"]
-    base --> evalp["evaluation protocol<br/>point + event metrics,<br/>intervals, Week 3"]
-    evalp --> models["model comparison<br/>and choice, Week 4"]
-    models --> art["versioned artifact +<br/>inference pipeline, Week 5"]
-    art --> api["FastAPI service<br/>Week 5"]
-    api --> img["container + CI<br/>Week 6"]
-    img --> dep["deployment<br/>authorisation-gated"]
-    dep --> mon["logging, drift and<br/>performance monitoring, Week 7"]
-    mon -. "retrain / roll back" .-> models
-```
+<img src="../assets/diagrams/mmd-guides-project-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *The project from raw data to a monitored service, with the week in which each stage is built.*
 

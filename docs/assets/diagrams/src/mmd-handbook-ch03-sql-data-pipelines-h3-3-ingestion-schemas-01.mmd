@@ -1,0 +1,7 @@
+flowchart LR
+    SRC["source<br/>(pinned commit, sha256 per file)"] --> RAW[("data/raw<br/>immutable")]
+    RAW --> ING["ingest<br/>explicit parse + checks"]
+    ING -->|"no error-severity failure"| INT[("data/interim/skab.csv<br/>declared schema")]
+    ING --> REP["quality_report.json<br/>provenance.json"]
+    ING -. "any error" .-> STOP["exit non-zero<br/>no table written"]
+    INT --> FEAT["features (w2d5)"] --> PROC[("data/processed<br/>tied to a split manifest")]

@@ -42,17 +42,7 @@ is the minimum.
 
 ## H10.2.3 Serialisation formats
 
-```mermaid
-flowchart TD
-    Q["What is the model's state?"] --> S{"small and well defined?<br/>(linear weights, thresholds, statistics)"}
-    S -- yes --> J["JSON + numeric npz<br/>store the mathematics<br/>own the loader"]
-    S -- no --> K{"which framework?"}
-    K -- "scikit-learn" --> SK["skops (allow-listed types)<br/>pin scikit-learn version"]
-    K -- "PyTorch" --> PT["state_dict + architecture in code<br/>torch.load weights_only"]
-    K -- "serve outside Python<br/>or optimise" --> OX["ONNX graph + runtime"]
-    Q --> P{"same process, same version,<br/>never shared?"}
-    P -- yes --> PK["pickle is acceptable<br/>(a cache, not an artifact)"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch10-batch-online-inference-h10-2-artifacts-and-versioning-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *Figure H10.2-1. Choosing a format. Pickle appears only for caches that never cross a trust boundary.*
 
@@ -131,14 +121,7 @@ is the contract with consumers: inputs, output meaning and scale, and the decisi
 Data, code and format have their own versions (manifest hash, commit, `format_version`). The model
 card records all of them, so "model 1.3.0" can be traced to exactly one data snapshot and one commit.
 
-```mermaid
-flowchart LR
-    D["data snapshot<br/>manifest sha256"] --> B["bundle flowguard-flowrate 1.3.0"]
-    C["code commit<br/>+ library versions"] --> B
-    F["bundle format v1"] --> B
-    B --> P["prediction log rows<br/>model_version = 1.3.0"]
-    B --> E["evaluation report<br/>cites 1.3.0"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch10-batch-online-inference-h10-2-artifacts-and-versioning-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 *Figure H10.2-3. Lineage: a version links predictions and reports back to data and code.*
 

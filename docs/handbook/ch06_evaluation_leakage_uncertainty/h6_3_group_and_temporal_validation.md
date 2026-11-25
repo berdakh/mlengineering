@@ -21,19 +21,7 @@ combination "new units, later". Row-wise K-fold answers none of them when rows a
 
 ## H6.3.2 Choosing a scheme from the deployment sentence
 
-```mermaid
-flowchart TD
-    Q["Write the deployment sentence:<br/>WHO will the model score, WHEN, under WHICH regime?"] --> U{"Unseen units?"}
-    U -- yes --> T1{"Also later in time?"}
-    U -- no --> T2{"Later in time?"}
-    T1 -- yes --> C1["Grouped AND forward:<br/>new units after the cut-off,<br/>purge at the cut-off"]
-    T1 -- no --> C2["Grouped K-fold or<br/>leave-one-group-out"]
-    T2 -- yes --> C3["Forward chaining<br/>with a gap"]
-    T2 -- no --> C4["Blocked K-fold<br/>with purge and embargo"]
-    C1 --> R{"Unseen regime possible?"}
-    C2 --> R
-    R -- yes --> S["Add leave-one-category-out<br/>as a stress test"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch06-evaluation-leakage-uncertainty-h6-3-group-and-temporal-validation-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 | Deployment question | Must be unseen | Scheme | scikit-learn |
 |---|---|---|---|

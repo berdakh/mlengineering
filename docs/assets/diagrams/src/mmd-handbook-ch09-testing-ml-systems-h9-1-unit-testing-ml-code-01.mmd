@@ -1,0 +1,8 @@
+flowchart TD
+    q["What is the correct output?"] --> a{"Can it be derived<br/>by hand or from theory?"}
+    a -- yes --> ka["Known-answer test<br/>sine RMS, Parseval, ramp line length"]
+    a -- no --> b{"Is there a transformation of the input<br/>with a predictable effect on the output?"}
+    b -- yes --> inv["Invariance / metamorphic test<br/>scale, shift, permute, pad"]
+    b -- no --> c{"Is there a slow, obviously<br/>correct implementation?"}
+    c -- yes --> diff["Differential test<br/>fast code against the slow reference"]
+    c -- no --> con["Contract tests only<br/>shapes, types, ranges, errors raised"]

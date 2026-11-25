@@ -28,14 +28,7 @@ The course's defaults, in one line each:
 
 ## H13.1.2 Identities: users, roles, and federation
 
-```mermaid
-flowchart LR
-    root["root user<br/>(account owner)<br/>MFA, then lock away"] -. "never for daily work" .-> x((" "))
-    idc["IAM Identity Center<br/>people sign in here"] -->|"permission set =<br/>role in the account"| role["role: flowguard-deployer<br/>temporary credentials"]
-    role -->|"calls with least privilege"| apis["ECR, ECS, Logs, Budgets,<br/>iam:PassRole on one role"]
-    ecs["ECS (the service)"] -->|"assumes"| exec["task execution role<br/>pull image, write logs"]
-    user["IAM user + access key"] -. "avoid: long-lived,<br/>easily leaked" .-> apis
-```
+<img src="../../assets/diagrams/mmd-handbook-ch13-cloud-deployment-h13-1-identity-credentials-cost-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 * **Root user.** The account's owner identity, with unrestricted power including closing the account.
   Protect it with MFA and do not use it for work.

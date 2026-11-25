@@ -61,16 +61,7 @@ For tabular business prediction the ladder is: prevalence; one-rule heuristics a
 ("failed a payment in the last 90 days"); logistic regression with sensible preprocessing; then
 tree ensembles.
 
-```mermaid
-flowchart TD
-    A["constant / random<br/>the floor"] --> B["clock or row index<br/>protocol probe"]
-    B --> C["persistence<br/>forecast floor"]
-    C --> D["one sensor, one limit<br/>what operators have"]
-    D --> E["max of per-sensor z<br/>independent limits"]
-    E --> F["Mahalanobis / PCA<br/>joint structure"]
-    F --> G["supervised linear model<br/>needs labelled faults"]
-    B -.->|"if it scores well"| X["stop: the benchmark leaks"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch05-classical-ml-baselines-h5-1-trivial-and-linear-baselines-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *Climb only while each rung beats the previous one by more than its uncertainty. A clock that scores
 well is a finding about the data, not a rung to beat.*

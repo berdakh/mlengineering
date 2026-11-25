@@ -147,7 +147,7 @@ print("repo root:", REPO_ROOT)
 # request waits about one service time on average, at 0.7 about 2.3, at 0.9 about 9, before even
 # considering the tail. Capacity plans therefore target 0.6-0.75.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-34-01.svg" alt="Diagram 1 of notebook 34" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-34-01.svg" alt="Diagram 1 of notebook 34" style="max-width:100%">
 #
 # ### 2.5 Where the time goes inside one request
 #
@@ -507,7 +507,7 @@ check("w6d4", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w6d4_latency_resources/assessment.md): reasoning questions, a design-choice explanation, the rubric and a
+# assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, the rubric and a
 # system-design interview rep on latency budgets.
 #
 #

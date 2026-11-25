@@ -24,7 +24,7 @@ while the boat may be fine.
 
 ---
 
-<img src="assets/diagrams/roadmap.svg" alt="The eight-week roadmap: software foundations, data, evaluation, models, serving, deployment, operations, and finishing" width="100%">
+<img src="assets/diagrams/roadmap.svg" alt="The eight-week roadmap: software foundations, data, evaluation, models, serving, deployment, operations, and finishing" style="max-width:100%">
 
 ## What you will be able to do
 

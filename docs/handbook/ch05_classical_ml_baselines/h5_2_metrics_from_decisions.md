@@ -148,19 +148,7 @@ State this limitation whenever a risk model drives an intervention.
 7. Write the sentence a stakeholder can check: "at 2 false alarms per pump-month we detect x % of
    faults within y minutes".
 
-```mermaid
-flowchart TD
-    Q["What is the binding constraint?"] --> C1["fixed review capacity k"]
-    Q --> C2["known cost per action and per miss"]
-    Q --> C3["must catch nearly all: safety"]
-    Q --> C4["alarm fatigue"]
-    Q --> C5["no decision yet: comparing rankers"]
-    C1 --> M1["precision@k, recall@k"]
-    C2 --> M2["expected cost at p >= C/B<br/>needs calibrated p"]
-    C3 --> M3["alarm rate or precision<br/>at a recall floor"]
-    C4 --> M4["recall at a fixed<br/>false alarms per hour"]
-    C5 --> M5["AP with its floor;<br/>ROC AUC if prevalence will vary"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch05-classical-ml-baselines-h5-2-metrics-from-decisions-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 **Industry example (illustrative numbers).** A card-fraud team can review 2,000 of 4 million daily
 transactions; fraud is about 0.1 %. The agreed metric is value-weighted recall within the daily

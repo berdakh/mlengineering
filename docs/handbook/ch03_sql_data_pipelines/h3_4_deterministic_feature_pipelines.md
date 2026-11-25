@@ -47,14 +47,7 @@ tables. Typical hidden arguments:
 that append to an output, or that write partially and then fail, are not idempotent. Write to
 a location determined by the inputs, and make completion explicit.
 
-```mermaid
-flowchart LR
-    D[("data")] --> F["step F"]
-    P["parameters"] --> F
-    C["code version"] --> F
-    F --> O[("output, named by<br/>hash(data, parameters, code)")]
-    H["hidden inputs:<br/>clock, random state, row order,<br/>environment, files edited by hand"] -. "must be zero" .-x F
-```
+<img src="../../assets/diagrams/mmd-handbook-ch03-sql-data-pipelines-h3-4-deterministic-feature-pipelines-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 
 ## H3.4.3 Content-addressed outputs
@@ -105,15 +98,7 @@ as "entry complete". For stronger guarantees write into a temporary directory an
 bytes for the same key (float formatting, algorithm changes). Record versions in the metadata
 and treat a cache as valid within one environment lock.
 
-```mermaid
-flowchart LR
-    D["input data<br/>sha256 of file bytes"] --> K
-    P["parameters<br/>canonical JSON, sorted"] --> K
-    C["code identity<br/>FEATURE_VERSION"] --> K
-    K["cache key = hash(data, parameters, code)"] --> Q{"entry with this key<br/>and its metadata file exists?"}
-    Q -->|"yes"| HIT["reuse: no computation"]
-    Q -->|"no"| RUN["compute features"] --> W["write table, then metadata LAST<br/>(metadata present = entry complete)"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch03-sql-data-pipelines-h3-4-deterministic-feature-pipelines-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 
 ## H3.4.4 Fitted state is an artifact, not a side effect
@@ -143,20 +128,7 @@ Rules that follow:
 This is the same separation as an EEG pipeline that estimates spatial filters or normalisation
 on calibration data and then applies them, unchanged, to later sessions.
 
-```mermaid
-flowchart LR
-    subgraph FIT["fit: once, on designated rows only"]
-        TR["reference rows<br/>(training experiments, normal operation)"] --> ST["ReferenceStats<br/>mean, sd per feature"]
-    end
-    ST --> SAVE[("saved with the model")]
-    subgraph APPLY["transform: everywhere, with the stored state"]
-        A1["training rows"] --> Z["z = (x - mean) / sd"]
-        A2["validation / test rows"] --> Z
-        A3["one live row in the service"] --> Z
-    end
-    SAVE --> Z
-    TE["test rows"] -. "never reach fit" .-x ST
-```
+<img src="../../assets/diagrams/mmd-handbook-ch03-sql-data-pipelines-h3-4-deterministic-feature-pipelines-03.svg" alt="Diagram 3 of this page" style="max-width:100%">
 
 
 ## H3.4.5 Point-in-time correctness and training/serving skew

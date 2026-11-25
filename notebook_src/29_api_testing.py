@@ -93,7 +93,7 @@ print("repo root:", REPO_ROOT)
 # A service has more ways to be wrong than a function, so it gets more layers of tests. Each layer
 # answers a different question and has a different cost.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-29-01.svg" alt="Diagram 1 of notebook 29" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-29-01.svg" alt="Diagram 1 of notebook 29" style="max-width:100%">
 #
 # * **Unit tests** check the scoring arithmetic and the bundle loader directly. They are fast and
 #   precise but know nothing about HTTP.
@@ -176,7 +176,7 @@ print("repo root:", REPO_ROOT)
 #   traffic (w6d5, w7d5). A readiness probe that answers 200 before the model is loaded sends real
 #   traffic to a process that can only fail.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-29-02.svg" alt="Diagram 2 of notebook 29" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-29-02.svg" alt="Diagram 2 of notebook 29" style="max-width:100%">
 #
 # ### 2.5 Concurrency: what runs at the same time
 #
@@ -582,7 +582,7 @@ check("w5d5", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w5d5_api_testing/assessment.md): reasoning questions, a design-choice explanation, an interview rep
+# assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, an interview rep
 # (debugging a flaky API test, `interview_rep/test_flaky.py`) and a rubric.
 #
 #

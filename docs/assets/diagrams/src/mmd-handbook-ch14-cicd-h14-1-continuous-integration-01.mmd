@@ -1,0 +1,6 @@
+flowchart LR
+    PR["pull request opened<br/>or updated"] --> CI["ci.yml runs<br/>lint, test matrix, image"]
+    CI -->|all required checks green| R["review"] --> M["merge to main"]
+    CI -->|any required check red| F["fix and push again<br/>(superseded run cancelled)"] --> CI
+    M --> P["push to main runs ci.yml again"]
+    S["schedule / manual"] --> EV["evaluate.yml<br/>data, metrics, perf"] --> REP["report artifact<br/>read by an owner"]

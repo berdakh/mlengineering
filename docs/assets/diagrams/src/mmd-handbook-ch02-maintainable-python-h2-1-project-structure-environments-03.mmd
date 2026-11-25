@@ -1,0 +1,6 @@
+flowchart TD
+    sys["system Python<br/>owned by the OS"] -->|"python -m venv .venv"| venv[".venv<br/>own site-packages, own bin/<br/>pyvenv.cfg points at the base interpreter"]
+    venv --> act["activate, or call .venv/bin/python directly"]
+    act --> inst["pip install -e .<br/>resolves the ranges you declared"]
+    inst --> freeze["snapshot or lock:<br/>the exact versions that were resolved"]
+    freeze --> rebuild["rebuild elsewhere from the lock"]

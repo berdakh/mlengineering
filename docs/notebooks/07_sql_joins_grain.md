@@ -129,7 +129,7 @@ of this lesson is to make the grain explicit before writing the `SELECT`.
 **The lesson database at a glance** (SYNTHETIC; full schema in [`data/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d1_sql_joins_grain/data/README.md)).
 Read each line as "one parent row has zero or more child rows"; the grain of a table is its primary key.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-07-01.svg" alt="Diagram 1 of notebook 07" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-07-01.svg" alt="Diagram 1 of notebook 07" style="max-width:100%">
 
 `machines` has two independent children (`work_orders`, `downtime_events`), and `work_orders` has a
 child of its own (`parts_used`). Those two shapes are where every fan-out in this lesson comes from.
@@ -259,7 +259,7 @@ that has no machines at all.
 
 Where a condition on the outer-joined table goes decides which rows survive:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-07-02.svg" alt="Diagram 2 of notebook 07" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-07-02.svg" alt="Diagram 2 of notebook 07" style="max-width:100%">
 
 
 ### 2.6 Verifying a query
@@ -275,7 +275,7 @@ Treat a query like code under test (W1D5). Useful oracles:
   from the single table at whose grain the measure is defined. This catches fan-out *and* dropped rows.
 - **Known small cases.** Check one entity by hand, preferably one with zero children and one with many.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-07-03.svg" alt="Diagram 3 of notebook 07" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-07-03.svg" alt="Diagram 3 of notebook 07" style="max-width:100%">
 
 
 ### 2.7 A concrete industry example
@@ -719,7 +719,7 @@ the path machine → work order → part line (a chain, not two sibling branches
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d1_sql_joins_grain/assessment.md): six reasoning questions, one design-choice explanation, a rubric, and
+assessment.md (section 7 of this notebook): six reasoning questions, one design-choice explanation, a rubric, and
 a 15-minute SQL interview rep. Write answers before opening
 `solutions/labs/w2d1_sql_joins_grain/assessment_answers.md`. The automated checks cover the queries;
 the written questions cover whether you can explain *why*.

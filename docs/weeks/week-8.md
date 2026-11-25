@@ -82,14 +82,7 @@ is filled in (after review of the final assessment).
 
 #### 2.1 The evidence chain
 
-```mermaid
-flowchart LR
-    A[Artifact<br/>report, test, transcript] --> C[Conditions<br/>independent? timed? reviewed?]
-    C --> L[Ledger level<br/>demonstrated / self-reported / unassessed]
-    L --> P[Portfolio row]
-    P --> B[CV bullet or interview answer]
-    B -. every claim traces back .-> A
-```
+<img src="../assets/diagrams/mmd-weeks-week-8-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *A claim in a CV bullet is only as strong as the artifact and the conditions behind it. The checks
 enforce the left end of the chain (the artifact exists); you enforce the rest.*
@@ -122,17 +115,7 @@ performance across many domains. Say so before an interviewer does, and say what
 
 #### 2.4 Choosing the next eight weeks
 
-```mermaid
-flowchart TD
-    G[Gaps in the ledger] --> Q1{Gap is about shipping<br/>or operating?}
-    Q1 -- yes --> A[Option: deploy for real, operate, write incidents]
-    Q1 -- no --> Q2{Gap is about breadth<br/>or transfer?}
-    Q2 -- yes --> B[Option: a second project in a new domain]
-    Q2 -- no --> C[Option: interview-loop practice, open-source contributions]
-    A --> D[Pick by criteria: closes gaps, fits target roles, cost, risk]
-    B --> D
-    C --> D
-```
+<img src="../assets/diagrams/mmd-weeks-week-8-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 *Let the ledger, not enthusiasm, choose. Most plans combine one artifact-producing option with
 recurring practice.*

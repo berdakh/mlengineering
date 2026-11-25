@@ -1,0 +1,6 @@
+flowchart TD
+    Q1{"Many labelled faults<br/>of recurring types?"} -- yes --> C["classification<br/>(evaluate per fault type)"]
+    Q1 -- no --> Q2{"Is the next value<br/>predictable when normal?"}
+    Q2 -- "yes, strong dynamics" --> F["forecasting residual<br/>(score = forecast error)"]
+    Q2 -- "partly, cross-sensor structure" --> R["reconstruction<br/>(score = reconstruction error)"]
+    Q2 -- "no, mostly noise" --> S["simple statistics first<br/>(z, Mahalanobis, CUSUM)"]

@@ -77,17 +77,7 @@ and contract tests, `w5d6` project milestone 2 (release candidate with three-way
 
 The week in one picture. Each arrow is a question the next lesson answers.
 
-```mermaid
-flowchart LR
-    W4["w4d5: the model to ship<br/>flow-rate |z|, threshold 7.2441"] --> P1["w5d1 one Detector<br/>skew, input contract,<br/>predict-batch, parity 1e-12"]
-    P1 --> P2["w5d2 artifact bundle<br/>checksums, format version,<br/>model card, registry"]
-    P2 --> P3["w5d3 streaming twin<br/>Welford, warm-up = None,<br/>late, duplicate, gap, snapshot"]
-    P2 --> P4["w5d4 HTTP contract<br/>422 / 400 / 503 / 500,<br/>healthz vs readyz, lifespan"]
-    P3 --> P4
-    P4 --> P5["w5d5 tests at the boundary<br/>status and content,<br/>concurrency, OpenAPI contract"]
-    P5 --> P6["w5d6 release candidate<br/>evaluation = batch = API,<br/>provenance, one version"]
-    P1 -.-> P6
-```
+<img src="../assets/diagrams/mmd-weeks-week-5-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 All real-data numbers below come from the Week 5 lessons' authoring runs on the frozen manifest v2
 (`w3d1`): 7 test and 27 development experiments. The shipped detector is the one chosen in `w4d5`:

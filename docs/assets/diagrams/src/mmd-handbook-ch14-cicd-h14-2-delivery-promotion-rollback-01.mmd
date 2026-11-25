@@ -1,0 +1,7 @@
+flowchart LR
+    c["commit SHA"] --> b["build + test once"] --> r[("registry: tag :SHA<br/>digest sha256:D")]
+    r --> s["staging runs @D"]
+    s -- "ready and healthy<br/>for the soak period" --> p["production runs @D"]
+    s -- "failed" --> x["stop: fix forward<br/>or discard D"]
+    p -- "image incident" --> rb["rollback: previous good @D'"]
+    p -- "config incident" --> rv["revert config,<br/>redeploy @D"]

@@ -47,17 +47,7 @@ but the reported number is wrong.
 
 To estimate what the *procedure* will achieve on new groups, wrap the procedure in an outer loop:
 
-```mermaid
-flowchart TD
-    D["development groups, split into K folds"] --> O["for each outer fold k"]
-    O --> I["inner data: the other K-1 folds"]
-    I --> S["search: grouped CV over the inner folds, all candidates"]
-    S --> C["select one candidate by the rule"]
-    C --> R["refit it on all inner folds"]
-    R --> E["score on outer fold k, which nothing above saw"]
-    E --> A["average the K outer scores: estimate of the procedure"]
-    T["test groups"] -.->|"untouched until one final evaluation"| F["final: run the procedure on all dev folds, evaluate once"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch06-evaluation-leakage-uncertainty-h6-4-selection-and-nested-validation-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 Properties:
 

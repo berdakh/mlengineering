@@ -1,0 +1,11 @@
+flowchart LR
+    B["bytes"] --> T{"transport<br/>size, content type"}
+    T -- fail --> T1["413 / 415"]
+    T --> S{"syntax<br/>JSON parses"}
+    S -- fail --> S1["422"]
+    S --> SC{"schema<br/>fields, types, ranges, sizes"}
+    SC -- fail --> SC1["422 + field paths"]
+    SC --> D{"domain<br/>cross-field, order, state"}
+    D -- fail --> D1["400 / 404 / 409"]
+    D --> M["model"]
+    M --> Q["monitoring<br/>distribution checks, not per request"]

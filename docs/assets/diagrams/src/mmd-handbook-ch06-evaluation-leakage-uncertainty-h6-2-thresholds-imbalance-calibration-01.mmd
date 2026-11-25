@@ -1,0 +1,6 @@
+flowchart LR
+    D["development experiments"] --> S["scores"] --> R{"criterion fixed<br/>in advance"}
+    R -->|"best F1, cost rule,<br/>or false-alarm quantile"| T["threshold tau"]
+    T --> A["stored with the<br/>model artifact"]
+    A -->|"frozen"| E["test experiments:<br/>metrics at tau only"]
+    E -.->|"never back"| R

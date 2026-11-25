@@ -112,7 +112,7 @@ versions of the w7d1-w7d4 modules, so you can work from it or port the checklist
 
 ### 2.1 What the demonstration must show
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-42-01.svg" alt="Diagram 1 of notebook 42" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-42-01.svg" alt="Diagram 1 of notebook 42" style="max-width:100%">
 
 Each event in the scenario tests one link between a problem and the signal that should catch it:
 
@@ -180,7 +180,7 @@ less trustworthy, not more.
 
 ### 2.4 Promotion and rollback are process events, not file events
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-42-02.svg" alt="Diagram 2 of notebook 42" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-42-02.svg" alt="Diagram 2 of notebook 42" style="max-width:100%">
 
 A running process loaded its bundle at startup. Changing the pointer changes nothing until the process is
 replaced, and replacing it means stopping the old one. Two of the three planted problems in the starter
@@ -395,7 +395,7 @@ the z-score is scale invariant, so a units error does not change alarms.
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d6_project_milestone_4/assessment.md): the milestone rubric, reasoning questions and a 15-minute interview rep:
+assessment.md (section 7 of this notebook): the milestone rubric, reasoning questions and a 15-minute interview rep:
 "how would you know the model is failing in production?" Answers are in
 `solutions/labs/w7d6_project_milestone_4/assessment_answers.md`.
 

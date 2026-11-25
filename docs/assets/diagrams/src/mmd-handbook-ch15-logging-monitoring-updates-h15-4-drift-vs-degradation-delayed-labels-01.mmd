@@ -1,0 +1,13 @@
+flowchart TB
+    subgraph S["What changed?"]
+        CV["covariate shift<br/>P(x) changes, P(y|x) fixed"]
+        PR["prior shift<br/>P(y) changes, P(x|y) fixed"]
+        CO["concept shift<br/>P(y|x) changes"]
+        PI["pipeline change<br/>code, config, upstream join"]
+    end
+    CV -->|"drift monitor sees it"| D["input drift flag"]
+    PR -->|"drift monitor may see it"| D
+    CO -->|"often invisible to input statistics"| L["only labels see it"]
+    PI -->|"invisible if inputs are logged before the bug"| L
+    CV -->|"harmless if the model is invariant or extrapolates well"| OK["performance unchanged"]
+    CV -->|"harmful otherwise"| L

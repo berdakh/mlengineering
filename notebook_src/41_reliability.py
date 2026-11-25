@@ -98,7 +98,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.2 Defensive layers, from the edge inwards
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-41-01.svg" alt="Diagram 1 of notebook 41" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-41-01.svg" alt="Diagram 1 of notebook 41" style="max-width:100%">
 #
 # 1. **Validation at the edge** (w5d4): malformed requests never reach the model. This is a contract with the
 #    caller, answered with `422` and the field paths.
@@ -161,7 +161,7 @@ print("repo root:", REPO_ROOT)
 # **Retry-After wins.** If the server sends `Retry-After`, it knows its own state better than the client's
 # formula does; honour it, capped at `max_delay`.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-41-02.svg" alt="Diagram 2 of notebook 41" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-41-02.svg" alt="Diagram 2 of notebook 41" style="max-width:100%">
 #
 # **Idempotency.** A retry is only safe if repeating the request cannot do harm twice. Scoring a window is
 # naturally idempotent. For anything with a side effect (creating an alert ticket, recording a
@@ -532,7 +532,7 @@ check("w7d5", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w7d5_reliability/assessment.md): reasoning questions, a design-choice explanation, a rubric and a 15-minute
+# assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, a rubric and a 15-minute
 # interview rep on a cascading failure. Answers are in
 # `solutions/labs/w7d5_reliability/assessment_answers.md`. Open it only after writing your own.
 #

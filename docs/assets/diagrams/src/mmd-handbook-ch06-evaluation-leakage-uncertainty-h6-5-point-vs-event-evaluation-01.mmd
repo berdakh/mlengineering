@@ -1,0 +1,11 @@
+flowchart LR
+    R["rows: y_t and s_t"] --> P1["point view<br/>TP, FP, FN over rows"]
+    R --> TH["flags at threshold"]
+    TH --> PP["post-processing<br/>merge gap g, min duration m"]
+    PP --> AL["alarms"]
+    R --> EV["true events"]
+    AL --> MT["matching rule M"]
+    EV --> MT
+    MT --> E1["event recall and precision"]
+    MT --> E2["delay per event, censored"]
+    MT --> E3["false alarms per hour of normal time"]

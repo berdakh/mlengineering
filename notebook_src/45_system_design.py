@@ -92,7 +92,7 @@ print("repo root:", REPO_ROOT)
 # what exactly is predicted, from which data, judged by which number, served how fast, watched how, and
 # replaced how. A structure stops you from spending 30 minutes on the model and 0 minutes on labels.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-01.svg" alt="Diagram 1 of notebook 45" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-01.svg" alt="Diagram 1 of notebook 45" style="max-width:100%">
 #
 # The order is a default, not a script. Say it out loud at the start ("I'll clarify requirements, do some
 # numbers, then data and labels, evaluation, serving and monitoring; stop me if you want depth anywhere"),
@@ -165,12 +165,12 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.5 Choosing batch, online or streaming
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-02.svg" alt="Diagram 2 of notebook 45" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-02.svg" alt="Diagram 2 of notebook 45" style="max-width:100%">
 #
 # Most production systems are hybrids: heavy features precomputed in batch or streaming jobs, a light
 # model called online. Training/serving parity becomes the main risk in a hybrid:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-03.svg" alt="Diagram 3 of notebook 45" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-03.svg" alt="Diagram 3 of notebook 45" style="max-width:100%">
 #
 # ### 2.6 An industry example and the 45-minute plan
 #
@@ -180,7 +180,7 @@ print("repo root:", REPO_ROOT)
 # that skipped that question shipped a model with excellent AUC that nobody could act on: the prediction
 # arrived after dispatch. The time plan below protects the parts that matter.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-04.svg" alt="Diagram 4 of notebook 45" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-04.svg" alt="Diagram 4 of notebook 45" style="max-width:100%">
 #
 # ### 2.7 Limitations and common misconceptions
 #
@@ -417,7 +417,7 @@ check("w8d3", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [`assessment.md`](../labs/w8d3_system_design/assessment.md): seven reasoning questions (estimation, label delay, batch vs online,
+# `assessment.md` (section 7 of this notebook): seven reasoning questions (estimation, label delay, batch vs online,
 # the quantile design choice, parity, launch criteria, common failure patterns), the rubric, and the
 # interview rep, which today is the pair of timed designs.
 #

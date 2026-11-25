@@ -1,0 +1,8 @@
+flowchart LR
+    N["need<br/>(who is hurt by what)"] --> D["decision<br/>(who acts, when, with what options)"]
+    D --> P["prediction that would<br/>change the decision"]
+    P --> LB["label that defines 'right'<br/>(source, delay, noise)"]
+    LB --> C["costs of each error"]
+    C --> M["metric that tracks the costs"]
+    M --> E["evaluation that<br/>mimics deployment"]
+    E -. "audit: read right to left" .-> N

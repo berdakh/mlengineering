@@ -1,0 +1,8 @@
+flowchart TD
+    a["Untested code whose current output<br/>people already rely on"] --> b["Run it; save the output as a golden file"]
+    b --> c["Characterization test:<br/>output must equal the golden file"]
+    c --> d["Refactor in small steps"]
+    d --> e{"test still green?"}
+    e -- yes --> d
+    e -- no --> f["revert the step, or admit it changed behaviour"]
+    d --> g["Replace the golden-file test with tests<br/>that state intended behaviour"]

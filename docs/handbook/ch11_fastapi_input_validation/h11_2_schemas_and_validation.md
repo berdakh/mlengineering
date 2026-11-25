@@ -21,19 +21,7 @@ constraints to write, which checks are *not* schema checks, and how strict to be
 
 ## H11.2.2 Layers of validation
 
-```mermaid
-flowchart LR
-    B["bytes"] --> T{"transport<br/>size, content type"}
-    T -- fail --> T1["413 / 415"]
-    T --> S{"syntax<br/>JSON parses"}
-    S -- fail --> S1["422"]
-    S --> SC{"schema<br/>fields, types, ranges, sizes"}
-    SC -- fail --> SC1["422 + field paths"]
-    SC --> D{"domain<br/>cross-field, order, state"}
-    D -- fail --> D1["400 / 404 / 409"]
-    D --> M["model"]
-    M --> Q["monitoring<br/>distribution checks, not per request"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch11-fastapi-input-validation-h11-2-schemas-and-validation-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *Diagram H11.2-1. Each layer answers a different question and has a different failure answer. The last
 one does not reject requests at all: whether inputs resemble the training data is a statistical
@@ -85,41 +73,7 @@ class PredictRequest(BaseModel):
   change between versions) and `input` (the offending value). Clients and tests should rely on `loc` and
   `type`, not `msg`; servers should not echo `input` back.
 
-```mermaid
-classDiagram
-    class PredictRequest {
-        machine_id: str pattern
-        samples: list~Sample~ 1..5000
-        extra = forbid
-    }
-    class Sample {
-        timestamp: datetime
-        8 sensors: float finite, in range
-        extra = forbid
-    }
-    class PredictResponse {
-        request_id: str
-        model_version: str
-        machine_id: str
-        threshold: float
-        n_samples: int
-        results: list~SampleResult~
-    }
-    class SampleResult {
-        timestamp: datetime
-        score: float or null
-        status: warming_up or ok
-        exceeds_threshold: bool or null
-    }
-    class ErrorResponse {
-        error.code: str
-        error.message: str
-        error.request_id: str
-        error.details: list or null
-    }
-    PredictRequest "1" o-- "1..5000" Sample
-    PredictResponse "1" o-- "*" SampleResult
-```
+<img src="../../assets/diagrams/mmd-handbook-ch11-fastapi-input-validation-h11-2-schemas-and-validation-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 *Diagram H11.2-2. The w5d4 contract. Request models constrain; response models document and filter
 what is returned (FastAPI validates and filters return values against `response_model`).*

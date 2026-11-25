@@ -1,0 +1,10 @@
+stateDiagram-v2
+    [*] --> Registered: register (immutable version)
+    Registered --> Rejected: gate fails
+    Registered --> Shadow: gate passes
+    Shadow --> Rejected: disagreement review or operational failure
+    Shadow --> Canary: reviewed
+    Canary --> RolledBack: stopping rule fires
+    Canary --> Current: promote (pointer + audit)
+    Current --> RolledBack: alarm after release
+    RolledBack --> Current: previous version made current again

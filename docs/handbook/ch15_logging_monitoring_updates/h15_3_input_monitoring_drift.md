@@ -20,19 +20,7 @@ well-formed and physically possible?), **missingness** (are values absent?), and
 come from calibration on stable data, not from p-values or rules of thumb. A drift alarm is evidence of
 change, not of lower model quality.
 
-```mermaid
-flowchart TB
-    IN["window of inputs"] --> SC["schema: finite, in limits, columns present"]
-    SC -->|"violations"| Q["count, quarantine, alert data owner"]
-    SC -->|"valid rows"| MS["missingness share per feature"]
-    MS --> ST["per-feature statistic vs reference: PSI, KS, W1"]
-    REF["reference: training data, recent stable window, or per-unit burn-in"] --> ST
-    CAL["calibration: statistic on stable windows, quantile at alpha / m"] --> TH["thresholds"]
-    ST --> CMP{"statistic above threshold?"}
-    TH --> CMP
-    CMP -->|"yes"| DA["drift alert: investigate, annotate planned changes"]
-    DA -.->|"does not imply"| PERF["lower accuracy: needs labels, see H15.4"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch15-logging-monitoring-updates-h15-3-input-monitoring-drift-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H15.3.2 Definitions
 

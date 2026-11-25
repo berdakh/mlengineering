@@ -81,16 +81,7 @@ sections H6.1, H6.3-H6.7, H7.2 and H7.3 on 2026-11-22. Every project number quot
 lessons, which all evaluate on the frozen split manifest `v2` of `w3d1` (7 test, 27 development
 experiments).
 
-```mermaid
-flowchart LR
-    L["w3d1 leakage<br/>what must not reach the model"] --> V["w3d2 validation design<br/>which estimand, which split"]
-    V --> S["w3d3 selection<br/>choices fitted on dev only"]
-    S --> E["w3d4 point vs event<br/>what is counted"]
-    E --> U["w3d5 uncertainty<br/>how sure, per experiment"]
-    U --> A["w3d6 error analysis<br/>what to fix next"]
-    A -. "new hypotheses, tested on dev" .-> S
-    L -. "frozen manifest v2" .-> U
-```
+<img src="../assets/diagrams/mmd-weeks-week-3-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *How the week fits together: each step protects the number produced by the next one. The dashed
 arrows are the two loops that most often go wrong in practice: error analysis feeding back into

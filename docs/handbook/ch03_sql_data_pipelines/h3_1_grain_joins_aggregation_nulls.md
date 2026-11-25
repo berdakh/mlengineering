@@ -206,20 +206,7 @@ only when a measure from a coarser level of the chain is summed, or when a secon
 The two shapes that produce double counting, drawn as grains. An arrow points from the "one" side to
 the "many" side; a measure is safe to sum only at the grain of the table that owns it.
 
-```mermaid
-flowchart TD
-    subgraph CHASM["Chasm: two children of one parent"]
-        P1["parent<br/>(one row per machine)"] --> C1["child A<br/>(work orders, owns labour)"]
-        P1 --> C2["child B<br/>(downtime events, owns hours)"]
-    end
-    subgraph FAN["Fan: a measure on the parent, joined down to a child"]
-        P2["parent<br/>(work order, owns labour)"] --> C3["child<br/>(part lines)"]
-    end
-    CHASM --> X1["joined rows = a x b per parent<br/>labour x b, hours x a"]
-    FAN --> X2["joined rows = m per parent<br/>labour x m"]
-    X1 --> FIX["pre-aggregate every child to the join grain, then join"]
-    X2 --> FIX
-```
+<img src="../../assets/diagrams/mmd-handbook-ch03-sql-data-pipelines-h3-1-grain-joins-aggregation-nulls-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 On the lesson database the factor can be read off machine by machine: the reported labour of each
 machine is its true labour times its number of downtime events.
@@ -370,14 +357,7 @@ hazard and a correctness hazard; group by everything you select, or wrap the ext
 
 The order in which the clauses of one `SELECT` take effect explains where each kind of filter can go:
 
-```mermaid
-flowchart LR
-    FROM["FROM + JOIN ... ON<br/>(ON filters before unmatched rows are padded)"] --> WHERE["WHERE<br/>(row filter; no aggregates)"]
-    WHERE --> GB["GROUP BY"]
-    GB --> HAV["HAVING<br/>(group filter; aggregates allowed)"]
-    HAV --> SEL["SELECT<br/>(expressions, aliases)"]
-    SEL --> OB["ORDER BY / LIMIT"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch03-sql-data-pipelines-h3-1-grain-joins-aggregation-nulls-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 
 ## H3.1.7 Verifying a query

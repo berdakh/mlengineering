@@ -1,0 +1,6 @@
+flowchart LR
+    FROM["FROM + JOIN ... ON<br/>(ON filters before unmatched rows are padded)"] --> WHERE["WHERE<br/>(row filter; no aggregates)"]
+    WHERE --> GB["GROUP BY"]
+    GB --> HAV["HAVING<br/>(group filter; aggregates allowed)"]
+    HAV --> SEL["SELECT<br/>(expressions, aliases)"]
+    SEL --> OB["ORDER BY / LIMIT"]

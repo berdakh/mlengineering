@@ -1,0 +1,10 @@
+flowchart LR
+    F["FROM / JOIN"] --> W["WHERE"] --> G["GROUP BY"] --> H["HAVING"]
+    H --> WIN["window functions"]
+    WIN --> S["SELECT / DISTINCT"] --> O["ORDER BY"] --> L["LIMIT"]
+    subgraph OVER["OVER ( ... ) for one row"]
+        direction TB
+        P["PARTITION BY<br/>which rows are comparable"] --> OB["ORDER BY<br/>their sequence; ties make peers"]
+        OB --> FR["frame<br/>ROWS = physical rows, RANGE = key values"]
+    end
+    WIN --- OVER

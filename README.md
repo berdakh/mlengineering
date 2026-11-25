@@ -10,7 +10,7 @@ then monitor it, update it and explain it. One real time-series project runs thr
 
 ---
 
-<img src="docs/assets/diagrams/roadmap.svg" alt="The eight-week roadmap: software foundations, data, evaluation, models, serving, deployment, operations, and finishing" width="100%">
+<img src="docs/assets/diagrams/roadmap.svg" alt="The eight-week roadmap: software foundations, data, evaluation, models, serving, deployment, operations, and finishing" style="max-width:100%">
 
 ## What you will be able to do
 

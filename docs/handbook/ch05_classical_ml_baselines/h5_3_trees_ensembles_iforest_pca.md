@@ -20,13 +20,7 @@ isolation forest reuses the tree idea for unsupervised anomaly scoring. This sec
 mechanics needed to tune and debug them, and the caveats that matter when rows are grouped and
 time-ordered. PCA-based detectors are in H7.5.
 
-```mermaid
-flowchart LR
-    T["single decision tree<br/>low bias, high variance"] --> BAG["bagging<br/>average trees on bootstrap samples:<br/>variance down"]
-    BAG --> RF["random forest<br/>+ random feature subsets per split:<br/>trees decorrelated, variance down more"]
-    T --> BOOST["gradient boosting<br/>shallow trees fitted to the current errors:<br/>bias down, needs shrinkage"]
-    T --> IF["isolation forest<br/>random splits, no labels:<br/>short paths = anomalous"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch05-classical-ml-baselines-h5-3-trees-ensembles-iforest-pca-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H5.3.2 Decision trees
 

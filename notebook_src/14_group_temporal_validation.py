@@ -101,7 +101,7 @@ print("repo root:", REPO_ROOT)
 # holds out less than deployment will withhold is optimistic; one that holds out more is pessimistic.
 # Neither is "wrong" as arithmetic. It answers a different question from the one you were asked.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-14-01.svg" alt="Diagram 1 of notebook 14" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-14-01.svg" alt="Diagram 1 of notebook 14" style="max-width:100%">
 #
 # A second axis is easy to miss. The estimand "performance of *the model I will ship*" differs from
 # "performance of *this training procedure* at this sample size". K-fold estimates the second: each fold
@@ -187,7 +187,7 @@ print("repo root:", REPO_ROOT)
 # Forward chaining with four blocks and a gap, drawn as a timeline (each bar is one fold; "gap" rows are
 # in neither set):
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-14-02.svg" alt="Diagram 2 of notebook 14" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-14-02.svg" alt="Diagram 2 of notebook 14" style="max-width:100%">
 #
 # ### 2.5 Purging and embargo: how many rows to drop
 #
@@ -684,7 +684,7 @@ check("w3d2", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w3d2_group_temporal_validation/assessment.md): six reasoning questions, a design-choice explanation, a rubric, and
+# assessment.md (section 7 of this notebook): six reasoning questions, a design-choice explanation, a rubric, and
 # an interview rep (validation and leakage). Model answers and common incorrect answers are in
 # `solutions/labs/w3d2_group_temporal_validation/assessment_answers.md`.
 #

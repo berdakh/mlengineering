@@ -95,7 +95,7 @@ print("repo root:", REPO_ROOT)
 # therefore a recipe that reads two moving sources. To make the result reproducible you must turn both
 # into fixed content addresses: a digest for the image, a version *and hash* for every package.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-32-01.svg" alt="Diagram 1 of notebook 32" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-32-01.svg" alt="Diagram 1 of notebook 32" style="max-width:100%">
 #
 # ### 2.2 Precise terms
 #
@@ -151,7 +151,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.5 Multi-stage builds: what they are for
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-32-02.svg" alt="Diagram 2 of notebook 32" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-32-02.svg" alt="Diagram 2 of notebook 32" style="max-width:100%">
 #
 # Whatever the builder needed and the runtime does not (compilers, headers, pip's caches, source
 # trees, downloaded archives, a `--mount`ed secret for a private index) stays in the discarded stage.
@@ -176,7 +176,7 @@ print("repo root:", REPO_ROOT)
 # and the model version with `smoke/expected.json`, which was computed by loading the same bundle
 # outside the container.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-32-03.svg" alt="Diagram 3 of notebook 32" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-32-03.svg" alt="Diagram 3 of notebook 32" style="max-width:100%">
 #
 # What a pass proves: the image starts, finds and loads *this* model, has a working dependency stack,
 # and computes the same numbers inside the container as the package computes outside it. What it does
@@ -620,7 +620,7 @@ check("w6d2", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w6d2_docker_reproducibility/assessment.md): six reasoning questions, one design-choice explanation, a rubric, and
+# assessment.md (section 7 of this notebook): six reasoning questions, one design-choice explanation, a rubric, and
 # a 15-minute interview rep (system design: "how do you make model images reproducible?").
 #
 # ---

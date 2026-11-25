@@ -51,15 +51,7 @@ computed from the wrong rows.
 There is skew if, for inputs from the deployment distribution, *g(x)* differs from *f(x)* by more than
 numerical noise, or if the decisions *d(g(x))* and *d(f(x))* differ.
 
-```mermaid
-flowchart TD
-    S["Skew: served function differs from evaluated function"] --> R["Re-implemented preprocessing<br/>(ddof, smoothing, rounding)"]
-    S --> D["Different defaults<br/>(burn-in length, fill value, clip)"]
-    S --> O["Feature order or naming<br/>(right shape, wrong columns)"]
-    S --> T["Statistics at the wrong time<br/>(stale, or recomputed on the batch)"]
-    S --> P["Parsing and types<br/>(units, decimal comma, time zone, float parser)"]
-    S --> C["Configuration<br/>(threshold, model version actually loaded)"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch10-batch-online-inference-h10-1-one-pipeline-for-training-and-serving-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *Figure H10.1-1. Where skew enters. Each source has a test that catches it (table below).*
 
@@ -128,15 +120,7 @@ there answers *"is this inside the function's domain?"*:
 A violation is a contract failure: nothing is scored, the caller gets a clear error (exit code 2 in
 the batch command, HTTP 422 in an API, Week 5 day 4).
 
-```mermaid
-flowchart LR
-    I["incoming rows"] --> V{"schema valid?"}
-    V -- no --> E["refuse whole input<br/>SchemaError / exit 2"]
-    V -- yes --> Q{"per-entity data usable?<br/>(enough rows, no gap in the used sensor)"}
-    Q -- no --> F["mark that run as error<br/>score the others / exit 3"]
-    Q -- yes --> S["score"]
-    S --> M["monitoring (Week 7):<br/>is valid data still plausible?"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch10-batch-online-inference-h10-1-one-pipeline-for-training-and-serving-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 *Figure H10.1-3. Three different questions, three different responses.*
 

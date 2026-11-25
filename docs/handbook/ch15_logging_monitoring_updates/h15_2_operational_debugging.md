@@ -21,17 +21,7 @@ starts further ahead.
 
 ## H15.2.2 The loop
 
-```mermaid
-flowchart TD
-    A["1 Stabilise if users are hurt:<br/>mitigate first (rollback, traffic off)"] --> B["2 What changed, when?<br/>deploy history, config diff, data"]
-    B --> C["3 Evidence: logs of the process,<br/>platform state, metrics"]
-    C --> D["4 Hypotheses (2-3), ranked"]
-    D --> E["5 One discriminating test"]
-    E -- "inconclusive" --> D
-    E --> F["6 Fix the cause"]
-    F --> G["7 Verify with the same signal<br/>that showed the problem"]
-    G --> H["8 Record: debug log, postmortem,<br/>action items"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch15-logging-monitoring-updates-h15-2-operational-debugging-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 Step 1 and step 6 are different. *Mitigation* stops the harm (roll back, route traffic away, disable a
 feature) and may be done before the cause is known. *The fix* removes the cause. Rolling back an image is a

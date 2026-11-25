@@ -20,19 +20,7 @@ cheap to keep and are what alerts are written on. **Logs** are records of indivi
 A correlation id (`X-Request-ID`) joins them. For ML services the telemetry must also describe the
 model's behaviour (version, scores, decisions) without storing the payload.
 
-```mermaid
-flowchart TB
-    R["request with X-Request-ID"] --> MW["middleware: id, timer, in-flight"]
-    MW --> H["handler: validate, score"]
-    H --> PE["prediction event: version, counts, max score"]
-    MW --> AE["access event: route, status, duration"]
-    MW --> MC["metrics: counter, histogram, gauge"]
-    PE --> LS["log store: queried by request_id, machine_id"]
-    AE --> LS
-    MC --> TS["time-series store: dashboards, SLO alerts"]
-    TS -->|"alert"| ON["on-call engineer"]
-    ON -->|"query by id or time"| LS
-```
+<img src="../../assets/diagrams/mmd-handbook-ch15-logging-monitoring-updates-h15-1-service-logs-and-metrics-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H15.1.2 Structured logging
 

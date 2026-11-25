@@ -78,15 +78,7 @@ Installing a package is the alternative to all three: it makes the code reachabl
 through entry 4, the only entry whose content is determined by a deliberate,
 reproducible action.
 
-```mermaid
-flowchart TD
-    start["python script.py / python -m pkg / an entry-point script"] --> p0["sys.path 0<br/>script directory, or current directory"]
-    p0 --> pp["PYTHONPATH entries, if set"]
-    pp --> std["standard library"]
-    std --> site["site-packages of the interpreter in use"]
-    site --> pth["extra paths added by .pth files<br/>this is how an editable install is found"]
-    pth --> miss["ModuleNotFoundError if nothing matched"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch02-maintainable-python-h2-1-project-structure-environments-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 *Search order for a top-level import. The first match wins, which is how a local file named like a library shadows it.*
 
@@ -308,14 +300,7 @@ the venv's `bin/` is not on `PATH`.
 
 ---
 
-```mermaid
-flowchart LR
-    src["source tree<br/>pyproject.toml + src/"] -- "build backend" --> wheel["wheel<br/>a zip of code + metadata"]
-    wheel -- "installer" --> env["environment<br/>site-packages + bin/"]
-    src -. "editable install:<br/>metadata + pointer, no copy" .-> env
-    idx["package index"] -- "dependencies" --> env
-    env --> run["import pumpwatch<br/>and the pumpwatch command"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch02-maintainable-python-h2-1-project-structure-environments-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
 
 *From source tree to something importable. A regular install copies a built wheel; an editable install records where the source lives.*
 
@@ -378,14 +363,7 @@ package is missing. If pip refuses with `externally-managed-environment`, you ar
 pointing it at a system interpreter that the distribution has marked as off-limits;
 the remedy is a virtual environment, not `--break-system-packages`.
 
-```mermaid
-flowchart TD
-    sys["system Python<br/>owned by the OS"] -->|"python -m venv .venv"| venv[".venv<br/>own site-packages, own bin/<br/>pyvenv.cfg points at the base interpreter"]
-    venv --> act["activate, or call .venv/bin/python directly"]
-    act --> inst["pip install -e .<br/>resolves the ranges you declared"]
-    inst --> freeze["snapshot or lock:<br/>the exact versions that were resolved"]
-    freeze --> rebuild["rebuild elsewhere from the lock"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch02-maintainable-python-h2-1-project-structure-environments-03.svg" alt="Diagram 3 of this page" style="max-width:100%">
 
 *Isolation first, then reproducibility: declared ranges say what may work; a lock records what was actually installed.*
 

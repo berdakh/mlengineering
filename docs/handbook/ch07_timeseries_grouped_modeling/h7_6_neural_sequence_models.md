@@ -28,14 +28,7 @@ Let `x_t` be the multivariate input at time `t` and `W_t = (x_{t-w+1}, ..., x_t)
 | Classification | cross-entropy of `p(y_t | W_t)` | `p(anomaly | W_t)` | many labelled faults of the types you expect |
 | Contrastive / self-supervised | e.g. distinguish real from shuffled windows | learned representation + any detector | lots of unlabelled data |
 
-```mermaid
-flowchart TD
-    Q1{"Many labelled faults<br/>of recurring types?"} -- yes --> C["classification<br/>(evaluate per fault type)"]
-    Q1 -- no --> Q2{"Is the next value<br/>predictable when normal?"}
-    Q2 -- "yes, strong dynamics" --> F["forecasting residual<br/>(score = forecast error)"]
-    Q2 -- "partly, cross-sensor structure" --> R["reconstruction<br/>(score = reconstruction error)"]
-    Q2 -- "no, mostly noise" --> S["simple statistics first<br/>(z, Mahalanobis, CUSUM)"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch07-timeseries-grouped-modeling-h7-6-neural-sequence-models-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 Two facts drive the choice. The *number of independent fault instances* (not rows) limits what a
 classifier can learn; on SKAB it is 27 in development across three families. And the semi-supervised

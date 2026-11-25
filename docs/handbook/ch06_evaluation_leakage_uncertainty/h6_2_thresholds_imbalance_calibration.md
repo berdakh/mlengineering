@@ -48,14 +48,7 @@ rate at the chosen threshold; the spread of per-unit optimal thresholds.
 artifact; report threshold-dependent metrics only at that value; when you also show the best
 achievable test value, label it as an oracle.
 
-```mermaid
-flowchart LR
-    D["development experiments"] --> S["scores"] --> R{"criterion fixed<br/>in advance"}
-    R -->|"best F1, cost rule,<br/>or false-alarm quantile"| T["threshold tau"]
-    T --> A["stored with the<br/>model artifact"]
-    A -->|"frozen"| E["test experiments:<br/>metrics at tau only"]
-    E -.->|"never back"| R
-```
+<img src="../../assets/diagrams/mmd-handbook-ch06-evaluation-leakage-uncertainty-h6-2-thresholds-imbalance-calibration-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H6.2.3 Imbalance: what it changes and what it does not
 

@@ -59,7 +59,7 @@ print("repo root:", REPO_ROOT)
 # Session A totals 110 minutes, session B 115. Use the remaining minutes of each session to fill in
 # [`SUBMISSION.md`](../diagnostic/SUBMISSION.md).
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-01-01.svg" alt="Diagram 1 of notebook 01" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-01-01.svg" alt="Diagram 1 of notebook 01" style="max-width:100%">
 #
 # *The path through the diagnostic. Nothing is adapted until the submission has been reviewed.*
 

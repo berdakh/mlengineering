@@ -32,21 +32,7 @@ two models is larger than that movement. This section gives the tools, in the or
 What none of these tools do: detect leakage, correct a biased test bench, or make up for having few
 independent units. They quantify sampling variation, given a correct design.
 
-```mermaid
-flowchart TD
-    A["Metric on a test set"] --> B{"Are rows independent?"}
-    B -- "no: rows grouped in units" --> C["Resample units<br/>(cluster bootstrap)"]
-    B -- "yes, demonstrably" --> D["Row bootstrap or analytic interval"]
-    C --> E{"Comparing two models<br/>on the same units?"}
-    D --> E
-    E -- "yes" --> F["Paired: per-unit differences,<br/>one resample for both models,<br/>sign-flip or sign test"]
-    E -- "no: one model" --> G{"Metric is a count of<br/>events out of n?"}
-    G -- "yes" --> H["Wilson or exact binomial interval"]
-    G -- "no" --> I["Percentile (or BCa) interval"]
-    F --> J["Report: difference, interval, wins out of G,<br/>and the minimum detectable difference"]
-    H --> J
-    I --> J
-```
+<img src="../../assets/diagrams/mmd-handbook-ch06-evaluation-leakage-uncertainty-h6-6-bootstrap-and-paired-comparisons-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H6.6.2 What varies, and what an interval is about
 

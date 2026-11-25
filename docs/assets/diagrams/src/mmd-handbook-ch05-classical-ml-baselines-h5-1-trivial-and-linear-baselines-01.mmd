@@ -1,0 +1,8 @@
+flowchart TD
+    A["constant / random<br/>the floor"] --> B["clock or row index<br/>protocol probe"]
+    B --> C["persistence<br/>forecast floor"]
+    C --> D["one sensor, one limit<br/>what operators have"]
+    D --> E["max of per-sensor z<br/>independent limits"]
+    E --> F["Mahalanobis / PCA<br/>joint structure"]
+    F --> G["supervised linear model<br/>needs labelled faults"]
+    B -.->|"if it scores well"| X["stop: the benchmark leaks"]

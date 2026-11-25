@@ -1,0 +1,13 @@
+flowchart TD
+    DEC["Decision supported<br/>who acts, on what, when"] --> PT["Prediction time<br/>and latency budget"]
+    PT --> DATA["Data available at prediction time"]
+    PT --> LAB["Label definition, source, delay, bias"]
+    LAB --> EVAL["Evaluation protocol<br/>and launch criteria"]
+    DATA --> MOD["Target, baseline, model"]
+    LAB --> MOD
+    MOD --> SERVE["Serving pattern<br/>batch, online, streaming"]
+    PT --> SERVE
+    SERVE --> MON["Monitoring<br/>inputs, health, delayed performance"]
+    LAB --> MON
+    MON --> UPD["Updates<br/>retraining, gate, shadow, canary, rollback"]
+    EVAL --> UPD

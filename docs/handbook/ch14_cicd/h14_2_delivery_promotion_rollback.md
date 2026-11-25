@@ -34,15 +34,7 @@ authoring run, three builds of the same unchanged service tree produced three di
 differences are harmless metadata; occasionally one is a different dependency version. Either way, a test
 result is evidence about one digest. Promotion moves the evidence with the artifact:
 
-```mermaid
-flowchart LR
-    c["commit SHA"] --> b["build + test once"] --> r[("registry: tag :SHA<br/>digest sha256:D")]
-    r --> s["staging runs @D"]
-    s -- "ready and healthy<br/>for the soak period" --> p["production runs @D"]
-    s -- "failed" --> x["stop: fix forward<br/>or discard D"]
-    p -- "image incident" --> rb["rollback: previous good @D'"]
-    p -- "config incident" --> rv["revert config,<br/>redeploy @D"]
-```
+<img src="../../assets/diagrams/mmd-handbook-ch14-cicd-h14-2-delivery-promotion-rollback-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
 
 ## H14.2.3 Tags, digests and immutability
 

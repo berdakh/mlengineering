@@ -72,7 +72,7 @@ scored in `SELF_SCORE.md`.
 **Completion criteria.**
 
 * `python wb.py check w8d5` passes (structure: all answers present, spoken length, cited artifacts exist).
-* One recording of the 5-minute walkthrough, self-scored against the rubric in [assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d5_project_explanation/assessment.md).
+* One recording of the 5-minute walkthrough, self-scored against the rubric in assessment.md (section 7 of this notebook).
 * Independent skill: `python wb.py check w8d5 --challenge` passes for a walkthrough of one of *your
   own* research projects and five adversarial answers, written without opening the hints.
 
@@ -97,7 +97,7 @@ this session is about structure, priorities and honesty under pressure.
 
 A technical project story that survives questioning has six beats, always in this order:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-47-01.svg" alt="Diagram 1 of notebook 47" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-47-01.svg" alt="Diagram 1 of notebook 47" style="max-width:100%">
 
 *The arc. Interviewers probe Evidence and Limitation; a script without them invites the question
 you least want.*
@@ -138,7 +138,7 @@ point estimate; the overlapping intervals and the cost columns are the argument.
 
 Hard questions usually target a real weakness. Three moves, in order, keep the answer honest and short:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-47-02.svg" alt="Diagram 2 of notebook 47" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-47-02.svg" alt="Diagram 2 of notebook 47" style="max-width:100%">
 
 *The three moves. Skipping "concede" sounds defensive; skipping "quantify" sounds vague; skipping
 "redirect" leaves the weakness as the last thing said.*
@@ -242,7 +242,7 @@ flowguard repository if the artifacts you cite live there (`export WB_PROJECT_DI
    rather than inventing a confident answer. Use concede-quantify-redirect where the question targets
    a weakness. Keep each to 40-130 words. *Checkpoint:* the answer checks for Q01-Q10 pass.
 4. **Record (20 min).** Record the 5-minute version (phone or `ffmpeg`/OBS), watch it once, fill in
-   `SELF_SCORE.md` against the rubric in [assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d5_project_explanation/assessment.md). One change only for the next take.
+   `SELF_SCORE.md` against the rubric in assessment.md (section 7 of this notebook). One change only for the next take.
 5. **Extension.** Remaining answers; `OUTLINE_20MIN.md` (timed parts, 18-22 min); `SLIDES.md` with the
    three visuals of section 2.2.
 
@@ -370,7 +370,7 @@ For the research challenge, the Translation section starts like this:
 
 ## 7. Assessment
 
-[assessment.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d5_project_explanation/assessment.md): reasoning questions, the walkthrough rubric, and the interview rep
+assessment.md (section 7 of this notebook): reasoning questions, the walkthrough rubric, and the interview rep
 (a recorded 5-minute walkthrough followed by three questions drawn at random from the bank).
 
 

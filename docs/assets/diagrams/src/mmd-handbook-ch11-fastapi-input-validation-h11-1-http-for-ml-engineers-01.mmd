@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant C as client
+    participant P as reverse proxy / load balancer
+    participant U as ASGI server (uvicorn)
+    participant A as app (FastAPI)
+    C->>P: POST /predict, TLS, JSON body
+    P->>P: TLS termination, body size limit (413), rate limit (429)
+    P->>U: forwards to a ready instance
+    U->>A: ASGI call (scope, receive, send)
+    A->>A: middleware (request id), routing (404/405), validation (422)
+    A->>A: domain checks (400/409), model, response model
+    A-->>U: status, headers, JSON
+    U-->>P: response
+    P-->>C: response (+ X-Request-ID)

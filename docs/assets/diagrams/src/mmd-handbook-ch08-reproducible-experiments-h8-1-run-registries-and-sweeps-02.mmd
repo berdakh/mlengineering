@@ -1,0 +1,6 @@
+flowchart LR
+    A["run directories<br/>(immutable)"] -->|scan| B["index<br/>one row per run"]
+    B -->|"filter status == complete"| C["group by config"]
+    B -->|"status != complete"| E["excluded counts"]
+    C --> D["results table<br/>n, mean, sd, min, max"]
+    E --> D

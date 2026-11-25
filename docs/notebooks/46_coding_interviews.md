@@ -102,7 +102,7 @@ whether your code is correct at the edges, and whether the interviewer can follo
 interview problems for data roles are variations of about a dozen patterns. Recognising the pattern is
 most of the work; the rest is careful code and your own tests.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-46-01.svg" alt="Diagram 1 of notebook 46" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-46-01.svg" alt="Diagram 1 of notebook 46" style="max-width:100%">
 
 ### 2.2 Precise terms
 
@@ -118,7 +118,7 @@ most of the work; the rest is careful code and your own tests.
 
 ### 2.3 The talk-aloud protocol
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-46-02.svg" alt="Diagram 2 of notebook 46" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-46-02.svg" alt="Diagram 2 of notebook 46" style="max-width:100%">
 
 Spend about two minutes on the first three boxes even when you think you know the answer: interviewers
 score them, and it is where misunderstandings are caught cheaply. When stuck, say what is blocking you and
@@ -148,7 +148,7 @@ by power is a heap. The interview difference is the time box and the need to say
 
 ### 2.6 SQL rounds: grain first
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-46-03.svg" alt="Diagram 3 of notebook 46" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-46-03.svg" alt="Diagram 3 of notebook 46" style="max-width:100%">
 
 The schema of today's database is in [`data/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/data/README.md) (an ER diagram and the grain of each
 table).
@@ -234,7 +234,7 @@ drivers).
 with the number of March completed trips: a larger number is fan-out. If a city is missing, a `WHERE`
 filter on the right-hand table has turned your `LEFT JOIN` into an inner join.
 
-**Task 4 — score and log.** Score each recording with the rubric in [`assessment.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/assessment.md). Fill
+**Task 4 — score and log.** Score each recording with the rubric in `assessment.md` (section 7 of this notebook). Fill
 your error log. Then read only the "Notes on the timed set" table in
 `solutions/labs/w8d4_coding_interviews/assessment_answers.md` for the problems you finished.
 
@@ -404,7 +404,7 @@ FROM days;
 
 ## 7. Assessment
 
-[`assessment.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/assessment.md): seven reasoning questions (complexity of a plausible wrong approach,
+`assessment.md` (section 7 of this notebook): seven reasoning questions (complexity of a plausible wrong approach,
 `RANK` vs `ROW_NUMBER`, the variance design choice, binary search on the answer, grain invariants,
 recursion in Python, what to do when stuck) and the talk-aloud rubric used for the interview rep, which
 today is the timed set itself.

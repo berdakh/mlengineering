@@ -1,0 +1,6 @@
+flowchart LR
+    A[Artifact<br/>report, test, transcript] --> C[Conditions<br/>independent? timed? reviewed?]
+    C --> L[Ledger level<br/>demonstrated / self-reported / unassessed]
+    L --> P[Portfolio row]
+    P --> B[CV bullet or interview answer]
+    B -. every claim traces back .-> A

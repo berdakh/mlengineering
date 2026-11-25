@@ -110,7 +110,7 @@ print("repo root:", REPO_ROOT)
 # for missing values, post-processing and threshold. Production is correct only if it runs that same
 # function.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-25-01.svg" alt="Diagram 1 of notebook 25" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-25-01.svg" alt="Diagram 1 of notebook 25" style="max-width:100%">
 #
 # *Figure 1. One object, two callers. The parity test keeps the evaluation code and the `Detector` from
 # drifting apart.*
@@ -190,7 +190,7 @@ print("repo root:", REPO_ROOT)
 # | refuse an output directory that holds another input's predictions | a retry pointed at the wrong date cannot overwrite what was already acted on |
 # | per-run failure, exit code 3 | one truncated upload does not silence every machine; the scheduler can still tell |
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-25-02.svg" alt="Diagram 2 of notebook 25" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-25-02.svg" alt="Diagram 2 of notebook 25" style="max-width:100%">
 #
 # *Figure 2. What `predict-batch` does, and the three ways it can end.*
 #
@@ -507,7 +507,7 @@ check("w5d1", challenge=True)
 # %% [markdown]
 # ## 7. Assessment
 #
-# [assessment.md](../labs/w5d1_inference_pipeline/assessment.md): reasoning questions, a design-choice explanation, a rubric, and a
+# assessment.md (section 7 of this notebook): reasoning questions, a design-choice explanation, a rubric, and a
 # 10-15 minute debugging interview rep ("alerts are a third of what offline evaluation predicted").
 # Model answers are in `solutions/labs/w5d1_inference_pipeline/assessment_answers.md`.
 #
