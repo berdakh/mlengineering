@@ -151,30 +151,30 @@
   "python": "3.13.18",
   "ref": "HEAD",
   "source": "/tmp/claude-0/-home-user/f971cf7c-4f25-5702-a0ed-89c631511e3f/scratchpad/refrepo",
-  "started_utc": "2026-11-22 18:42",
+  "started_utc": "2026-11-22 18:47",
   "steps": [
     {
       "command": "python scripts/get_skab.py",
       "exit_code": 0,
       "name": "download data (pinned commit, SHA-256 per file)",
-      "output_tail": "e1/13.csv\nok  valve1/14.csv\nok  valve1/15.csv\nok  valve2/0.csv\nok  valve2/1.csv\nok  valve2/2.csv\nok  valve2/3.csv\nok  other/1.csv\nok  other/2.csv\nok  other/3.csv\nok  other/4.csv\nok  other/5.csv\nok  other/6.csv\nok  other/7.csv\nok  other/8.csv\nok  other/9.csv\nok  other/10.csv\nok  other/11.csv\nok  other/12.csv\nok  other/13.csv\nok  other/14.csv\n35 files in /tmp/clean-clone-alfu37yl/clone/data/raw/skab",
-      "seconds": 5.26
+      "output_tail": "e1/13.csv\nok  valve1/14.csv\nok  valve1/15.csv\nok  valve2/0.csv\nok  valve2/1.csv\nok  valve2/2.csv\nok  valve2/3.csv\nok  other/1.csv\nok  other/2.csv\nok  other/3.csv\nok  other/4.csv\nok  other/5.csv\nok  other/6.csv\nok  other/7.csv\nok  other/8.csv\nok  other/9.csv\nok  other/10.csv\nok  other/11.csv\nok  other/12.csv\nok  other/13.csv\nok  other/14.csv\n35 files in /tmp/clean-clone-jsji36dl/clone/data/raw/skab",
+      "seconds": 6.91
     },
     {
       "command": "python scripts/get_skab.py --verify",
       "exit_code": 0,
       "name": "verify data hashes",
       "output_tail": "all files match MANIFEST.json",
-      "seconds": 0.06
+      "seconds": 0.08
     },
     {
       "command": "make evaluate",
       "exit_code": 0,
       "name": "evaluate (ingest, evaluate, report)",
       "output_tail": "python -m flowguard ingest --raw-dir data/raw/skab --out data/interim/skab.csv\nwrote data/interim/skab.csv\npython -m flowguard evaluate --tidy data/interim/skab.csv --splits splits/v2.json --out results/results.json \\\n\t--burn-in 100 --n-boot 2000 --seed 0\nwrote results/results.json\npython -m flowguard report --results results/results.json --out reports/evaluation.md\nwrote reports/evaluation.md",
-      "seconds": 62.35
+      "seconds": 63.15
     }
   ],
-  "total_seconds": 71.64,
+  "total_seconds": 75.45,
   "verdict": "PASS"
 }
