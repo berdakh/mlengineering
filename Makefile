@@ -1,6 +1,6 @@
 # Course maintenance tasks. Students need only the commands in the README; instructors use these.
 
-.PHONY: help install install-locked test notebooks pages diagrams schedule check verify lint data app clean
+.PHONY: help install install-locked test notebooks pages diagrams schedule check verify verify-notebooks lint data app clean
 
 help:  ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
@@ -19,11 +19,13 @@ data:  ## Download the SKAB project data (~4 MB) and verify it
 test:  ## Course tests: helpers, tools, site markup (fast, no data needed)
 	python -m pytest tests -q
 
-notebooks:  ## Rebuild notebooks/*.ipynb from notebook_src/*.py
+notebooks:  ## Rebuild student + solved notebooks (12-week course) and the advanced-track notebooks
 	python tools/nbbuild.py
+	python tools/nbbuild.py --src advanced/notebook_src --out advanced/notebooks --solutions ""
 
-pages:  ## Render notebooks into docs/notebooks/ for the course site
+pages:  ## Render notebooks into docs/notebooks/ and docs/advanced/notebooks/ for the course site
 	python tools/nbpages.py
+	python tools/nbpages.py --track advanced
 
 diagrams:  ## Render docs/assets/diagrams/src/*.mmd to SVG (needs Node + Playwright)
 	python tools/make_diagrams.py
@@ -34,13 +36,18 @@ schedule:  ## Regenerate advanced/course.json and docs/advanced/schedule.md
 check:  ## Everything CI checks except the long lab verification
 	python tools/build_course.py && git diff --exit-code advanced/course.json docs/advanced/schedule.md
 	python tools/nbbuild.py --check
+	python tools/nbbuild.py --check --src advanced/notebook_src --out advanced/notebooks --solutions ""
 	python tools/nbpages.py --check
+	python tools/nbpages.py --check --track advanced
 	python tools/make_diagrams.py --check
 	python tools/check_notebooks.py
 	python tools/check_links.py
 	python -m pytest tests -q
 
-verify:  ## Every reference solution passes and every wrong submission is rejected (~30 min)
+verify-notebooks:  ## Solved notebooks pass every grader; student copies fail only with NotImplementedError (~15 min)
+	python tools/verify_notebooks.py
+
+verify:  ## Advanced track: every reference solution passes and every wrong submission is rejected (~30 min)
 	python tools/verify_checks.py --all
 
 lint:  ## Lint the helpers and tools

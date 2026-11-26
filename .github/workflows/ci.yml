@@ -31,10 +31,14 @@ jobs:
         run: |
           python tools/build_course.py
           git diff --exit-code advanced/course.json docs/advanced/schedule.md
-      - name: Notebooks are in sync with their sources
-        run: python tools/nbbuild.py --check
-      - name: Site notebook pages are in sync
-        run: python tools/nbpages.py --check
+      - name: Notebooks are in sync with their sources (12-week course and advanced track)
+        run: |
+          python tools/nbbuild.py --check
+          python tools/nbbuild.py --check --src advanced/notebook_src --out advanced/notebooks --solutions ""
+      - name: Site notebook pages are in sync (both tracks)
+        run: |
+          python tools/nbpages.py --check
+          python tools/nbpages.py --check --track advanced
       - name: Diagrams are in sync with their sources
         run: python tools/make_diagrams.py --check
       - name: Notebook structure, syntax, links and images
@@ -43,6 +47,20 @@ jobs:
         run: python tools/check_links.py
       - name: Course tests
         run: python -m pytest tests -q
+
+  graded-notebooks:
+    name: Solved notebooks pass every grader; student notebooks fail them cleanly
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements.txt -r requirements-dev.txt
+      - name: Run all 48 course notebooks, solved and student copies
+        run: python tools/verify_notebooks.py
 
   labs:
     name: Lab checks accept references and reject wrong submissions (${{ matrix.python-version }})
