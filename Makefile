@@ -28,11 +28,11 @@ pages:  ## Render notebooks into docs/notebooks/ for the course site
 diagrams:  ## Render docs/assets/diagrams/src/*.mmd to SVG (needs Node + Playwright)
 	python tools/make_diagrams.py
 
-schedule:  ## Regenerate course.json and docs/guides/schedule.md
+schedule:  ## Regenerate advanced/course.json and docs/advanced/schedule.md
 	python tools/build_course.py
 
 check:  ## Everything CI checks except the long lab verification
-	python tools/build_course.py && git diff --exit-code course.json docs/guides/schedule.md
+	python tools/build_course.py && git diff --exit-code advanced/course.json docs/advanced/schedule.md
 	python tools/nbbuild.py --check
 	python tools/nbpages.py --check
 	python tools/make_diagrams.py --check

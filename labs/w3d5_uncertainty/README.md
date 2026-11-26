@@ -1,6 +1,6 @@
 # 17 · Uncertainty: cluster bootstrap, paired comparisons, small-n honesty — lab files
 
-**The lesson is notebook [`17_uncertainty`](../../notebooks/17_uncertainty.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/17_uncertainty.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/17_uncertainty.ipynb)).
+**The lesson is notebook [`17_uncertainty`](../../advanced/notebooks/17_uncertainty.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/17_uncertainty.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/17_uncertainty.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

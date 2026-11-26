@@ -1,6 +1,6 @@
 # 19 · Time-series fundamentals and forecast-residual detectors — lab files
 
-**The lesson is notebook [`19_timeseries_fundamentals`](../../notebooks/19_timeseries_fundamentals.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/19_timeseries_fundamentals.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/19_timeseries_fundamentals.ipynb)).
+**The lesson is notebook [`19_timeseries_fundamentals`](../../advanced/notebooks/19_timeseries_fundamentals.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/19_timeseries_fundamentals.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/19_timeseries_fundamentals.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

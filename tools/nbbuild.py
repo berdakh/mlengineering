@@ -22,6 +22,20 @@ Usage::
     python tools/nbbuild.py            # build every source
     python tools/nbbuild.py --check    # fail if notebooks are stale (CI)
     python tools/nbbuild.py 03_first_generation
+    python tools/nbbuild.py --src advanced/notebook_src --out advanced/notebooks --solutions ""
+
+Solutions (nbgrader-style). A code cell may contain one or more solution blocks::
+
+    def total(xs):
+        ### BEGIN SOLUTION
+        return sum(xs)
+        ### STARTER (optional: what the student sees instead; default is a TODO line)
+        return None
+        ### END SOLUTION
+
+The student notebook gets the STARTER lines (or `# YOUR CODE HERE` + `raise NotImplementedError()`),
+indented like the block; the solved notebook (``--solutions`` folder) gets the solution lines. Markdown
+between ``<!-- BEGIN SOLUTION -->`` and ``<!-- END SOLUTION -->`` is likewise removed for students.
 """
 
 from __future__ import annotations
@@ -34,6 +48,46 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SRC_DIR = REPO_ROOT / "notebook_src"
 OUT_DIR = REPO_ROOT / "notebooks"
+SOL_DIR = REPO_ROOT / "solutions" / "notebooks"
+BEGIN, STARTER, END = "### BEGIN SOLUTION", "### STARTER", "### END SOLUTION"
+MD_BEGIN, MD_END = "<!-- BEGIN SOLUTION -->", "<!-- END SOLUTION -->"
+
+
+def strip_solutions(text: str, student: bool) -> str:
+    """Resolve solution blocks in one cell body for the student or the solved version."""
+    out: list[str] = []
+    mode = None  # None | "solution" | "starter"
+    indent = ""
+    starter: list[str] = []
+    for line in text.split("\n"):
+        stripped = line.strip()
+        if stripped == BEGIN:
+            mode, indent, starter = "solution", line[: len(line) - len(line.lstrip())], []
+            continue
+        if stripped == STARTER and mode == "solution":
+            mode = "starter"
+            continue
+        if stripped == END and mode:
+            if student:
+                out.extend(starter or [indent + "# YOUR CODE HERE", indent + "raise NotImplementedError()"])
+            mode = None
+            continue
+        if stripped == MD_BEGIN:
+            mode = "md"
+            continue
+        if stripped == MD_END and mode == "md":
+            mode = None
+            continue
+        if mode == "solution" or mode == "md":
+            if not student:
+                out.append(line)
+        elif mode == "starter":
+            starter.append(line)
+        else:
+            out.append(line)
+    if mode:
+        raise ValueError("unterminated solution block")
+    return "\n".join(out)
 
 KERNELSPEC = {
     "display_name": "Python 3 (ml-engineering)",
@@ -121,8 +175,12 @@ def parse_percent(text: str) -> list[dict]:
     return cells
 
 
-def build_notebook(src: Path) -> dict:
+def build_notebook(src: Path, student: bool = True) -> dict:
     cells = parse_percent(src.read_text(encoding="utf-8"))
+    for cell in cells:
+        body = "".join(cell["source"])
+        if "SOLUTION" in body:
+            cell["source"] = _as_source_lines(strip_solutions(body, student))
     if not cells:
         raise ValueError(f"{src.name} produced no cells - is it percent-formatted?")
     return {
@@ -141,27 +199,38 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("only", nargs="*", help="build only sources matching these substrings")
     parser.add_argument("--check", action="store_true", help="verify notebooks are up to date")
+    parser.add_argument("--src", default=str(SRC_DIR.relative_to(REPO_ROOT)))
+    parser.add_argument("--out", default=str(OUT_DIR.relative_to(REPO_ROOT)))
+    parser.add_argument("--solutions", default=str(SOL_DIR.relative_to(REPO_ROOT)),
+                        help='folder for solved notebooks ("" to skip)')
     args = parser.parse_args()
+    src_dir, out_dir = REPO_ROOT / args.src, REPO_ROOT / args.out
+    sol_dir = REPO_ROOT / args.solutions if args.solutions else None
 
-    sources = sorted(SRC_DIR.glob("*.py"))
+    sources = sorted(src_dir.glob("*.py"))
     if args.only:
         sources = [s for s in sources if any(token in s.name for token in args.only)]
     if not sources:
         print("no notebook sources matched", file=sys.stderr)
         return 1
 
-    OUT_DIR.mkdir(exist_ok=True)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    if sol_dir:
+        sol_dir.mkdir(parents=True, exist_ok=True)
     stale: list[str] = []
     for src in sources:
-        out = OUT_DIR / (src.stem + ".ipynb")
-        text = render(build_notebook(src))
-        if args.check:
-            if not out.exists() or out.read_text(encoding="utf-8") != text:
-                stale.append(out.name)
-            continue
-        out.write_text(text, encoding="utf-8")
-        n_cells = len(json.loads(text)["cells"])
-        print(f"built {out.relative_to(REPO_ROOT)}  ({n_cells} cells)")
+        targets = [(out_dir / (src.stem + ".ipynb"), True)]
+        if sol_dir and "SOLUTION" in src.read_text(encoding="utf-8"):
+            targets.append((sol_dir / (src.stem + ".ipynb"), False))
+        for out, student in targets:
+            text = render(build_notebook(src, student))
+            if args.check:
+                if not out.exists() or out.read_text(encoding="utf-8") != text:
+                    stale.append(str(out.relative_to(REPO_ROOT)))
+                continue
+            out.write_text(text, encoding="utf-8")
+            n_cells = len(json.loads(text)["cells"])
+            print(f"built {out.relative_to(REPO_ROOT)}  ({n_cells} cells)")
 
     if args.check:
         if stale:

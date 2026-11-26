@@ -1,6 +1,6 @@
 # 40 · Model updates: retraining triggers, shadow and canary, rollback — lab files
 
-**The lesson is notebook [`40_model_updates_rollback`](../../notebooks/40_model_updates_rollback.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/40_model_updates_rollback.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/40_model_updates_rollback.ipynb)).
+**The lesson is notebook [`40_model_updates_rollback`](../../advanced/notebooks/40_model_updates_rollback.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/40_model_updates_rollback.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/40_model_updates_rollback.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

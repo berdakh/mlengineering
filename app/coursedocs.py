@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-COURSE = ROOT / "course.json"
+COURSE = ROOT / "advanced" / "course.json"
 PROGRESS = ROOT / "progress" / "progress.json"
 NOTES = ROOT / "progress" / "notes.md"
 FLAGS = ("reading", "guided", "independent", "review")

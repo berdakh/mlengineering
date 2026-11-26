@@ -1,6 +1,6 @@
 # 09 · pandas ingestion, schemas and data-quality checks (project data arrives) — lab files
 
-**The lesson is notebook [`09_data_quality_ingestion`](../../notebooks/09_data_quality_ingestion.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/09_data_quality_ingestion.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/09_data_quality_ingestion.ipynb)).
+**The lesson is notebook [`09_data_quality_ingestion`](../../advanced/notebooks/09_data_quality_ingestion.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/09_data_quality_ingestion.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/09_data_quality_ingestion.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

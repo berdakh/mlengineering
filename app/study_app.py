@@ -78,9 +78,9 @@ def unit_doc(unit: dict) -> Path | None:
     if not unit.get("path"):
         return None
     if unit.get("notebook"):
-        p = cd.ROOT / "notebooks" / f"{unit['notebook']}.ipynb"
+        p = cd.ROOT / "advanced" / "notebooks" / f"{unit['notebook']}.ipynb"
     else:
-        p = cd.ROOT / "docs" / "weeks" / f"week-{unit['week']}.md"
+        p = cd.ROOT / "docs" / "advanced" / "weeks" / f"week-{unit['week']}.md"
     return p if p.is_file() else None
 
 

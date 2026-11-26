@@ -1,6 +1,6 @@
 # 43 · Project completion audit: reproduce from a clean clone — lab files
 
-**The lesson is notebook [`43_project_completion`](../../notebooks/43_project_completion.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/43_project_completion.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/43_project_completion.ipynb)).
+**The lesson is notebook [`43_project_completion`](../../advanced/notebooks/43_project_completion.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/43_project_completion.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/43_project_completion.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

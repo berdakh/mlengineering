@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-NOTEBOOK_DIR = REPO_ROOT / "notebooks"
+NOTEBOOK_DIRS = [REPO_ROOT / "notebooks", REPO_ROOT / "advanced" / "notebooks", REPO_ROOT / "solutions" / "notebooks"]
 
 # Lines Jupyter understands but Python does not.
 MAGIC = re.compile(r"^\s*[%!]")
@@ -99,7 +99,9 @@ def check_notebook(path: Path) -> list[str]:
                 if not target.startswith(COLAB_PREFIX):
                     problems.append(f"cell {number}: unexpected Colab URL {target}")
                     continue
-                expected = f"{COLAB_PREFIX}notebooks/{path.name}"
+                expected = f"{COLAB_PREFIX}{path.parent.relative_to(REPO_ROOT).as_posix()}/{path.name}"
+                if path.parent.name == "notebooks" and path.parent.parent.name == "solutions":
+                    expected = f"{COLAB_PREFIX}notebooks/{path.name}"  # solved copies keep the student badge
                 if target != expected:
                     problems.append(
                         f"cell {number}: Colab badge points at {target.rsplit('/', 1)[-1]}, "
@@ -110,7 +112,7 @@ def check_notebook(path: Path) -> list[str]:
 
 
 def main() -> int:
-    notebooks = sorted(NOTEBOOK_DIR.glob("*.ipynb"))
+    notebooks = sorted(p for d in NOTEBOOK_DIRS for p in d.glob("*.ipynb"))
     if not notebooks:
         print("no notebooks found - run python tools/nbbuild.py first", file=sys.stderr)
         return 1
@@ -121,7 +123,8 @@ def main() -> int:
         total_problems += len(problems)
         status = "OK" if not problems else f"{len(problems)} problem(s)"
         cells = len(json.loads(path.read_text(encoding='utf-8'))["cells"])
-        print(f"{path.name:<44}{cells:>3} cells  {status}")
+        if problems:
+            print(f"{path.relative_to(REPO_ROOT)}  {cells} cells  {status}")
         for problem in problems:
             print(f"    - {problem}")
 

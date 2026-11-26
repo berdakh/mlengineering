@@ -1,6 +1,6 @@
 # 39 · Drift is not degradation: delayed labels and measured performance — lab files
 
-**The lesson is notebook [`39_drift_vs_degradation`](../../notebooks/39_drift_vs_degradation.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/39_drift_vs_degradation.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/39_drift_vs_degradation.ipynb)).
+**The lesson is notebook [`39_drift_vs_degradation`](../../advanced/notebooks/39_drift_vs_degradation.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/39_drift_vs_degradation.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/39_drift_vs_degradation.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

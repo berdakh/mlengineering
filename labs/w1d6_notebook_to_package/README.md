@@ -1,6 +1,6 @@
 # 06 · Independent refactor: a real exploratory notebook becomes the project skeleton — lab files
 
-**The lesson is notebook [`06_notebook_to_package`](../../notebooks/06_notebook_to_package.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/06_notebook_to_package.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/06_notebook_to_package.ipynb)).
+**The lesson is notebook [`06_notebook_to_package`](../../advanced/notebooks/06_notebook_to_package.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/06_notebook_to_package.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/06_notebook_to_package.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

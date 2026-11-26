@@ -1,6 +1,6 @@
 # 31 · Docker I: images, layers and a correct Dockerfile — lab files
 
-**The lesson is notebook [`31_docker_basics`](../../notebooks/31_docker_basics.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/31_docker_basics.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/31_docker_basics.ipynb)).
+**The lesson is notebook [`31_docker_basics`](../../advanced/notebooks/31_docker_basics.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/31_docker_basics.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/31_docker_basics.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

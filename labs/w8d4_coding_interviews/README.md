@@ -1,6 +1,6 @@
 # 46 · Coding and SQL interviews, timed — lab files
 
-**The lesson is notebook [`46_coding_interviews`](../../notebooks/46_coding_interviews.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/46_coding_interviews.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/46_coding_interviews.ipynb)).
+**The lesson is notebook [`46_coding_interviews`](../../advanced/notebooks/46_coding_interviews.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/46_coding_interviews.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/46_coding_interviews.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

@@ -1,6 +1,6 @@
 # 18 · Error analysis and timed transfer exercise — lab files
 
-**The lesson is notebook [`18_error_analysis_transfer`](../../notebooks/18_error_analysis_transfer.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/18_error_analysis_transfer.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/18_error_analysis_transfer.ipynb)).
+**The lesson is notebook [`18_error_analysis_transfer`](../../advanced/notebooks/18_error_analysis_transfer.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/18_error_analysis_transfer.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/18_error_analysis_transfer.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

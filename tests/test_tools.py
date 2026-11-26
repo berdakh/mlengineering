@@ -27,11 +27,11 @@ def test_inline_maths_becomes_double_dollar_outside_code():
 
 
 def test_every_notebook_has_one_source_and_course_entry():
-    units = json.loads((ROOT / "course.json").read_text())["units"]
+    units = json.loads((ROOT / "advanced" / "course.json").read_text())["units"]
     names = sorted(u["notebook"] for u in units if u["notebook"])
     assert len(names) == 48
-    assert sorted(p.stem for p in (ROOT / "notebook_src").glob("*.py")) == names
-    assert sorted(p.stem for p in (ROOT / "notebooks").glob("*.ipynb")) == names
+    assert sorted(p.stem for p in (ROOT / "advanced" / "notebook_src").glob("*.py")) == names
+    assert sorted(p.stem for p in (ROOT / "advanced" / "notebooks").glob("*.ipynb")) == names
 
 
 def test_site_pages_have_front_matter_and_no_unprotected_liquid():

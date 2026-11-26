@@ -1,6 +1,6 @@
 # 10 · Problem framing and versioned split definitions — lab files
 
-**The lesson is notebook [`10_problem_framing_splits`](../../notebooks/10_problem_framing_splits.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/10_problem_framing_splits.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/10_problem_framing_splits.ipynb)).
+**The lesson is notebook [`10_problem_framing_splits`](../../advanced/notebooks/10_problem_framing_splits.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/10_problem_framing_splits.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/10_problem_framing_splits.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

@@ -75,7 +75,7 @@ def main() -> int:
     args = ap.parse_args()
     if args.all:
         # Units still marked Planned in course.json may be half-written; they are not verified.
-        planned = {u["path"] for u in json.loads((ROOT / "course.json").read_text())["units"]
+        planned = {u["path"] for u in json.loads((ROOT / "advanced" / "course.json").read_text())["units"]
                    if u["status"] == "Planned" and u.get("path")}
         found = {str(c.parent.relative_to(ROOT)) for base in ("diagnostic", "labs")
                  for pattern in ("*/checks*", "*/*/checks*")  # nested: labs/<unit>/<section>/checks

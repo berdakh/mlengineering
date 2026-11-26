@@ -1,6 +1,6 @@
 # 41 · Reliability and failure handling — lab files
 
-**The lesson is notebook [`41_reliability`](../../notebooks/41_reliability.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/41_reliability.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/41_reliability.ipynb)).
+**The lesson is notebook [`41_reliability`](../../advanced/notebooks/41_reliability.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/41_reliability.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/41_reliability.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

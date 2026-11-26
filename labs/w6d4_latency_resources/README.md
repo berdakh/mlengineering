@@ -1,6 +1,6 @@
 # 34 · Latency, throughput and resource use — lab files
 
-**The lesson is notebook [`34_latency_resources`](../../notebooks/34_latency_resources.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/34_latency_resources.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/34_latency_resources.ipynb)).
+**The lesson is notebook [`34_latency_resources`](../../advanced/notebooks/34_latency_resources.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/34_latency_resources.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/34_latency_resources.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

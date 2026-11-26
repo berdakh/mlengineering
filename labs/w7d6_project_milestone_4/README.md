@@ -1,6 +1,6 @@
 # 42 · Project milestone 4: monitoring demonstration and runbook — lab files
 
-**The lesson is notebook [`42_project_milestone_4`](../../notebooks/42_project_milestone_4.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/42_project_milestone_4.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/42_project_milestone_4.ipynb)).
+**The lesson is notebook [`42_project_milestone_4`](../../advanced/notebooks/42_project_milestone_4.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/42_project_milestone_4.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/42_project_milestone_4.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

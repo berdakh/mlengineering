@@ -1,6 +1,6 @@
 # 04 · Configuration, logging and reproducible runs — lab files
 
-**The lesson is notebook [`04_config_logging`](../../notebooks/04_config_logging.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/04_config_logging.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/04_config_logging.ipynb)).
+**The lesson is notebook [`04_config_logging`](../../advanced/notebooks/04_config_logging.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/04_config_logging.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/04_config_logging.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

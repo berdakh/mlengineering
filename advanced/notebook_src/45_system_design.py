@@ -1,0 +1,526 @@
+# %% [markdown]
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/45_system_design.ipynb)
+#
+# *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
+
+# %% [markdown]
+# # 45 · ML system design
+#
+# **Week 8 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d3_system_design/`](../../labs/w8d3_system_design/)
+#
+# **Objective.** Apply a repeatable structure (requirements, data, labels, evaluation, serving, monitoring, iteration) to two timed designs, one in an unfamiliar domain.
+
+# %%
+# --- Setup: works on your laptop AND in Google Colab ----------------------------
+# In Colab this clones the course repository and installs the requirements (about a
+# minute, first run only). On your own machine it just finds the repository. Every
+# command in this notebook runs from the repository root. Safe to re-run.
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+if "google.colab" in sys.modules:
+    if not Path("/content/mlengineering").exists():
+        subprocess.run(["git", "clone", "--depth", "1",
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q",
+                    "-r", "requirements.txt"], check=True)
+
+REPO_ROOT = next(p for p in [Path.cwd(), *Path.cwd().parents]
+                 if (p / "src" / "mlcourse").is_dir())
+os.chdir(REPO_ROOT)
+sys.path.insert(0, str(REPO_ROOT / "src"))
+print("repo root:", REPO_ROOT)
+
+# %% [markdown]
+# **Status:** Execution verified (see the verification record at the end).
+# **Handbook:** [H16.3 System design structure](../../docs/handbook/ch16_system_design_communication/h16_3_system_design_structure.md)
+# **Prerequisites:** Weeks 5-7, in particular [w5d1](25_inference_pipeline.ipynb) (one pipeline for
+# training and serving), [w6d4](34_latency_resources.ipynb) (Little's law, latency budgets),
+# [w7d3](39_drift_vs_degradation.ipynb) (delayed labels), [w7d4](40_model_updates_rollback.ipynb)
+# (safe rollout); interview set 5 from the [w5d7 review](../../labs/w5d7_review/README.md) (your first design rep).
+#
+# ---
+
+# %% [markdown]
+# ## 1. Purpose
+#
+# **What you will learn.** A structure you can apply to any ML system-design question in 45 minutes,
+# the back-of-envelope arithmetic that turns hand-waving into decisions, and how to make trade-offs
+# explicit. You then apply it twice, timed, to domains you have not worked in: search ranking and
+# delivery-time estimation.
+#
+# **Why an applied ML engineer needs it.** ML system design is a standard round in Machine Learning
+# Engineer and Applied Scientist loops, and the same reasoning is what a design review at work demands.
+# The round is rarely lost on modelling knowledge; it is lost on structure: no requirements, no label
+# story, no evaluation that matches deployment, no numbers. You have now built every part of such a
+# system once (flowguard); this session is about explaining one you have not built.
+#
+# **Primary objective.** Produce two complete, timed, recorded designs and score them honestly against a
+# rubric, using an estimation worksheet you implemented yourself.
+#
+# **Deliverable.** `lab/estimates.py` passing the checks; two recordings (or written transcripts) with
+# rubric scores in `progress/notes.md`; a design review of a flawed document (`challenge/REVIEW.md`).
+#
+# **Completion criteria.**
+# - `python wb.py check w8d3` passes (guided practice).
+# - D1 done under exam conditions and self-scored before reading the worked answer.
+# - `python wb.py check w8d3 --challenge` passes and your review names the two blockers and fixes them
+#   (independent skill; score with the challenge rubric).
+#
+# | Activity | Essential (2 h) | Optional (≤ 1 h) |
+# |---|---|---|
+# | Read sections 2-3, run the worked example | 30 min | |
+# | Guided lab: the estimation worksheet | 25 min | |
+# | D1, timed and recorded, then self-score | 55 min | |
+# | Assessment Q1-Q7 and reflection | 10 min | |
+# | D2, timed and recorded, then self-score | | 55 min |
+# | Challenge: design review (45 min) | on the review day if not today | |
+#
+# ---
+
+# %% [markdown]
+# ## 2. Conceptual explanation
+#
+# ### 2.1 Intuition
+#
+# An ML system-design question is a compressed version of the whole course. The interviewer gives you a
+# business problem and listens for whether you can turn it into a system that works and keeps working:
+# what exactly is predicted, from which data, judged by which number, served how fast, watched how, and
+# replaced how. A structure stops you from spending 30 minutes on the model and 0 minutes on labels.
+#
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-45-01.svg" alt="Diagram 1 of notebook 45" style="max-width:100%">
+#
+# The order is a default, not a script. Say it out loud at the start ("I'll clarify requirements, do some
+# numbers, then data and labels, evaluation, serving and monitoring; stop me if you want depth anywhere"),
+# then follow the interviewer.
+#
+# ### 2.2 Precise terms
+#
+# * **Functional requirements:** what the system must output, for whom, when (e.g. a ranked list of 10
+#   documents per query; a delivery range at checkout).
+# * **Non-functional requirements:** latency (state the percentile: p95, p99), throughput (peak, not
+#   average), availability, cost, privacy, auditability.
+# * **Prediction time and label time:** when the model is called and when the truth becomes known.
+#   The gap is the **label delay**; it decides how fast you can evaluate and retrain (w7d3).
+# * **Batch inference:** predictions computed on a schedule and stored; **online inference:** computed on
+#   request inside a latency budget; **streaming inference:** computed continuously over event streams
+#   with state (w5d3).
+# * **Feature store:** a system that serves the same feature definitions offline (point-in-time correct
+#   training rows) and online (low-latency lookups). The concept matters more than the product: one
+#   definition, two execution paths, a parity test (w5d1).
+# * **Launch criteria:** the pre-registered evidence needed to replace the incumbent (offline gate,
+#   shadow, online test with guardrails; w7d4).
+# * **Back-of-envelope estimate:** an order-of-magnitude calculation from stated assumptions, with units.
+#
+# ### 2.3 The mathematics you need
+#
+# All of it is arithmetic with units. Four relations cover most rounds.
+#
+# **Peak rate.** $\lambda_{\text{peak}} = \dfrac{N_{\text{day}}}{86{,}400\ \text{s}} \times r$, where $r$ is the
+# peak-to-mean ratio (3-10 is typical for consumer traffic).
+#
+# **Little's law for capacity.** Busy servers $L = \lambda W$, with $W$ the service time per request.
+# Replicas $= \left\lceil \dfrac{\lambda W}{c \cdot u} \right\rceil$ for $c$ cores per replica at target
+# utilisation $u$ (0.5-0.7 leaves room for bursts and garbage collection), and never fewer than two for
+# availability.
+#
+# **Labels in an evaluation window.** With $n$ predictions per day, a fraction $\rho$ ever labelled and a
+# delay of $d$ days, a window of $w$ days holds $n \rho \max(0, w - d)$ labelled examples today.
+#
+# **Labels needed for a precision target.** For a proportion near $p$, the normal-approximation 95 %
+# half-width is $h = 1.96\sqrt{p(1-p)/n}$, so $n = 1.96^2 p(1-p)/h^2$. Halving $h$ needs four times the
+# labels. For rare events use the Wilson interval (w3d5); this formula is for planning.
+#
+# **Latency budget.** The model gets what is left after every other hop:
+# $t_{\text{model}} \le B - \sum_i t_i$. Percentiles do not add exactly, but adding p99s is a conservative
+# planning bound for a sequential path.
+#
+# **Asymmetric costs choose a quantile.** If being late costs $c_\ell$ per unit and being early $c_e$, the
+# quoted value that minimises expected cost is the quantile $\tau = c_\ell/(c_\ell + c_e)$ of the outcome
+# distribution (D2 uses this).
+#
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d3_system_design/figures/labels_vs_window.svg" alt="Labels available today against the evaluation window for label delays of 1, 7, 14 and 28 days: each line is zero until the window exceeds the delay" width="100%">
+#
+# *Figure 1 (planning arithmetic, 1,000 predictions a day with 5 % labelled; not data).* With a 28-day
+# delay, a 30-day window holds 100 labels; you need about 36 days just to reach 385 labels, the amount for
+# ±5 points on a proportion near 0.5.
+#
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d3_system_design/figures/half_width_vs_n.svg" alt="Ninety-five percent half-width of a proportion against number of labels on log-log axes for base rates 0.5, 0.1 and 0.01" width="100%">
+#
+# *Figure 2 (formula).* Slopes are −1/2 on log-log axes: every halving of the interval costs four times
+# the labels. Rare outcomes (p = 0.01) have narrow absolute intervals but huge relative ones.
+#
+# ### 2.4 Connection to other domains
+#
+# Designing any experimental study follows this structure. A brain-computer-interface study, for example,
+# fixes the user and task (requirements), sampling rate and channel count (estimates), the paradigm that
+# yields labels and their timing (labels), evaluation on new participants (evaluation matching deployment),
+# the real-time loop and its latency (serving), artefact detection during sessions (monitoring) and
+# recalibration between sessions (iteration). The new parts are the scale of traffic, money as a constraint, and that nobody re-runs the
+# experiment if the system breaks at 3 a.m.
+#
+# ### 2.5 Choosing batch, online or streaming
+#
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-45-02.svg" alt="Diagram 2 of notebook 45" style="max-width:100%">
+#
+# Most production systems are hybrids: heavy features precomputed in batch or streaming jobs, a light
+# model called online. Training/serving parity becomes the main risk in a hybrid:
+#
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-45-03.svg" alt="Diagram 3 of notebook 45" style="max-width:100%">
+#
+# ### 2.6 An industry example and the 45-minute plan
+#
+# A ride-hailing company's dispatch team is asked to "predict cancellations". A strong design starts by
+# asking what decision the prediction changes (re-dispatch a driver early? show a different price?),
+# because that fixes the prediction time, the acceptable latency and the cost of each error. Two teams
+# that skipped that question shipped a model with excellent AUC that nobody could act on: the prediction
+# arrived after dispatch. The time plan below protects the parts that matter.
+#
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-45-04.svg" alt="Diagram 4 of notebook 45" style="max-width:100%">
+#
+# ### 2.7 Limitations and common misconceptions
+#
+# * *"The interviewer wants the best model."* They want a system that works, a baseline, and a reason to
+#   add complexity (w4d5). Naming a model family without a target and a metric scores nothing.
+# * *"Estimates must be accurate."* They must be in the right order of magnitude with stated assumptions.
+#   The value is in noticing that 12 queries/s is not a throughput problem, or that 220 ms does not fit in
+#   200 ms.
+# * *"More detail everywhere is better."* Time is the constraint. Go deep where the interviewer pushes and
+#   where the risk is (labels, evaluation, failure modes), shallow elsewhere.
+# * *"Monitoring = accuracy dashboard."* Labels are usually late. Monitor inputs, service health and proxy
+#   signals now, and performance when labels arrive (w7d1-w7d3).
+# * A structure is not a script. Interviewers who interrupt are giving you information; adapt.
+#
+# ---
+
+# %% [markdown]
+# ## 3. Worked example: estimates for a listing-moderation model
+#
+# **Scenario (constructed).** A marketplace receives 3 million new listings a day; a model must flag rule-
+# breaking listings within 400 ms at p99 before they go live; moderators review flagged listings, and a
+# 0.1 % random sample of unflagged listings is audited to find misses. All numbers are stated assumptions
+# at the top of [`example/estimate_listing_moderation.py`](../../labs/w8d3_system_design/example/estimate_listing_moderation.py).
+
+# %%
+!python labs/w8d3_system_design/example/estimate_listing_moderation.py
+
+# %% [markdown]
+# Output (copied from a run; pure arithmetic, so identical everywhere):
+#
+# ```text
+# Quantity                               Arithmetic                                Result
+# Peak requests per second               3,000,000/86,400 x 4.0                    139 req/s
+# Prediction log storage                 per day x 600 B x 180 d x 3 copies        0.97 TB
+# Latency left for the model             400 ms - 280 ms                           120 ms (model needs 12 ms)
+# Busy cores at peak (Little's law)      139 req/s x 12 ms                         1.67
+# Model replicas                         busy / (4 cores x 0.6)                    1
+# Moderator labels per week              flagged x (7 - 1 day delay)               360,000
+# Audit labels per week (unflagged)      0.1 % audit x (7 - 1)                     18,000
+# Misses found by audits per week        audit labels x 0.4 % violation rate       72.0
+# Audits for +/-0.1 pt on the miss rate  1.96^2 p(1-p) / 0.001^2                   15,305 (~0.9 weeks)
+# ```
+#
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d3_system_design/figures/latency_budget.svg" alt="Assumed p99 per component of the listing-moderation request path; image fetch and image embedding dominate and the model takes 12 ms" width="100%">
+#
+# *Figure 3 (assumed numbers from the worked example).* The model is 12 of 292 ms.
+#
+# **Interpretation, as you would say it in the room.**
+# 1. 139 requests/s is modest; **one replica is enough by arithmetic, but you run at least two** across
+#    zones for availability. The design problem is latency, not throughput.
+# 2. The request path, not the model, uses the budget: image fetch and image embedding are 210 of 292 ms.
+#    The first optimisation is to embed images asynchronously at upload and hold the listing for a few
+#    seconds if the embedding is not ready, not to shrink the model.
+# 3. **Moderator labels are plentiful but biased**: they only exist for flagged listings, so they measure
+#    precision, not recall. Misses are measured from the random audit: 18,000 audited listings a week
+#    contain about 72 violations, and estimating the miss rate to ±0.1 point needs about 15,300 audits, so
+#    one week of audits per estimate. That number is what decides whether you can detect a regression in
+#    recall within a week.
+# 4. Logging 600 bytes per prediction for 180 days is under 1 TB; logging images would not be.
+#
+# **Reproducibility.** Deterministic arithmetic; no data, no randomness. The figures are regenerated with
+# `python labs/w8d3_system_design/figures/make_figures.py`, which also writes `figure_data.csv`.
+#
+# ---
+
+# %% [markdown]
+# ## 4. Guided lab
+#
+# The lab has two parts: a small worksheet that makes your estimates fast and correct, and the first timed
+# design.
+#
+# **Task 1 — the estimation worksheet.** Open [`lab/estimates.py`](../../labs/w8d3_system_design/lab/estimates.py). Implement the six
+# functions; each docstring states the formula and the units. Every function must raise `ValueError` for
+# inputs that make the estimate meaningless (zero or negative volumes, fractions outside (0, 1], NaN).
+#
+# *Checkpoint.*
+
+# %%
+!python wb.py check w8d3
+
+# %% [markdown]
+# The checks compare your functions with the stated formulas over 40 seeded random inputs each, plus edge
+# cases (exact capacity boundaries, a window shorter than the label delay, an over-budget latency path).
+# They do not care how you write the code.
+#
+# *Debugging guidance.* If `test_replicas_exact_boundary_and_minimum` fails, you are rounding instead of
+# taking the ceiling, or floating point turned 2.0 into 2.0000000000000004 (subtract a tiny epsilon before
+# `ceil`). If `test_latency_remaining` fails on the over-budget case, you are clipping negatives to zero:
+# an over-budget design should be visible.
+#
+# **Task 2 — use it.** Reproduce three rows of the worked example's table with your functions in a Python
+# shell, and check them against the output above.
+#
+# **Task 3 — D1 under exam conditions.** Open [`DESIGN_PROMPTS.md`](../../labs/w8d3_system_design/DESIGN_PROMPTS.md), set a 45-minute timer,
+# record yourself, and design D1 (knowledge-base search ranking). Use `estimates.py` for the numbers.
+# Keep 8 minutes for the follow-ups.
+#
+# **Task 4 — score before reading.** Open only part A of
+# `solutions/labs/w8d3_system_design/DESIGN_ANSWERS.md` and score your recording area by area
+# (Demonstrated / Partial / Not yet). Then read the worked answer and write in `progress/notes.md`: the
+# lowest-scoring area, what you would say differently, and one habit for the next rep.
+#
+# **Optional extension — D2** (delivery-time estimates) under the same conditions.
+#
+# ---
+
+# %%
+# Run the automated checks on your guided lab.
+# A fresh starter is expected to FAIL; passing means guided practice, not mastery.
+from mlcourse.checks import check
+
+check("w8d3")
+
+# %% [markdown]
+# ## 5. Independent challenge — review a flawed design
+#
+# [`challenge/README.md`](../../labs/w8d3_system_design/challenge/README.md): a colleague's design doc for routing support tickets with a
+# model. Write a review (findings with severity and concrete fixes, a verdict, a summary). It transfers the
+# structure from producing a design to critiquing one, which is what a design review at work and the
+# "what is wrong with this design?" interview variant both ask for. No solution in this directory.
+#
+#
+# ### The challenge brief
+#
+#
+# **Task.** Read `DESIGN_DOC.md`, a colleague's draft design for routing support tickets with
+# a model. Write your review in `REVIEW.md`: a findings table, a verdict and a short summary.
+# Treat it as a real review: the author will act on what you write, so every finding needs a concrete fix.
+#
+# **Conditions.** Timer on, 45 minutes. No hints, no solutions, no AI assistance. Do not open
+# `checks_challenge/`: like an interviewer's answer sheet it names what a strong review covers.
+# Use the structure of section 2 of the lesson (requirements, data and labels, evaluation, serving,
+# monitoring, iteration) as your checklist, and use your `estimates.py` for any arithmetic.
+#
+# **Acceptance criteria** (`python wb.py check w8d3 --challenge` verifies the structural ones).
+# 1. At least six findings, each with a section reference that exists in the doc (`§1`-`§9`), a severity
+#    from {blocker, major, minor} and a fix of at least eight words.
+# 2. At least two findings are blockers, and you can defend each blocker in one sentence: why would
+#    building it as written produce a wrong or unsafe system?
+# 3. The evaluation, the label and the serving arithmetic are all reviewed (the checks look for the
+#    sections, not your wording).
+# 4. A verdict other than plain approval if you found any blocker, and a summary of at most 120 words.
+# 5. Scored against the rubric in `solutions/labs/w8d3_system_design/challenge/RUBRIC.md` **after**
+#    you have finished: prioritisation and quality of fixes matter more than the number of findings.
+
+# %%
+# Run the automated checks on your independent challenge.
+# A fresh starter is expected to FAIL; passing means guided practice, not mastery.
+from mlcourse.checks import check
+
+check("w8d3", challenge=True)
+
+# %% [markdown]
+# ## 6. Progressive hints
+#
+# [Hint 1 — concept](../../labs/w8d3_system_design/hints/hint1_concept.md) · [Hint 2 — approach](../../labs/w8d3_system_design/hints/hint2_approach.md) ·
+# [Hint 3 — partial implementation](../../labs/w8d3_system_design/hints/hint3_partial.md)
+#
+#
+# Open one hint at a time, only after a real attempt.
+#
+# <details>
+# <summary><b>Hint 1 concept</b></summary>
+#
+#
+# **Estimation worksheet.** Every function is one line of arithmetic once the units are clear. Write the
+# units next to each quantity before you write code: requests per day ÷ seconds per day = requests per
+# second; requests per second × seconds of service per request = busy servers (Little's law, `L = λW`).
+#
+# **Labels available.** A prediction made `a` days ago is labelled only if `a ≥ delay`. If predictions are
+# spread evenly over the last `window` days, what fraction of those days are old enough?
+#
+# **Design review (challenge).** Before you comment on anything, ask of every input to the model: *does it
+# exist at the moment the prediction is made?* Then ask of the evaluation: *does it measure what the
+# system will face after launch?* Those two questions find the blockers in most design docs.
+#
+# </details>
+#
+# <details>
+# <summary><b>Hint 2 approach</b></summary>
+#
+#
+# **Worksheet.**
+# 1. Validate first: a helper that raises `ValueError` unless a value is finite and positive, and another for
+#    fractions in (0, 1]. Call them at the top of each function; the checks pass `nan`, 0 and negatives.
+# 2. `replicas_needed`: busy cores = qps × ms / 1000. Divide by usable cores per replica (cores × target
+#    utilisation), round **up**, and never return fewer than one. Watch floating point at exact boundaries
+#    (2.0000000001 must not become 3): subtract a tiny epsilon before `ceil`.
+# 3. `labels_for_precision`: invert the half-width of a normal-approximation interval,
+#    `h = z·sqrt(p(1-p)/n)`, for `n`, then round up.
+# 4. `latency_remaining_ms` may return a negative number; that is the useful answer when a design is over
+#    budget.
+#
+# **Design review.** Walk the doc in the order of the lesson's structure (requirements → data and labels →
+# evaluation → serving → monitoring → iteration). For each section write one line "what would go wrong in
+# production if built exactly like this?" Then rank: anything that makes the reported metric meaningless is
+# a blocker; anything that breaks the service or the users at launch is major.
+#
+# </details>
+#
+# <details>
+# <summary><b>Hint 3 partial</b></summary>
+#
+#
+# ```python
+# import math
+#
+# def _positive(**values):
+#     for name, v in values.items():
+#         if not (isinstance(v, (int, float)) and math.isfinite(v) and v > 0):
+#             raise ValueError(f"{name} must be a finite number > 0, got {v!r}")
+#
+# def peak_qps(requests_per_day, peak_to_mean):
+#     _positive(requests_per_day=requests_per_day, peak_to_mean=peak_to_mean)
+#     if peak_to_mean < 1:
+#         raise ValueError("peak_to_mean must be >= 1")
+#     return requests_per_day / 86_400 * peak_to_mean
+#
+# def replicas_needed(peak_qps_value, service_ms, cores_per_replica, target_utilisation):
+#     ...  # validate
+#     busy = peak_qps_value * service_ms / 1000
+#     return max(1, math.ceil(busy / (cores_per_replica * target_utilisation) - 1e-12))
+# ```
+#
+# The remaining three follow the same pattern. `labels_available` is
+# `predictions_per_day * label_rate * max(0, window_days - label_delay_days)`.
+#
+# **Design review, the two blockers in outline.** §4 lists two fields that are written *after* the ticket is
+# routed. §5 splits tickets at random although the system will route *future* tickets and the same customers
+# and outages produce near-duplicate tickets. Write the fix for each as a protocol, not as "be careful".
+#
+# </details>
+
+# %% [markdown]
+# ## 7. Assessment
+#
+# `assessment.md` (section 7 of this notebook): seven reasoning questions (estimation, label delay, batch vs online,
+# the quantile design choice, parity, launch criteria, common failure patterns), the rubric, and the
+# interview rep, which today is the pair of timed designs.
+#
+#
+# ### Assessment questions
+#
+#
+# Answer in writing (or aloud, recorded) before opening
+# `solutions/labs/w8d3_system_design/assessment_answers.md`.
+#
+# **Q1 (estimation).** A fraud model scores 40 million card transactions a day with a 6x peak. Each
+# prediction takes 8 ms on one core. Replicas have 4 cores and you run them at 50 % utilisation. How many
+# replicas do you need at peak? Show the units at each step.
+#
+# **Q2 (labels).** A churn model predicts monthly; churn is known 60 days after the prediction; you keep a
+# 90-day evaluation window. What fraction of the window's predictions have labels today? What happens to
+# your monitoring if the label delay grows to 100 days?
+#
+# **Q3 (batch vs online).** For each, choose batch, online (request-time) or streaming, and give one reason:
+# (a) weekly product recommendations e-mailed on Monday; (b) a fraud decision at card authorisation;
+# (c) a machine-health score that must react to vibration within a minute; (d) a demand forecast that sets
+# tomorrow's staffing.
+#
+# **Q4 (design choice — explain).** In D2 you quote the 0.75 quantile as the upper bound rather than the
+# mean plus a margin. Explain why, using the cost ratio, and state the assumption that makes 0.75 optimal.
+#
+# **Q5 (training/serving parity).** A feature "orders in the store in the last 15 minutes" is computed in SQL
+# for training and in a streaming job for serving. List three ways they can disagree and one design that
+# prevents it.
+#
+# **Q6 (launch criteria).** Why should a launch criterion include at least one metric the model was not
+# trained on? Give an example from D1 or D2.
+#
+# **Q7 (failure patterns).** Name four ways candidates commonly lose a design interview in the first ten
+# minutes, and what to do instead.
+#
+# #### Interview rep (the session's main event)
+#
+# The two timed designs in [`DESIGN_PROMPTS.md`](../../labs/w8d3_system_design/DESIGN_PROMPTS.md), 45 minutes each, recorded, self-scored
+# against part A of `solutions/labs/w8d3_system_design/DESIGN_ANSWERS.md` before you read part B.
+# Log in `progress/notes.md`: area scores, the follow-up you handled worst, and one structural habit to
+# change on the next attempt.
+#
+# #### Rubric for Q1-Q7 (open-ended reasoning)
+#
+# | Score | Meaning |
+# |---|---|
+# | Demonstrated | Correct, with units or mechanism; states the assumption that would change the answer |
+# | Partial | Right direction but missing a step, a unit, or the key assumption |
+# | Not yet | Incorrect, or a slogan without mechanism |
+
+# %% [markdown]
+# ## 8. Reflection and review
+#
+# **You should now be able to, without notes:**
+# - open a design round with requirements that change the design, and say your plan in one sentence;
+# - produce peak rate, capacity, storage, latency headroom and label-volume estimates with units in under
+#   five minutes;
+# - choose batch, online or streaming with a reason, and describe how training/serving parity is kept;
+# - state launch criteria and a monitoring plan that respects label delay;
+# - review someone else's design and separate blockers from improvements.
+#
+# **Reflection prompt (5 minutes, `progress/notes.md`).** Listen to the first five minutes of your D1
+# recording. Did you ask a question whose answer changed your design? If not, which question should you
+# have asked?
+#
+# **Retrieval question for review day.** *A model makes 2 million predictions a day, 10 % are ever labelled,
+# labels arrive after 21 days, and you need ±2 points on a precision near 0.8. How many days of predictions
+# must your evaluation window cover?* (Answer from memory, then check with `estimates.py`.)
+#
+# **Next.** [w8d4 — Coding and SQL interviews, timed](46_coding_interviews.ipynb): the other half
+# of most loops, practised with the same honesty about timing and self-scoring.
+#
+# ---
+
+# %% [markdown]
+# ## Verification record
+#
+# Executed on 2026-11-22, Python 3.13.18, matplotlib 3.11.2 (figures only); no other dependencies.
+#
+# | What | Command | Outcome |
+# |---|---|---|
+# | Worked example | `python labs/w8d3_system_design/example/estimate_listing_moderation.py` | Output above, copied from the run |
+# | Figures | `python labs/w8d3_system_design/figures/make_figures.py` | 3 SVGs + `figure_data.csv`; PNG copies viewed |
+# | Lab checks vs reference | `python tools/verify_checks.py labs/w8d3_system_design --part lab` | Reference passes 25 checks; 7 mutants rejected |
+# | Challenge checks vs reference | `... --part challenge` | Reference review passes 8 checks; 5 mutants rejected |
+# | Starters fail | `python -m pytest labs/w8d3_system_design/checks -q` | 25 failed (stubs raise `NotImplementedError`) |
+# | Worked-answer numbers | reference `estimates.py` on the prompt assumptions | Every table number in `DESIGN_ANSWERS.md` recomputed |
+#
+# Not verified: the time budget (not trialled by a learner); the industry example in 2.6 is an
+# illustrative composite, not a cited incident; the newsvendor quantile result in 2.3 is standard decision
+# theory stated from memory (it follows from setting the derivative of expected linear cost to zero).
+
+# %% [markdown]
+# ## Record your progress
+#
+# Tick only what is true. Passing the supplied checks is *guided practice*; mark *independent* only for work done without hints or solutions.
+
+# %%
+from mlcourse.progress import mark, note
+
+# mark("w8d3", "reading")
+# mark("w8d3", "guided")
+# mark("w8d3", "independent")
+# note("w8d3", "what tripped me up today")
+

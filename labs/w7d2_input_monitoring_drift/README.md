@@ -1,6 +1,6 @@
 # 38 · Input monitoring and drift statistics — lab files
 
-**The lesson is notebook [`38_input_monitoring_drift`](../../notebooks/38_input_monitoring_drift.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/38_input_monitoring_drift.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/38_input_monitoring_drift.ipynb)).
+**The lesson is notebook [`38_input_monitoring_drift`](../../advanced/notebooks/38_input_monitoring_drift.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/38_input_monitoring_drift.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/38_input_monitoring_drift.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

@@ -1,6 +1,6 @@
 # 07 · SQL I: grain, joins, aggregation and NULL semantics — lab files
 
-**The lesson is notebook [`07_sql_joins_grain`](../../notebooks/07_sql_joins_grain.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/07_sql_joins_grain.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/07_sql_joins_grain.ipynb)).
+**The lesson is notebook [`07_sql_joins_grain`](../../advanced/notebooks/07_sql_joins_grain.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/07_sql_joins_grain.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/07_sql_joins_grain.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

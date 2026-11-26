@@ -9,15 +9,15 @@ def repo_root(start: Path | None = None) -> Path:
     """The first directory at or above `start` (default: cwd) that holds src/mlcourse."""
     start = (start or Path.cwd()).resolve()
     for candidate in [start, *start.parents]:
-        if (candidate / "src" / "mlcourse").is_dir() and (candidate / "course.json").is_file():
+        if (candidate / "src" / "mlcourse").is_dir() :
             return candidate
     raise FileNotFoundError("not inside the course repository (no src/mlcourse above the current directory)")
 
 
 def units(root: Path | None = None) -> list[dict]:
-    """Every session in course.json, in schedule order."""
+    """Every advanced-track session (advanced/course.json), in schedule order."""
     root = root or repo_root()
-    return json.loads((root / "course.json").read_text())["units"]
+    return json.loads((root / "advanced" / "course.json").read_text())["units"]
 
 
 def find_unit(token: str, root: Path | None = None) -> dict:

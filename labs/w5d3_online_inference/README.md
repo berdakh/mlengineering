@@ -1,6 +1,6 @@
 # 27 · Online inference on streams: state, warm-up and parity — lab files
 
-**The lesson is notebook [`27_online_inference`](../../notebooks/27_online_inference.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/27_online_inference.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/27_online_inference.ipynb)).
+**The lesson is notebook [`27_online_inference`](../../advanced/notebooks/27_online_inference.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/27_online_inference.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/27_online_inference.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

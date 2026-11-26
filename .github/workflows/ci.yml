@@ -30,7 +30,7 @@ jobs:
       - name: Schedule is in sync with tools/build_course.py
         run: |
           python tools/build_course.py
-          git diff --exit-code course.json docs/guides/schedule.md
+          git diff --exit-code advanced/course.json docs/advanced/schedule.md
       - name: Notebooks are in sync with their sources
         run: python tools/nbbuild.py --check
       - name: Site notebook pages are in sync

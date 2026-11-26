@@ -23,7 +23,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-COURSE = ROOT / "course.json"
+COURSE = ROOT / "advanced" / "course.json"
 PROGRESS = ROOT / "progress" / "progress.json"
 FLAGS = ("reading", "guided", "independent", "review")
 

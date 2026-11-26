@@ -1,6 +1,6 @@
 # 37 · Structured logging and service metrics — lab files
 
-**The lesson is notebook [`37_service_logging_metrics`](../../notebooks/37_service_logging_metrics.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/37_service_logging_metrics.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/37_service_logging_metrics.ipynb)).
+**The lesson is notebook [`37_service_logging_metrics`](../../advanced/notebooks/37_service_logging_metrics.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/advanced/notebooks/37_service_logging_metrics.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/advanced/notebooks/37_service_logging_metrics.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 
