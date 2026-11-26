@@ -29,10 +29,10 @@ SRC = {
     "demo": "solutions/labs/w7d6_project_milestone_4/example_demo/results.json",
     "reproduction": "solutions/labs/w8d1_project_completion/real_audit/REPRODUCTION_LOG.json",
     "project": "docs/guides/project.md",
-    "drift_lesson": "docs/notebooks/38_input_monitoring_drift.md",
-    "degradation_lesson": "docs/notebooks/39_drift_vs_degradation.md",
-    "updates_lesson": "docs/notebooks/40_model_updates_rollback.md",
-    "demo_lesson": "docs/notebooks/42_project_milestone_4.md",
+    "drift_lesson": "docs/advanced/notebooks/38_input_monitoring_drift.md",
+    "degradation_lesson": "docs/advanced/notebooks/39_drift_vs_degradation.md",
+    "updates_lesson": "docs/advanced/notebooks/40_model_updates_rollback.md",
+    "demo_lesson": "docs/advanced/notebooks/42_project_milestone_4.md",
 }
 
 

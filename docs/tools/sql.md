@@ -246,7 +246,75 @@ FROM (SELECT customer_id, COUNT(*) AS total FROM orders GROUP BY customer_id)
 WHERE total >= 5;
 ```
 
-A subquery in parentheses can stand where a table stands. Week 3 adds `WITH` (CTEs) and window functions.
+A subquery in parentheses can stand where a table stands.
+
+### CTEs: naming a step with WITH
+
+A **CTE** (common table expression) is a subquery with a name, written first. It reads top to bottom like a
+recipe, and you can check each step on its own by selecting from it.
+
+```sql
+WITH monthly AS (
+  SELECT strftime('%Y-%m', order_date) AS month, COUNT(*) AS n_orders
+  FROM orders
+  GROUP BY month
+)
+SELECT month, n_orders FROM monthly ORDER BY n_orders DESC LIMIT 3;
+```
+
+In the shop this gives 2025-12 (615 orders), 2025-11 (558) and 2025-10 (443). Several CTEs are separated by
+commas (`WITH a AS (...), b AS (SELECT ... FROM a) SELECT ...`), and a later one may use an earlier one.
+
+### Window functions: a value per row, computed over a group
+
+`GROUP BY` collapses each group to one row. A **window function** keeps every row and adds a column computed
+over related rows, its *window*. `OVER (PARTITION BY ... ORDER BY ...)` says which rows (the partition) and in
+what order.
+
+```sql
+SELECT customer_id, order_date,
+       ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date) AS nth_order,
+       LAG(order_date) OVER (PARTITION BY customer_id ORDER BY order_date) AS previous_order
+FROM orders
+WHERE customer_id = 1;
+```
+
+| customer_id | order_date | nth_order | previous_order |
+|---|---|---|---|
+| 1 | 2025-05-20 | 1 | NULL |
+| 1 | 2025-06-20 | 2 | 2025-05-20 |
+| 1 | 2025-07-01 | 3 | 2025-06-20 |
+| 1 | 2025-08-09 | 4 | 2025-07-01 |
+| 1 | 2025-08-29 | 5 | 2025-08-09 |
+
+The functions you will use most:
+
+| Function | Gives | Typical use |
+|---|---|---|
+| `ROW_NUMBER()` | 1, 2, 3 ... within the partition, no ties | first or latest row per customer |
+| `RANK()` / `DENSE_RANK()` | rank with ties (`RANK` skips numbers after a tie) | top 3 products per category |
+| `LAG(x)` / `LEAD(x)` | `x` from the previous / next row | days since the previous order |
+| `SUM(x) OVER (ORDER BY ...)` | running total | cumulative revenue by month |
+| `AVG(x) OVER (... ROWS BETWEEN 2 PRECEDING AND CURRENT ROW)` | moving average | 3-month smoothed trend |
+
+**Latest row per group**, the pattern you will write most often: number the rows in a CTE, then keep row 1.
+Window functions cannot go in `WHERE` (they are computed after it), which is why the CTE is needed.
+
+```sql
+WITH ranked AS (
+  SELECT customer_id, order_id, order_date,
+         ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS rn
+  FROM orders
+)
+SELECT customer_id, order_id, order_date FROM ranked WHERE rn = 1;
+```
+
+This returns 1,086 rows, one for each customer who has ordered, which is a quick check that it worked:
+`SELECT COUNT(DISTINCT customer_id) FROM orders` also gives 1,086.
+
+For machine learning, window functions are how you build "as of" features (the number of orders before each
+order, days since the previous one) without looking into the future: the `ORDER BY` inside `OVER` plus a frame
+that ends at the current row only sees the past.
 
 ## Common errors and how to read them
 
@@ -295,6 +363,11 @@ strftime('%Y-%m', d)   date(d, '+7 days')   julianday(d2) - julianday(d1)
 
 -- NULL and numbers
 COALESCE(x, 0)   ROUND(x, 2)   x * 1.0 / y
+
+-- steps and windows
+WITH step1 AS (SELECT ...), step2 AS (SELECT ... FROM step1) SELECT ... FROM step2;
+ROW_NUMBER() OVER (PARTITION BY k ORDER BY d DESC)        -- then WHERE rn = 1 in an outer query
+LAG(x) OVER (PARTITION BY k ORDER BY d)   SUM(x) OVER (ORDER BY d)   RANK() OVER (ORDER BY x DESC)
 ```
 
 Query order to remember: **FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT**.
@@ -305,7 +378,7 @@ Before you trust a number: state the grain, state the definition, check the row 
 
 * Course notebooks: [05 · Databases and SELECT](../notebooks/05_sql_select.html),
   [06 · Aggregation](../notebooks/06_sql_aggregation.html), [07 · JOINs](../notebooks/07_sql_joins.html),
-  [08 · Lab](../notebooks/08_lab_sql_business_questions.html); then Week 3 for CTEs and window functions.
+  [08 · Lab](../notebooks/08_lab_sql_business_questions.html); [09 · Subqueries, CTEs and window functions](../notebooks/09_sql_windows_ctes.html).
 * SQLite documentation: <https://www.sqlite.org/lang.html> (the SQL language) and
   <https://www.sqlite.org/lang_datefunc.html> (date functions).
 * DuckDB documentation: <https://duckdb.org/docs/>.
