@@ -183,6 +183,8 @@ def build_notebook(src: Path, student: bool = True) -> dict:
             cell["source"] = _as_source_lines(strip_solutions(body, student))
     if not cells:
         raise ValueError(f"{src.name} produced no cells - is it percent-formatted?")
+    for i, cell in enumerate(cells):
+        cell["id"] = f"c{i:03d}"  # stable ids: required by nbformat 4.5+, and keep diffs small
     return {
         "cells": cells,
         "metadata": {"kernelspec": KERNELSPEC, "language_info": LANGUAGE_INFO},

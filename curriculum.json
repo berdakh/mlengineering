@@ -1,0 +1,97 @@
+{
+  "title": "Applied ML Engineering",
+  "audience": "Students who have taken an introductory machine-learning course (for example Learning from Data) and can program in basic Python, but have no industry tool experience: no SQL, Git, testing, APIs, Docker or cloud.",
+  "weeks": [
+    {"week": 1, "title": "Your engineering workbench", "goal": "work confidently in Colab, write clean Python, and use the terminal and Git"},
+    {"week": 2, "title": "SQL from zero", "goal": "answer business questions from a relational database with SELECT, GROUP BY and JOIN"},
+    {"week": 3, "title": "Advanced SQL and pandas", "goal": "use window functions and CTEs, do the same work in pandas, and clean messy data with quality checks"},
+    {"week": 4, "title": "From data to features", "goal": "explore a dataset with purpose and turn it into features with scikit-learn pipelines"},
+    {"week": 5, "title": "From theory to practice: framing, baselines, metrics", "goal": "frame a business problem as an ML task, beat honest baselines, and pick metrics and thresholds from costs"},
+    {"week": 6, "title": "Validation and leakage", "goal": "validate the way the model will be used and find leakage before it fools you"},
+    {"week": 7, "title": "Models, uncertainty and error analysis", "goal": "compare models fairly with uncertainty, analyse errors, and start the project"},
+    {"week": 8, "title": "Code you can trust", "goal": "turn notebook code into a tested, configurable Python package"},
+    {"week": 9, "title": "Serving models", "goal": "save models safely and serve predictions through a tested FastAPI service"},
+    {"week": 10, "title": "Containers and CI", "goal": "set up VS Code locally, run the service in Docker, and test every push with GitHub Actions"},
+    {"week": 11, "title": "Deploy and operate", "goal": "deploy safely, log and monitor a model, and tell input drift from real degradation"},
+    {"week": 12, "title": "Capstone and career", "goal": "finish and present the project, and practise for interviews"}
+  ],
+  "notebooks": [
+    {"notebook": "01_welcome_and_colab", "week": 1, "kind": "lesson", "title": "Welcome, Colab, and how this course works", "minutes": 75},
+    {"notebook": "02_python_for_engineers", "week": 1, "kind": "lesson", "title": "Python for engineers: functions, errors, files", "minutes": 100},
+    {"notebook": "03_terminal_and_git", "week": 1, "kind": "lesson", "title": "The terminal and Git", "minutes": 100},
+    {"notebook": "04_lab_data_utility", "week": 1, "kind": "lab", "title": "Lab: a small, tested data utility", "minutes": 90},
+
+    {"notebook": "05_sql_select", "week": 2, "kind": "lesson", "title": "Databases and SELECT", "minutes": 90},
+    {"notebook": "06_sql_aggregation", "week": 2, "kind": "lesson", "title": "Aggregation: GROUP BY, HAVING, CASE", "minutes": 90},
+    {"notebook": "07_sql_joins", "week": 2, "kind": "lesson", "title": "JOINs and the grain of a table", "minutes": 100},
+    {"notebook": "08_lab_sql_business_questions", "week": 2, "kind": "lab", "title": "Lab: business questions in SQL", "minutes": 90},
+
+    {"notebook": "09_sql_windows_ctes", "week": 3, "kind": "lesson", "title": "Subqueries, CTEs and window functions", "minutes": 100},
+    {"notebook": "10_pandas_essentials", "week": 3, "kind": "lesson", "title": "pandas essentials, side by side with SQL", "minutes": 100},
+    {"notebook": "11_data_cleaning_quality", "week": 3, "kind": "lesson", "title": "Data cleaning and quality checks", "minutes": 100},
+    {"notebook": "12_lab_clean_and_validate", "week": 3, "kind": "lab", "title": "Lab: clean a messy export and report its quality", "minutes": 90},
+
+    {"notebook": "13_eda_with_purpose", "week": 4, "kind": "lesson", "title": "Exploratory analysis with a purpose", "minutes": 90},
+    {"notebook": "14_feature_engineering", "week": 4, "kind": "lesson", "title": "Feature engineering, including time windows", "minutes": 100},
+    {"notebook": "15_sklearn_pipelines", "week": 4, "kind": "lesson", "title": "scikit-learn pipelines", "minutes": 90},
+    {"notebook": "16_lab_feature_pipeline", "week": 4, "kind": "lab", "title": "Lab: a feature pipeline for churn", "minutes": 90},
+
+    {"notebook": "17_theory_to_practice_framing", "week": 5, "kind": "lesson", "title": "From Learning from Data to real problems: framing", "minutes": 90},
+    {"notebook": "18_baselines_first_models", "week": 5, "kind": "lesson", "title": "Baselines and first models", "minutes": 90},
+    {"notebook": "19_metrics_for_decisions", "week": 5, "kind": "lesson", "title": "Metrics and thresholds that match decisions", "minutes": 100},
+    {"notebook": "20_lab_churn_model", "week": 5, "kind": "lab", "title": "Lab: a churn model you can defend", "minutes": 90},
+
+    {"notebook": "21_validation_done_right", "week": 6, "kind": "lesson", "title": "Validation done right: grouped and time-based splits", "minutes": 100},
+    {"notebook": "22_leakage", "week": 6, "kind": "lesson", "title": "Leakage: how good models lie", "minutes": 90},
+    {"notebook": "23_hyperparameter_search", "week": 6, "kind": "lesson", "title": "Hyperparameter search without fooling yourself", "minutes": 90},
+    {"notebook": "24_lab_find_the_leaks", "week": 6, "kind": "lab", "title": "Lab: find and fix the leaks", "minutes": 90},
+
+    {"notebook": "25_trees_and_ensembles", "week": 7, "kind": "lesson", "title": "Trees and ensembles in practice", "minutes": 90},
+    {"notebook": "26_uncertainty_comparisons", "week": 7, "kind": "lesson", "title": "Uncertainty and fair model comparisons", "minutes": 90},
+    {"notebook": "27_error_analysis_model_choice", "week": 7, "kind": "lesson", "title": "Error analysis and choosing a model", "minutes": 90},
+    {"notebook": "28_project_m1_fault_detection", "week": 7, "kind": "lab", "title": "Project milestone 1: fault detection on sensor data", "minutes": 120},
+
+    {"notebook": "29_notebook_to_package", "week": 8, "kind": "lesson", "title": "From notebook to Python package", "minutes": 100},
+    {"notebook": "30_testing_with_pytest", "week": 8, "kind": "lesson", "title": "Testing with pytest", "minutes": 100},
+    {"notebook": "31_config_logging_reproducibility", "week": 8, "kind": "lesson", "title": "Configuration, logging and reproducibility", "minutes": 90},
+    {"notebook": "32_lab_package_and_test", "week": 8, "kind": "lab", "title": "Lab: package and test the churn pipeline", "minutes": 100},
+
+    {"notebook": "33_saving_models_batch", "week": 9, "kind": "lesson", "title": "Saving models and batch prediction", "minutes": 90},
+    {"notebook": "34_apis_and_fastapi", "week": 9, "kind": "lesson", "title": "APIs and FastAPI", "minutes": 100},
+    {"notebook": "35_testing_apis_bad_input", "week": 9, "kind": "lesson", "title": "Testing APIs and handling bad input", "minutes": 90},
+    {"notebook": "36_project_m2_prediction_api", "week": 9, "kind": "lab", "title": "Project milestone 2: a prediction API", "minutes": 120},
+
+    {"notebook": "37_vscode_local_setup", "week": 10, "kind": "lesson", "title": "VS Code and a local setup", "minutes": 90},
+    {"notebook": "38_docker_from_zero", "week": 10, "kind": "lesson", "title": "Docker from zero", "minutes": 100},
+    {"notebook": "39_ci_github_actions", "week": 10, "kind": "lesson", "title": "Continuous integration with GitHub Actions", "minutes": 90},
+    {"notebook": "40_lab_container_and_ci", "week": 10, "kind": "lab", "title": "Lab: containerise the API and add CI", "minutes": 100},
+
+    {"notebook": "41_cloud_deployment_basics", "week": 11, "kind": "lesson", "title": "Deploying to the cloud safely", "minutes": 90},
+    {"notebook": "42_logging_monitoring", "week": 11, "kind": "lesson", "title": "Logging and monitoring a model service", "minutes": 90},
+    {"notebook": "43_drift_and_updates", "week": 11, "kind": "lesson", "title": "Drift, degradation and model updates", "minutes": 100},
+    {"notebook": "44_project_m3_monitoring", "week": 11, "kind": "lab", "title": "Project milestone 3: monitoring demo", "minutes": 120},
+
+    {"notebook": "45_capstone_build", "week": 12, "kind": "lesson", "title": "Capstone: finish the project end to end", "minutes": 120},
+    {"notebook": "46_communicating_results", "week": 12, "kind": "lesson", "title": "Communicating results: README, report, model card", "minutes": 90},
+    {"notebook": "47_interview_preparation", "week": 12, "kind": "lesson", "title": "Interview preparation: SQL, Python, ML, system design", "minutes": 120},
+    {"notebook": "48_final_assessment", "week": 12, "kind": "lab", "title": "Final assessment", "minutes": 120}
+  ],
+  "tool_guides": [
+    {"guide": "colab", "title": "Google Colab", "week": 1},
+    {"guide": "python-for-engineers", "title": "Python for engineers", "week": 1},
+    {"guide": "terminal", "title": "The terminal (bash)", "week": 1},
+    {"guide": "git-github", "title": "Git and GitHub", "week": 1},
+    {"guide": "sql", "title": "SQL (SQLite)", "week": 2},
+    {"guide": "pandas", "title": "pandas", "week": 3},
+    {"guide": "matplotlib", "title": "Plotting with matplotlib", "week": 4},
+    {"guide": "scikit-learn", "title": "scikit-learn", "week": 4},
+    {"guide": "packaging", "title": "Python packaging and environments", "week": 8},
+    {"guide": "pytest", "title": "pytest", "week": 8},
+    {"guide": "fastapi", "title": "FastAPI and pydantic", "week": 9},
+    {"guide": "vscode", "title": "VS Code", "week": 10},
+    {"guide": "docker", "title": "Docker", "week": 10},
+    {"guide": "github-actions", "title": "GitHub Actions", "week": 10},
+    {"guide": "cloud-aws", "title": "Cloud basics (AWS)", "week": 11},
+    {"guide": "monitoring", "title": "Logging and monitoring", "week": 11}
+  ]
+}

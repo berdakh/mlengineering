@@ -52,7 +52,7 @@ def test_mlcourse_finds_sessions_and_check_dirs():
 
     assert repo_root(ROOT / "labs") == ROOT
     assert find_unit("w3d4")["notebook"] == "16_point_vs_event_evaluation"
-    assert find_unit("16")["id"] == "w3d4_point_vs_event_evaluation"
+    assert find_unit("16")["id"] == "16_lab_feature_pipeline"  # main course wins for a bare number
     assert [d.name for d in check_dirs("w3d4", root=ROOT)] == ["checks"]
     assert [d.name for d in check_dirs("w3d4", challenge=True, root=ROOT)] == ["checks_challenge"]
     sections = [d.parent.name for d in check_dirs("diagnostic", root=ROOT)]
