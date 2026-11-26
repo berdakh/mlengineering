@@ -165,7 +165,9 @@ def _check_config(model, cls_name: str):
     if "n_jobs" in m.get_params():
         m.set_params(n_jobs=-1)
     Xtr, ytr, Xva, yva, _, _ = _fresh_deliveries()
-    m.fit(Xtr, ytr)
+    from threadpoolctl import threadpool_limits
+    with threadpool_limits(1):          # small data: one thread is much faster than OpenMP start-up costs
+        m.fit(Xtr, ytr)
     tr, va = _auc(ytr, m.predict_proba(Xtr)[:, 1]), _auc(yva, m.predict_proba(Xva)[:, 1])
     return m, tr, va
 
@@ -751,3 +753,272 @@ register_quiz("w07.27_q5", "b",
                "c": "Overlap is not the criterion; the paired interval of B's difference contains 0, which makes B "
                     "acceptable.",
                "d": "Part of the interval being negative is expected; only an interval entirely below 0 excludes B."})
+
+
+# ============================================================================= 28: project milestone 1 (SKAB)
+
+_SKAB_RAW = ["Accelerometer1RMS", "Accelerometer2RMS", "Current", "Pressure", "Temperature", "Thermocouple",
+             "Voltage", "Volume Flow RateRMS"]
+_SENSORS = ["accel1", "accel2", "current", "pressure", "temperature", "thermocouple", "voltage", "flow_rate"]
+
+
+def _synthetic_runs(n_exp=6, seed=0, n_rows=(160, 260)):
+    """Synthetic sensor experiments shaped like SKAB: one anomalous segment each, sensor levels differ per run."""
+    rng = np.random.default_rng(seed)
+    parts = []
+    for e in range(n_exp):
+        n = int(rng.integers(*n_rows))
+        start = int(rng.integers(110, n - 40))
+        stop = int(rng.integers(start + 10, n - 5))
+        anomaly = np.zeros(n, int)
+        anomaly[start:stop] = 1
+        level = rng.normal(0, 5, len(_SENSORS))
+        X = level + rng.normal(0, 1, (n, len(_SENSORS)))
+        X[:, 7] += anomaly * rng.uniform(1.5, 4)          # flow rate reacts to the fault
+        X[:, 1] = np.round(X[:, 1])                        # a quantised sensor
+        df = pd.DataFrame(X, columns=_SENSORS)
+        df.insert(0, "t", np.arange(n))
+        df.insert(0, "experiment", f"fam{e % 2}/{e}")
+        df["anomaly"] = anomaly
+        df["changepoint"] = 0
+        df.loc[[start, stop], "changepoint"] = 1
+        parts.append(df)
+    return pd.concat(parts, ignore_index=True)
+
+
+@exercise("w07.p_load_experiment", hint="pd.read_csv(path, sep=';'), rename with SKAB_COLUMNS, parse datetime, "
+                                        "cast anomaly/changepoint to int, insert experiment and t at the front.")
+def _(fn):
+    import tempfile
+    from pathlib import Path
+    want_cols = ["experiment", "t", "datetime", *_SENSORS, "anomaly", "changepoint"]
+    with tempfile.TemporaryDirectory() as tmp:
+        for i, n in enumerate([5, 12]):
+            rng = np.random.default_rng(i)
+            raw = pd.DataFrame(rng.normal(size=(n, 8)).round(5), columns=_SKAB_RAW)
+            raw.insert(0, "datetime", pd.date_range("2020-03-09 10:14:33", periods=n, freq="s").astype(str))
+            raw["anomaly"] = (np.arange(n) >= n // 2).astype(float)
+            raw["changepoint"] = (np.arange(n) == n // 2).astype(float)
+            path = Path(tmp) / f"{i}.csv"
+            raw.to_csv(path, sep=";", index=False)
+            exp = f"valve{i + 1}/{i}"
+            got = fn(path, exp)
+            assert isinstance(got, pd.DataFrame), "return a DataFrame"
+            assert list(got.columns) == want_cols, f"the columns should be, in order: {want_cols}; got {list(got.columns)}"
+            assert len(got) == n, f"expected {n} rows, got {len(got)}"
+            assert (got["experiment"] == exp).all(), "every row should carry the experiment id passed in"
+            assert list(got["t"]) == list(range(n)), "t should be 0, 1, 2, ... (the row number in the file)"
+            assert pd.api.types.is_datetime64_any_dtype(got["datetime"]), "parse `datetime` into a pandas datetime"
+            for c in ["anomaly", "changepoint"]:
+                assert pd.api.types.is_integer_dtype(got[c]), f"`{c}` should be an integer column (0/1)"
+            assert np.allclose(got["flow_rate"], raw["Volume Flow RateRMS"]), "sensor values changed while loading"
+            assert np.allclose(got[_SENSORS].to_numpy(), raw[_SKAB_RAW].to_numpy()), "sensors were renamed in the wrong order"
+
+
+@exercise("w07.p_split_violations", hint="For each group: does it intersect dev AND intersect test? Return those "
+                                         "groups, sorted.")
+def _(fn):
+    groups = [["anomaly-free/anomaly-free", "other/5"], ["other/10", "other/11"], ["other/12", "other/13"],
+              ["other/2", "other/3", "other/4"]]
+    ok = {"dev": ["other/5", "other/10", "other/11", "other/12", "other/13", "other/2", "other/3", "other/4"],
+          "test": ["other/1", "valve1/8"]}
+    assert fn(ok, groups) == [], "this split keeps every group together (anomaly-free is in neither list)"
+    bad = {"dev": ["other/5", "other/10", "other/12", "other/13", "other/2", "other/3"],
+           "test": ["other/4", "other/11", "other/1"]}
+    got = fn(bad, groups)
+    assert got == [["other/10", "other/11"], ["other/2", "other/3", "other/4"]], (
+        f"expected exactly the two broken groups, in the given order, each sorted; got {got}")
+    assert fn({"dev": [], "test": ["other/4"]}, groups) == [], "a group with members only in test is not a violation"
+    assert fn({"dev": ["b"], "test": ["a"]}, [["b", "a"]]) == [["a", "b"]], "return each violated group sorted"
+
+
+def _ref_burn(df, columns, burn_in):
+    calib = df[df["t"] < burn_in].groupby("experiment")[columns]
+    mean = calib.mean().reindex(df["experiment"]).to_numpy()
+    std = calib.std().reindex(df["experiment"]).to_numpy()
+    with np.errstate(divide="ignore", invalid="ignore"):
+        z = np.abs(df[columns].to_numpy(float) - mean) / std
+    z[~np.isfinite(z)] = 0.0
+    return pd.DataFrame(z, index=df.index, columns=columns)
+
+
+@exercise("w07.p_burn_in_abs_z", hint="Per experiment, mean and std of the rows with t < burn_in; "
+                                      "|x - mean| / std; 0 where the std is 0.")
+def _(fn):
+    df = _synthetic_runs(5, seed=3)
+    df["constant"] = 7.0
+    df.index = df.index * 3 + 10                           # a non-default index must be kept
+    cols = ["flow_rate", "accel2", "constant", "pressure"]
+    before = df.copy()
+    for b in (100, 40):
+        got = fn(df, cols, burn_in=b) if b != 100 else fn(df, cols)
+        assert df.equals(before), "burn_in_abs_z changed its input"
+        assert isinstance(got, pd.DataFrame), "return a DataFrame"
+        assert list(got.columns) == cols, f"one column per requested sensor, named as given: {cols}"
+        assert got.index.equals(df.index), "keep the same index as the input"
+        want = _ref_burn(df, cols, b)
+        assert np.allclose(got["constant"], 0), "a sensor that is constant during burn-in should get |z| = 0"
+        ok = np.isclose(got.to_numpy(float), want.to_numpy(), atol=1e-9)
+        if not ok.all():
+            r, c = np.argwhere(~ok)[0]
+            raise AssertionError(f"with burn_in={b}, |z| of '{cols[c]}' is wrong (first at experiment "
+                                 f"{df['experiment'].iloc[r]}, t={df['t'].iloc[r]}): use only rows with t < burn_in of "
+                                 "the SAME experiment, and the pandas default std")
+    later = df.copy()
+    later.loc[later["t"] >= 150, "flow_rate"] += 1000.0
+    z1, z2 = fn(df, ["flow_rate"]), fn(later, ["flow_rate"])
+    early = df["t"] < 150
+    assert np.allclose(z1.loc[early, "flow_rate"], z2.loc[early, "flow_rate"]), \
+        "changing later rows changed earlier scores: the calibration must use only the burn-in rows"
+
+
+@exercise("w07.p_pr_auc_usable", hint="keep = (split == split) & (t >= burn_in); average_precision_score on the "
+                                      "kept rows.")
+def _(fn):
+    from sklearn.metrics import average_precision_score
+    df = _synthetic_runs(6, seed=4)
+    rng = np.random.default_rng(1)
+    df["split"] = np.where(df["experiment"].str.endswith(("/4", "/5")), "test", "dev")
+    df["score"] = df["anomaly"] * 0.8 + rng.normal(0, 0.6, len(df))
+    df.loc[df["t"] < 100, "score"] = 5.0                   # burn-in rows look alarming: they must be excluded
+    for split, b in [("dev", 100), ("test", 100), ("dev", 120)]:
+        keep = (df["split"] == split) & (df["t"] >= b)
+        want = average_precision_score(df.loc[keep, "anomaly"], df.loc[keep, "score"])
+        got = fn(df, "score", split, burn_in=b) if b != 100 else fn(df, "score", split)
+        assert isinstance(got, (float, np.floating)), "return a float"
+        assert abs(got - want) < 1e-9, (f"PR-AUC on {split} rows with burn_in={b} should be {want:.4f}, got {got:.4f} "
+                                        "(only rows of that split with t >= burn_in)")
+
+
+@exercise("w07.p_event_table", hint="Group by experiment; detected = any(alert & anomaly); false_alarm = "
+                                    "any(alert & not anomaly); delay from the first alert on an anomalous row.")
+def _(fn):
+    rows = []
+
+    def exp(name, anomaly, alert, t0=100):
+        for i, (a, al) in enumerate(zip(anomaly, alert)):
+            rows.append({"experiment": name, "t": t0 + i, "anomaly": a, "alert": al})
+    exp("b/1", [0, 0, 1, 1, 1, 1, 0], [0, 0, 0, 1, 1, 0, 0])       # detected, delay 1, no false alarm
+    exp("a/2", [0, 0, 0, 1, 1, 0, 0], [1, 0, 0, 0, 0, 0, 0])       # missed, false alarm
+    exp("c/3", [0, 1, 1, 1, 0], [0, 1, 0, 0, 1], t0=250)           # detected at once, false alarm after
+    df = pd.DataFrame(rows)
+    df["alert"] = df["alert"].astype(bool)
+    got = fn(df.copy(), "alert")
+    assert isinstance(got, pd.DataFrame), "return a DataFrame"
+    assert list(got.index) == ["a/2", "b/1", "c/3"], "index by experiment, sorted"
+    for col in ["detected", "false_alarm", "delay"]:
+        assert col in got.columns, f"missing column '{col}'"
+    assert [bool(v) for v in got["detected"]] == [False, True, True], "`detected` is wrong for some experiment"
+    assert [bool(v) for v in got["false_alarm"]] == [True, False, True], "`false_alarm` is wrong for some experiment"
+    d = got["delay"].astype(float).to_numpy()
+    assert np.isnan(d[0]), "a missed fault has no delay: NaN"
+    assert d[1] == 1 and d[2] == 0, "delay = t of the first alert on an anomalous row - t of the first anomalous row"
+    got2 = fn(df.assign(other=df["alert"].astype(int)), "other")
+    assert [bool(v) for v in got2["detected"]] == [False, True, True], "use the column named by `alert_col` (0/1 works too)"
+
+
+@exercise("w07.p_persistent_alerts", hint="Group the alert column by experiment and take a rolling sum over k rows; "
+                                          "True where the sum equals k.")
+def _(fn):
+    df = pd.DataFrame({"experiment": ["x"] * 6 + ["y"] * 5,
+                       "t": list(range(6)) + list(range(5)),
+                       "alert": [1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1]}, index=range(100, 111))
+    df["alert"] = df["alert"].astype(bool)
+    for k, want in [(1, df["alert"].tolist()),
+                    (2, [False, True, True, False, False, True, False, True, False, False, True]),
+                    (3, [False, False, True, False, False, False, False, False, False, False, False])]:
+        got = fn(df.copy(), "alert", k)
+        assert isinstance(got, pd.Series), "return a boolean Series"
+        assert got.index.equals(df.index), "keep the index of the input"
+        assert [bool(v) for v in got] == want, (f"with k={k} the result is wrong (a run must not continue across two "
+                                                "experiments, and the first k-1 rows of an experiment cannot qualify)")
+
+
+@exercise("w07.p_experiment_bootstrap", hint="rng.choice(unique experiments, size=n, replace=True); concatenate all "
+                                            "rows of the drawn experiments; average_precision_score per replicate.")
+def _(fn):
+    from sklearn.metrics import average_precision_score
+    df = _synthetic_runs(8, seed=9)
+    rng = np.random.default_rng(2)
+    strength = {e: rng.uniform(0.0, 3.0) for e in df["experiment"].unique()}   # experiments differ a lot
+    df["score"] = df["anomaly"] * df["experiment"].map(strength) + rng.normal(0, 1, len(df))
+    got = np.asarray(fn(df, "score", n_boot=200, seed=0), float)
+    assert got.shape == (200,), f"expected n_boot=200 values, got shape {got.shape}"
+    assert np.array_equal(got, np.asarray(fn(df, "score", n_boot=200, seed=0), float)), \
+        "the same seed must give the same replicates"
+    y, s, g = df["anomaly"].to_numpy(), df["score"].to_numpy(), df["experiment"].to_numpy()
+    ref = _ref_group_boot(y, s, g, average_precision_score, 400, 1)
+    rows_r = np.random.default_rng(1)
+    row_sd = np.std([average_precision_score(y[i], s[i]) for i in
+                     (rows_r.integers(0, len(y), len(y)) for _ in range(200))])
+    assert abs(got.mean() - ref.mean()) < 0.03, "the replicates do not centre where an experiment bootstrap would"
+    assert got.std() > 2 * row_sd and abs(got.std() - ref.std()) < 0.4 * ref.std(), (
+        f"the spread of your replicates ({got.std():.3f}) looks like a row bootstrap ({row_sd:.3f}), not an "
+        f"experiment bootstrap ({ref.std():.3f}): draw whole experiments")
+
+
+# Ranges measured on the real data (7 test experiments of split v2; see the solved notebook). They are loose on
+# purpose: a student's own interval code or bootstrap draws may differ slightly.
+_RANGES = {"ap_constant": (0.36, 0.39), "ap_detector": (0.86, 0.91), "ap_model": (0.86, 0.92)}
+
+
+@exercise("w07.p_findings", hint="Build the dict key by key from the functions of steps 4-7; the summary is your "
+                                 "own text with the numbers in it.")
+def _(f):
+    if f is None:
+        raise NotImplementedError
+    assert isinstance(f, dict), "findings should be a dict"
+    keys = ["n_dev_experiments", "n_test_experiments", "ap_constant", "ap_detector", "ap_model", "ap_detector_ci",
+            "ap_model_ci", "diff_ci", "events_detected", "false_alarm_experiments_k1", "false_alarm_experiments_k5",
+            "summary"]
+    missing = [k for k in keys if k not in f]
+    assert not missing, f"missing keys: {missing}"
+    assert (f["n_dev_experiments"], f["n_test_experiments"]) == (27, 7), \
+        "split v2 has 27 dev and 7 test experiments: are you counting experiments, not rows?"
+    for k, (lo, hi) in _RANGES.items():
+        assert lo <= f[k] <= hi, (f"{k} = {f[k]:.3f} is outside the range measured on the real data ({lo}-{hi}): "
+                                  "test split only, rows with t >= burn-in only?")
+    for k, point in [("ap_detector_ci", f["ap_detector"]), ("ap_model_ci", f["ap_model"])]:
+        lo, hi = f[k]
+        assert lo < point < hi, f"{k} should be an interval (low, high) around the point estimate"
+        assert 0.03 < hi - lo < 0.25, f"{k} has width {hi - lo:.3f}; an experiment bootstrap on 7 experiments gives about 0.1"
+    lo, hi = f["diff_ci"]
+    diff = f["ap_model"] - f["ap_detector"]
+    assert lo < hi and lo - 0.01 <= diff <= hi + 0.01, "diff_ci should be an interval around ap_model - ap_detector"
+    assert hi - lo < 0.2, "diff_ci is too wide for a PAIRED interval: resample both scores on the same experiments"
+    assert 6 <= f["events_detected"] <= 7, "events_detected: count of test experiments whose fault was detected (k=1)"
+    assert f["false_alarm_experiments_k5"] <= f["false_alarm_experiments_k1"] <= 7, \
+        "a persistence rule can only remove false alarms, never add them"
+    assert f["false_alarm_experiments_k1"] >= 5, "with k=1 the detector raises false alarms in most test experiments"
+    s = f["summary"]
+    assert isinstance(s, str) and len(s.split()) >= 60, "write a summary of 4-8 sentences (at least 60 words)"
+    assert str(f["n_test_experiments"]) in s, "the summary should say how many test experiments the numbers rest on"
+    assert f"{f['ap_detector']:.2f}" in s or f"{f['ap_detector']:.3f}" in s, \
+        "the summary should quote the detector's PR-AUC"
+    assert "interval" in s.lower(), "the summary should mention the intervals"
+
+
+register_quiz("w07.28_q1", "a",
+              "Statistics over the whole recording include the anomalous segment and the future; at prediction time "
+              "only the past exists. The burn-in uses the past only.",
+              {"b": "Speed is not the reason; correctness is.",
+               "c": "It is the opposite: the start of each experiment is normal operation, which is why it calibrates.",
+               "d": "It changes the meaning of the feature: whole-recording statistics leak the future."})
+register_quiz("w07.28_q2", "b",
+              "The fault onset is set by the experimental protocol (rows 550-600 in 31 of 34 runs); `t` lets the model "
+              "learn the protocol, which a real plant does not follow.",
+              {"a": "Pump wear over a 20-minute run is not what the labels describe; the jump comes from the protocol.",
+               "c": "More features can add leakage or noise; here it adds a leak.",
+               "d": "Being known at prediction time is necessary, not sufficient: the feature must also generalise."})
+register_quiz("w07.28_q3", "d",
+              "The interval contains 0, so the model is not detectably better; the rule picks the simpler, "
+              "explainable detector and keeps the comparison for later.",
+              {"a": "That chases a point estimate inside the noise (notebook 26).",
+               "b": "More data would help, but you can still make a defensible decision now.",
+               "c": "An ensemble adds complexity without evidence that it helps."})
+register_quiz("w07.28_q4", "b",
+              "A handful of isolated rows hardly moves a point-level metric, but each becomes an alarm. Event-level "
+              "metrics count them; persistence rules reduce them.",
+              {"a": "The metric can be correct and still not measure what the engineer experiences.",
+               "c": "The complaint is about alarms in operation; the dev/test split is not the issue.",
+               "d": "Choosing the threshold on test would make every reported test number optimistic."})

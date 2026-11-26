@@ -230,8 +230,8 @@ grade("w07.worst_slice", worst_slice)
 
 # %% [markdown]
 # On the forest, the worst sizeable band is **5-12 km**: 579 deliveries, recall about 0.25. Short and medium trips
-# are mostly on time, so the model learned "short means on time" and rarely warns there. But a quarter of the late
-# deliveries in validation are on 5-12 km trips. Which ones are late, if not the long ones?
+# are mostly on time, so the model learned "short means on time" and rarely warns there. But about a third of the
+# late deliveries in validation (101 of 305) are on 5-12 km trips. Which ones are late, if not the long ones?
 
 # %% [markdown]
 # ## 3. Read the worst mistakes
@@ -262,15 +262,18 @@ def top_mistakes(df, k=10, threshold=0.35):
 
 
 cols = ["courier_id", "region", "distance_km", "hour", "weekend", "rain", "score", "late", "error", "margin"]
-top_mistakes(analysis, k=12)[cols].round(3)
+top_mistakes(analysis, k=12)[cols].round(3)   # try: top_mistakes(analysis, k=200).query("error == 'false negative'").head(12)[cols]
 
 # %%
 grade("w07.top_mistakes", top_mistakes)
 
 # %% [markdown]
-# Look at the `courier_id` column of the confident false negatives: the same few couriers come back. Remember how
-# the data was made: each courier has a hidden skill that is **not a feature**. The model cannot know that
-# courier 44 is often late on ordinary trips. That is a **missing feature**, and no choice of algorithm fixes it.
+# The most confident mistakes are all false positives: long trips, in the north, in the rain, in the evening,
+# which the model has learned to expect late, yet they arrived on time. And one `courier_id` comes back again and
+# again: courier 76 has 4 of the top 12. Remember how the data was made: each courier has a hidden skill that is
+# **not a feature**. The model cannot know that courier 76 is better than average. (The comment in the
+# cell shows the other side: late deliveries the model scored around 0.05-0.08, from a handful of couriers such as
+# 68, 45 and 24.) That is a **missing feature**, and no choice of algorithm fixes it.
 #
 # ### Exercise 3.2 · Errors that cluster by courier
 #
@@ -297,7 +300,8 @@ plt.show()
 grade("w07.group_residuals", group_residuals)
 
 # %% [markdown]
-# Some couriers are late about 10 percentage points more often than predicted, others less. The fix to propose is
+# Couriers 40 and 48 are late about 10-11 percentage points more often than the model predicts; couriers 76, 28
+# and 5 are late 9-12 points *less* often. The fix to propose is
 # a feature such as "this courier's late rate over the previous 90 days", computed only from deliveries *before*
 # the one being predicted (Week 4's time windows, Week 6's leakage rules). For brand-new couriers it would be
 # missing, and the model must cope with that. Error analysis turned a vague "AUC 0.80" into a concrete, testable
