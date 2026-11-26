@@ -1,0 +1,10 @@
+flowchart LR
+  Y["config.yaml"] --> L["load + validate"]
+  O["overrides<br/>seed=3"] --> L
+  L --> C["RunConfig"]
+  C --> T["train_and_evaluate"]
+  T --> G["run.log<br/>timestamped messages"]
+  T --> D["runs/run-id/"]
+  D --> D1["config.json"]
+  D --> D2["metrics.json"]
+  D --> D3["versions.json"]

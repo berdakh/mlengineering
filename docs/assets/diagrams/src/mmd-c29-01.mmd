@@ -1,0 +1,8 @@
+flowchart LR
+  N["notebook cells<br/>copied between notebooks"] --> F["pure functions<br/>arguments in, result out"]
+  F --> M["module<br/>features.py"]
+  M --> P["package<br/>src/shopfeat/"]
+  P --> I["pip install -e<br/>import shopfeat anywhere"]
+  I --> U1["notebooks"]
+  I --> U2["tests"]
+  I --> U3["command line"]

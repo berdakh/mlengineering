@@ -1,0 +1,8 @@
+flowchart LR
+  E["34 SKAB experiments"] --> DET["detector<br/>(milestone 2)"]
+  DET --> LOG["monitoring log<br/>one JSON line per<br/>experiment"]
+  E --> DRIFT["drift table<br/>PSI of normal operation<br/>vs a reference"]
+  LOG --> OPS["ops table<br/>alarms, max PSI,<br/>drift alert, errors"]
+  DRIFT --> OPS
+  OPS --> DASH["dashboard"]
+  OPS --> NOTE["operations note"]

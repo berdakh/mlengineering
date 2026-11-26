@@ -1,0 +1,11 @@
+flowchart LR
+  subgraph avoid["Avoid: long-lived key"]
+    U["IAM user"] --> K["access key<br/>(works until deleted)"]
+    K --> F["~/.aws/credentials,<br/>a notebook, a commit..."]
+  end
+  subgraph prefer["Prefer: role + temporary credentials"]
+    P["you (sign in with MFA)"] --> SSO["IAM Identity Center"]
+    SSO --> RO["role with only<br/>the permissions needed"]
+    RO --> T["temporary credentials<br/>(expire in hours)"]
+    SVC["the running service"] --> TR["task role"] --> T2["temporary credentials,<br/>renewed automatically"]
+  end

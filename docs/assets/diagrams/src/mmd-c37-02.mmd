@@ -1,0 +1,7 @@
+flowchart TB
+  F["project folder<br/>(Open Folder in VS Code)"] --> C["src/, tests/, notebooks/"]
+  F --> E[".venv/<br/>(not in Git)"]
+  F --> Q["requirements.txt<br/>(in Git)"]
+  F --> S[".vscode/settings.json<br/>(in Git)"]
+  F --> G[".gitignore<br/>(in Git)"]
+  E -. "rebuilt anywhere with<br/>pip install -r" .-> Q

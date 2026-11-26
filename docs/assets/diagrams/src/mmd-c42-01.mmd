@@ -1,0 +1,8 @@
+flowchart LR
+  Q["request"] --> API["service"]
+  API --> A["answer"]
+  API -- "one JSON line<br/>per request" --> LOG["log file /<br/>log service"]
+  LOG --> M["metrics per window<br/>requests, error rate,<br/>p95 latency, positive rate"]
+  M --> D["dashboard<br/>(for looking)"]
+  M --> AL{"alert rules<br/>(for acting)"}
+  AL -- "sustained breach" --> PG["notify a person"]

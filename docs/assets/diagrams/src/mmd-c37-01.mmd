@@ -1,0 +1,5 @@
+flowchart LR
+  T["you type<br/>python"] --> P{"PATH: folders searched<br/>in order, first match wins"}
+  P -->|"after activation:<br/>.venv/bin is first"| V[".venv/bin/python<br/>this project's packages"]
+  P -.->|"not activated"| S["/usr/bin/python3<br/>system packages"]
+  V --> R["requirements.txt<br/>says what to install"]

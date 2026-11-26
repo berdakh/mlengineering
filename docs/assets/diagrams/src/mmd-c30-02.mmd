@@ -1,0 +1,9 @@
+flowchart LR
+  T["your tests"] --> OK["correct code"]
+  T --> B1["copy with bug 1"]
+  T --> B2["copy with bug 2"]
+  T --> B3["copy with bug 3"]
+  OK --> R1["must PASS"]
+  B1 --> R2["must FAIL"]
+  B2 --> R3["must FAIL"]
+  B3 --> R4["must FAIL"]

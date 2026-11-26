@@ -1,0 +1,5 @@
+flowchart LR
+  DF["Dockerfile<br/>+ build context"] -->|"docker build -t scorer:0.1 ."| IMG["image<br/>scorer:0.1<br/>(read-only layers)"]
+  IMG -->|"docker run -p 8080:8000"| C["container<br/>a running process<br/>listening on 8000"]
+  B["browser or curl<br/>localhost:8080"] -->|"port mapping"| C
+  IMG -->|"docker push"| R["registry<br/>(Docker Hub, GHCR, ECR)"]

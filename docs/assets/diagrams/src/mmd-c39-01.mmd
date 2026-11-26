@@ -1,0 +1,6 @@
+flowchart LR
+  P["git push or<br/>pull request"] --> GH["GitHub reads<br/>.github/workflows/*.yml"]
+  GH --> RN["fresh runner<br/>(ubuntu-latest VM)"]
+  RN --> S1["checkout"] --> S2["set up Python"] --> S3["pip install -r"] --> S4["pytest"]
+  S4 -->|"all steps pass"| OK["green check<br/>on the commit"]
+  S4 -->|"a step fails"| NO["red cross<br/>+ log to read"]

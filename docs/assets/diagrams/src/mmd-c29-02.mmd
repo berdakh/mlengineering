@@ -1,0 +1,9 @@
+flowchart TB
+  R["shopfeat/ (project folder)"] --> T["pyproject.toml<br/>name, version, dependencies, commands"]
+  R --> S["src/"]
+  R --> X["tests/"]
+  S --> K["shopfeat/ (the package)"]
+  K --> I["＿＿init＿＿.py<br/>version, re-exports"]
+  K --> F["features.py"]
+  K --> P["report.py<br/>from .features import ..."]
+  K --> C["cli.py<br/>main(argv)"]

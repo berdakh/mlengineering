@@ -1,0 +1,7 @@
+flowchart TB
+  IN["new inputs (no labels yet)"] --> DR{"input drift?<br/>PSI / KS per feature"}
+  LB["labels, days later"] --> PF{"performance drop?<br/>recall on known labels"}
+  PF -- "yes" --> DEG["degradation:<br/>fix data or retrain,<br/>compare, roll out safely"]
+  PF -- "no / not known yet" --> DR
+  DR -- "yes" --> INV["input drift only:<br/>find the cause (sensor,<br/>pipeline, real change); watch labels"]
+  DR -- "no" --> OK["healthy"]

@@ -1,0 +1,8 @@
+flowchart LR
+  B["your code + model<br/>(tested, in Git)"] --> I["container image<br/>(built by CI, tagged<br/>with the commit)"]
+  I --> R["registry<br/>(Amazon ECR)"]
+  R --> S["container service<br/>(ECS on Fargate)<br/>runs N copies, restarts<br/>unhealthy ones"]
+  C["configuration<br/>env vars + secret<br/>references"] --> S
+  N["network rule<br/>who may connect"] --> S
+  S --> L["logs and metrics<br/>(CloudWatch)"]
+  BA["budget alert<br/>(set up first)"] -.-> S

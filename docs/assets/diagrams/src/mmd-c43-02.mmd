@@ -1,0 +1,8 @@
+flowchart LR
+  T["traffic"] --> CUR["current model<br/>(answers users)"]
+  T -. "copy" .-> SH["shadow: candidate sees<br/>the same requests,<br/>answers are only logged"]
+  SH --> CMP{"agreement,<br/>errors, latency ok?"}
+  CMP -- "yes" --> CAN["canary: 5-10 % of users<br/>(stable hash of the id)"]
+  CAN --> G{"guardrails ok after<br/>enough requests?"}
+  G -- "yes" --> ALL["promote to 100 %"]
+  G -- "no" --> RB["roll back to the<br/>previous version"]

@@ -1,0 +1,10 @@
+flowchart LR
+  U["churnkit --config config.yaml"] --> CLI["cli.py"]
+  CLI --> CFG["config.py<br/>load + overrides"]
+  CLI --> TR["train.py"]
+  TR --> FE["features.py"]
+  CSV[("data/*.csv")] --> FE
+  TR --> LOG["churnkit.log"]
+  TR --> RUN["runs/run-id/<br/>config.json, metrics.json"]
+  TS["tests/"] -.->|check| CFG
+  TS -.->|check| FE

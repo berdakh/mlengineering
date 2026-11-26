@@ -1,0 +1,5 @@
+flowchart LR
+  A["Arrange<br/>a small input whose answer<br/>you worked out by hand"] --> B["Act<br/>call the function once"]
+  B --> C["Assert<br/>result == known answer"]
+  C -->|true| P["test passes"]
+  C -->|false| F["test fails:<br/>pytest shows both values"]

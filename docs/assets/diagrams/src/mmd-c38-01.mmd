@@ -1,0 +1,15 @@
+flowchart TB
+  subgraph VM["Virtual machines"]
+    direction TB
+    A1["app A"] --> O1["guest OS<br/>(its own kernel)"]
+    A2["app B"] --> O2["guest OS<br/>(its own kernel)"]
+    O1 --> H1["hypervisor"]
+    O2 --> H1
+    H1 --> K1["host OS and hardware"]
+  end
+  subgraph CT["Containers"]
+    direction TB
+    B1["app A<br/>+ its libraries"] --> D["container runtime<br/>(Docker)"]
+    B2["app B<br/>+ its libraries"] --> D
+    D --> K2["host OS kernel<br/>(shared) and hardware"]
+  end

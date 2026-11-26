@@ -1,0 +1,454 @@
+# %% [markdown]
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/24_lab_find_the_leaks.ipynb)
+#
+# *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
+
+# %% [markdown]
+# # 24 · Lab: find and fix the leaks
+#
+# **Week 6 · lab · about 90 minutes**
+#
+# A colleague has built a churn model for a software company that sells subscriptions to businesses, and reports
+# almost **99% accuracy**. Management wants to use it next quarter to decide which customers the account managers call.
+# Your job is the model review: find every reason the number is too good, fix the evaluation, and report the honest
+# accuracy. Several problems are planted; each one alone would make the number unreliable.
+#
+# **What you will practise**
+#
+# - Probing columns and reading a data dictionary for features known too late (notebook 22).
+# - Finding duplicate rows and rows that belong together (notebooks 21 and 22).
+# - Rebuilding the evaluation: a clean table, a pipeline, splits forward in time (notebooks 21-23).
+# - Reporting one honest number, and the list of issues behind the difference.
+#
+# **What you need:** notebooks 21, 22 and 23. There are no new concepts in this lab.
+#
+# **How grading works:** each exercise has a grader cell. Exercises build on each other; if you skip one, later cells
+# use the course's reference version and say so. Your honest accuracy is graded against the accuracy the model
+# really reaches on brand-new future customers, which the course can generate because the data is synthetic.
+
+# %%
+# --- Setup: works in Google Colab AND on your own computer. Safe to re-run. ---
+# In Colab this downloads the course (about 30 s) and installs what it needs (about a minute, once
+# per session). On your computer it just finds the course folder.
+import os, sys, subprocess
+from pathlib import Path
+
+if "google.colab" in sys.modules and not Path("/content/mlengineering").exists():
+    subprocess.run(["git", "clone", "--depth", "1",
+                    "https://github.com/berdakh/mlengineering.git", "/content/mlengineering"], check=True)
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-r",
+                    "/content/mlengineering/requirements.txt"], check=True)
+REPO_ROOT = Path("/content/mlengineering") if "google.colab" in sys.modules else next(
+    p for p in [Path.cwd(), *Path.cwd().parents] if (p / "src" / "mlcourse").is_dir())
+os.chdir(REPO_ROOT)
+sys.path.insert(0, str(REPO_ROOT / "src"))
+from mlcourse.grader import grade, quiz
+print("Ready. Course folder:", REPO_ROOT)
+
+# %% [markdown]
+# ## The situation
+#
+# The table has one row per **user seat** (one person's login) of a business customer, a **company**. Each company is
+# reviewed once, in its renewal `month` (1 to 12 of last year): that month is the **prediction date**. The label
+# `churned` is 1 if the company cancelled within 90 days after it, so every seat of a company has the same label.
+# Next quarter the model will score **new renewal months**, for companies it has never seen. The data is synthetic.
+#
+# Here is your colleague's code, exactly as they sent it. Run it and read it line by line.
+
+# %%
+import warnings
+
+import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import SelectKBest, f_classif
+from sklearn.model_selection import KFold, cross_val_score
+
+from mlcourse.validation_data import LAB_ISSUES, make_saas_churn
+from mlcourse.graders.w06 import use
+
+warnings.filterwarnings("ignore", category=UserWarning)
+
+# ---- the colleague's notebook --------------------------------------------------------------------------
+raw, data_dict = make_saas_churn()
+X_all = pd.get_dummies(raw.drop(columns=["churned", "company_id"]), dtype=float).fillna(0)   # numbers only
+y_all = raw["churned"]
+X_best = SelectKBest(f_classif, k=15).fit_transform(X_all, y_all)       # keep the 15 most useful columns
+model = RandomForestClassifier(n_estimators=200, min_samples_leaf=5, random_state=0, n_jobs=-1)
+claimed = cross_val_score(model, X_best, y_all, cv=KFold(5, shuffle=True, random_state=0)).mean()
+print(f"5-fold accuracy: {claimed:.3f}")
+# --------------------------------------------------------------------------------------------------------
+
+# %% [markdown]
+# 0.989. Before believing it, look at the data and at the dictionary that came with it.
+
+# %%
+print(raw.shape, " companies:", raw["company_id"].nunique(), " churn rate:", round(raw["churned"].mean(), 3))
+raw.head()
+
+# %%
+data_dict
+
+# %% [markdown]
+# The `known_at` column says when each value becomes known. Keep the prediction date (the renewal month) in mind as
+# you read it.
+#
+# ## Step 1 · Which columns do the work?
+#
+# ### Exercise 1 · probe every numeric column
+#
+# Write `probe_columns(df, target)` exactly as in notebook 22: for every numeric column except `target`, the AUC of
+# that column alone, ignoring missing values, reported as $\max(AUC, 1 - AUC)$; a Series sorted from highest to
+# lowest. (You may copy your notebook 22 functions into this cell.)
+
+# %%
+from sklearn.metrics import roc_auc_score
+
+
+def probe_columns(df, target):
+    ### BEGIN SOLUTION
+    scores = {}
+    for col in df.select_dtypes("number").columns:
+        if col == target:
+            continue
+        keep = df[col].notna()
+        x, y = df.loc[keep, col], df.loc[keep, target]
+        if y.nunique() < 2:
+            scores[col] = 0.5
+        else:
+            auc = roc_auc_score(y, x)
+            scores[col] = max(auc, 1 - auc)
+    return pd.Series(scores).sort_values(ascending=False)
+    ### END SOLUTION
+
+
+# %%
+grade("w06.lab_probe", probe_columns)
+
+# %%
+use(probe_columns, raw, "churned").round(3).head(8)
+
+# %% [markdown]
+# Two columns score above 0.9 on their own. Look each of them up in the data dictionary: is it known at the
+# prediction date? The next two (`logins_30d`, `reports_30d`) are strong too; are they?
+#
+# Write your conclusion in a sentence here before going on (double-click to edit):
+#
+# *My conclusion:* ...
+#
+# ## Step 2 · Which rows are not what they seem?
+#
+# ### Exercise 2 · duplicates
+#
+# Write `duplicate_report(df)`: return a dict with
+#
+# - `"duplicate_rows"`: the number of rows that are exact copies of an earlier row (`df.duplicated()` marks them);
+# - `"companies_affected"`: the number of distinct `company_id` values among those copies.
+
+# %%
+def duplicate_report(df):
+    ### BEGIN SOLUTION
+    copies = df[df.duplicated()]
+    return {"duplicate_rows": len(copies), "companies_affected": copies["company_id"].nunique()}
+    ### END SOLUTION
+
+
+# %%
+grade("w06.lab_duplicates", duplicate_report)
+
+# %% [markdown]
+# Now the structure of the rows. Run the cell and answer for yourself: with `KFold(5, shuffle=True)` on seats, can
+# seats of the same company be in training and in test? And can the model be trained on December and tested on March?
+
+# %%
+print("seats per company:", raw.groupby("company_id").size().describe()[["min", "50%", "max"]].tolist())
+print("rows per renewal month:", raw["month"].value_counts().sort_index().tolist())
+tr, te = next(KFold(5, shuffle=True, random_state=0).split(raw))
+shared = set(raw["company_id"].iloc[tr]) & set(raw["company_id"].iloc[te])
+print("companies with seats on both sides of the colleague's first fold:", len(shared))
+
+# %% [markdown]
+# ## Step 3 · A clean table
+#
+# ### Exercise 3 · clean the table
+#
+# Write `clean_table(df)`: remove exact duplicate rows (keep one of each) and drop the columns that are **not known
+# at the prediction date**. Keep every other column, including `seat_id`, `company_id` and `month`: they are not
+# features, but the evaluation needs them. Return a new DataFrame with a fresh index (`reset_index(drop=True)`).
+
+# %%
+def clean_table(df):
+    ### BEGIN SOLUTION
+    out = df.drop_duplicates().drop(columns=["retention_offer", "days_since_last_login"])
+    return out.reset_index(drop=True)
+    ### END SOLUTION
+
+
+# %%
+grade("w06.lab_clean", clean_table)
+
+# %%
+clean = use(clean_table, raw).reset_index(drop=True)
+FEATURES = [c for c in clean.columns if c not in ("seat_id", "company_id", "month", "churned")]
+CATEGORICAL = ["plan", "industry"]
+NUMERIC = [c for c in FEATURES if c not in CATEGORICAL]
+print(clean.shape, "features:", len(FEATURES))
+
+# %% [markdown]
+# ## Step 4 · An honest evaluation
+#
+# ### Exercise 4 · the pipeline
+#
+# The colleague one-hot encoded and selected columns on **all** rows before cross-validation. Write
+# `make_honest_pipeline(numeric, categorical)`: an **unfitted** `Pipeline` with
+#
+# - a step `"prep"`: a `ColumnTransformer` that sends the numeric columns through `SimpleImputer(strategy="median")`,
+#   and the categorical columns through `SimpleImputer(strategy="most_frequent")` then
+#   `OneHotEncoder(handle_unknown="ignore")`;
+# - a step `"model"`: the colleague's model, unchanged:
+#   `RandomForestClassifier(n_estimators=200, min_samples_leaf=5, random_state=0, n_jobs=-1)`.
+#
+# (A `SelectKBest` step between them would also be fine, now that it is inside the pipeline. The review changes the
+# evaluation, not the model.)
+
+# %%
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder
+
+
+def make_honest_pipeline(numeric, categorical):
+    ### BEGIN SOLUTION
+    categorical_steps = Pipeline([("impute", SimpleImputer(strategy="most_frequent")),
+                                  ("onehot", OneHotEncoder(handle_unknown="ignore"))])
+    prep = ColumnTransformer([("num", SimpleImputer(strategy="median"), numeric),
+                              ("cat", categorical_steps, categorical)])
+    model = RandomForestClassifier(n_estimators=200, min_samples_leaf=5, random_state=0, n_jobs=-1)
+    return Pipeline([("prep", prep), ("model", model)])
+    ### END SOLUTION
+
+
+# %%
+grade("w06.lab_pipeline", make_honest_pipeline)
+
+# %% [markdown]
+# ### Exercise 5 · splits forward in time
+#
+# The model will be used on later months for new companies. Each company appears in only one month, so splitting by
+# month also keeps every company on one side. Write `month_splits(months, first_test_month, block)` returning a list of
+# `(train_idx, test_idx)` position pairs: the first test block is months `first_test_month` to
+# `first_test_month + block - 1`, trained on **every** earlier month; then the next block, and so on until the last
+# month (the last block may be shorter). Use `m = np.asarray(months)` and `np.flatnonzero(...)`.
+#
+# With `first_test_month=4, block=3` on months 1-12: test 4-6 (train 1-3), test 7-9 (train 1-6), test 10-12
+# (train 1-9).
+
+# %%
+def month_splits(months, first_test_month, block):
+    ### BEGIN SOLUTION
+    m = np.asarray(months)
+    splits = []
+    for start in range(first_test_month, m.max() + 1, block):
+        test = np.flatnonzero((m >= start) & (m < start + block))
+        splits.append((np.flatnonzero(m < start), test))
+    return splits
+    ### END SOLUTION
+
+
+# %%
+grade("w06.lab_splits", month_splits)
+
+# %% [markdown]
+# ### Exercise 6 · the honest accuracy
+#
+# Compute `honest_score`: for each split of `month_splits(clean["month"], 4, 3)`, build a **fresh**
+# `make_honest_pipeline(NUMERIC, CATEGORICAL)`, fit it on the training rows of `clean[FEATURES]` and
+# `clean["churned"]`, and compute the accuracy on the test rows (`(predictions == truth).mean()`). `honest_score` is
+# the mean over the three splits, a single number. Use `.iloc[...]` with the positions.
+
+# %%
+### BEGIN SOLUTION
+scores = []
+for train_idx, test_idx in month_splits(clean["month"], 4, 3):
+    pipe = make_honest_pipeline(NUMERIC, CATEGORICAL)
+    train, test = clean.iloc[train_idx], clean.iloc[test_idx]
+    pipe.fit(train[FEATURES], train["churned"])
+    scores.append((pipe.predict(test[FEATURES]) == test["churned"]).mean())
+    print(f"test months {test['month'].min()}-{test['month'].max()}: accuracy {scores[-1]:.3f}")
+honest_score = float(np.mean(scores))
+print(f"honest accuracy: {honest_score:.3f}")
+### STARTER
+honest_score = None   # replace with your computation
+### END SOLUTION
+
+# %%
+grade("w06.lab_honest_score", honest_score)
+
+# %% [markdown]
+# ## Step 5 · The leak ledger
+#
+# A review is more convincing when it shows what each fix did. The next cell (given) fixes the evaluation one step at
+# a time, using your functions where they are finished. Predict before you run it: which step moves the number most?
+
+# %%
+from sklearn.model_selection import GroupKFold
+
+
+def cv_accuracy(make_model, X, y, splits):
+    """Mean accuracy over the given (train, test) position pairs, with a freshly built model in each split."""
+    scores = []
+    for tr, te in splits:
+        m = make_model().fit(X.iloc[tr], y.iloc[tr])
+        scores.append((m.predict(X.iloc[te]) == y.iloc[te].values).mean())
+    return float(np.mean(scores))
+
+
+forest = lambda: RandomForestClassifier(n_estimators=200, min_samples_leaf=5, random_state=0, n_jobs=-1)   # noqa: E731
+select_inside = lambda: Pipeline([("select", SelectKBest(f_classif, k=15)), ("model", forest())])          # noqa: E731
+X_ok = X_all.drop(columns=["retention_offer", "days_since_last_login"])
+random5 = list(KFold(5, shuffle=True, random_state=0).split(X_ok))
+keep = ~raw.duplicated().values
+X_d, y_d, g_d = X_ok[keep], y_all[keep], raw["company_id"][keep]
+
+ledger = {
+    "colleague's number": claimed,
+    "- two late columns": cv_accuracy(
+        forest, pd.DataFrame(SelectKBest(f_classif, k=15).fit_transform(X_ok, y_all)), y_all, random5),
+    "- selection inside the pipeline": cv_accuracy(select_inside, X_ok, y_all, random5),
+    "- duplicate rows": cv_accuracy(select_inside, X_d, y_d, list(KFold(5, shuffle=True, random_state=0).split(X_d))),
+    "- companies kept on one side": cv_accuracy(select_inside, X_d, y_d, list(GroupKFold(5).split(X_d, y_d, g_d))),
+    "- forward in time (your evaluation)": cv_accuracy(
+        lambda: use(make_honest_pipeline, NUMERIC, CATEGORICAL), clean[FEATURES], clean["churned"],
+        use(month_splits, clean["month"], 4, 3)),
+}
+baseline = max(clean["churned"].mean(), 1 - clean["churned"].mean())
+for step, value in ledger.items():
+    print(f"{step:38s} {value:.3f}")
+print(f"{'baseline: always predict the majority':38s} {baseline:.3f}")
+
+# %% [markdown]
+# Removing the two late columns takes the number from 0.989 to 0.828. Moving selection inside the pipeline and
+# removing the copies barely changes it **on this data** (with 3,000 rows and 30 columns there is little room for those
+# two leaks); keeping companies on one side takes it down to 0.702, and the forward-in-time evaluation gives 0.701. The
+# majority-class baseline is 0.653: the honest model adds about five points of accuracy, not thirty-four.
+#
+# Small leaks still count: on a smaller table, or with hundreds of columns, the same two lines can add ten points
+# (notebook 22 got 0.77 out of pure noise). A review lists every leak, not only the big ones.
+#
+# ### Exercise 7 · the list of issues
+#
+# Below are eleven candidate issues, in alphabetical order. Some are real reasons why 0.989 is too high; others are
+# true facts about the data that do **not** make the cross-validated number optimistic. Put the codes of **every**
+# issue that inflates the colleague's number into the set `issues_found`.
+
+# %%
+pd.Series(LAB_ISSUES).sort_index().to_frame("description")
+
+# %%
+### BEGIN SOLUTION
+issues_found = {"retention_offer_after_cancel", "last_login_measured_at_export", "duplicate_rows",
+                "selection_fitted_on_all_rows", "same_company_in_train_and_test", "training_on_future_months"}
+### STARTER
+issues_found = set()   # put codes from the table here, e.g. {"some_code", "another_code"}
+### END SOLUTION
+
+# %%
+grade("w06.lab_issues", issues_found)
+
+# %% [markdown]
+# ## Quiz
+#
+# **Q1.** After dropping the two late columns, random 5-fold still gives 0.83, against about 0.70 honestly. What
+# explains most of the remaining gap?
+#
+# - a) The forest has too many trees.
+# - b) Seats of the same company (and exact copies) on both sides: the forest recognises the company and recalls its
+#   label.
+# - c) The classes are imbalanced.
+# - d) Dropping the columns was a mistake.
+
+# %%
+### BEGIN SOLUTION
+answer = "b"
+### STARTER
+answer = "?"  # put your letter between the quotes
+### END SOLUTION
+quiz("w06.24_q1", answer)
+
+# %% [markdown]
+# **Q2.** Your honest accuracy is about 0.70 and the majority baseline is 0.65. What do you report to management?
+#
+# - a) 0.989, since that is what the colleague measured.
+# - b) 0.70, without mentioning the baseline, so that the model looks useful.
+# - c) The honest accuracy, the baseline, and how it was measured (forward in time, whole companies, duplicates
+#   removed, only columns known at the renewal month).
+# - d) Nothing, because 0.70 is disappointing.
+
+# %%
+### BEGIN SOLUTION
+answer = "c"
+### STARTER
+answer = "?"  # put your letter between the quotes
+### END SOLUTION
+quiz("w06.24_q2", answer)
+
+# %% [markdown]
+# **Q3.** Each company appears in only one month. Why still test on months **after** the training months?
+#
+# - a) Churn changes over the year (prices rose after month 8) and the model will be used on later months; only a
+#   forward split includes that change in the estimate.
+# - b) Because otherwise companies would be split across train and test.
+# - c) Because forward splits balance the classes.
+# - d) Because forward splits use more training rows.
+
+# %%
+### BEGIN SOLUTION
+answer = "a"
+### STARTER
+answer = "?"  # put your letter between the quotes
+### END SOLUTION
+quiz("w06.24_q3", answer)
+
+# %% [markdown]
+# **Q4.** The colleague suggests: "keep `retention_offer` and `days_since_last_login` for training, they are the
+# strongest predictors; we just won't have them in production". What is wrong with that?
+#
+# - a) Nothing: strong predictors should always be kept.
+# - b) Nothing, as long as the accuracy is reported.
+# - c) Nothing, the model will simply ignore the missing columns in production.
+# - d) At prediction time those values do not exist yet; a model that relies on them gets missing or meaningless
+#   inputs in production and its accuracy collapses.
+
+# %%
+### BEGIN SOLUTION
+answer = "d"
+### STARTER
+answer = "?"  # put your letter between the quotes
+### END SOLUTION
+quiz("w06.24_q4", answer)
+
+# %% [markdown]
+# ## Reflection
+#
+# Write five to eight sentences, as you would in the review you send back to the colleague (kindly: everyone ships a
+# leak once). Which issue would you have missed without the data dictionary? Which one only shows up when you ask how
+# the model will be used? What would you put in place so the next model is checked before anyone sees a number?
+#
+# *Your reflection:* ...
+#
+# ## What to show in your portfolio
+#
+# A short "model review" write-up: the claimed number, the leak ledger table, the issues you found with one sentence
+# of evidence each (a probe value, a `known_at` date, a count of shared companies), the honest accuracy next to the
+# baseline, and the evaluation design you recommend. Reviews like this show the judgement that interviewers look for
+# far more than another high score does.
+
+# %% [markdown]
+# ## Record your progress
+
+# %%
+from mlcourse.progress import mark
+
+# mark("24", "guided")
+# mark("24", "independent")

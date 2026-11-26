@@ -1,0 +1,6 @@
+flowchart TB
+  W["workflow file<br/>name, on, permissions"] --> J1["job: test<br/>runs-on, strategy.matrix"]
+  W --> J2["job: docker<br/>needs: test"]
+  J1 --> ST1["steps<br/>uses: an action<br/>run: a shell command"]
+  J2 --> ST2["steps"]
+  J1 -->|"matrix: 3.11, 3.12, 3.13"| X["three parallel copies<br/>of the job"]

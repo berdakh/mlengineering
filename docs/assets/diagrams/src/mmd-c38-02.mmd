@@ -1,0 +1,8 @@
+flowchart TB
+  L1["FROM python:3.12-slim<br/>base layers, downloaded once"] --> L2["WORKDIR /app"]
+  L2 --> L3["COPY requirements.txt ."]
+  L3 --> L4["RUN pip install ...<br/>slow, about 29 MB"]
+  L4 --> L5["COPY app/ app/<br/>changes often"]
+  L5 --> L6["RUN useradd, USER, EXPOSE, CMD"]
+  C1["you edit app/main.py"] -. "cache breaks here:<br/>this step and all below re-run" .-> L5
+  C2["you edit requirements.txt"] -. "cache breaks here:<br/>pip install re-runs too" .-> L3

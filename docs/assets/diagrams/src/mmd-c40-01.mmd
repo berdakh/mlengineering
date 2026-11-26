@@ -1,0 +1,8 @@
+flowchart LR
+  M["model.joblib<br/>+ metadata"] --> A["app/main.py<br/>FastAPI"]
+  R["requirements.txt<br/>(pinned)"] --> D
+  A --> T["tests/test_api.py<br/>TestClient"]
+  A --> D["Dockerfile<br/>+ .dockerignore"]
+  T --> CI["ci.yml: job test"]
+  D --> CI2["ci.yml: job docker<br/>needs: test"]
+  CI --> CI2

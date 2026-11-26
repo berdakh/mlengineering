@@ -166,9 +166,9 @@ def _(fn):
                 raise AssertionError("every row must be in exactly one test fold")
             for cls in np.unique(y):
                 total = (y == cls).sum()
-                counts = [(y[te] == cls).sum() for _, te in splits]
+                counts = [int((y[te] == cls).sum()) for _, te in splits]
                 if min(counts) < np.floor(total / k) - 0.01 or max(counts) > np.ceil(total / k) + 0.01:
-                    raise AssertionError(f"class {cls!r} ({total} rows) is spread {counts} over the folds: each fold "
+                    raise AssertionError(f"class {cls.item() if hasattr(cls, 'item') else cls!r} ({int(total)} rows) is spread {counts} over the folds: each fold "
                                          "should get its fair share of every class")
     a, b = _pairs(fn(cases[0], 5, 4)), _pairs(fn(cases[0], 5, 4))
     if [set(t) for _, t in a] != [set(t) for _, t in b]:
@@ -887,7 +887,7 @@ def _(fn):
         res = {key: np.ma.masked_array(v) if key.startswith("param_") else np.array(v) for key, v in res.items()}
         got = _num(fn(res, k), "one_se_choice")
         if not np.isclose(got, want):
-            raise AssertionError(f"means {list(res['mean_test_score'])}, stds {list(res['std_test_score'])}, "
+            raise AssertionError(f"means {res['mean_test_score'].tolist()}, stds {res['std_test_score'].tolist()}, "
                                  f"{k} folds: expected C = {want}, got {got:g}")
 
 
