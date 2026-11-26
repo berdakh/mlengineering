@@ -910,6 +910,8 @@ _CFG_FIELDS = [("data_path", str, None), ("cutoff", str, None), ("horizon_days",
 def _t_run_config(cls):
     if not (isinstance(cls, type) and is_dataclass(cls)):
         raise AssertionError("RunConfig should be a class decorated with @dataclass")
+    if not fields(cls):
+        raise NotImplementedError
     names = [f.name for f in fields(cls)]
     if names != [n for n, _, _ in _CFG_FIELDS]:
         raise AssertionError(f"expected fields {[n for n, _, _ in _CFG_FIELDS]} in that order, got {names}")
@@ -1029,9 +1031,11 @@ def _cleanup_logger(name: str) -> None:
 def _t_setup_logging(fn):
     with tempfile.TemporaryDirectory() as tmp:
         log_file = Path(tmp) / "run.log"
+        quiet = io.StringIO()  # handlers to sys.stdout created inside fn write here, not into the notebook
         try:
-            lg = fn(log_file)
-            lg = fn(log_file)  # twice: must not duplicate handlers
+            with contextlib.redirect_stdout(quiet):
+                lg = fn(log_file)
+                lg = fn(log_file)  # twice: must not duplicate handlers
             if not isinstance(lg, logging.Logger) or lg.name != "churn":
                 raise AssertionError("setup_logging should return the logger named \"churn\"")
             with contextlib.redirect_stderr(io.StringIO()):
@@ -1059,7 +1063,8 @@ def _t_setup_logging(fn):
             if not any("WARNING" in ln and "hello warning" in ln for ln in lines):
                 raise AssertionError("the WARNING message is missing")
             _cleanup_logger("churn")
-            lg = fn(Path(tmp) / "debug.log", level="DEBUG")
+            with contextlib.redirect_stdout(quiet):
+                lg = fn(Path(tmp) / "debug.log", level="DEBUG")
             with contextlib.redirect_stderr(io.StringIO()):
                 lg.debug("now visible")
             for h in lg.handlers:

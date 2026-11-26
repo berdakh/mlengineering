@@ -61,6 +61,8 @@ from mlcourse.graders.w08 import work_dir, load_module, FEATUREKIT
 T = work_dir() / "testing"
 (T / "tests").mkdir(parents=True, exist_ok=True)
 (T / "featurekit.py").write_text(FEATUREKIT)
+# An (almost) empty pytest.ini marks T as the project root for pytest; see section 1.
+(T / "pytest.ini").write_text("[pytest]\n")
 sys.path.insert(0, str(T))
 print(FEATUREKIT)
 
@@ -111,6 +113,10 @@ clean_city("NEW   york")
 #
 # In a notebook, `!cd "{T}" && python -m pytest tests/test_demo.py -q` means: go into the project folder, then run
 # pytest on one file. Running from the project folder is what lets the tests `import featurekit`.
+#
+# pytest also looks upwards from there for a settings file (`pytest.ini`, or a `pyproject.toml` with a
+# `[tool.pytest.ini_options]` table) and treats the folder that has it as the **root** of the project. The setup cell
+# put a one-line `pytest.ini` in `T`, so pytest never picks up settings from some folder above.
 
 # %%
 %%writefile {T}/tests/test_demo.py
@@ -682,7 +688,7 @@ grade("w08.test_split_by_time", T / "tests" / "test_split_by_time.py")
 from mlcourse.graders.w08 import COLLEAGUE_FEATUREKIT
 
 (T / "colleague").mkdir(exist_ok=True)
-(T / "colleague" / "featurekit.py").write_text(COLLEAGUE_FEATUREKIT)
+_ = (T / "colleague" / "featurekit.py").write_text(COLLEAGUE_FEATUREKIT)
 
 # %%
 %%writefile {T}/tests/test_recency.py

@@ -525,3 +525,229 @@ register_quiz("w07.26_q5", "c",
               {"a": "Doubling the groups shrinks the width only by a factor of sqrt(2), to about 0.057.",
                "b": "That is less than double the groups; the width would barely change.",
                "d": "That would shrink the width to about 0.025, more than needed."})
+
+
+# ============================================================================= 27: error analysis and model choice
+
+
+@exercise("w07.add_bands", hint="out = df.copy(); out[f'{column}_band'] = pd.cut(out[column], bins=edges, "
+                                "labels=labels, right=False).")
+def _(fn):
+    df = pd.DataFrame({"distance_km": [0.0, 4.9, 5.0, 11.99, 12.0, 19.5, 20.0, 55.0], "x": range(8)})
+    before = df.copy()
+    got = fn(df, "distance_km", [0, 5, 12, 20, np.inf], ["0-5", "5-12", "12-20", "20+"])
+    assert df.equals(before), "add_bands changed its input: work on a copy"
+    assert "distance_km_band" in got.columns, "the new column should be called 'distance_km_band'"
+    want = ["0-5", "0-5", "5-12", "5-12", "12-20", "12-20", "20+", "20+"]
+    assert [str(v) for v in got["distance_km_band"]] == want, (
+        "some values fall in the wrong band: each band includes its left edge and excludes its right edge (right=False)")
+    got2 = fn(pd.DataFrame({"hour": [7, 8, 12, 17, 18, 21, 22]}), "hour", [8, 12, 18, 22], ["m", "a", "e"])
+    vals = [None if pd.isna(v) else str(v) for v in got2["hour_band"]]
+    assert vals == [None, "m", "a", "a", "e", "e", None], "values outside the edges should become missing (NaN)"
+    assert len(got) == len(df) and list(got["x"]) == list(df["x"]), "keep every row and every original column"
+
+
+def _ref_slice(df, by, threshold):
+    pred = (df["score"] >= threshold).astype(int)
+    rows = {}
+    for v, part in df.assign(_p=pred).groupby(by, observed=True, sort=True):
+        late, p = part["late"], part["_p"]
+        rows[v] = {"n": len(part), "late_rate": late.mean(),
+                   "recall": p[late == 1].mean() if (late == 1).any() else np.nan,
+                   "precision": late[p == 1].mean() if (p == 1).any() else np.nan,
+                   "error_rate": (p != late).mean()}
+    return pd.DataFrame.from_dict(rows, orient="index")
+
+
+def _toy_slices():
+    return pd.DataFrame({
+        "region": ["n", "n", "n", "n", "s", "s", "s", "e", "e", "w", "w", "w"],
+        "late":   [1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0],
+        "score":  [0.9, 0.2, 0.5, 0.1, 0.34, 0.2, 0.1, 0.6, 0.1, 0.35, 0.8, 0.36],
+    })
+
+
+@exercise("w07.slice_metrics", hint="Group by `by`; per group: n = size, late_rate = mean of late, recall among "
+                                    "late rows, precision among predicted rows (NaN when there are none).")
+def _(fn):
+    df = _toy_slices()
+    for threshold in (0.35, 0.5):
+        got = fn(df.copy(), "region", threshold=threshold) if threshold != 0.35 else fn(df.copy(), "region")
+        want = _ref_slice(df, "region", threshold)
+        assert isinstance(got, pd.DataFrame), "return a DataFrame"
+        for col in ["n", "late_rate", "recall", "precision", "error_rate"]:
+            assert col in got.columns, f"the table needs a column '{col}'"
+        assert list(got.index) == list(want.index), (f"the index should be the slice values, sorted: {list(want.index)}"
+                                                    f" (got {list(got.index)})")
+        for col in ["n", "late_rate", "recall", "precision", "error_rate"]:
+            a, b = got[col].astype(float).to_numpy(), want[col].astype(float).to_numpy()
+            ok = np.isclose(a, b, equal_nan=True)
+            if not ok.all():
+                i = int(np.argmin(ok))
+                hint = ""
+                if col == "recall" and np.isnan(b[i]):
+                    hint = " (a slice with no late rows has no recall: NaN)"
+                elif col == "precision" and np.isnan(b[i]):
+                    hint = " (a slice where nothing is predicted late has no precision: NaN)"
+                elif threshold == 0.35:
+                    hint = " (a score exactly at the threshold counts as predicted late)"
+                raise AssertionError(f"with threshold {threshold}, column '{col}' is wrong for slice "
+                                     f"'{want.index[i]}'{hint}")
+
+
+@exercise("w07.worst_slice", hint="Filter n >= min_n and metric not NaN; sort by the metric (direction from "
+                                  "higher_is_worse) and by n descending for ties.")
+def _(fn):
+    t = pd.DataFrame({"n": [325, 579, 231, 74, 12], "recall": [0.35, 0.25, 0.97, 0.95, 0.0],
+                      "error_rate": [0.16, 0.21, 0.46, 0.46, 0.5]}, index=["0-5", "5-12", "12-20", "20+", "tiny"])
+    assert fn(t) == "5-12", "the lowest recall among slices with at least 50 rows is not that one"
+    assert fn(t, min_n=10) == "tiny", "with min_n=10 the tiny slice qualifies"
+    assert fn(t, metric="error_rate", higher_is_worse=True) == "12-20", (
+        "for error_rate (higher is worse) with a tie between 12-20 and 20+, the larger slice should win")
+    assert fn(t, min_n=1000) is None, "when no slice is big enough, return None"
+    t2 = t.copy()
+    t2.loc["5-12", "recall"] = np.nan
+    assert fn(t2) == "0-5", "slices with a missing metric (NaN) should be skipped"
+
+
+@exercise("w07.top_mistakes", hint="Keep wrong predictions only; error label from the prediction; margin = "
+                                   "|score - threshold|; sort by margin descending; head(k).")
+def _(fn):
+    df = pd.DataFrame({"id": range(8), "late": [1, 0, 1, 0, 1, 0, 1, 0],
+                       "score": [0.05, 0.95, 0.30, 0.40, 0.90, 0.10, 0.36, 0.70]})
+    before = df.copy()
+    got = fn(df, k=3, threshold=0.35)
+    assert df.equals(before), "top_mistakes changed its input: work on a copy"
+    assert isinstance(got, pd.DataFrame) and len(got) == 3, "return a DataFrame with k=3 rows"
+    assert list(got["id"]) == [1, 7, 0], "wrong rows or wrong order: the largest margins first, only wrong predictions"
+    assert list(got["error"]) == ["false positive", "false positive", "false negative"], "the `error` labels are wrong"
+    assert np.allclose(got["margin"], [0.60, 0.35, 0.30]), "margin should be |score - threshold|"
+    allm = fn(df, k=100, threshold=0.35)
+    assert sorted(allm["id"]) == [0, 1, 2, 3, 7], "with a large k, return every wrong prediction (and only those)"
+    got5 = fn(df, k=2, threshold=0.5)
+    assert sorted(got5["id"]) == [0, 1], "the threshold argument must be used"
+
+
+@exercise("w07.group_residuals", hint="groupby(group): mean of late minus mean of score; sort descending; "
+                                      ".rename('residual').")
+def _(fn):
+    df = pd.DataFrame({"courier_id": [1, 1, 2, 2, 2, 3, 3, 4],
+                       "late": [1, 1, 0, 0, 1, 0, 1, 0],
+                       "score": [0.2, 0.4, 0.3, 0.3, 0.3, 0.5, 0.5, 0.1]})
+    got = fn(df)
+    assert isinstance(got, pd.Series), "return a Series"
+    assert got.name == "residual", "name the Series 'residual'"
+    want = (df.groupby("courier_id")["late"].mean() - df.groupby("courier_id")["score"].mean()).sort_values(ascending=False)
+    assert list(got.index) == list(want.index), "sort from the most positive residual to the most negative"
+    assert np.allclose(got.to_numpy(), want.to_numpy()), "residual = mean(late) - mean(score) per group"
+    got2 = fn(df.rename(columns={"courier_id": "region"}), group="region")
+    assert np.allclose(got2.sort_index().to_numpy(), want.sort_index().to_numpy()), "use the `group` argument"
+
+
+@exercise("w07.measure_latency", hint="Time n_repeats calls with time.perf_counter() for X.iloc[:1] and for X; "
+                                      "medians in ms; divide the batch median by len(X).")
+def _(fn):
+    calls = {"single": 0, "batch": 0}
+
+    def fake_predict(X):
+        if len(X) == 1:
+            calls["single"] += 1
+        else:
+            calls["batch"] += 1
+        time.sleep(0.004 + 0.0002 * len(X))
+    X = pd.DataFrame({"a": range(50)})
+    got = fn(fake_predict, X, n_repeats=5)
+    assert isinstance(got, dict) and {"single_ms", "batch_ms_per_row"} <= set(got), \
+        "return a dict with the keys 'single_ms' and 'batch_ms_per_row'"
+    assert calls == {"single": 5, "batch": 5}, f"expected 5 single-row and 5 batch calls, got {calls}"
+    assert 3.5 <= got["single_ms"] <= 15, (f"a single call takes about 4.2 ms here, you report {got['single_ms']:.3f}"
+                                           " (milliseconds = seconds * 1000)")
+    assert 0.25 <= got["batch_ms_per_row"] <= 0.6, (
+        f"the batch call takes about 14 ms for 50 rows (0.28 ms per row); you report {got['batch_ms_per_row']:.4f}")
+
+
+def _cand():
+    return pd.DataFrame({"model": ["logistic", "forest", "boosting"], "auc": [0.730, 0.801, 0.798],
+                         "diff_low": [-0.088, 0.0, -0.014], "diff_high": [-0.054, 0.0, 0.010],
+                         "single_ms": [0.8, 14.0, 2.0], "complexity": [1, 3, 2]})
+
+
+@exercise("w07.choose_model", hint="ok = table[table.diff_high >= 0]; sort by complexity, then single_ms; "
+                                   "take the first model.")
+def _(fn):
+    t = _cand()
+    assert fn(t.copy()) == "boosting", "logistic is detectably worse; of the rest, the simpler one should win"
+    t2 = t.copy()
+    t2.loc[0, ["diff_low", "diff_high"]] = [-0.03, 0.002]
+    assert fn(t2) == "logistic", "if logistic is not detectably worse, the simplest model should win"
+    t3 = t.copy()
+    t3["complexity"] = [1, 2, 2]
+    assert fn(t3) == "boosting", "on a complexity tie, the faster model should win"
+    t4 = t.copy()
+    t4.loc[2, ["diff_low", "diff_high"]] = [-0.03, -0.001]
+    assert fn(t4) == "forest", "when every other model is detectably worse, the best one remains"
+
+
+@exercise("w07.write_memo", hint="Build a list of lines with the four headings in order; format numbers with "
+                                 "f'{x:.3f}'; join with newlines.")
+def _(fn):
+    import re
+    t = _cand()
+    worst = "5-12 km trips, recall about 0.25"
+    memo = fn(t.copy(), "boosting", worst)
+    assert isinstance(memo, str), "return the memo as a string"
+    heads = ["## Decision", "## Evidence", "## Alternatives", "## Risks"]
+    lines = memo.splitlines()
+    pos = []
+    for h in heads:
+        hits = [i for i, line in enumerate(lines) if line.strip() == h]
+        assert hits, f"the heading '{h}' is missing (it must be on its own line)"
+        pos.append(hits[0])
+    assert pos == sorted(pos), "the four headings must appear in the order Decision, Evidence, Alternatives, Risks"
+    part = {h: "\n".join(lines[pos[i] + 1:(pos[i + 1] if i + 1 < 4 else len(lines))]) for i, h in enumerate(heads)}
+    assert "boosting" in part["## Decision"], "the Decision section should name the chosen model"
+    nums = [float(x) for x in re.findall(r"[-+]?\d+\.\d+", part["## Evidence"])]
+
+    def has(v, tol):
+        return any(abs(x - v) <= tol for x in nums)
+    assert has(0.798, 0.0005), "the Evidence section should give the chosen model's AUC with 3 decimals (0.798)"
+    assert has(-0.014, 0.0005) and has(0.010, 0.0005), "the Evidence section should give the difference interval"
+    assert has(2.0, 0.05), "the Evidence section should give the chosen model's single-row latency in ms"
+    for other in ["logistic", "forest"]:
+        assert other in part["## Alternatives"], f"the Alternatives section should mention '{other}'"
+    assert worst in part["## Risks"], "the Risks section should include the description of the weakest slice"
+    memo2 = fn(t.copy(), "forest", "north region")
+    assert "forest" in memo2.split("## Evidence")[0] and "0.801" in memo2, "the memo must follow the `choice` argument"
+
+
+register_quiz("w07.27_q1", "b",
+              "Nine rows cannot support a recall estimate (one more caught delivery changes it by a lot). Note it, "
+              "set a minimum slice size, and watch it as data grows.",
+              {"a": "Reacting to a 9-row slice is fitting noise, and it may hurt the other slices.",
+               "c": "Removing inconvenient data hides the problem from evaluation instead of solving it.",
+               "d": "The slice is far too small to support a claim about the whole region."})
+register_quiz("w07.27_q2", "d",
+              "Every change made after studying errors is a modelling decision; the test set must stay untouched "
+              "until the final, one-time evaluation.",
+              {"a": "Size is not the reason; even a big test set must not be used for tuning.",
+               "b": "Both should be representative; the point is which data you are allowed to learn from.",
+               "c": "Speed has nothing to do with it."})
+register_quiz("w07.27_q3", "c",
+              "The pattern points to a missing feature (courier skill). A courier-history feature computed only from "
+              "earlier deliveries can capture it without leakage.",
+              {"a": "No algorithm can use information that is not in its inputs.",
+               "b": "A global threshold change trades precision for recall everywhere; it does not fix the cause.",
+               "d": "Those couriers will still deliver parcels; hiding them from training makes the model worse for them."})
+register_quiz("w07.27_q4", "a",
+              "Timings have outliers from warm-up and background activity; the median of many repeats is a stable "
+              "summary.",
+              {"b": "The median is chosen for robustness, not to flatter the model.",
+               "c": "The mean can be computed; it is just pulled up by one slow call.",
+               "d": "One timing is the least reliable measurement of all."})
+register_quiz("w07.27_q5", "b",
+              "B's interval contains 0, so it is not detectably worse than A; it is simpler and faster, so the rule "
+              "picks B.",
+              {"a": "The rule deliberately does not chase a point estimate that is inside the noise.",
+               "c": "Overlap is not the criterion; the paired interval of B's difference contains 0, which makes B "
+                    "acceptable.",
+               "d": "Part of the interval being negative is expected; only an interval entirely below 0 excludes B."})
