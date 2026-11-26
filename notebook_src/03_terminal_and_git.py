@@ -111,7 +111,7 @@ print("wrote", practice / "server.log")
 !wc -l /tmp/shell-practice/server.log
 line_count = 240
 ### STARTER
-# !wc -l /tmp/shell-practice/server.log
+!wc -l /tmp/shell-practice/server.log
 line_count = None  # YOUR ANSWER HERE: a whole number
 ### END SOLUTION
 
