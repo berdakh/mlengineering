@@ -1,0 +1,8 @@
+flowchart LR
+  D["All labelled data"] --> S{"1. Hold out a test set<br/>the right way<br/>(whole groups / latest period)"}
+  S --> TR["Training part"]
+  S --> TE[("Test set<br/>locked away")]
+  TR --> CV["2. Search: every candidate<br/>cross-validated with<br/>GroupKFold / TimeSeriesSplit"]
+  CV --> RF["3. Refit the best candidate<br/>on the whole training part"]
+  RF --> ONE["4. Score ONCE on the test set:<br/>the number you report"]
+  TE --> ONE

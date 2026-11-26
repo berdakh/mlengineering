@@ -66,7 +66,7 @@ if not (SKAB / "MANIFEST.json").is_file():
     subprocess.run([sys.executable, "project/get_skab.py"], check=True)
 
 FLOW = "Volume Flow RateRMS"
-exp = pd.read_csv(SKAB / "valve1" / "1.csv", sep=";")
+exp = pd.read_csv(SKAB / "valve1" / "10.csv", sep=";")
 start = int(np.argmax(exp["anomaly"].to_numpy() == 1))
 print(exp.shape, "| anomaly starts at row", start)
 exp[[FLOW, "anomaly"]].describe().round(2)
@@ -90,11 +90,14 @@ ax.axvspan(0, 100, color="tab:green", alpha=0.15, label="burn-in (baseline)")
 ax.axvspan(start, len(exp), color="tab:red", alpha=0.10, label="labelled anomaly")
 ax.set_xlabel("reading (about 1 per second)")
 ax.set_ylabel("flow rate (L/min)")
-ax.set_title("SKAB valve1/1: flow rate")
+ax.set_title("SKAB valve1/10: flow rate")
 ax.legend(loc="lower left", fontsize=8)
 plt.show()
 
 # %% [markdown]
+# The flow sensor reports whole litres per minute, which is why the line jumps between 29 and 33. Around reading 600
+# the flow drops by about two litres per minute and stays low for about 300 readings: the fault.
+#
 # ## Exercise 1 · burn-in statistics
 #
 # Write `burn_in_stats(values, burn_in)` returning the tuple `(mean, std)` of the first `burn_in` values, as plain
@@ -167,7 +170,7 @@ def alarms(values, burn_in=100, threshold=3.0, min_run=5):
 grade("w09.alarms", alarms)
 
 # %% [markdown]
-# **See it.** The detector on valve1/1:
+# **See it.** The detector on valve1/10:
 
 # %%
 from mlcourse.graders.w09 import use
@@ -176,8 +179,12 @@ found = use(alarms, exp[FLOW].to_numpy())
 print(len(found), "alarm readings; first alarm at", found[0] if found else None, "| anomaly starts at", start)
 
 # %% [markdown]
-# The first alarm comes about 60 readings (about a minute) after the labelled start: the flow rate changes
-# gradually at first, and the persistence rule adds a few readings on top.
+# The first alarm comes 61 readings (about a minute) after the labelled start: the flow rate changes gradually at
+# first, and the persistence rule adds a few readings on top.
+#
+# **Try it.** Load `valve1/1.csv` instead (change the file name in the data cell above and re-run it and this
+# cell). This time there is no alarm at all: the fault is real, but the flow rate stays within three baseline
+# standard deviations for long enough runs. Not every fault shows up in every sensor.
 #
 # ## Exercise 4 · the scoring service
 #
