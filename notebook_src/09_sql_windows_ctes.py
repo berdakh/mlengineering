@@ -709,8 +709,7 @@ quiz("w03.09_q5", answer)
 #
 # ## Going further
 #
-# - Tool guide: [SQL (SQLite)](../docs/tools/sql.md), with a cheat sheet of
-#   window functions.
+# - Tool guide: [SQL (SQLite)](../docs/tools/sql.md), the reference for the SQL basics this notebook builds on.
 # - SQLite's own page on window functions: <https://www.sqlite.org/windowfunctions.html> (frames such as
 #   `ROWS BETWEEN 2 PRECEDING AND CURRENT ROW` give moving averages).
 # - Next: [10 · pandas essentials, side by side with SQL](10_pandas_essentials.ipynb).
