@@ -12,8 +12,8 @@ Used by: [w3d6](../../../labs/w3d6_error_analysis_transfer/README.md).
 Related: [H6.2 thresholds, imbalance, calibration](h6_2_thresholds_imbalance_calibration.md),
 [H5.2 metrics from decisions](../ch05_classical_ml_baselines/h5_2_metrics_from_decisions.md),
 [H1.2 units, labels, costs](../ch01_problem_formulation/h1_2_units_labels_costs_constraints.md).
-[H6.6 bootstrap and paired comparisons](h6_6_bootstrap_and_paired_comparisons.md). H6.5 (point versus
-event evaluation) is being written; the parts needed here are restated.
+[H6.6 bootstrap and paired comparisons](h6_6_bootstrap_and_paired_comparisons.md). [H6.5 point versus
+event evaluation](h6_5_point_vs_event_evaluation.md).
 
 ## H6.7.1 Overview
 

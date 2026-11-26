@@ -10,7 +10,7 @@ nav_order: 6
 Status: Reviewed (see H6.6.9 for what was executed and what is from memory).
 Used by: [w3d5](../../../labs/w3d5_uncertainty/README.md); relied on by
 [w3d6](../../../labs/w3d6_error_analysis_transfer/README.md) and Week 4 model choice.
-Related: H6.4 selection and nested validation (being written for w3d3),
+Related: [H6.4 selection and nested validation](h6_4_selection_and_nested_validation.md),
 [H6.7 error analysis](h6_7_error_analysis.md),
 [H1.2 units, labels, costs](../ch01_problem_formulation/h1_2_units_labels_costs_constraints.md).
 

@@ -1416,3 +1416,7 @@ register_quiz("w12.48_q4", "c",
               {"a": "A 200 with a wrong prediction hides the problem.",
                "b": "Silently replacing values guesses on the client's behalf.",
                "d": "A 500 blames the server for the client's mistake."})
+
+
+# Reference versions for `use()` in notebook 48, registered under the names the notebook uses.
+_REFERENCES.update(customer_summary=_ref_customer_summary, honest_score=_ref_group_cv, psi=_ref_psi)

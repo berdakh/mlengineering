@@ -113,10 +113,8 @@ grade("w12.final_pandas", customer_summary)
 # On the real shop (one way to check your function makes sense):
 
 # %%
-from mlcourse.graders.w12 import use
-from mlcourse.graders import w12 as _w12
+from mlcourse.graders.w12 import use   # use(): runs your function, or the course's version if yours is unfinished
 
-_w12._REFERENCES["customer_summary"] = _w12._ref_customer_summary   # so the cell runs even before you finish
 orders = sql("SELECT order_id, customer_id, order_date, status FROM orders")
 use(customer_summary, orders, "2025-09-30").describe().round(1)
 
@@ -165,13 +163,15 @@ grade("w12.final_grouped_cv", honest_score)
 # **Compare** (ungraded): the same pipeline with ordinary shuffled folds, which put rows of one machine on both sides.
 
 # %%
-_w12._REFERENCES["honest_score"] = _w12._ref_group_cv
 naive = cross_val_score(make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000)),
                         X_machines, y_machines, cv=KFold(5, shuffle=True, random_state=0)).mean()
 print(f"grouped: {use(honest_score, X_machines, y_machines, machine):.3f} | shuffled rows: {naive:.3f}")
 
 # %% [markdown]
-# Write one sentence for yourself: which number would you report for new machines, and why?
+# With the reference solution: 0.868 grouped, 0.885 with shuffled rows. The gap is small here because a linear model
+# cannot memorise machine fingerprints well; a flexible model (try `KNeighborsClassifier(1)` in place of the
+# pipeline) shows a much larger gap: 0.78 grouped against 0.93 shuffled. Write one sentence for yourself: which number would you report for new
+# machines, and why?
 #
 # ## Exercise 4 · a threshold from costs  (Week 5; notebook 19)
 #
@@ -307,7 +307,6 @@ grade("w12.final_psi", psi)
 # thumb reads PSI below 0.1 as little change and above 0.25 as a large shift; treat these as conventions, not laws.)
 
 # %%
-_w12._REFERENCES["psi"] = _w12._ref_psi
 spend = sql("""
 SELECT o.order_date, SUM(oi.quantity * oi.unit_price * (1 - oi.discount)) AS value
 FROM orders o JOIN order_items oi ON oi.order_id = o.order_id
@@ -318,6 +317,11 @@ first_half = spend.loc[spend["order_date"] < "2025-07-01", "value"]
 second_half = spend.loc[spend["order_date"] >= "2025-07-01", "value"]
 print(f"orders: {len(first_half)} then {len(second_half)} | PSI of order value: "
       f"{use(psi, first_half, second_half):.3f}")
+
+# %% [markdown]
+# With the reference solution: 1,163 orders in the first half and 2,514 in the second, and a PSI of 0.012. The shop
+# sold many more orders later in the year, but the *distribution* of order values barely moved: volume and
+# distribution are different questions.
 
 # %% [markdown]
 # ## Exercise 8 · a written judgement  (Weeks 7 and 12; notebooks 26, 27, 46)
