@@ -12,7 +12,7 @@ compute overlap groups and keep each group on one side; the frozen manifest v2 d
 redrawing the test set. And 235 rows have no single correct label, which bounds how well any
 detector can score near those boundaries.
 
-Evidence: `docs/guides/project.md` `notebooks/13_leakage.ipynb`
+Evidence: `docs/guides/project.md` `advanced/notebooks/13_leakage.ipynb`
 
 ## Q02
 
@@ -22,7 +22,7 @@ that is monotone in time is a leak of the experimental protocol, so `t` and time
 inputs. And any sensor model must be compared against the clock, not only against chance; I keep the
 clock as a sanity row in every evaluation table.
 
-Evidence: `notebooks/12_baselines_metrics.ipynb` `docs/maintainers/flowguard-spec.md`
+Evidence: `advanced/notebooks/12_baselines_metrics.ipynb` `docs/maintainers/flowguard-spec.md`
 
 ## Q03
 
@@ -32,7 +32,7 @@ test. I resample whole experiments for intervals, I made every selection decisio
 development experiments, and the test set got one look. What I can say is "clearly better than the
 clock and than chance", not "two points better than the alternative".
 
-Evidence: `labs/w4d5_model_choice/figures/test_look.csv` `notebooks/17_uncertainty.ipynb`
+Evidence: `labs/w4d5_model_choice/figures/test_look.csv` `advanced/notebooks/17_uncertainty.ipynb`
 
 ## Q04
 
@@ -42,7 +42,7 @@ faults came from fault families seen in training, but 0.636 when I held out the 
 A plant meets new fault types. A supervised model trained on labelled valve faults is supported by
 the labels for valve faults only, so I treated its win as narrow, not general.
 
-Evidence: `notebooks/20_classical_detectors.ipynb`
+Evidence: `advanced/notebooks/20_classical_detectors.ipynb`
 
 ## Q05
 
@@ -52,7 +52,7 @@ for the burn-in flow-rate z-score. So the neural model was neither better nor st
 justify its cost. With 34 labelled experiments and one-hertz signals I would not expect a large model
 to win; I would revisit it with far more recordings.
 
-Evidence: `notebooks/21_neural_comparison.ipynb`
+Evidence: `advanced/notebooks/21_neural_comparison.ipynb`
 
 ## Q06
 
@@ -62,7 +62,7 @@ pre-set rule called inconclusive against a minimum important difference of 0.05.
 370 bytes, needs only NumPy, scores a sample in a fraction of a millisecond and an engineer can read
 it. Choosing the simple model when evidence does not separate candidates is a decision I can defend.
 
-Evidence: `labs/w4d5_model_choice/figures/decision_table.csv` `notebooks/23_model_choice.ipynb`
+Evidence: `labs/w4d5_model_choice/figures/decision_table.csv` `advanced/notebooks/23_model_choice.ipynb`
 
 ## Q07
 
@@ -72,7 +72,7 @@ threshold 7.24, a 30-sample minimum duration. The test set got one look after th
 written. Nested validation on the same data showed how optimistic picking the best of many trials is,
 which is why the single test look matters.
 
-Evidence: `labs/w4d5_model_choice/figures/decision_table.csv` `notebooks/15_hyperparameter_selection.ipynb`
+Evidence: `labs/w4d5_model_choice/figures/decision_table.csv` `advanced/notebooks/15_hyperparameter_selection.ipynb`
 
 ## Q08
 
@@ -82,7 +82,7 @@ late, how many false alarms per hour. I also show why the common "point-adjust" 
 it lets almost any scorer look good. Event metrics do not fix leakage, though: the clock still finds
 3 of 7 test faults.
 
-Evidence: `notebooks/16_point_vs_event_evaluation.ipynb`
+Evidence: `advanced/notebooks/16_point_vs_event_evaluation.ipynb`
 
 ## Q09
 
@@ -92,7 +92,7 @@ flagged only 14-20 % of fault windows, so it is not a fault detector and I never
 one. Fault detection is the model's job; "is the model still good" needs delayed labels. Three
 monitors, three questions.
 
-Evidence: `notebooks/38_input_monitoring_drift.ipynb` `notebooks/39_drift_vs_degradation.ipynb`
+Evidence: `advanced/notebooks/38_input_monitoring_drift.ipynb` `advanced/notebooks/39_drift_vs_degradation.ipynb`
 
 ## Q10
 
@@ -102,7 +102,7 @@ not ready, and scoring falls back to a simple envelope rule with `degraded: true
 and a metric. I measured the cost: the fallback catches 2 of 7 test faults against 5 of 7 for the
 model, so degraded mode must be visible, never silent.
 
-Evidence: `notebooks/41_reliability.ipynb`
+Evidence: `advanced/notebooks/41_reliability.ipynb`
 
 ## Q11
 
@@ -112,7 +112,7 @@ response. I confirmed it from the installed source and by forcing TCP_NODELAY in
 median latency at 60 requests per second fell from 52 to 9.5 ms. The lesson: measure percentiles
 under load, change one thing, and confirm the mechanism before fixing.
 
-Evidence: `notebooks/34_latency_resources.ipynb`
+Evidence: `advanced/notebooks/34_latency_resources.ipynb`
 
 ## Q12
 
@@ -122,7 +122,7 @@ exactly zero over all 46,806 rows of the 35 experiments, and streaming replay ma
 1e-12. One finding: pandas' default CSV float parser is not round-trip exact, so the contract reads
 with `float_precision="round_trip"`.
 
-Evidence: `notebooks/30_project_milestone_2.ipynb` `notebooks/27_online_inference.ipynb`
+Evidence: `advanced/notebooks/30_project_milestone_2.ipynb` `advanced/notebooks/27_online_inference.ipynb`
 
 ## Q13
 
@@ -132,7 +132,7 @@ a 1e-14 difference flipped their flags. The caught faults were identical, but pe
 differed. In production that means a deterministic tie rule, a comparison that is documented as `>`
 or `>=`, and parity tests with tolerances chosen on purpose.
 
-Evidence: `notebooks/39_drift_vs_degradation.ipynb`
+Evidence: `advanced/notebooks/39_drift_vs_degradation.ipynb`
 
 ## Q14
 
@@ -142,7 +142,7 @@ monitor stayed quiet. The labelled estimate was "unknown" at first and still inc
 later because few events arrive. So the honest plan is: alert rate and score distribution as early
 proxies, labelled event recall with intervals as the verdict.
 
-Evidence: `notebooks/39_drift_vs_degradation.ipynb`
+Evidence: `advanced/notebooks/39_drift_vs_degradation.ipynb`
 
 ## Q15
 
@@ -152,7 +152,7 @@ at +0.143 with an interval from 0.000 to 0.429. Then shadow mode scores live tra
 it. A pitfall I found: the shadow traffic contained no "other" family, where all the candidate's false
 alarms were. Rollback is a registry pointer move, verified byte-identical.
 
-Evidence: `notebooks/40_model_updates_rollback.ipynb`
+Evidence: `advanced/notebooks/40_model_updates_rollback.ipynb`
 
 ## Q16
 
@@ -162,7 +162,7 @@ contradictory rows with whoever ran the testbed. Third, a supervised model per f
 proper leave-family-out evaluation, since the unseen-family result is the real risk. Fourth, run the
 monitoring stack on live data for weeks to calibrate alert thresholds.
 
-Evidence: `docs/guides/project.md` `notebooks/17_uncertainty.ipynb`
+Evidence: `docs/guides/project.md` `advanced/notebooks/17_uncertainty.ipynb`
 
 ## Q17
 
@@ -181,7 +181,7 @@ experiment are strongly correlated, and the deployment question is a new run. Ro
 cross-validation reported ROC-AUC 0.986; experiment-level gave 0.849 on the same development data. The
 cost is fewer, noisier folds and wider intervals - the price of measuring the right thing.
 
-Evidence: `notebooks/10_problem_framing_splits.ipynb`
+Evidence: `advanced/notebooks/10_problem_framing_splits.ipynb`
 
 ## Q19
 
@@ -191,7 +191,7 @@ a coverage simulation with clustered data showed the same. The cluster bootstrap
 experiments, keeps their internal dependence and gives intervals that cover. With 7 test
 experiments I also check intervals against exact binomial ones for event recall.
 
-Evidence: `notebooks/17_uncertainty.ipynb`
+Evidence: `advanced/notebooks/17_uncertainty.ipynb`
 
 ## Q20
 
