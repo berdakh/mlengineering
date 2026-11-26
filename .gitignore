@@ -29,3 +29,6 @@ labs/*/lab/results/
 solutions/labs/*/lab/results/
 labs/*/challenge/results/
 solutions/labs/*/challenge/results/
+
+# scratch folder created by the Week 8-9 notebooks
+/work/

@@ -1,0 +1,3 @@
+flowchart LR
+  A["majority class<br/>(DummyClassifier)<br/>predicts one answer"] --> B["one-feature rule<br/>e.g. no order for 90+ days"] --> C["logistic regression<br/>in a pipeline"] --> D["decision tree<br/>and beyond"]
+  A -. "every model must beat<br/>the one before it" .-> D

@@ -1,0 +1,10 @@
+flowchart TB
+  subgraph T["In a course"]
+    direction LR
+    T1["dataset given<br/>X, y ready"] --> T2["fit and validate"] --> T3["report test error<br/>E_out estimate"]
+  end
+  subgraph J["On the job"]
+    direction LR
+    J1["a decision someone<br/>has to make"] --> J2["frame it:<br/>unit, label, time, cost"] --> J3["assemble the table<br/>from the database"] --> J4["baselines, models,<br/>validation"] --> J5["pick a threshold<br/>from costs"] --> J6["act, then measure<br/>what really happened"]
+  end
+  T ~~~ J

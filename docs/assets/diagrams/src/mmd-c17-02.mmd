@@ -1,0 +1,2 @@
+flowchart LR
+  A["feature window<br/>everything up to the cutoff<br/>(features come from here)"] --> B(["cutoff = prediction time<br/>score customers, decide"]) --> C["label window<br/>cutoff + 1 day ... cutoff + 90 days<br/>(the label comes from here)"] --> D["label known<br/>check the decision"]

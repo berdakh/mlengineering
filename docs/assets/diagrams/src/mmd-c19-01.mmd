@@ -1,0 +1,8 @@
+flowchart LR
+  S["model score<br/>per customer<br/>(0 to 1)"] --> T{"score at least<br/>the threshold?"}
+  T -- "yes" --> C["contact"]
+  T -- "no" --> N["do nothing"]
+  C --> TP["churner: TP<br/>saved some of the time"]
+  C --> FP["stayer: FP<br/>wasted call"]
+  N --> FN["churner: FN<br/>lost customer"]
+  N --> TN["stayer: TN<br/>no cost"]
