@@ -22,15 +22,14 @@ notebooks, graded inside the notebook, Colab first. See [how it is designed](pro
 
 | Weeks | State |
 |---|---|
-| 1-9 | Written and verified (below): 327 graded exercises and 170 quiz questions in 36 notebooks |
-| 10-12 | Being written; this page is updated when each week passes verification |
+| 1-12 | Written and verified (below): 427 graded exercises and 228 quiz questions in 48 notebooks |
 
 ### What is verified
 
 * **Every exercise is gradable, and no starter passes.** `python tools/verify_notebooks.py` executes both copies of
   each notebook with a Jupyter kernel: the solved copy (`solutions/notebooks/`) must pass every grader with no cell
   errors, and the student copy (`notebooks/`) must fail every grader, raising nothing but `NotImplementedError`.
-  Weeks 1-9 pass.
+  All 48 notebooks pass.
 * **Graders reject typical mistakes.** While writing each week, its author fed the graders plausible wrong answers
   (off-by-one boundaries, counting cancelled orders, random folds where grouped folds were needed, leaky
   scores, tests that miss a planted bug) and checked that each was rejected with a message that does not give the
@@ -46,8 +45,11 @@ notebooks, graded inside the notebook, Colab first. See [how it is designed](pro
    estimates, not measurements, and no lesson has been tested on a learner.
 2. **Colab runs are not automated.** Notebooks are executed with a local Jupyter kernel on Linux with Python 3.13.
    The setup cell is written for Colab and Colab's installed packages; a change on Colab's side can break it.
-3. **Weeks 10-11 local steps** (installing VS Code, Python, Git and Docker on each operating system) are written
-   from the official documentation; their graded parts run in Colab and are verified, the local steps are not.
+3. **Weeks 10-11 local steps.** Installing VS Code, Python, Git and Docker on each operating system is written
+   from the official documentation and was not tried on each system. Docker images in Week 10 were built and run
+   on Linux, and the quoted outputs come from those runs. The example GitHub Actions workflows passed `actionlint`
+   and their commands passed locally, but the workflows were not run on GitHub. The AWS commands in Week 11 were
+   never run (no cloud resources were created), and the prices in its examples are invented for practice.
 4. **The site** is built by GitHub Pages from `docs/`. A local Jekyll build is used to check it, but the published
    site could not be opened from the authoring environment.
 5. **One authoring pass by AI authors, then independent re-verification.** Explanations have not had an
