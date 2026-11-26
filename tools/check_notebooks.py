@@ -66,8 +66,16 @@ def check_notebook(path: Path) -> list[str]:
         if kind == "code":
             if cell.get("outputs"):
                 problems.append(f"cell {number}: has saved outputs (should be cleared)")
-            # Skip magics/shell lines, which are not valid Python.
-            code = "\n".join("pass" if MAGIC.match(line) else line for line in source.split("\n"))
+            # A cell magic (%%writefile, %%bash, ...) makes the whole body non-Python, except a
+            # %%writefile of a .py file, whose body is checked. Line magics and shell lines (% or !)
+            # become `pass` at the same indentation so the surrounding Python still parses.
+            first, _, body = source.partition("\n")
+            if first.lstrip().startswith("%%"):
+                if not (first.split()[0] == "%%writefile" and first.rstrip().endswith(".py")):
+                    continue
+                source = body
+            code = "\n".join(line[: len(line) - len(line.lstrip())] + "pass" if MAGIC.match(line) else line
+                             for line in source.split("\n"))
             try:
                 ast.parse(code)
             except SyntaxError as exc:
