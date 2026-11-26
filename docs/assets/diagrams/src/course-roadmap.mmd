@@ -1,0 +1,14 @@
+flowchart TB
+  subgraph A ["Foundations"]
+    direction LR
+    W1["Week 1<br/>Colab · Python<br/>terminal · Git"] --> W2["Week 2<br/>SQL from zero"] --> W3["Week 3<br/>advanced SQL<br/>pandas · cleaning"] --> W4["Week 4<br/>EDA · features<br/>scikit-learn pipelines"]
+  end
+  subgraph B ["Applied ML done right"]
+    direction LR
+    W5["Week 5<br/>framing · baselines<br/>metrics"] --> W6["Week 6<br/>validation<br/>leakage"] --> W7["Week 7<br/>models · uncertainty<br/>project milestone 1"]
+  end
+  subgraph C ["Shipping and operating"]
+    direction LR
+    W8["Week 8<br/>packages · pytest<br/>logging"] --> W9["Week 9<br/>FastAPI<br/>milestone 2"] --> W10["Week 10<br/>VS Code · Docker<br/>CI"] --> W11["Week 11<br/>cloud · monitoring<br/>milestone 3"] --> W12["Week 12<br/>capstone<br/>interviews"]
+  end
+  A --> B --> C
