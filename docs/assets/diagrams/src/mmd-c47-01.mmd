@@ -1,0 +1,9 @@
+flowchart LR
+  G["1 · goal and<br/>constraints"] --> D["2 · data<br/>and labels"]
+  D --> B["3 · baseline"]
+  B --> M["4 · model"]
+  M --> E["5 · offline<br/>evaluation"]
+  E --> S["6 · serving"]
+  S --> O["7 · monitoring"]
+  O --> R["8 · rollback<br/>and updates"]
+  O -. "drift, new labels" .-> D

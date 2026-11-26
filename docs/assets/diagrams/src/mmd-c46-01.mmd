@@ -1,0 +1,7 @@
+flowchart TB
+  P["one project,<br/>one set of numbers"] --> R["README<br/>a visitor: what is it,<br/>does it work, how to run"]
+  P --> T["technical report<br/>a reviewer: question, data,<br/>method, results, limits"]
+  P --> C["model card<br/>a would-be user: intended use,<br/>out of scope, risks"]
+  R --> X["every number with an interval,<br/>every claim inside the evidence"]
+  T --> X
+  C --> X

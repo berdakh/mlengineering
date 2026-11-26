@@ -1,0 +1,8 @@
+flowchart LR
+  D["SKAB files<br/>+ frozen manifest v2"] --> S["1 · split<br/>27 dev, 7 test<br/>no group crosses"]
+  S --> Z["2 · causal scores<br/>burn-in |z|"]
+  Z --> E["3 · evaluation<br/>PR-AUC, events,<br/>bootstrap over experiments"]
+  E --> J["4 · detector.json<br/>params + metadata<br/>+ sha256"]
+  J --> W["5 · score_window<br/>(what POST /score calls)"]
+  W --> L["request log"]
+  L --> M["6 · monitoring summary<br/>errors, latency,<br/>alarm rate, input shift"]

@@ -1,0 +1,10 @@
+flowchart LR
+  T["7 test experiments<br/>e1 e2 e3 e4 e5 e6 e7"] --> R1["resample 1<br/>e3 e3 e1 e7 e5 e2 e5"]
+  T --> R2["resample 2<br/>e6 e1 e1 e4 e2 e7 e3"]
+  T --> R3["... 1,000 resamples"]
+  R1 --> M1["metric"]
+  R2 --> M2["metric"]
+  R3 --> M3["metric"]
+  M1 --> P["2.5th and 97.5th<br/>percentiles = 95% interval"]
+  M2 --> P
+  M3 --> P

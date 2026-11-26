@@ -12,11 +12,11 @@ under different names. This guide covers what Week 11 uses (notebook 41) and wha
 prediction API **if and when you decide to**.
 
 {: .warning }
-> **Read this first.** Nothing in the course creates cloud resources, and you do not need an AWS account to finish
-> it. Everything below that creates a resource **costs money** from the moment it exists, until you delete it.
-> Follow the steps only if you understand the bill, have a budget alert in place, and will tear everything down
-> afterwards. Never expose a service to the internet without a reason and someone's agreement. Prices and free-tier
-> terms change: always read AWS's current pricing pages; this guide quotes no prices on purpose.
+**Read this first.** Nothing in the course creates cloud resources, and you do not need an AWS account to finish
+it. Everything below that creates a resource **costs money** from the moment it exists, until you delete it.
+Follow the steps only if you understand the bill, have a budget alert in place, and will tear everything down
+afterwards. Never expose a service to the internet without a reason and someone's agreement. Prices and free-tier
+terms change: always read AWS's current pricing pages; this guide quotes no prices on purpose.
 
 ## What it is, and why teams use it
 
@@ -66,8 +66,8 @@ explains the choice in more depth.
 
 1. **Secure the root user**: turn on MFA (a phone authenticator app), and do not create access keys for it.
 2. **Create a budget with an alert.** In the console: *Billing and Cost Management → Budgets → Create budget*,
-   choose a monthly cost budget, a small amount, and your email for alerts. Budgets themselves are free to
-   create (check the current Budgets pricing page); they alert, they do **not** stop spending.
+   choose a monthly cost budget, a small amount, and your email for alerts. Check the current AWS Budgets
+   pricing page for what a budget itself costs. A budget alerts; it does **not** stop spending.
 3. **Set up IAM Identity Center** and create a user for yourself with a permission set, then sign in through it
    for daily work.
 4. **Pick one region** and use it everywhere.
