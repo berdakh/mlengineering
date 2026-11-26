@@ -83,6 +83,26 @@ def show_tree(path, prefix: str = "") -> None:
             show_tree(p, prefix + ("    " if last else "│   "))
 
 
+def install_project(project) -> bool:
+    """`pip install -q -e project` with the notebook's own Python, once pyproject.toml is finished.
+
+    This is what `%pip install -q -e "<folder>"` does; the helper only adds the check that you finished the file,
+    so an unfinished exercise never installs a half-written project.
+    """
+    project = Path(project)
+    toml = project / "pyproject.toml"
+    if not toml.is_file() or "YOUR CODE HERE" in toml.read_text():
+        print(f"Not installed: finish {toml} first.")
+        return False
+    proc = subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-e", str(project)],
+                          capture_output=True, text=True)
+    noise = ("Running pip as the 'root' user", "[notice]")
+    lines = [ln for ln in (proc.stdout + proc.stderr).splitlines() if ln.strip() and not any(n in ln for n in noise)]
+    print("\n".join(lines) if lines else f"installed {project.name} in editable mode")
+    importlib.invalidate_caches()
+    return proc.returncode == 0
+
+
 def _project(answer) -> Path:
     if not isinstance(answer, (str, Path)):
         raise AssertionError("pass the project FOLDER (a path), for example grade(..., PROJECT)")

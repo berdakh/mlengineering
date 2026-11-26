@@ -462,7 +462,8 @@ grade("w08.report_module", PROJECT)
 # depend on where you stand. Installing takes 10-30 seconds.
 
 # %%
-%%writefile {DEMO}/pyproject.toml
+# A TOML file is not Python, so we write it from Python: a triple-quoted string keeps the line breaks.
+(DEMO / "pyproject.toml").write_text("""\
 [build-system]
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
@@ -473,6 +474,8 @@ version = "0.1.0"
 description = "Demo package"
 requires-python = ">=3.9"
 dependencies = []
+""")
+print((DEMO / "pyproject.toml").read_text())
 
 # %%
 %pip install -q -e "{DEMO}"
@@ -496,7 +499,7 @@ dependencies = []
 # `dependencies` listing pandas (for example `"pandas>=2.0"`).
 
 # %%
-%%writefile {PROJECT}/pyproject.toml
+(PROJECT / "pyproject.toml").write_text("""\
 ### BEGIN SOLUTION
 [build-system]
 requires = ["setuptools>=61"]
@@ -511,19 +514,23 @@ dependencies = ["pandas>=2.0"]
 ### STARTER
 # YOUR CODE HERE: [build-system] and [project]
 ### END SOLUTION
+""")
 
 # %%
 grade("w08.pyproject", PROJECT)
 
 # %% [markdown]
-# Now install it. The cell checks first that you finished the file, so it does not try to install an empty project.
+# Now install it. `install_project(PROJECT)` runs exactly `%pip install -q -e "{PROJECT}"`, after checking that you
+# finished `pyproject.toml` (so an unfinished exercise never installs a half-written project). Then a fresh Python,
+# started in `/tmp`, imports it.
 
 # %%
-if "YOUR CODE HERE" in (PROJECT / "pyproject.toml").read_text():
-    print("Finish Exercise 7 first.")
-else:
-    %pip install -q -e "{PROJECT}"
-    !cd /tmp && python -c "import shopfeat; print('shopfeat', shopfeat.__version__, 'from', shopfeat.__file__)"
+from mlcourse.graders.w08 import install_project
+
+install_project(PROJECT)
+
+# %%
+!cd /tmp && python -c "import shopfeat; print('shopfeat', shopfeat.__version__, 'from', shopfeat.__file__)"
 
 # %% [markdown]
 # ### Exercise 8 · what did pip install?
@@ -588,10 +595,8 @@ def main(argv=None):
     return 0
 
 # %%
-%%writefile -a {DEMO}/pyproject.toml
-
-[project.scripts]
-tinycount = "tinytools.cli:main"
+with open(DEMO / "pyproject.toml", "a") as fh:      # "a" = append to the end of the file
+    fh.write('\n[project.scripts]\ntinycount = "tinytools.cli:main"\n')
 
 # %%
 (WORK / "demo" / "poem.txt").write_text("the cat and the hat and the bat\n")
@@ -600,7 +605,7 @@ tinycount = "tinytools.cli:main"
 !tinycount --help
 
 # %% [markdown]
-# `%%writefile -a` **appends** to a file instead of replacing it. The first command printed
+# Opening a file with mode `"a"` **appends** to it instead of replacing it. The first command printed
 # `{"words": 8, "top": [["the", 3], ["and", 2]]}`; `--help` shows the usage message argparse built for you.
 #
 # **Try it.** Run `!tinycount` with no file name. Read the error: argparse tells the user exactly what is missing.
@@ -664,14 +669,15 @@ grade("w08.cli_main", PROJECT)
 # running `main` from `shopfeat/cli.py`.
 
 # %%
-%%writefile -a {PROJECT}/pyproject.toml
+with open(PROJECT / "pyproject.toml", "a") as fh:
+    fh.write("""
 ### BEGIN SOLUTION
-
 [project.scripts]
 shopfeat-summary = "shopfeat.cli:main"
 ### STARTER
 # YOUR CODE HERE: the [project.scripts] table
 ### END SOLUTION
+""")
 
 # %%
 grade("w08.entry_point", PROJECT)
@@ -680,18 +686,19 @@ grade("w08.entry_point", PROJECT)
 # The `pyproject.toml` changed, so re-install, then run your command like any other program:
 
 # %%
-if "YOUR CODE HERE" in (PROJECT / "pyproject.toml").read_text():
-    print("Finish Exercises 7 and 10 first.")
-else:
-    %pip install -q -e "{PROJECT}"
-    !shopfeat-summary "{WORK}/data/orders.csv" "{WORK}/data/order_items.csv" --cutoff 2025-06-30
+install_project(PROJECT)
+
+# %%
+!shopfeat-summary "{WORK}/data/orders.csv" "{WORK}/data/order_items.csv" --cutoff 2025-06-30
+
+# %%
 show_tree(PROJECT)
 
 # %% [markdown]
 # You should see `{"cutoff": "2025-06-30", "active_customers": 655, "total_spent": 124301.0}` and a tree with
 # `pyproject.toml` and `src/shopfeat/` holding four modules. That is a real, installable Python package.
 #
-# **Re-running this notebook.** If you run the Exercise 10 cell twice, `%%writefile -a` appends the table twice and
+# **Re-running this notebook.** If you run the Exercise 10 cell twice, it appends the table twice and
 # the TOML becomes invalid ("Cannot declare ... twice"). Re-run the Exercise 7 cell first: it rewrites the file from
 # scratch.
 
