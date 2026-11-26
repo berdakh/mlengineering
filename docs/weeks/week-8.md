@@ -20,12 +20,12 @@ Six core days of about **2 hours** each (plus an optional hour), and one lighter
 
 | Day | Session | Notebook | Deliverable |
 |---|---|---|---|
-| 1 | **Project completion audit: reproduce from a clean clone** | [`43_project_completion`](../notebooks/43_project_completion.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/43_project_completion.ipynb) | Clean-clone reproduction log; gap list closed or explicitly scoped out. |
-| 2 | **Technical report and model limitations** | [`44_report_limitations`](../notebooks/44_report_limitations.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/44_report_limitations.ipynb) | 4-page report, model card, limitations. |
-| 3 | **ML system design** | [`45_system_design`](../notebooks/45_system_design.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/45_system_design.ipynb) | Two written designs scored against the rubric. |
-| 4 | **Coding and SQL interviews, timed** | [`46_coding_interviews`](../notebooks/46_coding_interviews.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/46_coding_interviews.ipynb) | Timed set results and an error log by pattern. |
-| 5 | **Explaining the project and defending tradeoffs** | [`47_project_explanation`](../notebooks/47_project_explanation.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/47_project_explanation.ipynb) | Recorded walkthrough + written answers to ten hard questions. |
-| 6 | **Final independent assessment** | [`48_final_assessment`](../notebooks/48_final_assessment.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/48_final_assessment.ipynb) | Final assessment submission. |
+| 1 | **Project completion audit: reproduce from a clean clone** | [`43_project_completion`](../notebooks/43_project_completion.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/43_project_completion.ipynb) | Clean-clone reproduction log; gap list closed or explicitly scoped out. |
+| 2 | **Technical report and model limitations** | [`44_report_limitations`](../notebooks/44_report_limitations.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/44_report_limitations.ipynb) | 4-page report, model card, limitations. |
+| 3 | **ML system design** | [`45_system_design`](../notebooks/45_system_design.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/45_system_design.ipynb) | Two written designs scored against the rubric. |
+| 4 | **Coding and SQL interviews, timed** | [`46_coding_interviews`](../notebooks/46_coding_interviews.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/46_coding_interviews.ipynb) | Timed set results and an error log by pattern. |
+| 5 | **Explaining the project and defending tradeoffs** | [`47_project_explanation`](../notebooks/47_project_explanation.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/47_project_explanation.ipynb) | Recorded walkthrough + written answers to ten hard questions. |
+| 6 | **Final independent assessment** | [`48_final_assessment`](../notebooks/48_final_assessment.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/48_final_assessment.ipynb) | Final assessment submission. |
 | 7 | **Retrospective and evidence portfolio (light)** | [review below](#day-7--review-and-catch-up) | Evidence portfolio index and personal next-steps plan. |
 
 ## What each day is for
@@ -98,7 +98,7 @@ Three rules keep the chain honest:
 
 #### 2.2 Where evidence could have come from
 
-![A grid of ten target capabilities by eight weeks: capabilities 1-2 in week 2, 3 in weeks 2-3, 4 in weeks 3-4, 5 and 7 in week 5, 6 in every week, 8 in week 6, 9 in weeks 6-7, 10 in weeks 4 and 8](https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d7_retrospective/figures/capability_weeks.svg)
+![A grid of ten target capabilities by eight weeks: capabilities 1-2 in week 2, 3 in weeks 2-3, 4 in weeks 3-4, 5 and 7 in week 5, 6 in every week, 8 in week 6, 9 in weeks 6-7, 10 in weeks 4 and 8](https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d7_retrospective/figures/capability_weeks.svg)
 
 *Parsed from the "What the course is for" table in [ROADMAP.md](../guides/program-design.html). A filled cell is
 an opportunity for evidence, not evidence: your portfolio decides which cells became real.*

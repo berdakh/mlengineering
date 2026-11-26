@@ -4,7 +4,7 @@
      The commit is the course-repository commit the reference was built from; the tag is illustrative
      (no tag was created in the course repository). -->
 
-Repository: https://github.com/berdakh/mlengineering-
+Repository: https://github.com/berdakh/mlengineering
 Commit: 3734c415dc7e
 Tag: v0.6.0-rc1
 Build command: `make model RAW=data/raw/skab`

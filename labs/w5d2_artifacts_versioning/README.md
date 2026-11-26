@@ -1,6 +1,6 @@
 # 26 · Model artifacts, metadata and versioning — lab files
 
-**The lesson is notebook [`26_artifacts_versioning`](../../notebooks/26_artifacts_versioning.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/26_artifacts_versioning.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/26_artifacts_versioning.ipynb)).
+**The lesson is notebook [`26_artifacts_versioning`](../../notebooks/26_artifacts_versioning.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/26_artifacts_versioning.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/26_artifacts_versioning.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

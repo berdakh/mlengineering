@@ -1,6 +1,6 @@
 # 13 · Leakage: a taxonomy and prevention by construction — lab files
 
-**The lesson is notebook [`13_leakage`](../../notebooks/13_leakage.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/13_leakage.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/13_leakage.ipynb)).
+**The lesson is notebook [`13_leakage`](../../notebooks/13_leakage.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/13_leakage.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/13_leakage.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

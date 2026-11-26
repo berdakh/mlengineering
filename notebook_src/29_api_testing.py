@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/29_api_testing.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/29_api_testing.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -93,7 +93,7 @@ print("repo root:", REPO_ROOT)
 # A service has more ways to be wrong than a function, so it gets more layers of tests. Each layer
 # answers a different question and has a different cost.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-29-01.svg" alt="Diagram 1 of notebook 29" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-29-01.svg" alt="Diagram 1 of notebook 29" style="max-width:100%">
 #
 # * **Unit tests** check the scoring arithmetic and the bundle loader directly. They are fast and
 #   precise but know nothing about HTTP.
@@ -176,7 +176,7 @@ print("repo root:", REPO_ROOT)
 #   traffic (w6d5, w7d5). A readiness probe that answers 200 before the model is loaded sends real
 #   traffic to a process that can only fail.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-29-02.svg" alt="Diagram 2 of notebook 29" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-29-02.svg" alt="Diagram 2 of notebook 29" style="max-width:100%">
 #
 # ### 2.5 Concurrency: what runs at the same time
 #
@@ -210,7 +210,7 @@ print("repo root:", REPO_ROOT)
 # ```
 #
 # <a id="figure-1"></a>
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d5_api_testing/figures/race_fraction.svg" alt="With one client thread the buggy service is always right; from two threads on, 44-82 % of responses belong to another request" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d5_api_testing/figures/race_fraction.svg" alt="With one client thread the buggy service is always right; from two threads on, 44-82 % of responses belong to another request" width="100%">
 #
 # *Figure 1 (worked-example service, real runs).* Fraction of 96 responses that carry another request's
 # result, by number of client threads; band = range over 3 repeats. The correct service is never wrong.
@@ -378,14 +378,14 @@ print("repo root:", REPO_ROOT)
 # seconds and kills 12 of 12 defects. Record which test killed which defect in a comment at the top of
 # each test file; you will need that list for the assessment.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d5_api_testing/figures/kill_matrix.svg" alt="Kill matrix: the starter and a happy-path suite kill 0 of 12 defects, a status-code suite 7, the full suite without its concurrency test 11, the reference suite 12" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d5_api_testing/figures/kill_matrix.svg" alt="Kill matrix: the starter and a happy-path suite kill 0 of 12 defects, a status-code suite 7, the full suite without its concurrency test 11, the reference suite 12" width="100%">
 #
 # <a id="figure-2"></a>*Figure 2 (real runs of the grader).* Rows are test suites, columns the 12
 # defects; dark cells are kills. A status-code-only suite misses every defect in the *content* of a 200
 # response. The reference suite without its single concurrency test kills 11. Plot your own suite's
 # row mentally before looking at the hints.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d5_api_testing/figures/predict_latency.svg" alt="Time per /predict request through TestClient: about 1-1.5 ms median up to 100 values, 2.5 ms at 1,000 and 5 ms at 3,600" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d5_api_testing/figures/predict_latency.svg" alt="Time per /predict request through TestClient: about 1-1.5 ms median up to 100 values, 2.5 ms at 1,000 and 5 ms at 3,600" width="100%">
 #
 # *Figure 3 (real run, in-process, one machine; noisy).* Time per request through `TestClient`, 200
 # requests per batch size after warm-up. Median 1.2 ms for one value, 2.5 ms for 1,000, 5.0 ms for

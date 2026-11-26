@@ -9,8 +9,8 @@ nav_order: 3
 # 03 · From script to installable package: project structure and environments
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/03_package_structure.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/03_package_structure.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/03_package_structure.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/03_package_structure.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 3
 
 ---
 
-**Week 1 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w1d3_package_structure/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d3_package_structure/)
+**Week 1 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w1d3_package_structure/`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d3_package_structure/)
 
 **Objective.** Turn a notebook-export script into a src-layout package with pyproject.toml, an isolated environment, an editable install and a console entry point, proving behaviour is preserved.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -139,7 +139,7 @@ Consequences you have certainly met:
 *Installing* a package means making it findable through step 4, which is the only step
 that does not depend on where you are standing or how you started Python.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-03-01.svg" alt="Diagram 1 of notebook 03" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-03-01.svg" alt="Diagram 1 of notebook 03" style="max-width:100%">
 
 *An import is a search over `sys.path`, in order. "Works from the repo root, fails elsewhere" means entry 0 found your code and nothing else would have.*
 
@@ -214,7 +214,7 @@ dependencies or entry points in `pyproject.toml`, re-run `pip install -e .`. An 
 install is a development convenience, not a deployment mechanism — images and servers get
 a regular install (week 6).
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-03-02.svg" alt="Diagram 2 of notebook 03" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-03-02.svg" alt="Diagram 2 of notebook 03" style="max-width:100%">
 
 *What an editable install does. The frontend orchestrates; the backend knows how to build your project.*
 
@@ -250,11 +250,11 @@ week 6, a service image (locked).
 - A characterization run is a pilot recording: before changing the rig, record what the
   current rig produces, so later differences can be attributed.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d3_package_structure/figures/pump_signal_spectrum.svg" alt="SYNTHETIC pump data: a healthy and a faulty window of unit P09 in time and frequency; the faulty window has an extra peak at 90 Hz inside the bp_high band" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w1d3_package_structure/figures/pump_signal_spectrum.svg" alt="SYNTHETIC pump data: a healthy and a faulty window of unit P09 in time and frequency; the faulty window has an extra peak at 90 Hz inside the bp_high band" width="100%">
 
 *SYNTHETIC data. The features you will move into `pumpwatch.features` are standard window features from signal processing: here `bp_high` picks up the 90 Hz fault component and `bp_low` the shaft rotation near 25 Hz. Regenerate with `python labs/w1d3_package_structure/figures/make_figures.py`.*
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d3_package_structure/figures/unit_vs_fault.svg" alt="SYNTHETIC pump data: per-unit strip plots; mean rms per unit ranges from 0.36 to 1.27 while healthy and faulty windows overlap, and the bp_high/bp_low ratio separates the classes within every faulty unit" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w1d3_package_structure/figures/unit_vs_fault.svg" alt="SYNTHETIC pump data: per-unit strip plots; mean rms per unit ranges from 0.36 to 1.27 while healthy and faulty windows overlap, and the bp_high/bp_low ratio separates the classes within every faulty unit" width="100%">
 
 *SYNTHETIC data. Left: mean `rms` per unit runs from 0.36 to 1.27, a wider spread than the healthy-versus-faulty gap (0.81 versus 1.01 on average), which is why the split is by unit, as it would be by subject in a medical study. Right: a ratio of band powers cancels the unit gain.*
 
@@ -295,7 +295,7 @@ produced this?" has an answer: a version.
 ## 3. Worked example: `room_report.py` → `tempstats`
 
 A deliberately tiny, different problem so the lab is not a copy exercise.
-Files: [`example/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d3_package_structure/example).
+Files: [`example/`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d3_package_structure/example).
 
 **Dataset (SYNTHETIC).** `example/data/room_temps.csv`, 72 rows, hourly readings for
 three rooms over one day, two missing values.
@@ -306,7 +306,7 @@ three rooms over one day, two missing values.
 | `timestamp` | ISO-8601 str | hourly, 2026-03-02 |
 | `temp_c` | float, nullable | temperature in °C |
 
-**Before** — [`example/before/room_report.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d3_package_structure/example/before/room_report.py):
+**Before** — [`example/before/room_report.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d3_package_structure/example/before/room_report.py):
 
 ```python
 !python labs/w1d3_package_structure/example/before/room_report.py
@@ -324,7 +324,7 @@ Now run it from somewhere else — `cd /tmp && python /path/to/.../before/room_r
 and it fails with `FileNotFoundError`: the data path is relative to the *working
 directory*, not to the script.
 
-**After** — [`example/after/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d3_package_structure/example/after): `pyproject.toml`, `src/tempstats/stats.py`,
+**After** — [`example/after/`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d3_package_structure/example/after): `pyproject.toml`, `src/tempstats/stats.py`,
 `src/tempstats/cli.py`.
 
 ```bash
@@ -368,13 +368,13 @@ versions in `docs/maintainers/tested-versions.md`.
 
 ## 4. Guided lab
 
-Workspace: [`lab/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d3_package_structure/lab/README.md). Starter material: `messy_analysis.py` (the script),
+Workspace: [`lab/`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d3_package_structure/lab/README.md). Starter material: `messy_analysis.py` (the script),
 `stubs/` (module contracts), `REFACTOR_LOG.md` (template), `compare_to_golden.py`.
 
 **Result to produce:** an installed `pumpwatch` command that reproduces the script's
 metrics from any directory, with the scaler leakage removed as a separate logged change.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-03-03.svg" alt="Diagram 3 of notebook 03" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-03-03.svg" alt="Diagram 3 of notebook 03" style="max-width:100%">
 
 *The lab in one picture: preserve behaviour first and prove it, then change behaviour once, on purpose.*
 
@@ -559,7 +559,7 @@ check("w1d3")
 
 ## 5. Independent challenge
 
-[`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d3_package_structure/challenge/README.md) — extend the package to a two-stage
+[`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d3_package_structure/challenge/README.md) — extend the package to a two-stage
 pipeline (`pumpwatch features` → `pumpwatch train --features`) that also runs as
 `python -m pumpwatch`. Acceptance criteria are listed there; no solution is given.
 Checks: `python -m pytest labs/w1d3_package_structure/checks_challenge -q`.
@@ -647,9 +647,9 @@ check("w1d3", challenge=True)
 
 Open only as far as you need, and note in `progress` how far you went.
 
-1. [Conceptual hint](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d3_package_structure/hints/hint1_concept.md)
-2. [Suggested approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d3_package_structure/hints/hint2_approach.md)
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d3_package_structure/hints/hint3_partial.md)
+1. [Conceptual hint](https://github.com/berdakh/mlengineering/blob/main/labs/w1d3_package_structure/hints/hint1_concept.md)
+2. [Suggested approach](https://github.com/berdakh/mlengineering/blob/main/labs/w1d3_package_structure/hints/hint2_approach.md)
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w1d3_package_structure/hints/hint3_partial.md)
 4. Full reference solution: `solutions/labs/w1d3_package_structure/` (lab and challenge).
    Opening it before your own attempt passes means the unit counts as *guided*, not *independent*.
 

@@ -1,6 +1,6 @@
 # 05 · Testing ML code with pytest: what a unit test can and cannot tell you — lab files
 
-**The lesson is notebook [`05_testing_ml_code`](../../notebooks/05_testing_ml_code.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/05_testing_ml_code.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/05_testing_ml_code.ipynb)).
+**The lesson is notebook [`05_testing_ml_code`](../../notebooks/05_testing_ml_code.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/05_testing_ml_code.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/05_testing_ml_code.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

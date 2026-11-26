@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/03_package_structure.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/03_package_structure.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -127,7 +127,7 @@ print("repo root:", REPO_ROOT)
 # *Installing* a package means making it findable through step 4, which is the only step
 # that does not depend on where you are standing or how you started Python.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-03-01.svg" alt="Diagram 1 of notebook 03" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-03-01.svg" alt="Diagram 1 of notebook 03" style="max-width:100%">
 #
 # *An import is a search over `sys.path`, in order. "Works from the repo root, fails elsewhere" means entry 0 found your code and nothing else would have.*
 #
@@ -202,7 +202,7 @@ print("repo root:", REPO_ROOT)
 # install is a development convenience, not a deployment mechanism — images and servers get
 # a regular install (week 6).
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-03-02.svg" alt="Diagram 2 of notebook 03" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-03-02.svg" alt="Diagram 2 of notebook 03" style="max-width:100%">
 #
 # *What an editable install does. The frontend orchestrates; the backend knows how to build your project.*
 #
@@ -238,11 +238,11 @@ print("repo root:", REPO_ROOT)
 # - A characterization run is a pilot recording: before changing the rig, record what the
 #   current rig produces, so later differences can be attributed.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d3_package_structure/figures/pump_signal_spectrum.svg" alt="SYNTHETIC pump data: a healthy and a faulty window of unit P09 in time and frequency; the faulty window has an extra peak at 90 Hz inside the bp_high band" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w1d3_package_structure/figures/pump_signal_spectrum.svg" alt="SYNTHETIC pump data: a healthy and a faulty window of unit P09 in time and frequency; the faulty window has an extra peak at 90 Hz inside the bp_high band" width="100%">
 #
 # *SYNTHETIC data. The features you will move into `pumpwatch.features` are standard window features from signal processing: here `bp_high` picks up the 90 Hz fault component and `bp_low` the shaft rotation near 25 Hz. Regenerate with `python labs/w1d3_package_structure/figures/make_figures.py`.*
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d3_package_structure/figures/unit_vs_fault.svg" alt="SYNTHETIC pump data: per-unit strip plots; mean rms per unit ranges from 0.36 to 1.27 while healthy and faulty windows overlap, and the bp_high/bp_low ratio separates the classes within every faulty unit" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w1d3_package_structure/figures/unit_vs_fault.svg" alt="SYNTHETIC pump data: per-unit strip plots; mean rms per unit ranges from 0.36 to 1.27 while healthy and faulty windows overlap, and the bp_high/bp_low ratio separates the classes within every faulty unit" width="100%">
 #
 # *SYNTHETIC data. Left: mean `rms` per unit runs from 0.36 to 1.27, a wider spread than the healthy-versus-faulty gap (0.81 versus 1.01 on average), which is why the split is by unit, as it would be by subject in a medical study. Right: a ratio of band powers cancels the unit gain.*
 #
@@ -364,7 +364,7 @@ print("repo root:", REPO_ROOT)
 # **Result to produce:** an installed `pumpwatch` command that reproduces the script's
 # metrics from any directory, with the scaler leakage removed as a separate logged change.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-03-03.svg" alt="Diagram 3 of notebook 03" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-03-03.svg" alt="Diagram 3 of notebook 03" style="max-width:100%">
 #
 # *The lab in one picture: preserve behaviour first and prove it, then change behaviour once, on purpose.*
 #

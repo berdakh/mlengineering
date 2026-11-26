@@ -9,8 +9,8 @@ nav_order: 34
 # 34 · Latency, throughput and resource use
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/34_latency_resources.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/34_latency_resources.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/34_latency_resources.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/34_latency_resources.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 34
 
 ---
 
-**Week 6 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w6d4_latency_resources/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d4_latency_resources/)
+**Week 6 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w6d4_latency_resources/`](https://github.com/berdakh/mlengineering/blob/main/labs/w6d4_latency_resources/)
 
 **Objective.** Measure p50/p95/p99 latency and memory under load, find the bottleneck, and tune workers/batching against a stated budget.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -160,7 +160,7 @@ Why not run at $$\rho = 0.95$$? Queueing delay grows like $$\rho/(1-\rho)$$ for 
 request waits about one service time on average, at 0.7 about 2.3, at 0.9 about 9, before even
 considering the tail. Capacity plans therefore target 0.6-0.75.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-34-01.svg" alt="Diagram 1 of notebook 34" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-34-01.svg" alt="Diagram 1 of notebook 34" style="max-width:100%">
 
 ### 2.5 Where the time goes inside one request
 
@@ -247,7 +247,7 @@ closed loop  n= 2951 (49.2/s)  p50=  10.0  p95=  10.0  p99=   10.0  p99.9=   10.
 open loop    n= 3000 (50.0/s)  p50=  10.0  p95=  10.0  p99=  710.1  p99.9=  980.0  max= 1010.0 ms  >100 ms: 3.07%
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d4_latency_resources/figures/coordinated_omission.svg" alt="Grouped bars: closed loop reports 10 ms at every percentile; open loop reports p99 710 ms and p99.9 980 ms." width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d4_latency_resources/figures/coordinated_omission.svg" alt="Grouped bars: closed loop reports 10 ms at every percentile; open loop reports p99 710 ms and p99.9 980 ms." width="100%">
 
 *Figure 1. SYNTHETIC simulation. Same server, same stall.*
 
@@ -346,16 +346,16 @@ python labs/w6d4_latency_resources/lab/measure_service.py --launcher serve --wor
 Authoring machine, means of two repetitions: p95 14.8, 11.7, 14.1 and 13.7 ms at 20, 60, 90 and
 120/s; p99 at most 43.9 ms; no errors; 239 MB. Fill in `lab/LATENCY_REPORT.md` from **your** numbers.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d4_latency_resources/figures/latency_vs_rate.svg" alt="Two panels, p50 and p95 against offered load on a log scale: one worker rises above 1 s past 90 req/s; two and four workers sit near 52 ms p50; two workers with TCP_NODELAY stay near 10 ms." width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d4_latency_resources/figures/latency_vs_rate.svg" alt="Two panels, p50 and p95 against offered load on a log scale: one worker rises above 1 s past 90 req/s; two and four workers sit near 52 ms p50; two workers with TCP_NODELAY stay near 10 ms." width="100%">
 
 *Figure 2. Real measurements on the authoring machine (dots: two repetitions; lines: their mean).*
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d4_latency_resources/figures/throughput.svg" alt="Served against offered load: two workers with TCP_NODELAY follow the diagonal to 120/s; one worker peaks near 83/s and falls to 3.5/s at 120/s." width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d4_latency_resources/figures/throughput.svg" alt="Served against offered load: two workers with TCP_NODELAY follow the diagonal to 120/s; one worker peaks near 83/s and falls to 3.5/s at 120/s." width="100%">
 
 *Figure 3. Past saturation, served throughput falls: the queue fills, requests time out, and work
 done on requests that will time out is wasted. Real measurements.*
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d4_latency_resources/figures/latency_cdf.svg" alt="Cumulative distribution on a log axis: one worker at 60/s has p99 near 90 ms; at 95/s the whole curve sits between 1 and 10 seconds." width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d4_latency_resources/figures/latency_cdf.svg" alt="Cumulative distribution on a log axis: one worker at 60/s has p99 near 90 ms; at 95/s the whole curve sits between 1 and 10 seconds." width="100%">
 
 *Figure 4. One worker, 30 s at 60/s and at 95/s (real; 532 of 2,850 requests at 95/s succeeded).*
 
@@ -369,7 +369,7 @@ check("w6d4")
 
 ## 5. Independent challenge: a capacity plan you can defend
 
-Read [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d4_latency_resources/challenge/README.md). You size the service for 120,000 machines from the
+Read [challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w6d4_latency_resources/challenge/README.md). You size the service for 120,000 machines from the
 single-worker curve you measured (`challenge/measured_curve.csv` holds the authoring machine's), with
 Little's law, a utilisation target and a sensitivity analysis, and write a one-page plan.
 
@@ -423,8 +423,8 @@ check("w6d4", challenge=True)
 
 ## 6. Progressive hints
 
-[Hint 1: concepts](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d4_latency_resources/hints/hint1_concept.md) · [Hint 2: approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d4_latency_resources/hints/hint2_approach.md) ·
-[Hint 3: partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d4_latency_resources/hints/hint3_partial.md)
+[Hint 1: concepts](https://github.com/berdakh/mlengineering/blob/main/labs/w6d4_latency_resources/hints/hint1_concept.md) · [Hint 2: approach](https://github.com/berdakh/mlengineering/blob/main/labs/w6d4_latency_resources/hints/hint2_approach.md) ·
+[Hint 3: partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w6d4_latency_resources/hints/hint3_partial.md)
 
 
 Open one hint at a time, only after a real attempt.

@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/06_notebook_to_package.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/06_notebook_to_package.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -122,7 +122,7 @@ print("repo root:", REPO_ROOT)
 # not a specification.** You pin it so that you can tell when *you* change something, and you expect
 # to overturn parts of it.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-01.svg" alt="Diagram 1 of notebook 06" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-06-01.svg" alt="Diagram 1 of notebook 06" style="max-width:100%">
 #
 # *Hidden state: the same cell gives different results depending on which cells ran before it, and the file on disk does not record which did.*
 #
@@ -152,7 +152,7 @@ print("repo root:", REPO_ROOT)
 # last kind for several cells, which is why the lab asks for a discrepancy table instead of a golden
 # file.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-02.svg" alt="Diagram 2 of notebook 06" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-06-02.svg" alt="Diagram 2 of notebook 06" style="max-width:100%">
 #
 # *Two kinds of commit. In a refactoring the golden file must not move; in a behaviour change it must, visibly.*
 #
@@ -195,7 +195,7 @@ print("repo root:", REPO_ROOT)
 # word "and"**, and the project should work after it. That makes `git bisect` usable later (every
 # commit is a valid state to test) and makes review cheap.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-03.svg" alt="Diagram 3 of notebook 06" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-06-03.svg" alt="Diagram 3 of notebook 06" style="max-width:100%">
 #
 # *The staging area is where you review yourself before anyone else does.*
 #
@@ -282,7 +282,7 @@ print("repo root:", REPO_ROOT)
 # c6808c8 Add notebook export and sample data as found
 # ```
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-04.svg" alt="Diagram 4 of notebook 06" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-06-04.svg" alt="Diagram 4 of notebook 06" style="max-width:100%">
 #
 # *The six commits of the worked example. Only the highlighted one changes what the program prints (3.603 to 1.949).*
 #

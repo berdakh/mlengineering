@@ -9,8 +9,8 @@ nav_order: 2
 # 02 · Diagnostic B: baselines, leakage, testing/API, explaining a decision
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/02_diagnostic_b.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/02_diagnostic_b.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/02_diagnostic_b.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/02_diagnostic_b.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 2
 
 ---
 
-**Week 1 · day 2 · about 2 h, time-boxed, unassisted** · your files: [`diagnostic/`](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/)
+**Week 1 · day 2 · about 2 h, time-boxed, unassisted** · your files: [`diagnostic/`](https://github.com/berdakh/mlengineering/blob/main/diagnostic/)
 
 **Objective.** Produce time-boxed, unassisted evidence in baseline modelling on an unfamiliar business table, leakage detection, test writing, API concepts and written justification.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -61,18 +61,18 @@ submissions are reviewed.
 
 | Session | Section | Probes | Time box |
 |---|---|---|---|
-| A (W1D1) | [a1_python](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/a1_python/README.md) | debugging, refactoring, Python semantics | 40 min |
-| A | [a2_sql](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/a2_sql/README.md) | joins, aggregation, NULLs, fan-out, window functions | 35 min |
-| A | [a3_cleaning](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/a3_cleaning/README.md) | pandas data cleaning, date/time-zone handling, judgment | 35 min |
-| B (W1D2) | [b1_baseline](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/b1_baseline/README.md) | problem framing, baselines, metrics under imbalance | 35 min |
-| B | [b2_leakage](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/b2_leakage/README.md) | leakage, validation design | 35 min |
-| B | [b3_testing_api](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/b3_testing_api/README.md) | writing tests, request validation, API concepts | 25 min |
-| B | [b4_explain](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/b4_explain/README.md) | explaining and defending an ML decision | 20 min |
+| A (W1D1) | [a1_python](https://github.com/berdakh/mlengineering/blob/main/diagnostic/a1_python/README.md) | debugging, refactoring, Python semantics | 40 min |
+| A | [a2_sql](https://github.com/berdakh/mlengineering/blob/main/diagnostic/a2_sql/README.md) | joins, aggregation, NULLs, fan-out, window functions | 35 min |
+| A | [a3_cleaning](https://github.com/berdakh/mlengineering/blob/main/diagnostic/a3_cleaning/README.md) | pandas data cleaning, date/time-zone handling, judgment | 35 min |
+| B (W1D2) | [b1_baseline](https://github.com/berdakh/mlengineering/blob/main/diagnostic/b1_baseline/README.md) | problem framing, baselines, metrics under imbalance | 35 min |
+| B | [b2_leakage](https://github.com/berdakh/mlengineering/blob/main/diagnostic/b2_leakage/README.md) | leakage, validation design | 35 min |
+| B | [b3_testing_api](https://github.com/berdakh/mlengineering/blob/main/diagnostic/b3_testing_api/README.md) | writing tests, request validation, API concepts | 25 min |
+| B | [b4_explain](https://github.com/berdakh/mlengineering/blob/main/diagnostic/b4_explain/README.md) | explaining and defending an ML decision | 20 min |
 
 Session A totals 110 minutes, session B 115. Use the remaining minutes of each session to fill in
-[`SUBMISSION.md`](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/SUBMISSION.md).
+[`SUBMISSION.md`](https://github.com/berdakh/mlengineering/blob/main/diagnostic/SUBMISSION.md).
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-02-01.svg" alt="Diagram 1 of notebook 02" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-02-01.svg" alt="Diagram 1 of notebook 02" style="max-width:100%">
 
 *The path through the diagnostic. Nothing is adapted until the submission has been reviewed.*
 
@@ -106,7 +106,7 @@ repository `README.md` for environment setup).
 
 ## Data
 
-All sections use one synthetic dataset, documented in [`data/README.md`](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/data/README.md). It is not
+All sections use one synthetic dataset, documented in [`data/README.md`](https://github.com/berdakh/mlengineering/blob/main/diagnostic/data/README.md). It is not
 real; see that file for what cannot be concluded from it.
 
 ## After you finish
@@ -123,7 +123,7 @@ Fill in `SUBMISSION.md`, commit, and send back what it lists. Then (and only the
 StreamBox (a **synthetic** subscription video service) wants to reduce churn. On the 1st of every
 month a retention team can phone **10% of active customers**. They ask for a monthly risk ranking.
 
-The data team hands you two files, described in [`../data/README.md`](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/data/README.md):
+The data team hands you two files, described in [`../data/README.md`](https://github.com/berdakh/mlengineering/blob/main/diagnostic/data/README.md):
 `churn_train.csv` and `churn_test.csv`. Each row is one customer on one monthly snapshot date, with
 features known on that date and the label `churned_30d` (1 if the customer cancelled within the
 following 30 days). Use the split exactly as given in this section.
@@ -187,7 +187,7 @@ check("diagnostic/b1_baseline")
 ## Situation
 
 A colleague evaluated a churn model on the full feature export `diagnostic/data/churn_export_full.csv`
-(**synthetic**; columns documented in [`../data/README.md`](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/data/README.md)) and is delighted:
+(**synthetic**; columns documented in [`../data/README.md`](https://github.com/berdakh/mlengineering/blob/main/diagnostic/data/README.md)) and is delighted:
 
 ```python
 !python diagnostic/b2_leakage/lab/leaky_eval.py

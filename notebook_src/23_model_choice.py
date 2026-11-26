@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/23_model_choice.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/23_model_choice.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -115,7 +115,7 @@ print("repo root:", REPO_ROOT)
 #
 # With an interval `[lo, hi]` for (candidate - reference), higher is better, there are four readings:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d5_model_choice/figures/interval_rule.svg" alt="Four intervals against a shaded band from -MPID to +MPID: one wholly above (better), one inside (equivalent), one excluding zero but reaching into the band (inconclusive), one wide (inconclusive), one wholly below (worse)" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d5_model_choice/figures/interval_rule.svg" alt="Four intervals against a shaded band from -MPID to +MPID: one wholly above (better), one inside (equivalent), one excluding zero but reaching into the band (inconclusive), one wide (inconclusive), one wholly below (worse)" width="100%">
 #
 # *Figure 1 (SYNTHETIC schematic). Read the whole interval, not its centre or whether it excludes zero.*
 #
@@ -211,7 +211,7 @@ print("repo root:", REPO_ROOT)
 # * **"Test results decide between candidates."** That is selection on the test set (w3d3). The choice
 #   is made on development data; the test set confirms the chosen model once.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-23-01.svg" alt="Diagram 1 of notebook 23" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-23-01.svg" alt="Diagram 1 of notebook 23" style="max-width:100%">
 
 # %% [markdown]
 # ## 3. Worked example: a demand-forecasting choice
@@ -331,12 +331,12 @@ print("repo root:", REPO_ROOT)
 # * The logistic model's interval excludes zero but reaches inside the practically-equivalent band.
 # * The isolation forest is the only candidate shown to differ, and it is worse.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d5_model_choice/figures/pareto.svg" alt="Scatter of PR-AUC with confidence intervals against p95 latency on a log scale; flow-rate and logistic are on the Pareto front, Mahalanobis and isolation forest are dominated" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d5_model_choice/figures/pareto.svg" alt="Scatter of PR-AUC with confidence intervals against p95 latency on a log scale; flow-rate and logistic are on the Pareto front, Mahalanobis and isolation forest are dominated" width="100%">
 #
 # *Figure 3 (real SKAB, development data; latency from the authoring host).* The front keeps two
 # candidates. Choosing between them takes the MPID and the complexity ranking.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d5_model_choice/figures/costs.svg" alt="Three bar panels on log scales: p95 latency, pickled size and fit time per candidate; the isolation forest is about 20x slower and about 700x larger than the others" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d5_model_choice/figures/costs.svg" alt="Three bar panels on log scales: p95 latency, pickled size and fit time per candidate; the isolation forest is about 20x slower and about 700x larger than the others" width="100%">
 #
 # *Figure 4 (real SKAB; host-dependent costs).* The isolation forest's step holds 100 trees per
 # calibrated run: 759 kB against a few hundred bytes for the z-score.

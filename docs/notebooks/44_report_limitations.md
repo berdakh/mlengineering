@@ -9,8 +9,8 @@ nav_order: 44
 # 44 · Technical report and model limitations
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/44_report_limitations.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/44_report_limitations.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/44_report_limitations.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/44_report_limitations.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 44
 
 ---
 
-**Week 8 · day 2 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d2_report_limitations/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d2_report_limitations/)
+**Week 8 · day 2 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d2_report_limitations/`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d2_report_limitations/)
 
 **Objective.** Write a short technical report and a limitations section that a sceptical reviewer would accept.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -101,7 +101,7 @@ Wilson intervals, paired comparisons); the milestone reports of w4d6, w5d6 and w
 
 ### 2.1 The structure of a short technical report
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-44-01.svg" alt="Diagram 1 of notebook 44" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-44-01.svg" alt="Diagram 1 of notebook 44" style="max-width:100%">
 
 Each section answers a question a sceptical reader will ask, in the order they will ask it: what is this for, what
 data, how could the evaluation have fooled you, what did you find, where does it fail, what did you decide, how
@@ -114,7 +114,7 @@ tables carry the numbers and prose carries the reasoning.
   it). A typed number drifts the first time the analysis is rerun. The w4d6 and w7d6 milestones already did this
   for tables; the checker extends it to prose.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-44-02.svg" alt="Diagram 2 of notebook 44" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-44-02.svg" alt="Diagram 2 of notebook 44" style="max-width:100%">
 * **Every estimate has an interval and its unit.** "0.884 [0.811, 0.928]" means little until the reader knows
   the interval came from a cluster bootstrap over 7 test recordings. The unit of resampling is the claim about
   what generalises.
@@ -126,7 +126,7 @@ tables carry the numbers and prose carries the reasoning.
 * **Report what did not work.** The neural model that did not beat the classical one, the detector that fell on
   an unseen fault family, the missed fault. Omitting them makes every remaining claim less credible.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d2_report_limitations/figures/overlap_vs_paired.svg" alt="Left: test PR-AUC intervals of the two best detectors overlap; right: on development data the paired difference is +0.069 with interval 0.022 to 0.128, which excludes zero but not the 0.05 practical threshold" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d2_report_limitations/figures/overlap_vs_paired.svg" alt="Left: test PR-AUC intervals of the two best detectors overlap; right: on development data the paired difference is +0.069 with interval 0.022 to 0.128, which excludes zero but not the 0.05 practical threshold" width="100%">
 
 *Real SKAB results from the w4d6 reference (`figures/make_figures.py`). The left panel is the single test look,
 the right panel the development comparison on which the decision was made. Neither "the intervals overlap, so
@@ -141,7 +141,7 @@ $$\frac{\hat p + \frac{z^2}{2n} \pm z\sqrt{\frac{\hat p(1-\hat p)}{n} + \frac{z^
 For 5 of 7 it is [0.36, 0.92]: the detector might catch a third of faults or nine in ten. Even all 34 SKAB
 events would give an interval about 0.29 wide.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d2_report_limitations/figures/wilson_width.svg" alt="Width of the 95 % Wilson interval for a recall of 5/7 against the number of events: 0.56 at 7 events, 0.29 at 34, still 0.12 at 200" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d2_report_limitations/figures/wilson_width.svg" alt="Width of the 95 % Wilson interval for a recall of 5/7 against the number of events: 0.56 at 7 events, 0.29 at 34, still 0.12 at 200" width="100%">
 
 *Computed (no data). A limitation is honest when it is quantified like this rather than called "small sample".*
 
@@ -254,7 +254,7 @@ check("w8d2")
 
 ## 5. Independent challenge: peer review
 
-See [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d2_report_limitations/challenge/README.md). Review [challenge/FLAWED_REPORT.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d2_report_limitations/challenge/FLAWED_REPORT.md)
+See [challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w8d2_report_limitations/challenge/README.md). Review [challenge/FLAWED_REPORT.md](https://github.com/berdakh/mlengineering/blob/main/labs/w8d2_report_limitations/challenge/FLAWED_REPORT.md)
 (SYNTHETIC late-payment prediction) in 40 minutes, without hints.
 
 
@@ -286,9 +286,9 @@ check("w8d2", challenge=True)
 
 ## 6. Progressive hints
 
-1. [Concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d2_report_limitations/hints/hint1_concept.md)
-2. [Approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d2_report_limitations/hints/hint2_approach.md)
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d2_report_limitations/hints/hint3_partial.md)
+1. [Concept](https://github.com/berdakh/mlengineering/blob/main/labs/w8d2_report_limitations/hints/hint1_concept.md)
+2. [Approach](https://github.com/berdakh/mlengineering/blob/main/labs/w8d2_report_limitations/hints/hint2_approach.md)
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w8d2_report_limitations/hints/hint3_partial.md)
 
 
 Open one hint at a time, only after a real attempt.

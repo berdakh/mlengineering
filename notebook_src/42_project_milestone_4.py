@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/42_project_milestone_4.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/42_project_milestone_4.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -100,7 +100,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.1 What the demonstration must show
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-42-01.svg" alt="Diagram 1 of notebook 42" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-42-01.svg" alt="Diagram 1 of notebook 42" style="max-width:100%">
 #
 # Each event in the scenario tests one link between a problem and the signal that should catch it:
 #
@@ -140,7 +140,7 @@ print("repo root:", REPO_ROOT)
 # restarts. A second run produced identical numbers. The full generated report is
 # `solutions/labs/w7d6_project_milestone_4/example_demo/monitoring_demo.md`.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d6_project_milestone_4/figures/demo_signals.svg" alt="Alarm rate is above budget only for the real fault and the bad promotion; drift PSI crosses its threshold for the units bug and the 80 % flow replay; only the units bug is out of support" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d6_project_milestone_4/figures/demo_signals.svg" alt="Alarm rate is above budget only for the real fault and the bad promotion; drift PSI crosses its threshold for the units bug and the 80 % flow replay; only the units bug is out of support" width="100%">
 #
 # *Figure 1. Signals per replayed event in the reference demo (REAL data). Orange bars are above their
 # alert line. The missed fault E5 looks exactly like normal operation, which is why the report must say
@@ -153,7 +153,7 @@ print("repo root:", REPO_ROOT)
 # them, 7.53. With 27 exchangeable healthy windows, a new healthy window exceeds the maximum with
 # probability about 1/28. That is the false-alarm rate the choice implies.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d6_project_milestone_4/figures/drift_calibration.svg" alt="Calibration PSI of 27 development experiments lies between 3.26 and 7.53; a healthy test experiment reaches 7.38, just under the threshold; the 80 % flow replay reaches 9.62" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d6_project_milestone_4/figures/drift_calibration.svg" alt="Calibration PSI of 27 development experiments lies between 3.26 and 7.53; a healthy test experiment reaches 7.38, just under the threshold; the 80 % flow replay reaches 9.62" width="100%">
 #
 # *Figure 2. The calibration set (REAL). Single healthy experiments already sit far from the pooled
 # reference, because SKAB experiments run at different, nearly constant flow levels. The healthy part of
@@ -168,7 +168,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.4 Promotion and rollback are process events, not file events
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-42-02.svg" alt="Diagram 2 of notebook 42" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-42-02.svg" alt="Diagram 2 of notebook 42" style="max-width:100%">
 #
 # A running process loaded its bundle at startup. Changing the pointer changes nothing until the process is
 # replaced, and replacing it means stopping the old one. Two of the three planted problems in the starter

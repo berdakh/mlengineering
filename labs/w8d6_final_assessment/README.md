@@ -1,6 +1,6 @@
 # 48 · Final independent assessment — lab files
 
-**The lesson is notebook [`48_final_assessment`](../../notebooks/48_final_assessment.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/48_final_assessment.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/48_final_assessment.ipynb)).
+**The lesson is notebook [`48_final_assessment`](../../notebooks/48_final_assessment.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/48_final_assessment.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/48_final_assessment.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

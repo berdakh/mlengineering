@@ -1,6 +1,6 @@
 # 33 · Continuous integration with GitHub Actions — lab files
 
-**The lesson is notebook [`33_ci`](../../notebooks/33_ci.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/33_ci.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/33_ci.ipynb)).
+**The lesson is notebook [`33_ci`](../../notebooks/33_ci.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/33_ci.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/33_ci.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

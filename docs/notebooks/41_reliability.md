@@ -9,8 +9,8 @@ nav_order: 41
 # 41 · Reliability and failure handling
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/41_reliability.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/41_reliability.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/41_reliability.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/41_reliability.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 41
 
 ---
 
-**Week 7 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w7d5_reliability/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d5_reliability/)
+**Week 7 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w7d5_reliability/`](https://github.com/berdakh/mlengineering/blob/main/labs/w7d5_reliability/)
 
 **Objective.** Handle bad input, timeouts, missing models and dependency failures deliberately: guards, fallbacks, degradation, failure-injection drills.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -110,7 +110,7 @@ lab equivalent of `out_of_support`.
 
 ### 2.2 Defensive layers, from the edge inwards
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-41-01.svg" alt="Diagram 1 of notebook 41" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-41-01.svg" alt="Diagram 1 of notebook 41" style="max-width:100%">
 
 1. **Validation at the edge** (w5d4): malformed requests never reach the model. This is a contract with the
    caller, answered with `422` and the field paths.
@@ -173,7 +173,7 @@ in the same instant, as the worked example shows.
 **Retry-After wins.** If the server sends `Retry-After`, it knows its own state better than the client's
 formula does; honour it, capped at `max_delay`.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-41-02.svg" alt="Diagram 2 of notebook 41" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-41-02.svg" alt="Diagram 2 of notebook 41" style="max-width:100%">
 
 **Idempotency.** A retry is only safe if repeating the request cannot do harm twice. Scoring a window is
 naturally idempotent. For anything with a side effect (creating an alert ticket, recording a
@@ -197,7 +197,7 @@ On the 7 frozen test experiments, with the same post-processing as the shipped o
 | Model (burn-in z-score, threshold 7.2441) | 5 of 7 | 0.00 | 0.978 | 0.270 |
 | Fallback envelope rule | 2 of 7 | 0.00 | 0.953 | 0.234 |
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d5_reliability/figures/fallback_vs_model.svg" alt="Model detects 5 of 7 test faults, the fallback envelope rule only 2; neither raises false alarm events" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d5_reliability/figures/fallback_vs_model.svg" alt="Model detects 5 of 7 test faults, the fallback envelope rule only 2; neither raises false alarm events" width="100%">
 
 *Figure 1. Per-experiment detection on the real SKAB test set (frozen v2 manifest). The fallback is a
 safety net with a known, documented cost, which is why its answers must carry `degraded: true`.*
@@ -273,7 +273,7 @@ exponential      1800    100     100         200         never
 full_jitter      1385    200       0          17        8.05 s
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d5_reliability/figures/retry_storm.svg" alt="Without jitter, 200 clients come back in single 100 ms buckets 10 times over capacity; with full jitter the load spreads below capacity" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d5_reliability/figures/retry_storm.svg" alt="Without jitter, 200 clients come back in single 100 ms buckets 10 times over capacity; with full jitter the load spreads below capacity" width="100%">
 
 *Figure 2. Requests per 100 ms after the outage (SYNTHETIC). Top: every client that failed together
 retries together, each wave serves 20 and re-synchronises the other 180. Bottom: full jitter spreads the
@@ -353,7 +353,7 @@ It starts a real uvicorn process on `127.0.0.1` for each scenario, replays the t
 | bundle_corrupt | `bundle_corrupt` | 503 | 4 × model_unavailable | 0 | 299 | 4 | 1.9 | 3.4 |
 | overload | `slow_model=0.3`, bulkhead 1, 4 clients | 200 | none | 0 | 313 | 10 | 1807.9 | 3165.2 |
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d5_reliability/figures/drill_latency.svg" alt="p50 and p95 latency per drill scenario: about 2-4 ms normally, 254 ms under the deadline, 1.8-3.2 s under overload" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d5_reliability/figures/drill_latency.svg" alt="p50 and p95 latency per drill scenario: about 2-4 ms normally, 254 ms under the deadline, 1.8-3.2 s under overload" width="100%">
 
 *Figure 3. Client-side latency per scenario in the reference drill (REAL data, one machine, one run;
 absolute times will differ on yours).*
@@ -379,7 +379,7 @@ check("w7d5")
 
 ## 5. Independent challenge
 
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d5_reliability/challenge/README.md): write flowguard's failure-mode table (FMEA style, at least 10
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w7d5_reliability/challenge/README.md): write flowguard's failure-mode table (FMEA style, at least 10
 rows across input, model/artifact, dependency, resource and stream failures), then implement two of its
 mitigations, a `CircuitBreaker` and a per-machine `SampleOrderGuard`, against a stated contract.
 `python wb.py check w7d5 --challenge` grades the structure of the table and the behaviour of both classes.
@@ -449,8 +449,8 @@ check("w7d5", challenge=True)
 
 ## 6. Progressive hints
 
-[Hint 1 — concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d5_reliability/hints/hint1_concept.md) · [Hint 2 — approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d5_reliability/hints/hint2_approach.md) ·
-[Hint 3 — partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d5_reliability/hints/hint3_partial.md)
+[Hint 1 — concept](https://github.com/berdakh/mlengineering/blob/main/labs/w7d5_reliability/hints/hint1_concept.md) · [Hint 2 — approach](https://github.com/berdakh/mlengineering/blob/main/labs/w7d5_reliability/hints/hint2_approach.md) ·
+[Hint 3 — partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w7d5_reliability/hints/hint3_partial.md)
 
 
 Open one hint at a time, only after a real attempt.

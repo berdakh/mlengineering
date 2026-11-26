@@ -1,6 +1,6 @@
 # 15 · Hyperparameter and threshold selection without fooling yourself — lab files
 
-**The lesson is notebook [`15_hyperparameter_selection`](../../notebooks/15_hyperparameter_selection.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/15_hyperparameter_selection.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/15_hyperparameter_selection.ipynb)).
+**The lesson is notebook [`15_hyperparameter_selection`](../../notebooks/15_hyperparameter_selection.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/15_hyperparameter_selection.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/15_hyperparameter_selection.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

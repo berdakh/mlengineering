@@ -9,8 +9,8 @@ nav_order: 9
 # 09 · pandas ingestion, schemas and data-quality checks (project data arrives)
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/09_data_quality_ingestion.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/09_data_quality_ingestion.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/09_data_quality_ingestion.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/09_data_quality_ingestion.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 9
 
 ---
 
-**Week 2 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w2d3_data_quality_ingestion/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d3_data_quality_ingestion/)
+**Week 2 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w2d3_data_quality_ingestion/`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d3_data_quality_ingestion/)
 
 **Objective.** Ingest the project dataset through a documented, re-runnable step with explicit schema and quality checks expressed as code that fails loudly.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -125,7 +125,7 @@ Careful labs already live by this rule: the acquisition file (`.edf`, `.vhdr`, B
 never overwritten by the filtered version, and a derivative is always traceable to it. Ingestion is
 the same discipline applied to tables.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-09-01.svg" alt="Diagram 1 of notebook 09" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-09-01.svg" alt="Diagram 1 of notebook 09" style="max-width:100%">
 
 
 ### 2.2 Parsing is a set of decisions; make each one in code
@@ -205,7 +205,7 @@ and defensible; put judgement calls in warnings and review them.
 recur. If a repair is ever adopted (say, "keep the last of duplicated rows"), it is a separate,
 named, tested transformation with its own line in the report: how many rows it touched.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-09-02.svg" alt="Diagram 2 of notebook 09" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-09-02.svg" alt="Diagram 2 of notebook 09" style="max-width:100%">
 
 
 ### 2.5 Idempotence and provenance
@@ -225,7 +225,7 @@ version. It answers "which files produced this table?" without anyone's memory. 
 limit: byte-identical output is guaranteed within one environment; a different pandas version may
 format a float differently, which is why the code and library versions are part of the record.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-09-03.svg" alt="Diagram 3 of notebook 09" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-09-03.svg" alt="Diagram 3 of notebook 09" style="max-width:100%">
 
 
 ### 2.6 Data validation is not model evaluation
@@ -307,7 +307,7 @@ annotate a batch — silent removal is precisely what they are there to prevent.
 
 ## 3. Worked example
 
-Two scripts in [`example/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d3_data_quality_ingestion/example). Outputs below are copied from runs on 2026-11-21
+Two scripts in [`example/`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d3_data_quality_ingestion/example). Outputs below are copied from runs on 2026-11-21
 (Python 3.13.18, pandas 3.0.5).
 
 ### 3.1 Part 1 — three wrong reads that raise nothing
@@ -452,7 +452,7 @@ flow_rate            0.57    0.94    1.00
 Findings 1 and 2 in one picture, and one the table does not show: the anomalous segment starts at nearly
 the same elapsed time in almost every experiment.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d3_data_quality_ingestion/figures/experiment_timelines.svg" alt="Timeline of the 34 labelled SKAB experiments: a grey bar for normal operation and an orange bar for the anomalous segment, which starts near 600 seconds in most experiments; nine black ticks mark sampling gaps in six files" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d3_data_quality_ingestion/figures/experiment_timelines.svg" alt="Timeline of the 34 labelled SKAB experiments: a grey bar for normal operation and an orange bar for the anomalous segment, which starts near 600 seconds in most experiments; nine black ticks mark sampling gaps in six files" width="100%">
 
 *Real data. The anomaly begins at row 550-600 in 31 of 34 experiments, so position in the recording
 predicts the label. That is an artefact of the experimental protocol, not a property of faults; it is
@@ -460,7 +460,7 @@ recorded here and becomes a leakage probe in w2d6 and w3d1. Black ticks are the 
 
 Finding 4, per family, on normal rows only:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d3_data_quality_ingestion/figures/sensor_levels_by_family.svg" alt="Eight small box plots, one per sensor, comparing normal-operation values across valve1, valve2, other and the anomaly-free recording" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d3_data_quality_ingestion/figures/sensor_levels_by_family.svg" alt="Eight small box plots, one per sensor, comparing normal-operation values across valve1, valve2, other and the anomaly-free recording" width="100%">
 
 *Real data. The two valve families run at about 32 L/min with low vibration; the `other` family and the
 fault-free recording run at about 126 L/min. A threshold on raw values separates operating regimes
@@ -484,7 +484,7 @@ both scripts are deterministic (no randomness).
 
 **Result to produce:** a working `flowguard ingest`, run on the real files, and `lab/DATA_NOTES.md`.
 
-Work in [`lab/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d3_data_quality_ingestion/lab). `src/flowguard/data.py` (the loader, to the project spec) and `cli.py` are
+Work in [`lab/`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d3_data_quality_ingestion/lab). `src/flowguard/data.py` (the loader, to the project spec) and `cli.py` are
 given. You write `quality.py` and `ingest.py`. Read the docstrings at the top of both stubs: they
 are the contract the checks grade.
 
@@ -586,7 +586,7 @@ check("w2d3")
 
 ## 5. Independent challenge
 
-[`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d3_data_quality_ingestion/challenge/README.md): an orders export from an invented web shop
+[`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d3_data_quality_ingestion/challenge/README.md): an orders export from an invented web shop
 (SYNTHETIC) with a written data contract. Turn the contract into a checker and write the quality
 report you would send to the team that owns the export. Different domain, no sensors, relational
 rules across columns, and two distribution-level warnings. No solution is given here.
@@ -673,9 +673,9 @@ check("w2d3", challenge=True)
 
 Open in order, and only when stuck for more than ten minutes:
 
-1. [Concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d3_data_quality_ingestion/hints/hint1_concept.md) — what to think about.
-2. [Approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d3_data_quality_ingestion/hints/hint2_approach.md) — a structure that works.
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d3_data_quality_ingestion/hints/hint3_partial.md) — the core pattern, two rules done.
+1. [Concept](https://github.com/berdakh/mlengineering/blob/main/labs/w2d3_data_quality_ingestion/hints/hint1_concept.md) — what to think about.
+2. [Approach](https://github.com/berdakh/mlengineering/blob/main/labs/w2d3_data_quality_ingestion/hints/hint2_approach.md) — a structure that works.
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w2d3_data_quality_ingestion/hints/hint3_partial.md) — the core pattern, two rules done.
 
 The full reference is in `solutions/labs/w2d3_data_quality_ingestion/` (lab, challenge, the
 wrong submissions the checks reject, and model answers).

@@ -9,8 +9,8 @@ nav_order: 27
 # 27 · Online inference on streams: state, warm-up and parity
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/27_online_inference.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/27_online_inference.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/27_online_inference.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/27_online_inference.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 27
 
 ---
 
-**Week 5 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w5d3_online_inference/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d3_online_inference/)
+**Week 5 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w5d3_online_inference/`](https://github.com/berdakh/mlengineering/blob/main/labs/w5d3_online_inference/)
 
 **Objective.** Implement stateful windowed scoring for one-sample-at-a-time input and prove parity with batch scoring.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -117,7 +117,7 @@ between calls, exactly the information that the batch function would have read f
 The design rule that follows: **state is O(1) in the length of the stream**. A detector that monitors
 a pump for a year must not hold a year of samples.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-27-01.svg" alt="Diagram 1 of notebook 27" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-27-01.svg" alt="Diagram 1 of notebook 27" style="max-width:100%">
 
 *Diagram 1. The life of one machine's stream. Rejections (invalid, out of order, conflicting
 duplicate) never change the state; that is what makes a rejection safe to retry.*
@@ -190,7 +190,7 @@ exist for, and one of the mutants the checks are validated against.
    model version, because combining one model's calibration with another model's threshold is silent
    nonsense.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-27-02.svg" alt="Diagram 2 of notebook 27" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-27-02.svg" alt="Diagram 2 of notebook 27" style="max-width:100%">
 
 *Diagram 2. The order of the rules in `update`. The order matters: an out-of-order sample that is
 also invalid is reported as invalid, and a duplicate is never treated as a gap.*
@@ -275,7 +275,7 @@ Streaming vs batch z on 2,000 samples at offset 1e6: same warm-up mask: True; ma
 * At offset 1e6 the streaming z differs from batch by 6.3e-10, inside the 1e-9 tolerance the checks
   use but not by much. Tolerances must be chosen with the data's scale in mind, and stated.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d3_online_inference/figures/cancellation.svg" alt="Log-log plot of relative error of the variance against offset: naive rises from 1e-12 to 1e3, Welford from 1e-15 to about 2e-8, shifted stays near 1e-14" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d3_online_inference/figures/cancellation.svg" alt="Log-log plot of relative error of the variance against offset: naive rises from 1e-12 to 1e3, Welford from 1e-15 to about 2e-8, shifted stays near 1e-14" width="100%">
 
 *Figure 1 (SYNTHETIC). The dashed line is the parity tolerance of the checks. In SKAB the burn-in mean of
 flow rate lies between 23 and 128 L/min and its SD between 0.3 and 18, so the project sits far to the
@@ -380,12 +380,12 @@ of magnitude; latency depends on the host and on what else it is doing. A second
 p95 3.2, p99 6.4 and max 904 us: the maximum is dominated by the operating system, not by your code.
 None of the test experiments has a gap longer than 5 s, so the gap column is 0.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d3_online_inference/figures/stream_valve1_13.svg" alt="Two panels for test experiment valve1/13: flow rate drops from 32 to 24 L/min during the labelled anomaly; the |z| score is absent during the 100-sample warm-up and crosses the 7.24 threshold during the anomaly" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d3_online_inference/figures/stream_valve1_13.svg" alt="Two panels for test experiment valve1/13: flow rate drops from 32 to 24 L/min during the labelled anomaly; the |z| score is absent during the 100-sample warm-up and crosses the 7.24 threshold during the anomaly" width="100%">
 
 *Figure 2 (REAL SKAB, test experiment valve1/13, scored sample by sample).* The grey band is the
 warm-up: no score exists there, and none is invented. 313 samples exceed the threshold.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d3_online_inference/figures/update_latency.svg" alt="Histogram of per-call update latency on a log axis: most calls take 2-4 microseconds, a second cluster near 6 microseconds, a long sparse tail to milliseconds" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d3_online_inference/figures/update_latency.svg" alt="Histogram of per-call update latency on a log axis: most calls take 2-4 microseconds, a second cluster near 6 microseconds, a long sparse tail to milliseconds" width="100%">
 
 *Figure 3 (REAL SKAB replay; host-dependent).* From a separate run of the figure script: p50 2.6 µs,
 p95 3.1 µs, p99 5.3 µs. Per-sample cost is negligible against a one-second sampling interval; in a
@@ -427,7 +427,7 @@ model bundle). Read `challenge/src/flowguard/hysteresis.py`: its docstring is th
   rule with reference to the alert budget (1 false alarm per 8 h) and the delay cost.
 * The test experiments are not read.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d3_online_inference/figures/hysteresis.svg" alt="Three rows of bars over 20 samples: raw exceedances; a streaming alarm with k=3, m=2 that starts at the third consecutive exceedance; an offline rule that marks the same alarm from the first exceedance of the run" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d3_online_inference/figures/hysteresis.svg" alt="Three rows of bars over 20 samples: raw exceedances; a streaming alarm with k=3, m=2 that starts at the third consecutive exceedance; an offline rule that marks the same alarm from the first exceedance of the run" width="100%">
 
 *Figure 4 (SYNTHETIC illustration).* The streaming alarm (blue) starts two samples later than the
 back-dated offline rule (orange) for the same exceedances.
@@ -446,9 +446,9 @@ check("w5d3", challenge=True)
 
 Open them one at a time, and only after a real attempt.
 
-1. [Hint 1 - concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d3_online_inference/hints/hint1_concept.md)
-2. [Hint 2 - approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d3_online_inference/hints/hint2_approach.md)
-3. [Hint 3 - partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d3_online_inference/hints/hint3_partial.md)
+1. [Hint 1 - concept](https://github.com/berdakh/mlengineering/blob/main/labs/w5d3_online_inference/hints/hint1_concept.md)
+2. [Hint 2 - approach](https://github.com/berdakh/mlengineering/blob/main/labs/w5d3_online_inference/hints/hint2_approach.md)
+3. [Hint 3 - partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w5d3_online_inference/hints/hint3_partial.md)
 
 The full reference solutions are in `solutions/labs/w5d3_online_inference/` (lab, challenge, and the
 plausible wrong submissions the checks were validated against). Do not open them before submitting.

@@ -20,12 +20,12 @@ Six core days of about **2 hours** each (plus an optional hour), and one lighter
 
 | Day | Session | Notebook | Deliverable |
 |---|---|---|---|
-| 1 | **Structured logging and service metrics** | [`37_service_logging_metrics`](../notebooks/37_service_logging_metrics.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/37_service_logging_metrics.ipynb) | Structured logs + metrics endpoint; a query that answers 'what happened to request X'. |
-| 2 | **Input monitoring and drift statistics** | [`38_input_monitoring_drift`](../notebooks/38_input_monitoring_drift.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/38_input_monitoring_drift.ipynb) | Drift monitor with a measured false-alarm rate on stable data. |
-| 3 | **Drift is not degradation: delayed labels and measured performance** | [`39_drift_vs_degradation`](../notebooks/39_drift_vs_degradation.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/39_drift_vs_degradation.ipynb) | Replay experiment showing drift without degradation and degradation without flagged drift. |
-| 4 | **Model updates: retraining triggers, shadow and canary, rollback** | [`40_model_updates_rollback`](../notebooks/40_model_updates_rollback.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/40_model_updates_rollback.ipynb) | Update and rollback procedure exercised locally with two model versions. |
-| 5 | **Reliability and failure handling** | [`41_reliability`](../notebooks/41_reliability.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/41_reliability.ipynb) | Failure-injection test suite and a short incident note. |
-| 6 | **Project milestone 4: monitoring demonstration and runbook** | [`42_project_milestone_4`](../notebooks/42_project_milestone_4.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/42_project_milestone_4.ipynb) | Monitoring demo + runbook; submit for review. |
+| 1 | **Structured logging and service metrics** | [`37_service_logging_metrics`](../notebooks/37_service_logging_metrics.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/37_service_logging_metrics.ipynb) | Structured logs + metrics endpoint; a query that answers 'what happened to request X'. |
+| 2 | **Input monitoring and drift statistics** | [`38_input_monitoring_drift`](../notebooks/38_input_monitoring_drift.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/38_input_monitoring_drift.ipynb) | Drift monitor with a measured false-alarm rate on stable data. |
+| 3 | **Drift is not degradation: delayed labels and measured performance** | [`39_drift_vs_degradation`](../notebooks/39_drift_vs_degradation.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/39_drift_vs_degradation.ipynb) | Replay experiment showing drift without degradation and degradation without flagged drift. |
+| 4 | **Model updates: retraining triggers, shadow and canary, rollback** | [`40_model_updates_rollback`](../notebooks/40_model_updates_rollback.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/40_model_updates_rollback.ipynb) | Update and rollback procedure exercised locally with two model versions. |
+| 5 | **Reliability and failure handling** | [`41_reliability`](../notebooks/41_reliability.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/41_reliability.ipynb) | Failure-injection test suite and a short incident note. |
+| 6 | **Project milestone 4: monitoring demonstration and runbook** | [`42_project_milestone_4`](../notebooks/42_project_milestone_4.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/42_project_milestone_4.ipynb) | Monitoring demo + runbook; submit for review. |
 | 7 | **Review and catch-up (light)** | [review below](#day-7--review-and-catch-up) | Week 7 retrieval sheet; ML system design rep 2 (45 min, spoken). |
 
 ## What each day is for
@@ -183,7 +183,7 @@ answer, write what you would check; open the key only when all twelve have an at
 
 ### 3. Score and choose (10 minutes)
 
-Open [`solutions/labs/w7d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering-/blob/main/solutions/labs/w7d7_review/retrieval_answers.md).
+Open [`solutions/labs/w7d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering/blob/main/solutions/labs/w7d7_review/retrieval_answers.md).
 Mark each answer **solid**, **shaky** or **missing** and record the lists:
 
 ```bash
@@ -219,7 +219,7 @@ Protocol (unchanged)
 
 ### 5. Interview set 7: system design rep 2 and a retry wrapper (45 minutes, timed and recorded)
 
-[`interview/set7_system_design.md`](https://github.com/berdakh/mlengineering-/blob/main/interview/set7_system_design.md):
+[`interview/set7_system_design.md`](https://github.com/berdakh/mlengineering/blob/main/interview/set7_system_design.md):
 
 * **D1 (30 minutes):** operating a prohibited-listing classifier on a second-hand marketplace, with
   delayed human labels that exist only for the listings the model chose to hold. The model already

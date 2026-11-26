@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/11_feature_pipeline.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/11_feature_pipeline.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -167,7 +167,7 @@ print("repo root:", REPO_ROOT)
 # warm-up edge and can be updated in O(1) state per sensor, which is why it is common in services;
 # its step response reaches fraction `1-(1-α)^k` of Δ after *k* samples.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d5_feature_pipeline/figures/delay_vs_window.svg" alt="Line chart: the median detection delay of a causal rolling mean grows from 2 to 14 samples as the window grows from 10 to 60, tracking w times theta over delta; the centred window shows minus 2 to minus 15" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d5_feature_pipeline/figures/delay_vs_window.svg" alt="Line chart: the median detection delay of a causal rolling mean grows from 2 to 14 samples as the window grows from 10 to 60, tracking w times theta over delta; the centred window shows minus 2 to minus 15" width="100%">
 #
 # *SYNTHETIC data (the simulation of the first worked example, 400 series per window length). The blue
 # line is equation (1); the orange line is the same quantity minus w/2. Regenerate with
@@ -219,7 +219,7 @@ print("repo root:", REPO_ROOT)
 # [w2d6](12_baselines_metrics.ipynb) and Week 3. What this unit fixes is the mechanism, so the
 # choice is one argument to `fit` and not a property scattered through the code.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-11-01.svg" alt="Diagram 1 of notebook 11" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-11-01.svg" alt="Diagram 1 of notebook 11" style="max-width:100%">
 #
 #
 # ### 2.6 Determinism and content-addressed caching
@@ -249,7 +249,7 @@ print("repo root:", REPO_ROOT)
 # (`set`, `groupby` on unsorted keys with `sort=False` and changing input order), parallel
 # reductions, and float formatting differences between library versions.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-11-02.svg" alt="Diagram 2 of notebook 11" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-11-02.svg" alt="Diagram 2 of notebook 11" style="max-width:100%">
 #
 #
 # ### 2.7 Industry example
@@ -331,7 +331,7 @@ print("repo root:", REPO_ROOT)
 #
 # One of the simulated series, with both rolling means and the alert threshold:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d5_feature_pipeline/figures/step_response.svg" alt="Line chart of a noisy step signal with a causal and a centred 30-sample rolling mean; the centred mean crosses the alert threshold 7 samples before the fault onset, the causal one 7 samples after" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d5_feature_pipeline/figures/step_response.svg" alt="Line chart of a noisy step signal with a causal and a centred 30-sample rolling mean; the centred mean crosses the alert threshold 7 samples before the fault onset, the causal one 7 samples after" width="100%">
 #
 # *SYNTHETIC data, one series, w = 30. The centred curve is the causal curve shifted 15 samples to the
 # left, which is all "centring" is. Offline, that shift reads as a better detector.*

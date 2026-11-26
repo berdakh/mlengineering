@@ -9,8 +9,8 @@ nav_order: 1
 # 01 · Diagnostic A: Python, SQL, data cleaning
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/01_diagnostic_a.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/01_diagnostic_a.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/01_diagnostic_a.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/01_diagnostic_a.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 1
 
 ---
 
-**Week 1 · day 1 · about 2 h, time-boxed, unassisted** · your files: [`diagnostic/`](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/)
+**Week 1 · day 1 · about 2 h, time-boxed, unassisted** · your files: [`diagnostic/`](https://github.com/berdakh/mlengineering/blob/main/diagnostic/)
 
 **Objective.** Produce time-boxed, unassisted evidence of current skill in Python refactoring/debugging, SQL joins and aggregation, and pandas data cleaning.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -61,18 +61,18 @@ submissions are reviewed.
 
 | Session | Section | Probes | Time box |
 |---|---|---|---|
-| A (W1D1) | [a1_python](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/a1_python/README.md) | debugging, refactoring, Python semantics | 40 min |
-| A | [a2_sql](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/a2_sql/README.md) | joins, aggregation, NULLs, fan-out, window functions | 35 min |
-| A | [a3_cleaning](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/a3_cleaning/README.md) | pandas data cleaning, date/time-zone handling, judgment | 35 min |
-| B (W1D2) | [b1_baseline](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/b1_baseline/README.md) | problem framing, baselines, metrics under imbalance | 35 min |
-| B | [b2_leakage](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/b2_leakage/README.md) | leakage, validation design | 35 min |
-| B | [b3_testing_api](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/b3_testing_api/README.md) | writing tests, request validation, API concepts | 25 min |
-| B | [b4_explain](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/b4_explain/README.md) | explaining and defending an ML decision | 20 min |
+| A (W1D1) | [a1_python](https://github.com/berdakh/mlengineering/blob/main/diagnostic/a1_python/README.md) | debugging, refactoring, Python semantics | 40 min |
+| A | [a2_sql](https://github.com/berdakh/mlengineering/blob/main/diagnostic/a2_sql/README.md) | joins, aggregation, NULLs, fan-out, window functions | 35 min |
+| A | [a3_cleaning](https://github.com/berdakh/mlengineering/blob/main/diagnostic/a3_cleaning/README.md) | pandas data cleaning, date/time-zone handling, judgment | 35 min |
+| B (W1D2) | [b1_baseline](https://github.com/berdakh/mlengineering/blob/main/diagnostic/b1_baseline/README.md) | problem framing, baselines, metrics under imbalance | 35 min |
+| B | [b2_leakage](https://github.com/berdakh/mlengineering/blob/main/diagnostic/b2_leakage/README.md) | leakage, validation design | 35 min |
+| B | [b3_testing_api](https://github.com/berdakh/mlengineering/blob/main/diagnostic/b3_testing_api/README.md) | writing tests, request validation, API concepts | 25 min |
+| B | [b4_explain](https://github.com/berdakh/mlengineering/blob/main/diagnostic/b4_explain/README.md) | explaining and defending an ML decision | 20 min |
 
 Session A totals 110 minutes, session B 115. Use the remaining minutes of each session to fill in
-[`SUBMISSION.md`](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/SUBMISSION.md).
+[`SUBMISSION.md`](https://github.com/berdakh/mlengineering/blob/main/diagnostic/SUBMISSION.md).
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-01-01.svg" alt="Diagram 1 of notebook 01" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-01-01.svg" alt="Diagram 1 of notebook 01" style="max-width:100%">
 
 *The path through the diagnostic. Nothing is adapted until the submission has been reviewed.*
 
@@ -106,7 +106,7 @@ repository `README.md` for environment setup).
 
 ## Data
 
-All sections use one synthetic dataset, documented in [`data/README.md`](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/data/README.md). It is not
+All sections use one synthetic dataset, documented in [`data/README.md`](https://github.com/berdakh/mlengineering/blob/main/diagnostic/data/README.md). It is not
 real; see that file for what cannot be concluded from it.
 
 ## After you finish
@@ -183,7 +183,7 @@ check("diagnostic/a1_python")
 **Time box: 35 minutes.** Session A, section 2 of 3. No hints; SQLite documentation is fine.
 
 Database: `diagnostic/data/streambox.db` (SQLite, **synthetic**). Schema and column meanings are in
-[`../data/README.md`](https://github.com/berdakh/mlengineering-/blob/main/diagnostic/data/README.md). Dates are ISO-8601 text (`YYYY-MM-DD`), so string comparison
+[`../data/README.md`](https://github.com/berdakh/mlengineering/blob/main/diagnostic/data/README.md). Dates are ISO-8601 text (`YYYY-MM-DD`), so string comparison
 orders them correctly.
 
 Write **one `SELECT` statement per file** (CTEs are fine) in `lab/q1.sql` ... `lab/q5.sql`. Return the

@@ -9,8 +9,8 @@ nav_order: 40
 # 40 · Model updates: retraining triggers, shadow and canary, rollback
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/40_model_updates_rollback.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/40_model_updates_rollback.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/40_model_updates_rollback.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/40_model_updates_rollback.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 40
 
 ---
 
-**Week 7 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w7d4_model_updates_rollback/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d4_model_updates_rollback/)
+**Week 7 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w7d4_model_updates_rollback/`](https://github.com/berdakh/mlengineering/blob/main/labs/w7d4_model_updates_rollback/)
 
 **Objective.** Define when and how a model is replaced: triggers, offline gate, shadow/canary comparison, versioned rollback.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -105,7 +105,7 @@ Shadow mode answers part of the second without risk: the candidate scores real i
 output. A canary answers the rest with bounded risk: a small share of real decisions comes from the
 candidate. Rollback makes every step reversible in seconds.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-40-01.svg" alt="Diagram 1 of notebook 40" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-40-01.svg" alt="Diagram 1 of notebook 40" style="max-width:100%">
 
 ### 2.2 Precise terms
 
@@ -211,7 +211,7 @@ includes 0: an unpaired superiority gate would reject a real improvement. Under 
 promote, which shows the other side: the policy choice can matter more than the statistics. Decide the
 policy before looking.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d4_model_updates_rollback/figures/paired_vs_unpaired.svg" alt="SYNTHETIC: paired interval +0.046 to +0.133 against unpaired -0.029 to +0.208 for the same recall difference" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d4_model_updates_rollback/figures/paired_vs_unpaired.svg" alt="SYNTHETIC: paired interval +0.046 to +0.133 against unpaired -0.029 to +0.208 for the same recall difference" width="100%">
 
 *Figure 1 (SYNTHETIC, worked example).*
 
@@ -269,7 +269,7 @@ the pointer, audit with action `rollback`, return the target.
 *Checkpoint:* all 16 checks pass, including `test_rollback_through_the_api_restores_exact_scores`, which
 promotes, reloads the API with a token, rolls back, reloads again and compares responses byte for byte.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-40-02.svg" alt="Diagram 2 of notebook 40" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-40-02.svg" alt="Diagram 2 of notebook 40" style="max-width:100%">
 
 The admin token is read from `FLOWGUARD_ADMIN_TOKEN` at request time and compared with
 `hmac.compare_digest`. Set it in the shell that starts the server
@@ -308,11 +308,11 @@ reload with a wrong token -> 401
 scores after rollback identical to before: True
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d4_model_updates_rollback/figures/gate_intervals.svg" alt="Paired recall difference on the 7 test experiments: 1.1.0 +0.143 with interval from 0.000 to 0.429; 2.0.0 -0.571 with interval from -0.857 to -0.143" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d4_model_updates_rollback/figures/gate_intervals.svg" alt="Paired recall difference on the 7 test experiments: 1.1.0 +0.143 with interval from 0.000 to 0.429; 2.0.0 -0.571 with interval from -0.857 to -0.143" width="100%">
 
 *Figure 2 (real data, gate on the frozen test set).*
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d4_model_updates_rollback/figures/probe_valve1_8.svg" alt="valve1/8: during the labelled fault the flow-rate score stays between 4.5 and 5.6, above 1.1.0's threshold of 4.50 and below 1.0.0's 7.24 except for a one-second spike" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d4_model_updates_rollback/figures/probe_valve1_8.svg" alt="valve1/8: during the labelled fault the flow-rate score stays between 4.5 and 5.6, above 1.1.0's threshold of 4.50 and below 1.0.0's 7.24 except for a one-second spike" width="100%">
 
 *Figure 3 (real data).* The one test experiment that separates the versions. The single-sample spike
 above 7.24 is removed by `min_duration = 30`; 1.1.0 raises one alarm covering samples 575-970.
@@ -352,10 +352,10 @@ check("w7d4")
 
 ## 5. Independent challenge
 
-Read a canary and decide: [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d4_model_updates_rollback/challenge/README.md). You implement a stated stopping
+Read a canary and decide: [challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w7d4_model_updates_rollback/challenge/README.md). You implement a stated stopping
 rule and explain why one scenario changes its answer between hourly and final evaluation.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d4_model_updates_rollback/figures/canary_bounds.svg" alt="SYNTHETIC: 95 % bounds on a canary's alert rate narrowing over 96 hours around the budget of 1 per machine-hour; the lower bound exceeds the budget at hour 2" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d4_model_updates_rollback/figures/canary_bounds.svg" alt="SYNTHETIC: 95 % bounds on a canary's alert rate narrowing over 96 hours around the budget of 1 per machine-hour; the lower bound exceeds the budget at hour 2" width="100%">
 
 *Figure 4 (SYNTHETIC, scenario e of the challenge).* Read this after you have tried the challenge.
 
@@ -420,9 +420,9 @@ check("w7d4", challenge=True)
 
 ## 6. Progressive hints
 
-1. [Conceptual hint](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d4_model_updates_rollback/hints/hint1_concept.md)
-2. [Suggested approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d4_model_updates_rollback/hints/hint2_approach.md)
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d4_model_updates_rollback/hints/hint3_partial.md)
+1. [Conceptual hint](https://github.com/berdakh/mlengineering/blob/main/labs/w7d4_model_updates_rollback/hints/hint1_concept.md)
+2. [Suggested approach](https://github.com/berdakh/mlengineering/blob/main/labs/w7d4_model_updates_rollback/hints/hint2_approach.md)
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w7d4_model_updates_rollback/hints/hint3_partial.md)
 
 The full reference solution is in `solutions/labs/w7d4_model_updates_rollback/lab/`.
 

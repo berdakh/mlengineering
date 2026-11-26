@@ -1,6 +1,6 @@
 # 36 · Delivery and operational debugging; project milestone 3 — lab files
 
-**The lesson is notebook [`36_cd_ops_debugging`](../../notebooks/36_cd_ops_debugging.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/36_cd_ops_debugging.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/36_cd_ops_debugging.ipynb)).
+**The lesson is notebook [`36_cd_ops_debugging`](../../notebooks/36_cd_ops_debugging.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/36_cd_ops_debugging.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/36_cd_ops_debugging.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

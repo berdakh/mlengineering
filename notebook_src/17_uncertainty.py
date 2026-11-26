@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/17_uncertainty.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/17_uncertainty.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -104,7 +104,7 @@ print("repo root:", REPO_ROOT)
 # the right quantity for "how well does *this* artifact do on new experiments like these". It is the
 # wrong quantity for "how good is this *method*", which also needs the second and third rows.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-17-01.svg" alt="Diagram 1 of notebook 17" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-17-01.svg" alt="Diagram 1 of notebook 17" style="max-width:100%">
 #
 # ### 2.2 Why rows are the wrong unit
 #
@@ -120,7 +120,7 @@ print("repo root:", REPO_ROOT)
 # *effective sample size* is `G·m / deff`. With `m = 40` and `ρ = 0.5`, 1,200 rows are worth
 # `1200 / 20.5 ≈ 59` independent observations; as `ρ → 1` they are worth `G`.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/handbook/figures/h6_6/design_effect.svg" alt="Effective sample size of about 1,200 rows falls steeply with the intraclass correlation and never goes below the number of clusters" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/handbook/figures/h6_6/design_effect.svg" alt="Effective sample size of about 1,200 rows falls steeply with the intraclass correlation and never goes below the number of clusters" width="100%">
 #
 # *Formula, no data. The same 1,200 rows arranged as 30, 10 or 7 clusters: at an ICC of 0.2 they are
 # worth about 136, 48 and 34 independent observations. Source: `handbook/figures/h6_6/make_figures.py`.*
@@ -146,7 +146,7 @@ print("repo root:", REPO_ROOT)
 # 3. Recompute the metric exactly as on the real data.
 # 4. Repeat `B` times. The 2.5th and 97.5th percentiles of the `B` values are the **percentile interval**.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-17-02.svg" alt="Diagram 2 of notebook 17" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-17-02.svg" alt="Diagram 2 of notebook 17" style="max-width:100%">
 #
 # Decisions hidden in "recompute the metric exactly":
 #
@@ -204,7 +204,7 @@ print("repo root:", REPO_ROOT)
 # files, if you want to be strict. (Useful to remember: zero failures in `n` trials gives an upper
 # 95% bound of roughly `3/n` on the failure rate.)
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d5_uncertainty/figures/wilson_widths.svg" alt="Wilson 95 % intervals for detection rates: 9 of 9 still allows 70 %, and only hundreds of events give a narrow interval" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d5_uncertainty/figures/wilson_widths.svg" alt="Wilson 95 % intervals for detection rates: 9 of 9 still allows 70 %, and only hundreds of events give a narrow interval" width="100%">
 #
 # *Formula, no data (Wilson score interval). The black dot is the observed rate, the bar the interval,
 # the number its lower limit. Values in `figures/wilson_widths.csv`.*
@@ -229,7 +229,7 @@ print("repo root:", REPO_ROOT)
 # * **The paired bootstrap** draws one set of cluster ids per replicate and applies it to both
 #   models, then takes the percentile interval of the differences.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d5_uncertainty/figures/paired_differences.svg" alt="Per-cluster PR-AUC differences on real SKAB scatter from about -0.6 to +0.6 while their means are -0.08 and +0.03 with intervals that include zero" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d5_uncertainty/figures/paired_differences.svg" alt="Per-cluster PR-AUC differences on real SKAB scatter from about -0.6 to +0.6 while their means are -0.08 and +0.03 with intervals that include zero" width="100%">
 #
 # *REAL SKAB results, all 30 independent clusters (logistic-regression scores on development clusters
 # are out-of-fold). Each dot is one cluster's difference; the blue line and band are the mean and its
@@ -280,7 +280,7 @@ print("repo root:", REPO_ROOT)
 # 0.09 with 34. Differences of a few hundredths, which is what the tables show, are far below what
 # this dataset can resolve. That calculation, by simulation, is the challenge.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/handbook/figures/h6_6/power_curve.svg" alt="Simulated power against the number of independent test clusters for two real SKAB comparisons: 30 clusters give power 0.35 and 0.13" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/handbook/figures/h6_6/power_curve.svg" alt="Simulated power against the number of independent test clusters for two real SKAB comparisons: 30 clusters give power 0.35 and 0.13" width="100%">
 #
 # *Simulation driven by the REAL per-cluster differences (sign-flip permutation test, α = 0.05).
 # With the 30 clusters available, power is 0.35 for Mahalanobis versus flow-rate z and 0.13 for
@@ -350,7 +350,7 @@ print("repo root:", REPO_ROOT)
 # * When rows really are independent (ICC 0) and clusters are few, the row bootstrap is the better
 #   procedure. The cluster bootstrap is not free; it is the price of not knowing the ICC is zero.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d5_uncertainty/figures/coverage.svg" alt="Coverage of nominal 95 % intervals: the row bootstrap falls to about 0.32 at ICC 0.5 while the cluster bootstrap stays near 0.93 with 30 clusters and about 0.87 with 7 or 9" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d5_uncertainty/figures/coverage.svg" alt="Coverage of nominal 95 % intervals: the row bootstrap falls to about 0.32 at ICC 0.5 while the cluster bootstrap stays near 0.93 with 30 clusters and about 0.87 with 7 or 9" width="100%">
 #
 # *SYNTHETIC simulation (the table above, 1,000 datasets per point). Orange is the wrong unit, blue
 # the correct one, in every figure of this lesson. Values in `figures/coverage.csv`.*
@@ -528,7 +528,7 @@ print("repo root:", REPO_ROOT)
 #   alarms entirely and is superseded by w3d4's matching.
 # * With 7 clusters the percentile intervals above undercover (section 3.1). Treat them as optimistic.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d5_uncertainty/figures/skab_intervals.svg" alt="Real SKAB test set: cluster-bootstrap intervals are 3 to 7 times wider than row-bootstrap intervals for the same four baselines" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d5_uncertainty/figures/skab_intervals.svg" alt="Real SKAB test set: cluster-bootstrap intervals are 3 to 7 times wider than row-bootstrap intervals for the same four baselines" width="100%">
 #
 # *REAL SKAB, frozen v2 test set (7 experiments, 7 independent clusters), table A above as a picture. The
 # row-level bars (orange) look precise and are not; the Mahalanobis interval on the correct unit spans

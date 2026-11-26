@@ -9,8 +9,8 @@ nav_order: 11
 # 11 · Reproducible feature generation without look-ahead
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/11_feature_pipeline.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/11_feature_pipeline.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/11_feature_pipeline.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/11_feature_pipeline.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 11
 
 ---
 
-**Week 2 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w2d5_feature_pipeline/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d5_feature_pipeline/)
+**Week 2 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w2d5_feature_pipeline/`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d5_feature_pipeline/)
 
 **Objective.** Build causal rolling-window features and train-only statistics as a deterministic, cached, tested pipeline step.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -179,7 +179,7 @@ windows. An EWMA with span *s* (`α = 2/(s+1)`) weights the past geometrically, 
 warm-up edge and can be updated in O(1) state per sensor, which is why it is common in services;
 its step response reaches fraction `1-(1-α)^k` of Δ after *k* samples.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d5_feature_pipeline/figures/delay_vs_window.svg" alt="Line chart: the median detection delay of a causal rolling mean grows from 2 to 14 samples as the window grows from 10 to 60, tracking w times theta over delta; the centred window shows minus 2 to minus 15" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d5_feature_pipeline/figures/delay_vs_window.svg" alt="Line chart: the median detection delay of a causal rolling mean grows from 2 to 14 samples as the window grows from 10 to 60, tracking w times theta over delta; the centred window shows minus 2 to minus 15" width="100%">
 
 *SYNTHETIC data (the simulation of the first worked example, 400 series per window length). The blue
 line is equation (1); the orange line is the same quantity minus w/2. Regenerate with
@@ -231,7 +231,7 @@ a per-session calibration does in many sensor systems). Choosing among them is e
 [w2d6](12_baselines_metrics.html) and Week 3. What this unit fixes is the mechanism, so the
 choice is one argument to `fit` and not a property scattered through the code.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-11-01.svg" alt="Diagram 1 of notebook 11" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-11-01.svg" alt="Diagram 1 of notebook 11" style="max-width:100%">
 
 
 ### 2.6 Determinism and content-addressed caching
@@ -261,7 +261,7 @@ computations. Sources of nondeterminism in feature code are usually unordered it
 (`set`, `groupby` on unsorted keys with `sort=False` and changing input order), parallel
 reductions, and float formatting differences between library versions.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-11-02.svg" alt="Diagram 2 of notebook 11" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-11-02.svg" alt="Diagram 2 of notebook 11" style="max-width:100%">
 
 
 ### 2.7 Industry example
@@ -342,7 +342,7 @@ visible instead of being clipped to zero; seeds are fixed per part.
 
 One of the simulated series, with both rolling means and the alert threshold:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d5_feature_pipeline/figures/step_response.svg" alt="Line chart of a noisy step signal with a causal and a centred 30-sample rolling mean; the centred mean crosses the alert threshold 7 samples before the fault onset, the causal one 7 samples after" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d5_feature_pipeline/figures/step_response.svg" alt="Line chart of a noisy step signal with a causal and a centred 30-sample rolling mean; the centred mean crosses the alert threshold 7 samples before the fault onset, the causal one 7 samples after" width="100%">
 
 *SYNTHETIC data, one series, w = 30. The centred curve is the causal curve shifted 15 samples to the
 left, which is all "centring" is. Offline, that shift reads as a better detector.*
@@ -498,7 +498,7 @@ check("w2d5")
 
 ## 5. Independent challenge
 
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d5_feature_pipeline/challenge/README.md): causal features for an **irregularly sampled**
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w2d5_feature_pipeline/challenge/README.md): causal features for an **irregularly sampled**
 series using time-based windows, with outage handling. Graded by
 `python wb.py check w2d5 --challenge`, which applies the same perturbation idea plus a
 truncation test. No solution is given in the instructions.
@@ -574,8 +574,8 @@ check("w2d5", challenge=True)
 ## 6. Progressive hints
 
 Open in order, and only when stuck for more than ten minutes:
-[hint 1 — concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d5_feature_pipeline/hints/hint1_concept.md) · [hint 2 — approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d5_feature_pipeline/hints/hint2_approach.md) ·
-[hint 3 — partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d5_feature_pipeline/hints/hint3_partial.md). The full reference is in
+[hint 1 — concept](https://github.com/berdakh/mlengineering/blob/main/labs/w2d5_feature_pipeline/hints/hint1_concept.md) · [hint 2 — approach](https://github.com/berdakh/mlengineering/blob/main/labs/w2d5_feature_pipeline/hints/hint2_approach.md) ·
+[hint 3 — partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w2d5_feature_pipeline/hints/hint3_partial.md). The full reference is in
 `solutions/labs/w2d5_feature_pipeline/`. Using hint 3 or the solution means the
 independent flag stays unset.
 

@@ -1,6 +1,6 @@
 # 21 · A neural comparison, where it is justified — lab files
 
-**The lesson is notebook [`21_neural_comparison`](../../notebooks/21_neural_comparison.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/21_neural_comparison.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/21_neural_comparison.ipynb)).
+**The lesson is notebook [`21_neural_comparison`](../../notebooks/21_neural_comparison.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/21_neural_comparison.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/21_neural_comparison.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

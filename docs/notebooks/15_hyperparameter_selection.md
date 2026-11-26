@@ -9,8 +9,8 @@ nav_order: 15
 # 15 · Hyperparameter and threshold selection without fooling yourself
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/15_hyperparameter_selection.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/15_hyperparameter_selection.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/15_hyperparameter_selection.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/15_hyperparameter_selection.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 15
 
 ---
 
-**Week 3 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w3d3_hyperparameter_selection/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d3_hyperparameter_selection/)
+**Week 3 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w3d3_hyperparameter_selection/`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d3_hyperparameter_selection/)
 
 **Objective.** Select hyperparameters and decision thresholds using only training/validation data; quantify selection optimism with nested validation.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -95,7 +95,7 @@ the same failure: the fitted object is adapted to the noise in the data it was f
 that data is optimistic. The difference is only one of scale: a threshold is a one-parameter model fitted
 to dev scores; choosing among 24 configurations is a model with 24 discrete options.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-15-01.svg" alt="Diagram 1 of notebook 15" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-15-01.svg" alt="Diagram 1 of notebook 15" style="max-width:100%">
 
 The quantity worth reporting is the performance of the **procedure** (search, select, refit, threshold)
 on new experiments, not the dev score of the configuration it happened to pick.
@@ -122,7 +122,7 @@ Wrap the procedure in an outer loop. For each outer fold k: run the whole search
 select, refit the selected candidate on those folds, and score fold k. Fold k never fitted a model, never
 scored a candidate, never moved a threshold.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-15-02.svg" alt="Diagram 2 of notebook 15" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-15-02.svg" alt="Diagram 2 of notebook 15" style="max-width:100%">
 
 What it estimates is a property of the procedure. Different outer folds may pick different candidates;
 that is information, not a malfunction: it says the search cannot separate the candidates with this data.
@@ -192,7 +192,7 @@ losses based on 0.912, was not met, and the next model's (honest) evaluation loo
 
 ## 3. Worked example: what selection does to the number you report
 
-[`example/selection_demo.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d3_hyperparameter_selection/example/selection_demo.py) is a SYNTHETIC simulation (NumPy only).
+[`example/selection_demo.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d3_hyperparameter_selection/example/selection_demo.py) is a SYNTHETIC simulation (NumPy only).
 
 ```python
 !python labs/w3d3_hyperparameter_selection/example/selection_demo.py
@@ -225,12 +225,12 @@ D. Budget 16 trials, score depends only on C (optimum 0.800):
      random:   16 distinct values of C, best score found 0.7970 on average; beats the grid in 89.7% of runs
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d3_hyperparameter_selection/figures/optimism_of_max.svg" alt="Optimism of the best of K equally good candidates against K, for independent and correlated estimates, with the sigma sqrt(2 ln K) bound" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d3_hyperparameter_selection/figures/optimism_of_max.svg" alt="Optimism of the best of K equally good candidates against K, for independent and correlated estimates, with the sigma sqrt(2 ln K) bound" width="100%">
 
 *Figure 1 (SYNTHETIC, σ = 0.02).* The optimism grows slowly with K (like √ln K) and is smaller when
 candidates share noise, as they do when scored on the same folds. The bound is loose at small K.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d3_hyperparameter_selection/figures/grid_vs_random.svg" alt="Grid versus random search with sixteen trials when only one of two hyperparameters affects the score" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d3_hyperparameter_selection/figures/grid_vs_random.svg" alt="Grid versus random search with sixteen trials when only one of two hyperparameters affects the score" width="100%">
 
 *Figure 2 (SYNTHETIC).* A 4×4 grid spends its 16 trials on 4 values of the hyperparameter that matters;
 random search tries 16.
@@ -239,7 +239,7 @@ Interpretation. Part C is the realistic case: the winner is better than a random
 0.700), so selection helps, but its dev estimate (0.752) overstates it by 0.04, and it is the truly best
 candidate only 11 % of the time. Selection is worth doing; its score is not worth reporting.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d3_hyperparameter_selection/figures/threshold_frozen.svg" alt="F1 against threshold on development and on shifted test scores, marking the frozen dev threshold and the test-optimal F1" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d3_hyperparameter_selection/figures/threshold_frozen.svg" alt="F1 against threshold on development and on shifted test scores, marking the frozen dev threshold and the test-optimal F1" width="100%">
 
 *Figure 3 (SYNTHETIC, test scores shifted by +0.5).* The circled test-optimal F1 belongs to no deployable
 detector. The reportable number is test F1 at the threshold frozen on dev.
@@ -331,7 +331,7 @@ TEST (looked at once), selected candidate refitted on all dev experiments:
 for scale: elapsed time alone (no sensors) has test PR-AUC 0.524; test prevalence 0.373
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d3_hyperparameter_selection/figures/skab_trials.svg" alt="Twenty-four recorded SKAB trials sorted by dev score with SE bars, and horizontal lines for the best trial's dev score, the nested estimate with its band, and the single test score" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d3_hyperparameter_selection/figures/skab_trials.svg" alt="Twenty-four recorded SKAB trials sorted by dev score with SE bars, and horizontal lines for the best trial's dev score, the nested estimate with its band, and the single test score" width="100%">
 
 *Figure 4 (real SKAB, 27 development and 7 test experiments).* The SE bars of the top trials overlap
 heavily; the best trial's own score (dashed) sits far above the nested estimate of the procedure (solid,
@@ -361,7 +361,7 @@ check("w3d3")
 
 ## 5. Independent challenge
 
-[`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d3_hyperparameter_selection/challenge/README.md). Sixty recorded trials (SYNTHETIC) with five fold scores
+[`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d3_hyperparameter_selection/challenge/README.md). Sixty recorded trials (SYNTHETIC) with five fold scores
 each; choose one, attach an honest estimate, look at its sealed test score exactly once, and design a
 simulation of the optimism of the maximum. Graded on 200 freshly generated tables: your estimate must be
 unbiased for the trial you choose.
@@ -433,9 +433,9 @@ check("w3d3", challenge=True)
 
 ## 6. Progressive hints (open in order, only when stuck)
 
-1. [Concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d3_hyperparameter_selection/hints/hint1_concept.md)
-2. [Approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d3_hyperparameter_selection/hints/hint2_approach.md)
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d3_hyperparameter_selection/hints/hint3_partial.md)
+1. [Concept](https://github.com/berdakh/mlengineering/blob/main/labs/w3d3_hyperparameter_selection/hints/hint1_concept.md)
+2. [Approach](https://github.com/berdakh/mlengineering/blob/main/labs/w3d3_hyperparameter_selection/hints/hint2_approach.md)
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w3d3_hyperparameter_selection/hints/hint3_partial.md)
 
 If you open a hint, the work counts as guided, not independent.
 

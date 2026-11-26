@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/36_cd_ops_debugging.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/36_cd_ops_debugging.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -88,7 +88,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.1 Intuition: build once, move the same bytes
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-36-01.svg" alt="Diagram 1 of notebook 36" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-36-01.svg" alt="Diagram 1 of notebook 36" style="max-width:100%">
 #
 # The image is the unit of release. Staging and production run **the same digest** with different
 # environment files. If production ran a rebuild of the same commit instead, "tested in staging" would be a
@@ -119,7 +119,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.3 Configuration: validate format at startup, existence by readiness
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-36-02.svg" alt="Diagram 2 of notebook 36" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-36-02.svg" alt="Diagram 2 of notebook 36" style="max-width:100%">
 #
 # Two layers, on purpose. A **typo** in a variable name or a malformed value is a configuration bug that
 # can never fix itself: stop at once, with the variable's name in the error. A **missing or corrupt model**
@@ -129,7 +129,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.4 The debugging method
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-36-03.svg" alt="Diagram 3 of notebook 36" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-36-03.svg" alt="Diagram 3 of notebook 36" style="max-width:100%">
 #
 # The habit that matters most is the first box. In each incident of this lab, `fgops.py history` and the
 # service's own startup log lines identify the change within a minute; most wasted time in real incidents is
@@ -283,7 +283,7 @@ print("repo root:", REPO_ROOT)
 # Fix tools: `python ops/rollback.py production --apply` (image problems), `python ops/fgops.py reset`
 # followed by `python ops/fgops.py deploy production <current release>` (configuration problems).
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d6_cd_ops_debugging/figures/readiness_timeline.svg" alt="Production readiness through the three incidents of the authoring run: 503 during the bad promotion and the MODEL_DIR incident, ready then no answer during the memory incident" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d6_cd_ops_debugging/figures/readiness_timeline.svg" alt="Production readiness through the three incidents of the authoring run: 503 during the bad promotion and the MODEL_DIR incident, ready then no answer during the memory incident" width="100%">
 #
 # *Figure 1. Production `/readyz` polled every 0.25 s during the authoring replay of all three incidents
 # (real run, 2026-11-22; `solutions/.../record/record_incidents.py`). Two incidents fail loudly (503 from the
@@ -298,14 +298,14 @@ print("repo root:", REPO_ROOT)
 #   outside the tool: redeploy through `fgops.py` so the record is true.
 # * When finished: `python ops/fgops.py cleanup` removes every container, the registry and the images.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d6_cd_ops_debugging/figures/deployment_history.svg" alt="Release history of the authoring run: staging and production deployments over time, coloured good, failed or rolled back" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d6_cd_ops_debugging/figures/deployment_history.svg" alt="Release history of the authoring run: staging and production deployments over time, coloured good, failed or rolled back" width="100%">
 #
 # *Figure 2. The release history at the end of the authoring replay (real). The hotfix release `6c7f7b` failed
 # in staging and was promoted by hand anyway; rollback then returned production to `b7c8d9`. The two later
 # failures are the same digest `b7c8d9` with broken configuration: rolling back to `a1b2c3` would have been the
 # wrong fix.*
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d6_cd_ops_debugging/figures/time_not_ready.svg" alt="Seconds production was not ready per incident in the scripted replay: 20, 20 and 13" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d6_cd_ops_debugging/figures/time_not_ready.svg" alt="Seconds production was not ready per incident in the scripted replay: 20, 20 and 13" width="100%">
 #
 # *Figure 3. Time production was not ready per incident in the scripted replay (real; the script applied each fix
 # immediately). With a person diagnosing, add the minutes the diagnosis takes: the method in section 2.4 is

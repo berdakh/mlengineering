@@ -9,8 +9,8 @@ nav_order: 4
 # 04 · Configuration, logging and reproducible runs
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/04_config_logging.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/04_config_logging.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/04_config_logging.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/04_config_logging.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 4
 
 ---
 
-**Week 1 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w1d4_config_logging/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d4_config_logging/)
+**Week 1 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w1d4_config_logging/`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d4_config_logging/)
 
 **Objective.** Make a training run reproducible and inspectable: typed validated config with overrides, logging configured once, explicit seeds, and a run directory with config snapshot, metrics and provenance.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -181,7 +181,7 @@ varies *between deploys* and puts all of it in environment variables; ML trainin
 so it belongs in files under version control. Deployment settings of the future service (W5–W6) will
 follow the environment-variable rule.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-04-01.svg" alt="Diagram 1 of notebook 04" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-04-01.svg" alt="Diagram 1 of notebook 04" style="max-width:100%">
 
 *Precedence is defaults, then file, then command line: later sources override earlier ones, and the snapshot records the result after all of them.*
 
@@ -218,7 +218,7 @@ this into JSON logs for the service; the habit is the same.
 **stdout is an interface.** The program's *result* goes to stdout, diagnostics to stderr.
 `pumpwatch train ... | jq .metrics.auc` must work at any log level.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-04-02.svg" alt="Diagram 2 of notebook 04" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-04-02.svg" alt="Diagram 2 of notebook 04" style="max-width:100%">
 
 *Library modules only obtain loggers and emit records. Where records go is decided in one place. Standard output stays free for the JSON result.*
 
@@ -260,7 +260,7 @@ operations with no deterministic implementation), and seeding DataLoader workers
 are configuration, and why the honest deliverable is a *statement of residual nondeterminism*
 rather than a claim of determinism.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d4_config_logging/figures/seed_spread.svg" alt="SYNTHETIC pump data: test F1 for split seeds 0 to 9 with identical code and data ranges from 0.778 to 0.930, mean 0.879, sample standard deviation 0.044" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w1d4_config_logging/figures/seed_spread.svg" alt="SYNTHETIC pump data: test F1 for split seeds 0 to 9 with identical code and data ranges from 0.778 to 0.930, mean 0.879, sample standard deviation 0.044" width="100%">
 
 *SYNTHETIC data, reference solution. The ten points share code and data and differ only in which three units are held out (numbers above each point). A 0.04 difference between two single runs is inside this spread. Regenerate with `python labs/w1d4_config_logging/figures/make_figures.py`.*
 
@@ -305,7 +305,7 @@ diff tool.
 
 ## 3. Worked example
 
-**Files:** [`example/run_detector.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d4_config_logging/example/run_detector.py), [`example/detector.toml`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d4_config_logging/example/detector.toml).
+**Files:** [`example/run_detector.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d4_config_logging/example/run_detector.py), [`example/detector.toml`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d4_config_logging/example/detector.toml).
 A deliberately different problem from the lab so that you see the pattern, not the solution: a
 rolling z-score spike detector on a simulated sensor trace.
 
@@ -458,7 +458,7 @@ Expected metrics for the base config, from the reference solution on the tested 
 `auc ≈ 0.9992`, `f1 ≈ 0.909`, `test_units = ["P01", "P06", "P09"]`. If your numbers differ at the
 second decimal, something other than the config changed — find out what before continuing.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-04-03.svg" alt="Diagram 3 of notebook 04" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-04-03.svg" alt="Diagram 3 of notebook 04" style="max-width:100%">
 
 *Anatomy of a run directory: four files, four questions.*
 
@@ -518,7 +518,7 @@ check("w1d4")
 
 ## 5. Independent challenge
 
-[`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d4_config_logging/challenge/README.md) — add `pumpwatch compare-runs RUN_A RUN_B`, the tool
+[`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d4_config_logging/challenge/README.md) — add `pumpwatch compare-runs RUN_A RUN_B`, the tool
 from the industry example in 2.7. It transfers today's ideas to *reading* run directories and
 forces a decision about what "the same data" means. Acceptance criteria are in that file; there is
 no solution in this directory. Checks: `python -m pytest labs/w1d4_config_logging/checks_challenge -q`.
@@ -607,9 +607,9 @@ Open them in order, and only after ten minutes of being stuck. Record which you 
 your progress notes — a challenge solved with hint 3 counts as guided practice, not as independent
 skill.
 
-1. [Conceptual hint](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d4_config_logging/hints/hint1_concept.md)
-2. [Suggested approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d4_config_logging/hints/hint2_approach.md)
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d4_config_logging/hints/hint3_partial.md)
+1. [Conceptual hint](https://github.com/berdakh/mlengineering/blob/main/labs/w1d4_config_logging/hints/hint1_concept.md)
+2. [Suggested approach](https://github.com/berdakh/mlengineering/blob/main/labs/w1d4_config_logging/hints/hint2_approach.md)
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w1d4_config_logging/hints/hint3_partial.md)
 4. Full reference solutions: `solutions/labs/w1d4_config_logging/` (`lab/`, `challenge/`).
 
 

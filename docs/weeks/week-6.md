@@ -21,12 +21,12 @@ Six core days of about **2 hours** each (plus an optional hour), and one lighter
 
 | Day | Session | Notebook | Deliverable |
 |---|---|---|---|
-| 1 | **Docker I: images, layers and a correct Dockerfile** | [`31_docker_basics`](../notebooks/31_docker_basics.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/31_docker_basics.ipynb) | Local container serving predictions; image build is repeatable. |
-| 2 | **Docker II: pinned dependencies, multi-stage builds, smoke tests** | [`32_docker_reproducibility`](../notebooks/32_docker_reproducibility.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/32_docker_reproducibility.ipynb) | Multi-stage image with lockfile and an automated container smoke test. |
-| 3 | **Continuous integration with GitHub Actions** | [`33_ci`](../notebooks/33_ci.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/33_ci.ipynb) | Green CI workflow on the project repository with caching. |
-| 4 | **Latency, throughput and resource use** | [`34_latency_resources`](../notebooks/34_latency_resources.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/34_latency_resources.ipynb) | Load-test report with method, percentiles and one evidence-based optimisation. |
-| 5 | **One small cloud deployment on AWS (authorisation-gated)** | [`35_cloud_deployment`](../notebooks/35_cloud_deployment.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/35_cloud_deployment.ipynb) | Deployment runbook; either a deployed endpoint (with explicit authorisation and teardown) or a local dry-run with the same configuration. |
-| 6 | **Delivery and operational debugging; project milestone 3** | [`36_cd_ops_debugging`](../notebooks/36_cd_ops_debugging.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/36_cd_ops_debugging.ipynb) | Debugging log for three seeded failures + rollback demonstration. |
+| 1 | **Docker I: images, layers and a correct Dockerfile** | [`31_docker_basics`](../notebooks/31_docker_basics.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/31_docker_basics.ipynb) | Local container serving predictions; image build is repeatable. |
+| 2 | **Docker II: pinned dependencies, multi-stage builds, smoke tests** | [`32_docker_reproducibility`](../notebooks/32_docker_reproducibility.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/32_docker_reproducibility.ipynb) | Multi-stage image with lockfile and an automated container smoke test. |
+| 3 | **Continuous integration with GitHub Actions** | [`33_ci`](../notebooks/33_ci.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/33_ci.ipynb) | Green CI workflow on the project repository with caching. |
+| 4 | **Latency, throughput and resource use** | [`34_latency_resources`](../notebooks/34_latency_resources.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/34_latency_resources.ipynb) | Load-test report with method, percentiles and one evidence-based optimisation. |
+| 5 | **One small cloud deployment on AWS (authorisation-gated)** | [`35_cloud_deployment`](../notebooks/35_cloud_deployment.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/35_cloud_deployment.ipynb) | Deployment runbook; either a deployed endpoint (with explicit authorisation and teardown) or a local dry-run with the same configuration. |
+| 6 | **Delivery and operational debugging; project milestone 3** | [`36_cd_ops_debugging`](../notebooks/36_cd_ops_debugging.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/36_cd_ops_debugging.ipynb) | Debugging log for three seeded failures + rollback demonstration. |
 | 7 | **Review and catch-up (light)** | [review below](#day-7--review-and-catch-up) | Week 6 retrieval sheet; interview set 6 (debugging narrative + Python, timed). |
 
 ## What each day is for
@@ -168,7 +168,7 @@ answer, write what you would check; open the key only when all twelve have an at
 
 ### 3. Score and choose (10 minutes)
 
-Open [`solutions/labs/w6d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering-/blob/main/solutions/labs/w6d7_review/retrieval_answers.md).
+Open [`solutions/labs/w6d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering/blob/main/solutions/labs/w6d7_review/retrieval_answers.md).
 Mark each answer **solid**, **shaky** or **missing** and record the lists:
 
 ```bash
@@ -204,7 +204,7 @@ Protocol (unchanged)
 
 ### 5. Interview set 6: debugging narratives and log arithmetic (45 minutes, timed and recorded)
 
-[`interview/set6_debugging.md`](https://github.com/berdakh/mlengineering-/blob/main/interview/set6_debugging.md):
+[`interview/set6_debugging.md`](https://github.com/berdakh/mlengineering/blob/main/interview/set6_debugging.md):
 
 * **N1 (12 minutes):** "ready on my laptop, 503 in staging". A different service with the same structure
   as yours; evidence cards are revealed as you ask for them.

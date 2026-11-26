@@ -9,8 +9,8 @@ nav_order: 19
 # 19 · Time-series fundamentals and forecast-residual detectors
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/19_timeseries_fundamentals.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/19_timeseries_fundamentals.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/19_timeseries_fundamentals.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/19_timeseries_fundamentals.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 19
 
 ---
 
-**Week 4 · day 1 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w4d1_timeseries_fundamentals/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d1_timeseries_fundamentals/)
+**Week 4 · day 1 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w4d1_timeseries_fundamentals/`](https://github.com/berdakh/mlengineering/blob/main/labs/w4d1_timeseries_fundamentals/)
 
 **Objective.** Reason about autocorrelation, non-stationarity and windowing; build naive, seasonal-naive and autoregressive forecasters and use their residuals as anomaly scores.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -132,7 +132,7 @@ Two practical consequences:
   stay correlated beyond 20 s, the current for a few seconds, and the flow rate and accelerometers
   hardly at all.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d1_timeseries_fundamentals/figures/acf_sensors.svg" alt="Median autocorrelation of four SKAB sensors in the burn-in rows of the 27 development experiments: thermocouple and motor temperature stay above 0.3 for 20 lags, current drops to about 0.3 at lag 1, flow rate is inside the noise band from lag 1" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d1_timeseries_fundamentals/figures/acf_sensors.svg" alt="Median autocorrelation of four SKAB sensors in the burn-in rows of the 27 development experiments: thermocouple and motor temperature stay above 0.3 for 20 lags, current drops to about 0.3 at lag 1, flow rate is inside the noise band from lag 1" width="100%">
 
 *Figure 1 (REAL SKAB, first 100 rows of each development experiment).* The memory of each sensor
 differs by an order of magnitude. A single window length or a single forecaster order for all eight
@@ -202,7 +202,7 @@ The forecaster you choose decides which kind of anomaly its residual can see.
   offset of about `(1 − Σφ_k) Δ` for as long as the shift lasts. A strongly persistent fitted process
   (`Σφ` close to 1) behaves almost like the naive forecaster.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d1_timeseries_fundamentals/figures/level_shift_residuals.svg" alt="SYNTHETIC AR(1) series with a +3 level shift at t = 600 and the residual scores of a naive and an AR(1) forecaster fitted on the first 300 samples: the naive score spikes once and returns to its previous level, the AR(1) score's running mean rises from about 0.8 to 1.1 and stays there" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d1_timeseries_fundamentals/figures/level_shift_residuals.svg" alt="SYNTHETIC AR(1) series with a +3 level shift at t = 600 and the residual scores of a naive and an AR(1) forecaster fitted on the first 300 samples: the naive score spikes once and returns to its previous level, the AR(1) score's running mean rises from about 0.8 to 1.1 and stays there" width="100%">
 
 *Figure 2 (SYNTHETIC).* The naive residual sees the step at `t = 600` and nothing after it. The AR(1)
 residual (fitted `φ = 0.67`) keeps about a third of the offset, which is why its 50-sample mean stays
@@ -235,7 +235,7 @@ authoring session; median 330). At 1 Hz that is **a false alarm every six to eig
 `ARL₀` tables assume independent, correctly standardised residuals; autocorrelated residuals or a
 wrong `σ̂_e` make the real false-alarm rate much higher.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d1_timeseries_fundamentals/figures/cusum_delay.svg" alt="Simulated median CUSUM detection delay against shift size for k = 0.5 and h = 5, with the approximation h divided by (delta minus k): about 27 samples at delta 0.5, 9 at delta 1, 2 at delta 3" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d1_timeseries_fundamentals/figures/cusum_delay.svg" alt="Simulated median CUSUM detection delay against shift size for k = 0.5 and h = 5, with the approximation h divided by (delta minus k): about 27 samples at delta 0.5, 9 at delta 1, 2 at delta 3" width="100%">
 
 *Figure 3 (SYNTHETIC, 300 runs per point).* `h/(δ − k)` is a good guide above `δ ≈ 1`; at `δ = k`
 the formula breaks down and the simulated median delay is 27 samples.
@@ -332,7 +332,7 @@ Work in `lab/src/flowguard/forecast.py`. Everything else in `lab/src/flowguard/`
 earlier lessons; you do not need to edit it. Checks: `python wb.py check w4d1` (or
 `python -m pytest labs/w4d1_timeseries_fundamentals/checks -q`). The starter fails all of them.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-19-01.svg" alt="Diagram 1 of notebook 19" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-19-01.svg" alt="Diagram 1 of notebook 19" style="max-width:100%">
 
 **Task 1 — `acf(x, nlags)` (8 min).** Mean-removed, one denominator for all lags. *Checkpoint:*
 `test_acf_*` pass; on an AR(1) with mean 40 the estimate must still be close to `0.8^k`.
@@ -384,7 +384,7 @@ Output from the authoring run (reference implementation; yours should match to t
 | AR(2) residual, max over sensors | 0.809 [0.664, 0.899] | 6/7 | 222.9 | 2 |
 | AR(2) residual + CUSUM (k=0.5) | 0.605 [0.532, 0.693] | 4/7 | 3.3 | 111 |
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d1_timeseries_fundamentals/figures/test_comparison.svg" alt="Test PR-AUC with 95% cluster-bootstrap intervals for the five detectors on the 7 SKAB test experiments: flow-rate z 0.884, max z 0.746, naive residual 0.401 next to the no-skill floor of 0.373, AR(2) residual 0.809, AR(2) plus CUSUM 0.605" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d1_timeseries_fundamentals/figures/test_comparison.svg" alt="Test PR-AUC with 95% cluster-bootstrap intervals for the five detectors on the 7 SKAB test experiments: flow-rate z 0.884, max z 0.746, naive residual 0.401 next to the no-skill floor of 0.373, AR(2) residual 0.809, AR(2) plus CUSUM 0.605" width="100%">
 
 *Figure 4 (REAL SKAB, 7 test experiments, frozen v2 manifest).* Intervals come from resampling the
 7 experiments with the models and thresholds held fixed (w3d5).
@@ -406,7 +406,7 @@ Output from the authoring run (reference implementation; yours should match to t
 * Seven test experiments: the intervals are wide and the ranking of the three middle detectors is not
   established.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d1_timeseries_fundamentals/figures/skab_valve1_0.svg" alt="Real SKAB experiment valve1/0: flow rate with the AR(2) one-step forecast, the absolute standardised residual, and the CUSUM statistic, with the labelled fault segment shaded; the residual rises during the fault and the CUSUM climbs steadily through it, with a smaller excursion above h around t = 150-250 before the fault" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d1_timeseries_fundamentals/figures/skab_valve1_0.svg" alt="Real SKAB experiment valve1/0: flow rate with the AR(2) one-step forecast, the absolute standardised residual, and the CUSUM statistic, with the labelled fault segment shaded; the residual rises during the fault and the CUSUM climbs steadily through it, with a smaller excursion above h around t = 150-250 before the fault" width="100%">
 
 *Figure 5 (REAL SKAB, development experiment valve1/0, flow rate only).* Two things the table hides:
 the flow rate is coarsely quantised (it moves in steps of about 1 L/min), so the residual takes few
@@ -425,7 +425,7 @@ check("w4d1")
 
 ## 5. Independent challenge
 
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d1_timeseries_fundamentals/challenge/README.md): detect promotions in SYNTHETIC daily sales of ten stores
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w4d1_timeseries_fundamentals/challenge/README.md): detect promotions in SYNTHETIC daily sales of ten stores
 with a weekly pattern, choosing between a seasonal-naive and an AR residual detector on development
 weeks only. Transfer: different sampling (daily), seasonality, a benign level change, and a
 one-sided anomaly. Graded on fresh generator seeds.
@@ -493,8 +493,8 @@ check("w4d1", challenge=True)
 
 ## 6. Progressive hints
 
-Try without them first. [Hint 1: concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d1_timeseries_fundamentals/hints/hint1_concept.md) ·
-[Hint 2: approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d1_timeseries_fundamentals/hints/hint2_approach.md) · [Hint 3: partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d1_timeseries_fundamentals/hints/hint3_partial.md)
+Try without them first. [Hint 1: concept](https://github.com/berdakh/mlengineering/blob/main/labs/w4d1_timeseries_fundamentals/hints/hint1_concept.md) ·
+[Hint 2: approach](https://github.com/berdakh/mlengineering/blob/main/labs/w4d1_timeseries_fundamentals/hints/hint2_approach.md) · [Hint 3: partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w4d1_timeseries_fundamentals/hints/hint3_partial.md)
 
 
 Open one hint at a time, only after a real attempt.

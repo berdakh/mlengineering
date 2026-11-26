@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/33_ci.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/33_ci.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -104,7 +104,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.2 Anatomy of a GitHub Actions workflow
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-33-01.svg" alt="Diagram 1 of notebook 33" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-33-01.svg" alt="Diagram 1 of notebook 33" style="max-width:100%">
 #
 # | Term | Meaning | Consequence |
 # |---|---|---|
@@ -166,7 +166,7 @@ print("repo root:", REPO_ROOT)
 #
 # The single most important design decision in an ML project's CI is what *not* to put in the gate.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-33-02.svg" alt="Diagram 2 of notebook 33" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-33-02.svg" alt="Diagram 2 of notebook 33" style="max-width:100%">
 #
 # | Belongs in the per-push gate | Belongs in the scheduled lane |
 # |---|---|
@@ -179,7 +179,7 @@ print("repo root:", REPO_ROOT)
 # The test for "gate or schedule" is: **would a red result on this commit, with no code change, be
 # possible?** If yes (noise, network, a slow runner, a new day's data), it is not a gate.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d3_ci/figures/flaky_vs_load.svg" alt="Bar chart: 0 of 40 failures with 0 or 2 competing processes, 2 of 40 with 4, 3 of 40 with 6." width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d3_ci/figures/flaky_vs_load.svg" alt="Bar chart: 0 of 40 failures with 0 or 2 competing processes, 2 of 40 with 4, 3 of 40 with 6." width="100%">
 #
 # *Figure 2. The challenge's single-request "under 50 ms" test, run 40 times at each level of competing
 # CPU-bound work on the 4-core authoring machine (real runs, `figures/measure.py`; the machine was also
@@ -203,7 +203,7 @@ print("repo root:", REPO_ROOT)
 # empty pip cache, 4.8 and 4.3 s with a warm one**. The download is only part of an install; unpacking
 # and byte-compiling remain. Do not assume a number; look at the step timings in your own runs.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d3_ci/figures/install_cache.svg" alt="Two horizontal bars: an empty pip cache takes 7.2 s on average and a warm cache 4.5 s." width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d3_ci/figures/install_cache.svg" alt="Two horizontal bars: an empty pip cache takes 7.2 s on average and a warm cache 4.5 s." width="100%">
 #
 # *Figure 1. Install time of the lab project in a fresh venv, real measurements on the authoring machine
 # (`figures/measure.py`). The cache helps, by about a third here; on a slow network it helps more.*

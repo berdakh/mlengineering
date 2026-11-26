@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/13_leakage.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/13_leakage.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -102,7 +102,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.2 The taxonomy, each kind with a test that detects it
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-13-01.svg" alt="Diagram 1 of notebook 13" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-13-01.svg" alt="Diagram 1 of notebook 13" style="max-width:100%">
 #
 # | Kind | Mechanism | Detection probe | Prevention by construction |
 # |---|---|---|---|
@@ -165,7 +165,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.5 Prevention by construction
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-13-02.svg" alt="Diagram 2 of notebook 13" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-13-02.svg" alt="Diagram 2 of notebook 13" style="max-width:100%">
 #
 # The common thread: make the leaky version *harder to write than the correct one*. A `Pipeline` makes
 # "fit the scaler on the test rows" impossible without deliberately breaking it; a manifest that
@@ -176,7 +176,7 @@ print("repo root:", REPO_ROOT)
 #
 # Found on the real SKAB files in Week 2 and now made into code:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-13-03.svg" alt="Diagram 3 of notebook 13" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-13-03.svg" alt="Diagram 3 of notebook 13" style="max-width:100%">
 #
 # **Duplicate leakage.** Five pairs of files share 1,290 identical rows (timestamp and all eight sensors);
 # the connected components are the four overlap groups above. A split that puts `other/12` in test and
@@ -185,7 +185,7 @@ print("repo root:", REPO_ROOT)
 #
 # **Protocol (clock) leakage.** In 31 of 34 experiments the anomaly starts in rows 550-600.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d1_leakage/figures/skab_onsets.svg" alt="Per-experiment timeline: anomalous segments (coloured) start in a narrow band of rows 550-600 for nearly every experiment" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d1_leakage/figures/skab_onsets.svg" alt="Per-experiment timeline: anomalous segments (coloured) start in a narrow band of rows 550-600 for nearly every experiment" width="100%">
 #
 # *Real data. Each row is one experiment; the coloured part is the labelled anomaly. Look at the vertical
 # alignment: position in the recording almost determines the label. A rule "row >= 570 is anomalous",
@@ -286,7 +286,7 @@ print("repo root:", REPO_ROOT)
 #    N = 50  -> 0.647
 # ```
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d1_leakage/figures/noise_selection.svg" alt="Two panels on pure noise: leaky feature selection climbs towards AUC 0.93 as features increase while the pipeline stays at 0.5; the best of N test scores rises with N" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d1_leakage/figures/noise_selection.svg" alt="Two panels on pure noise: leaky feature selection climbs towards AUC 0.93 as features increase while the pipeline stays at 0.5; the best of N test scores rises with N" width="100%">
 #
 # *SYNTHETIC; features and labels are independent, so every point above 0.5 is manufactured by the
 # procedure. Left: with $p = 20$ selecting 20 of 20 is no selection, so both agree; the gap opens with $p$.

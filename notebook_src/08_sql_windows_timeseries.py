@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/08_sql_windows_timeseries.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/08_sql_windows_timeseries.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -130,7 +130,7 @@ print("repo root:", REPO_ROOT)
 #
 # The same order as a diagram, with the place where each kind of filter can live:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-08-01.svg" alt="Diagram 1 of notebook 08" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-08-01.svg" alt="Diagram 1 of notebook 08" style="max-width:100%">
 #
 #
 # ### 2.3 Frames, and the default that bites
@@ -237,7 +237,7 @@ print("repo root:", REPO_ROOT)
 #
 # The reference query for Task 5 on one device and one day of the lab database:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d2_sql_windows_timeseries/figures/islands.svg" alt="Line chart of reported temperature for device D01 on 2 March with 21 flagged samples grouped into 5 shaded episodes" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d2_sql_windows_timeseries/figures/islands.svg" alt="Line chart of reported temperature for device D01 on 2 March with 21 flagged samples grouped into 5 shaded episodes" width="100%">
 #
 # *Twenty-one flagged samples become five episodes. Two of them are a single sample wide: whether those
 # deserve to be events is the minimum-duration decision the text above says you owe the reader.
@@ -278,12 +278,12 @@ print("repo root:", REPO_ROOT)
 # Point-in-time correctness is about when information became available, which needs an ingestion
 # time. Today's data has only `reading_id` as a proxy for arrival order; H3.2.5 discusses this.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-08-02.svg" alt="Diagram 2 of notebook 08" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-08-02.svg" alt="Diagram 2 of notebook 08" style="max-width:100%">
 #
 # On the lab database, device D01 changes calibration four times in three days. Each reading is corrected
 # with the offset, and compared with the threshold, that were in force when it was measured:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d2_sql_windows_timeseries/figures/asof_calibration.svg" alt="Two stacked panels for device D01: the calibration offset applied steps through five values; the corrected temperature is compared against an alert threshold that steps between 7.5, 8.0 and 8.5 degrees" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d2_sql_windows_timeseries/figures/asof_calibration.svg" alt="Two stacked panels for device D01: the calibration offset applied steps through five values; the corrected temperature is compared against an alert threshold that steps between 7.5, 8.0 and 8.5 degrees" width="100%">
 #
 # *Joining every reading to the latest calibration row instead would re-score three days of history with
 # an offset and threshold that did not exist yet. SYNTHETIC data, same script.*

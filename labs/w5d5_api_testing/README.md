@@ -1,6 +1,6 @@
 # 29 · FastAPI II: API tests, integration tests and model lifecycle — lab files
 
-**The lesson is notebook [`29_api_testing`](../../notebooks/29_api_testing.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/29_api_testing.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/29_api_testing.ipynb)).
+**The lesson is notebook [`29_api_testing`](../../notebooks/29_api_testing.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/29_api_testing.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/29_api_testing.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

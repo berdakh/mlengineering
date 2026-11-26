@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/21_neural_comparison.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/21_neural_comparison.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -151,7 +151,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.4 A fair comparison protocol
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-21-01.svg" alt="Diagram 1 of notebook 21" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-21-01.svg" alt="Diagram 1 of notebook 21" style="max-width:100%">
 #
 # What "fair" means here, item by item:
 #
@@ -250,7 +250,7 @@ print("repo root:", REPO_ROOT)
 # * "Neural loses, so neural is bad." This comparison is one architecture, one budget, 21 training
 #   experiments. The claim it supports is narrow: *under this protocol*, no evidence of improvement.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d3_neural_comparison/figures/seed_spread.svg" alt="Five autoencoder seeds spread from 0.682 to 0.837 TEST PR-AUC; Mahalanobis 0.768; flow-rate z 0.884 with a narrower interval" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d3_neural_comparison/figures/seed_spread.svg" alt="Five autoencoder seeds spread from 0.682 to 0.837 TEST PR-AUC; Mahalanobis 0.768; flow-rate z 0.884 with a narrower interval" width="100%">
 #
 # *Figure 1 (real SKAB, 7 test experiments).* Dots are the five neural seeds; bars are 95% cluster-bootstrap
 # intervals for one fitted model of each detector. The neural seed spread alone is about as wide as the gap
@@ -313,7 +313,7 @@ print("repo root:", REPO_ROOT)
 # version; the qualitative results (a spread of several points, monotone best-of-k optimism, 7 rows of
 # look-ahead for a 16-row centred window) should hold.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d3_neural_comparison/figures/step_reaction.svg" alt="On a step at row 100 the causal window's score rises at row 100, the centred window's at row 93" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d3_neural_comparison/figures/step_reaction.svg" alt="On a step at row 100 the causal window's score rises at row 100, the centred window's at row 93" width="100%">
 #
 # *Figure 2 (SYNTHETIC).* The centred window starts reacting half a window before the event.
 
@@ -329,7 +329,7 @@ print("repo root:", REPO_ROOT)
 !python wb.py check w4d3
 
 # %% [markdown]
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-21-02.svg" alt="Diagram 2 of notebook 21" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-21-02.svg" alt="Diagram 2 of notebook 21" style="max-width:100%">
 #
 # ### Task 1 — `make_windows(x, window)` (10 min)
 #
@@ -438,12 +438,12 @@ print("repo root:", REPO_ROOT)
 #
 # Now fill in `lab/NEURAL_REPORT.md` (template provided) with your own output and its four questions.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d3_neural_comparison/figures/learning_curves.svg" alt="Training loss falls for every seed; validation loss settles at different levels; restored epochs 4 to 29" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d3_neural_comparison/figures/learning_curves.svg" alt="Training loss falls for every seed; validation loss settles at different levels; restored epochs 4 to 29" width="100%">
 #
 # *Figure 3 (real SKAB).* Learning curves of the five seeds. The seed with the lowest validation loss is
 # not the best detector on TEST.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d3_neural_comparison/figures/tuning_budget.svg" alt="Four configurations per family on VAL: autoencoder 0.605-0.716, Mahalanobis 0.663-0.666" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d3_neural_comparison/figures/tuning_budget.svg" alt="Four configurations per family on VAL: autoencoder 0.605-0.716, Mahalanobis 0.663-0.666" width="100%">
 #
 # *Figure 4 (real SKAB, VAL only).* The tuning budget. The neural family varies much more across
 # configurations, which is also a cost: more selection, more optimism (w3d3).

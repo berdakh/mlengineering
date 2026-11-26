@@ -9,8 +9,8 @@ nav_order: 10
 # 10 · Problem framing and versioned split definitions
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/10_problem_framing_splits.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/10_problem_framing_splits.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/10_problem_framing_splits.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/10_problem_framing_splits.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 10
 
 ---
 
-**Week 2 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w2d4_problem_framing_splits/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d4_problem_framing_splits/)
+**Week 2 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w2d4_problem_framing_splits/`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d4_problem_framing_splits/)
 
 **Objective.** Translate the stakeholder problem into an ML task: unit of prediction, label definition (point vs event), costs of errors, constraints; freeze splits by experiment and time in a versioned manifest.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -114,7 +114,7 @@ Read from the left, it is a design procedure. Read from the right, it is an audi
 does not mimic deployment makes the metric meaningless, a metric that ignores costs makes model
 selection arbitrary, and so on back to "nobody needed this".
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-10-01.svg" alt="Diagram 1 of notebook 10" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-10-01.svg" alt="Diagram 1 of notebook 10" style="max-width:100%">
 
 
 ### 2.2 The worksheet, with precise terms
@@ -174,7 +174,7 @@ classification is *possible*), one episode per recording and three families with
 (so learning "normal" is supported). There is no future quantity anyone wants (so forecasting is at
 most a means). Protocol B in the split exists precisely to test the classification framing's weak point.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-10-02.svg" alt="Diagram 2 of notebook 10" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-10-02.svg" alt="Diagram 2 of notebook 10" style="max-width:100%">
 
 
 ### 2.5 From medical event detection to equipment, and where the analogy breaks
@@ -237,12 +237,12 @@ stated honestly, and it is why w3d5 attaches intervals to everything.
 
 The reference manifest drawn as a grid. Each numbered cell is one experiment; its colour is its only role.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d4_problem_framing_splits/figures/split_layout.svg" alt="Grid of the 34 labelled experiments by family: 9 in the test set, the other 25 in four development folds, each family represented in the test set" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d4_problem_framing_splits/figures/split_layout.svg" alt="Grid of the 34 labelled experiments by family: 9 in the test set, the other 25 in four development folds, each family represented in the test set" width="100%">
 
 *Real experiment ids from `splits/v1.json`: 4 + 1 + 4 test experiments, and development folds of
 7/6/6/6. (This is manifest v1; w3d1 revises it so that experiments sharing duplicated rows stay together.)*
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d4_problem_framing_splits/figures/recall_interval.svg" alt="Interval plot: a 95 percent interval around a true recall of 0.8 is plus or minus 0.26 with 9 test events and plus or minus 0.13 with 34" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d4_problem_framing_splits/figures/recall_interval.svg" alt="Interval plot: a 95 percent interval around a true recall of 0.8 is plus or minus 0.26 with 9 test events and plus or minus 0.13 with 34" width="100%">
 
 *What nine test events can tell you. The formula is the one above; the upper ends are clipped at 1.
 No data is involved, only arithmetic.*
@@ -276,7 +276,7 @@ split is by day (future days are new; drivers and postcodes recur). None of this
 
 ## 3. Worked example
 
-Two scripts in [`example/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d4_problem_framing_splits/example). Run from the repository root.
+Two scripts in [`example/`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d4_problem_framing_splits/example). Run from the repository root.
 
 ### 3.1 Synthetic: what a split estimates, and why a seed is not a split
 
@@ -355,7 +355,7 @@ across library versions.
 
 The same output as a picture, one dot per fold:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d4_problem_framing_splits/figures/row_vs_experiment.svg" alt="Dot plot of fold scores: row-level folds cluster at PR-AUC 0.98 and ROC-AUC 0.986, experiment-level folds spread from 0.73 to 0.94 with means 0.841 and 0.849" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d4_problem_framing_splits/figures/row_vs_experiment.svg" alt="Dot plot of fold scores: row-level folds cluster at PR-AUC 0.98 and ROC-AUC 0.986, experiment-level folds spread from 0.73 to 0.94 with means 0.841 and 0.849" width="100%">
 
 *Real SKAB, development experiments only. Look at the spread as much as the level: the tight orange
 cluster is four copies of the same leak; the wide blue one is the honest uncertainty of six held-out
@@ -366,7 +366,7 @@ recordings. Regenerate with `python labs/w2d4_problem_framing_splits/figures/mak
 
 ## 4. Guided lab
 
-Work in [`lab/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d4_problem_framing_splits/lab). It contains a `flowguard` package (v0.1.0) with a finished `data.py`
+Work in [`lab/`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d4_problem_framing_splits/lab). It contains a `flowguard` package (v0.1.0) with a finished `data.py`
 (the loader from the spec), a stub `splits.py`, a minimal `cli.py`, and a `PROBLEM_STATEMENT.md` template.
 
 Use the package without installing it, from the repository root:
@@ -473,7 +473,7 @@ check("w2d4")
 
 ## 5. Independent challenge
 
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d4_problem_framing_splits/challenge/README.md): frame a subscription-churn problem from a product
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w2d4_problem_framing_splits/challenge/README.md): frame a subscription-churn problem from a product
 manager's brief and implement a split that is correct in **time** (a three-month label horizon) and
 in **group** (customers the model has never seen), on a synthetic customer-month table. It transfers
 the lesson to a case where the unit of generalisation is *not* simply "the group", and contains one
@@ -570,8 +570,8 @@ check("w2d4", challenge=True)
 
 ## 6. Progressive hints
 
-For the challenge, in increasing strength: [1 concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d4_problem_framing_splits/hints/hint1_concept.md) ·
-[2 approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d4_problem_framing_splits/hints/hint2_approach.md) · [3 partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d4_problem_framing_splits/hints/hint3_partial.md).
+For the challenge, in increasing strength: [1 concept](https://github.com/berdakh/mlengineering/blob/main/labs/w2d4_problem_framing_splits/hints/hint1_concept.md) ·
+[2 approach](https://github.com/berdakh/mlengineering/blob/main/labs/w2d4_problem_framing_splits/hints/hint2_approach.md) · [3 partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w2d4_problem_framing_splits/hints/hint3_partial.md).
 Full reference: `solutions/labs/w2d4_problem_framing_splits/` (lab, challenge, model answers).
 
 

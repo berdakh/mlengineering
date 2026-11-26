@@ -20,12 +20,12 @@ Six core days of about **2 hours** each (plus an optional hour), and one lighter
 
 | Day | Session | Notebook | Deliverable |
 |---|---|---|---|
-| 1 | **Leakage: a taxonomy and prevention by construction** | [`13_leakage`](../notebooks/13_leakage.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/13_leakage.ipynb) | Leak hunt report on a seeded dataset with corrected estimates and the mechanism of each leak. |
-| 2 | **Group-aware and temporal validation** | [`14_group_temporal_validation`](../notebooks/14_group_temporal_validation.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/14_group_temporal_validation.ipynb) | Validation design memo + implementation for the project; comparison against a naive random split. |
-| 3 | **Hyperparameter and threshold selection without fooling yourself** | [`15_hyperparameter_selection`](../notebooks/15_hyperparameter_selection.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/15_hyperparameter_selection.ipynb) | Tuned baseline with a nested estimate and a frozen-threshold test evaluation. |
-| 4 | **Point-level versus event-level evaluation for detection** | [`16_point_vs_event_evaluation`](../notebooks/16_point_vs_event_evaluation.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/16_point_vs_event_evaluation.ipynb) | Tested `flowguard.evaluation` module; point vs event results table with interpretation. |
-| 5 | **Uncertainty: cluster bootstrap, paired comparisons, small-n honesty** | [`17_uncertainty`](../notebooks/17_uncertainty.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/17_uncertainty.ipynb) | Confidence intervals and a paired comparison for the baselines, with a stated unit of resampling. |
-| 6 | **Error analysis and timed transfer exercise** | [`18_error_analysis_transfer`](../notebooks/18_error_analysis_transfer.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/18_error_analysis_transfer.ipynb) | Project error-analysis note; transfer exercise part 2 submission. |
+| 1 | **Leakage: a taxonomy and prevention by construction** | [`13_leakage`](../notebooks/13_leakage.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/13_leakage.ipynb) | Leak hunt report on a seeded dataset with corrected estimates and the mechanism of each leak. |
+| 2 | **Group-aware and temporal validation** | [`14_group_temporal_validation`](../notebooks/14_group_temporal_validation.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/14_group_temporal_validation.ipynb) | Validation design memo + implementation for the project; comparison against a naive random split. |
+| 3 | **Hyperparameter and threshold selection without fooling yourself** | [`15_hyperparameter_selection`](../notebooks/15_hyperparameter_selection.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/15_hyperparameter_selection.ipynb) | Tuned baseline with a nested estimate and a frozen-threshold test evaluation. |
+| 4 | **Point-level versus event-level evaluation for detection** | [`16_point_vs_event_evaluation`](../notebooks/16_point_vs_event_evaluation.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/16_point_vs_event_evaluation.ipynb) | Tested `flowguard.evaluation` module; point vs event results table with interpretation. |
+| 5 | **Uncertainty: cluster bootstrap, paired comparisons, small-n honesty** | [`17_uncertainty`](../notebooks/17_uncertainty.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/17_uncertainty.ipynb) | Confidence intervals and a paired comparison for the baselines, with a stated unit of resampling. |
+| 6 | **Error analysis and timed transfer exercise** | [`18_error_analysis_transfer`](../notebooks/18_error_analysis_transfer.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/18_error_analysis_transfer.ipynb) | Project error-analysis note; transfer exercise part 2 submission. |
 | 7 | **Review and catch-up (light)** | [review below](#day-7--review-and-catch-up) | Week 3 retrieval sheet; interview set 3 (validation, leakage, ML fundamentals, spoken answers). |
 
 ## What each day is for
@@ -158,7 +158,7 @@ cannot answer, write what you would check; open the key only when all twelve hav
 
 ### 3. Score and choose (10 minutes)
 
-Open [`solutions/labs/w3d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering-/blob/main/solutions/labs/w3d7_review/retrieval_answers.md).
+Open [`solutions/labs/w3d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering/blob/main/solutions/labs/w3d7_review/retrieval_answers.md).
 Mark each answer **solid**, **shaky** or **missing** and record the lists:
 
 ```bash
@@ -192,7 +192,7 @@ Protocol (unchanged)
 
 ### 5. Interview set 3 (45 minutes, timed, spoken)
 
-[`interview/set3_validation_fundamentals.md`](https://github.com/berdakh/mlengineering-/blob/main/interview/set3_validation_fundamentals.md): five
+[`interview/set3_validation_fundamentals.md`](https://github.com/berdakh/mlengineering/blob/main/interview/set3_validation_fundamentals.md): five
 "spot the flaw and fix it" scenarios, three fundamentals to explain or derive, and one coding prompt
 (grouped K-fold from scratch).
 

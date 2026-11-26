@@ -1,6 +1,6 @@
 # 11 · Reproducible feature generation without look-ahead — lab files
 
-**The lesson is notebook [`11_feature_pipeline`](../../notebooks/11_feature_pipeline.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/11_feature_pipeline.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/11_feature_pipeline.ipynb)).
+**The lesson is notebook [`11_feature_pipeline`](../../notebooks/11_feature_pipeline.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/11_feature_pipeline.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/11_feature_pipeline.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

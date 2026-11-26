@@ -20,12 +20,12 @@ Six core days of about **2 hours** each (plus an optional hour), and one lighter
 
 | Day | Session | Notebook | Deliverable |
 |---|---|---|---|
-| 1 | **Diagnostic A: Python, SQL, data cleaning** | [`01_diagnostic_a`](../notebooks/01_diagnostic_a.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/01_diagnostic_a.ipynb) | Completed labs for a1/a2/a3 plus the Session A part of diagnostic/SUBMISSION.md. |
-| 2 | **Diagnostic B: baselines, leakage, testing/API, explaining a decision** | [`02_diagnostic_b`](../notebooks/02_diagnostic_b.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/02_diagnostic_b.ipynb) | Completed labs for b1/b2/b3, the written b4 answer, and the finished diagnostic/SUBMISSION.md. |
-| 3 | **From script to installable package: project structure and environments** | [`03_package_structure`](../notebooks/03_package_structure.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/03_package_structure.ipynb) | Installable `pumpwatch` package + refactoring log with before/after metrics. |
-| 4 | **Configuration, logging and reproducible runs** | [`04_config_logging`](../notebooks/04_config_logging.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/04_config_logging.ipynb) | `pumpwatch` v0.2 producing self-describing run directories; two identical runs shown to match. |
-| 5 | **Testing ML code with pytest: what a unit test can and cannot tell you** | [`05_testing_ml_code`](../notebooks/05_testing_ml_code.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/05_testing_ml_code.ipynb) | A test suite that kills the seeded bugs (mutation-graded) and a one-paragraph note on what it does not establish. |
-| 6 | **Independent refactor: a real exploratory notebook becomes the project skeleton** | [`06_notebook_to_package`](../notebooks/06_notebook_to_package.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/06_notebook_to_package.ipynb) | Project repository skeleton: package, config, tests, README stub, clean commit history. |
+| 1 | **Diagnostic A: Python, SQL, data cleaning** | [`01_diagnostic_a`](../notebooks/01_diagnostic_a.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/01_diagnostic_a.ipynb) | Completed labs for a1/a2/a3 plus the Session A part of diagnostic/SUBMISSION.md. |
+| 2 | **Diagnostic B: baselines, leakage, testing/API, explaining a decision** | [`02_diagnostic_b`](../notebooks/02_diagnostic_b.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/02_diagnostic_b.ipynb) | Completed labs for b1/b2/b3, the written b4 answer, and the finished diagnostic/SUBMISSION.md. |
+| 3 | **From script to installable package: project structure and environments** | [`03_package_structure`](../notebooks/03_package_structure.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/03_package_structure.ipynb) | Installable `pumpwatch` package + refactoring log with before/after metrics. |
+| 4 | **Configuration, logging and reproducible runs** | [`04_config_logging`](../notebooks/04_config_logging.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/04_config_logging.ipynb) | `pumpwatch` v0.2 producing self-describing run directories; two identical runs shown to match. |
+| 5 | **Testing ML code with pytest: what a unit test can and cannot tell you** | [`05_testing_ml_code`](../notebooks/05_testing_ml_code.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/05_testing_ml_code.ipynb) | A test suite that kills the seeded bugs (mutation-graded) and a one-paragraph note on what it does not establish. |
+| 6 | **Independent refactor: a real exploratory notebook becomes the project skeleton** | [`06_notebook_to_package`](../notebooks/06_notebook_to_package.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/06_notebook_to_package.ipynb) | Project repository skeleton: package, config, tests, README stub, clean commit history. |
 | 7 | **Review and catch-up (light)** | [review below](#day-7--review-and-catch-up) | Week 1 retrieval sheet answered; interview set 1 (Python + project structure). |
 
 ## What each day is for
@@ -128,7 +128,7 @@ is information. Do not open the answers until all twelve have an attempt.
 
 ### 2. Score and choose (10 minutes)
 
-Open [`solutions/labs/w1d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering-/blob/main/solutions/labs/w1d7_review/retrieval_answers.md).
+Open [`solutions/labs/w1d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering/blob/main/solutions/labs/w1d7_review/retrieval_answers.md).
 For each question mark one of:
 
 * **solid** - correct mechanism, stated without hedging;
@@ -169,7 +169,7 @@ goes onto the spaced-review list below.
 
 ### 4. Interview set 1 (40 minutes, timed)
 
-[`interview/set1_python_structure.md`](https://github.com/berdakh/mlengineering-/blob/main/interview/set1_python_structure.md): two coding prompts
+[`interview/set1_python_structure.md`](https://github.com/berdakh/mlengineering/blob/main/interview/set1_python_structure.md): two coding prompts
 (a streaming data structure; a refactor for testability) and two short explanations on project
 structure. Follow the conditions stated there. Self-check the code with
 

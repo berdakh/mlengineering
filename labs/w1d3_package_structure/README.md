@@ -1,6 +1,6 @@
 # 03 · From script to installable package: project structure and environments — lab files
 
-**The lesson is notebook [`03_package_structure`](../../notebooks/03_package_structure.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/03_package_structure.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/03_package_structure.ipynb)).
+**The lesson is notebook [`03_package_structure`](../../notebooks/03_package_structure.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/03_package_structure.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/03_package_structure.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

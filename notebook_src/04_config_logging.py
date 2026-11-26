@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/04_config_logging.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/04_config_logging.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -169,7 +169,7 @@ print("repo root:", REPO_ROOT)
 # so it belongs in files under version control. Deployment settings of the future service (W5–W6) will
 # follow the environment-variable rule.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-04-01.svg" alt="Diagram 1 of notebook 04" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-04-01.svg" alt="Diagram 1 of notebook 04" style="max-width:100%">
 #
 # *Precedence is defaults, then file, then command line: later sources override earlier ones, and the snapshot records the result after all of them.*
 #
@@ -206,7 +206,7 @@ print("repo root:", REPO_ROOT)
 # **stdout is an interface.** The program's *result* goes to stdout, diagnostics to stderr.
 # `pumpwatch train ... | jq .metrics.auc` must work at any log level.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-04-02.svg" alt="Diagram 2 of notebook 04" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-04-02.svg" alt="Diagram 2 of notebook 04" style="max-width:100%">
 #
 # *Library modules only obtain loggers and emit records. Where records go is decided in one place. Standard output stays free for the JSON result.*
 #
@@ -248,7 +248,7 @@ print("repo root:", REPO_ROOT)
 # are configuration, and why the honest deliverable is a *statement of residual nondeterminism*
 # rather than a claim of determinism.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d4_config_logging/figures/seed_spread.svg" alt="SYNTHETIC pump data: test F1 for split seeds 0 to 9 with identical code and data ranges from 0.778 to 0.930, mean 0.879, sample standard deviation 0.044" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w1d4_config_logging/figures/seed_spread.svg" alt="SYNTHETIC pump data: test F1 for split seeds 0 to 9 with identical code and data ranges from 0.778 to 0.930, mean 0.879, sample standard deviation 0.044" width="100%">
 #
 # *SYNTHETIC data, reference solution. The ten points share code and data and differ only in which three units are held out (numbers above each point). A 0.04 difference between two single runs is inside this spread. Regenerate with `python labs/w1d4_config_logging/figures/make_figures.py`.*
 #
@@ -448,7 +448,7 @@ print("repo root:", REPO_ROOT)
 # `auc ≈ 0.9992`, `f1 ≈ 0.909`, `test_units = ["P01", "P06", "P09"]`. If your numbers differ at the
 # second decimal, something other than the config changed — find out what before continuing.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-04-03.svg" alt="Diagram 3 of notebook 04" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-04-03.svg" alt="Diagram 3 of notebook 04" style="max-width:100%">
 #
 # *Anatomy of a run directory: four files, four questions.*
 #

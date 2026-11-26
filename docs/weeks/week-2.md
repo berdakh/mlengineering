@@ -20,12 +20,12 @@ Six core days of about **2 hours** each (plus an optional hour), and one lighter
 
 | Day | Session | Notebook | Deliverable |
 |---|---|---|---|
-| 1 | **SQL I: grain, joins, aggregation and NULL semantics** | [`07_sql_joins_grain`](../notebooks/07_sql_joins_grain.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/07_sql_joins_grain.ipynb) | Solved query set with a stated grain for every result; fan-out bug report on a broken query. |
-| 2 | **SQL II: CTEs, window functions and time-series queries** | [`08_sql_windows_timeseries`](../notebooks/08_sql_windows_timeseries.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/08_sql_windows_timeseries.ipynb) | Query set + pandas equivalence tests; a point-in-time-correct feature query. |
-| 3 | **pandas ingestion, schemas and data-quality checks (project data arrives)** | [`09_data_quality_ingestion`](../notebooks/09_data_quality_ingestion.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/09_data_quality_ingestion.ipynb) | `flowguard ingest` command, data dictionary, data-quality report, provenance record (source, licence, hashes). |
-| 4 | **Problem framing and versioned split definitions** | [`10_problem_framing_splits`](../notebooks/10_problem_framing_splits.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/10_problem_framing_splits.ipynb) | Problem statement, label definition, `splits/v1.json` manifest with a leakage-safety test. |
-| 5 | **Reproducible feature generation without look-ahead** | [`11_feature_pipeline`](../notebooks/11_feature_pipeline.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/11_feature_pipeline.ipynb) | Feature pipeline with no-look-ahead tests and content-addressed outputs. |
-| 6 | **Strong simple baselines and metrics that match the decision** | [`12_baselines_metrics`](../notebooks/12_baselines_metrics.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/12_baselines_metrics.ipynb) | Baseline table for the project (trivial, threshold, linear); transfer exercise part 1 baseline. |
+| 1 | **SQL I: grain, joins, aggregation and NULL semantics** | [`07_sql_joins_grain`](../notebooks/07_sql_joins_grain.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/07_sql_joins_grain.ipynb) | Solved query set with a stated grain for every result; fan-out bug report on a broken query. |
+| 2 | **SQL II: CTEs, window functions and time-series queries** | [`08_sql_windows_timeseries`](../notebooks/08_sql_windows_timeseries.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/08_sql_windows_timeseries.ipynb) | Query set + pandas equivalence tests; a point-in-time-correct feature query. |
+| 3 | **pandas ingestion, schemas and data-quality checks (project data arrives)** | [`09_data_quality_ingestion`](../notebooks/09_data_quality_ingestion.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/09_data_quality_ingestion.ipynb) | `flowguard ingest` command, data dictionary, data-quality report, provenance record (source, licence, hashes). |
+| 4 | **Problem framing and versioned split definitions** | [`10_problem_framing_splits`](../notebooks/10_problem_framing_splits.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/10_problem_framing_splits.ipynb) | Problem statement, label definition, `splits/v1.json` manifest with a leakage-safety test. |
+| 5 | **Reproducible feature generation without look-ahead** | [`11_feature_pipeline`](../notebooks/11_feature_pipeline.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/11_feature_pipeline.ipynb) | Feature pipeline with no-look-ahead tests and content-addressed outputs. |
+| 6 | **Strong simple baselines and metrics that match the decision** | [`12_baselines_metrics`](../notebooks/12_baselines_metrics.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/12_baselines_metrics.ipynb) | Baseline table for the project (trivial, threshold, linear); transfer exercise part 1 baseline. |
 | 7 | **Review and catch-up (light)** | [review below](#day-7--review-and-catch-up) | Week 2 retrieval sheet; interview set 2 (SQL + pandas, timed). |
 
 ## What each day is for
@@ -142,7 +142,7 @@ what you would check if you cannot answer; open the key only when all twelve hav
 
 ### 3. Score and choose (10 minutes)
 
-Open [`solutions/labs/w2d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering-/blob/main/solutions/labs/w2d7_review/retrieval_answers.md)
+Open [`solutions/labs/w2d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering/blob/main/solutions/labs/w2d7_review/retrieval_answers.md)
 (question 12's key is also at the end of `solutions/labs/w1d5_testing_ml_code/assessment_answers.md`).
 Mark each answer **solid**, **shaky** or **missing**, exactly as on `w1d7`, and record the lists:
 
@@ -178,7 +178,7 @@ Protocol (same as `w1d7`)
 
 ### 5. Interview set 2 (45 minutes, timed)
 
-[`interview/set2_sql_pandas.md`](https://github.com/berdakh/mlengineering-/blob/main/interview/set2_sql_pandas.md): three SQL prompts on the
+[`interview/set2_sql_pandas.md`](https://github.com/berdakh/mlengineering/blob/main/interview/set2_sql_pandas.md): three SQL prompts on the
 diagnostic's SQLite database (state the grain before each query; one uses window functions; one is a
 retention query with two traps) and one pandas prompt on a point-in-time feature. Self-check with
 

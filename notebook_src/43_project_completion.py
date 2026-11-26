@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/43_project_completion.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/43_project_completion.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -106,7 +106,7 @@ print("repo root:", REPO_ROOT)
 # | **Generated numbers** | a number typed or "rounded up" in a report | w4d6, w7d6: reports built from `results.json` |
 # | **Deterministic execution** | unseeded randomness, thread counts, iteration order | w1d4 (seeds), w4d3 and w4d5 (thread pinning), w5d1 (CSV `float_precision`) |
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-43-01.svg" alt="Diagram 1 of notebook 43" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-43-01.svg" alt="Diagram 1 of notebook 43" style="max-width:100%">
 #
 # ### 2.2 Precise terms
 #
@@ -164,7 +164,7 @@ print("repo root:", REPO_ROOT)
 # what to drop, with the time you actually have. A deliberate "out of scope, because..." reads as judgement; a
 # silent half-finished deliverable reads as a mistake.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-43-02.svg" alt="Diagram 2 of notebook 43" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-43-02.svg" alt="Diagram 2 of notebook 43" style="max-width:100%">
 #
 # ### 2.8 Limitations and misconceptions
 #
@@ -210,7 +210,7 @@ print("repo root:", REPO_ROOT)
 # solution, a fully pinned lock from `pip freeze`, the SKAB download script, and the committed
 # `results.json` as the expected file) passed: 18 headline values, maximum difference 0, 75 s in total.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d1_project_completion/figures/audit_timeline.svg" alt="Real clean-clone audit of the reference evaluation: about 5 s to clone and install, 7 s to download the data, 63 s to evaluate; verdict PASS" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d1_project_completion/figures/audit_timeline.svg" alt="Real clean-clone audit of the reference evaluation: about 5 s to clone and install, 7 s to download the data, 63 s to evaluate; verdict PASS" width="100%">
 #
 # *Real run (2026-11-22, Python 3.13.18); values in `figures/figure_data.csv`. Most of the time is the
 # evaluation itself, with 2000 bootstrap replicates; the environment and data steps are cheap enough to run on
@@ -222,7 +222,7 @@ print("repo root:", REPO_ROOT)
 # The checks run your tool against seven SYNTHETIC git repositories (built in a temporary directory by
 # `checks/synthetic_repo.py`): one reproducible project and six that each carry one defect.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d1_project_completion/figures/findings_matrix.svg" alt="SYNTHETIC projects: the reference tool flags absolute_path (plus the missing file it causes), unpinned_requirement, missing_dependency, missing_file, headline_mismatch, and nondeterministic (plus a mismatch); the good project passes" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d1_project_completion/figures/findings_matrix.svg" alt="SYNTHETIC projects: the reference tool flags absolute_path (plus the missing file it causes), unpinned_requirement, missing_dependency, missing_file, headline_mismatch, and nondeterministic (plus a mismatch); the good project passes" width="100%">
 #
 # *SYNTHETIC repositories; produced by running the reference tool (`figures/make_figures.py`). Two defects
 # produce a second, consequential finding: the absolute path also makes the file missing in the clone, and an

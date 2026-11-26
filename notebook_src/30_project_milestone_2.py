@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/30_project_milestone_2.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/30_project_milestone_2.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -93,7 +93,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.1 Three paths that must agree
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-30-01.svg" alt="Diagram 1 of notebook 30" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-30-01.svg" alt="Diagram 1 of notebook 30" style="max-width:100%">
 #
 # The numbers in the milestone-1 report came from the evaluation path. Operators will act on the API's
 # numbers; analysts will rerun the batch path over history. If the three disagree, the report describes a
@@ -168,7 +168,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.5 A request end to end
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-30-02.svg" alt="Diagram 2 of notebook 30" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-30-02.svg" alt="Diagram 2 of notebook 30" style="max-width:100%">
 #
 # **Long recordings.** The API accepts at most 3,600 values per request (one hour at 1 Hz). The
 # `anomaly-free` recording has 9,405 rows, so a client sends it in chunks, each with the same burn-in; the
@@ -276,7 +276,7 @@ print("repo root:", REPO_ROOT)
 # experiment usually means the burn-in is taken from the wrong rows. If `/predict` returns 413 on real data,
 # you are sending a whole long recording in one request; chunk it.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d6_project_milestone_2/figures/api_traces.svg" alt="Scores from POST /predict for three test experiments: valve1/13 rises above the threshold during its labelled anomaly, valve2/0 never does, other/14 crosses it during most of its anomaly" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d6_project_milestone_2/figures/api_traces.svg" alt="Scores from POST /predict for three test experiments: valve1/13 rises above the threshold during its labelled anomaly, valve2/0 never does, other/14 crosses it during most of its anomaly" width="100%">
 #
 # *Figure 1 (real data, reference project).* What the fixed API returns. `valve1/13`: scores near 20
 # during the anomaly, 313 flagged rows. `valve2/0`: the anomaly barely moves flow rate (maximum score 3.0),
@@ -284,7 +284,7 @@ print("repo root:", REPO_ROOT)
 # the final rows spike to 246 (clipped in the plot).
 #
 # <a id="figure-2"></a>
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d6_project_milestone_2/figures/skew_vs_burn_in.svg" alt="API score relative to batch by burn-in size: -29 % at n=2, -5 % at n=10, -0.5 % at n=100; the measured value on SKAB sits on the curve" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d6_project_milestone_2/figures/skew_vs_burn_in.svg" alt="API score relative to batch by burn-in size: -29 % at n=2, -5 % at n=10, -0.5 % at n=100; the measured value on SKAB sits on the curve" width="100%">
 #
 # *Figure 2 (formula and real measurement).* The starter's API (ddof=1) against the fixed one on all 35
 # SKAB experiments: median ratio 0.99499 at $n = 100$, identical across experiments, exactly

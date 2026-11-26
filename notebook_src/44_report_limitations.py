@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/44_report_limitations.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/44_report_limitations.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -89,7 +89,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.1 The structure of a short technical report
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-44-01.svg" alt="Diagram 1 of notebook 44" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-44-01.svg" alt="Diagram 1 of notebook 44" style="max-width:100%">
 #
 # Each section answers a question a sceptical reader will ask, in the order they will ask it: what is this for, what
 # data, how could the evaluation have fooled you, what did you find, where does it fail, what did you decide, how
@@ -102,7 +102,7 @@ print("repo root:", REPO_ROOT)
 #   it). A typed number drifts the first time the analysis is rerun. The w4d6 and w7d6 milestones already did this
 #   for tables; the checker extends it to prose.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-44-02.svg" alt="Diagram 2 of notebook 44" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-44-02.svg" alt="Diagram 2 of notebook 44" style="max-width:100%">
 # * **Every estimate has an interval and its unit.** "0.884 [0.811, 0.928]" means little until the reader knows
 #   the interval came from a cluster bootstrap over 7 test recordings. The unit of resampling is the claim about
 #   what generalises.
@@ -114,7 +114,7 @@ print("repo root:", REPO_ROOT)
 # * **Report what did not work.** The neural model that did not beat the classical one, the detector that fell on
 #   an unseen fault family, the missed fault. Omitting them makes every remaining claim less credible.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d2_report_limitations/figures/overlap_vs_paired.svg" alt="Left: test PR-AUC intervals of the two best detectors overlap; right: on development data the paired difference is +0.069 with interval 0.022 to 0.128, which excludes zero but not the 0.05 practical threshold" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d2_report_limitations/figures/overlap_vs_paired.svg" alt="Left: test PR-AUC intervals of the two best detectors overlap; right: on development data the paired difference is +0.069 with interval 0.022 to 0.128, which excludes zero but not the 0.05 practical threshold" width="100%">
 #
 # *Real SKAB results from the w4d6 reference (`figures/make_figures.py`). The left panel is the single test look,
 # the right panel the development comparison on which the decision was made. Neither "the intervals overlap, so
@@ -129,7 +129,7 @@ print("repo root:", REPO_ROOT)
 # For 5 of 7 it is [0.36, 0.92]: the detector might catch a third of faults or nine in ten. Even all 34 SKAB
 # events would give an interval about 0.29 wide.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d2_report_limitations/figures/wilson_width.svg" alt="Width of the 95 % Wilson interval for a recall of 5/7 against the number of events: 0.56 at 7 events, 0.29 at 34, still 0.12 at 200" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d2_report_limitations/figures/wilson_width.svg" alt="Width of the 95 % Wilson interval for a recall of 5/7 against the number of events: 0.56 at 7 events, 0.29 at 34, still 0.12 at 200" width="100%">
 #
 # *Computed (no data). A limitation is honest when it is quantified like this rather than called "small sample".*
 #

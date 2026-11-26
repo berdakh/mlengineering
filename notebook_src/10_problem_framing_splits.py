@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/10_problem_framing_splits.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/10_problem_framing_splits.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -102,7 +102,7 @@ print("repo root:", REPO_ROOT)
 # does not mimic deployment makes the metric meaningless, a metric that ignores costs makes model
 # selection arbitrary, and so on back to "nobody needed this".
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-10-01.svg" alt="Diagram 1 of notebook 10" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-10-01.svg" alt="Diagram 1 of notebook 10" style="max-width:100%">
 #
 #
 # ### 2.2 The worksheet, with precise terms
@@ -162,7 +162,7 @@ print("repo root:", REPO_ROOT)
 # (so learning "normal" is supported). There is no future quantity anyone wants (so forecasting is at
 # most a means). Protocol B in the split exists precisely to test the classification framing's weak point.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-10-02.svg" alt="Diagram 2 of notebook 10" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-10-02.svg" alt="Diagram 2 of notebook 10" style="max-width:100%">
 #
 #
 # ### 2.5 From medical event detection to equipment, and where the analogy breaks
@@ -225,12 +225,12 @@ print("repo root:", REPO_ROOT)
 #
 # The reference manifest drawn as a grid. Each numbered cell is one experiment; its colour is its only role.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d4_problem_framing_splits/figures/split_layout.svg" alt="Grid of the 34 labelled experiments by family: 9 in the test set, the other 25 in four development folds, each family represented in the test set" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d4_problem_framing_splits/figures/split_layout.svg" alt="Grid of the 34 labelled experiments by family: 9 in the test set, the other 25 in four development folds, each family represented in the test set" width="100%">
 #
 # *Real experiment ids from `splits/v1.json`: 4 + 1 + 4 test experiments, and development folds of
 # 7/6/6/6. (This is manifest v1; w3d1 revises it so that experiments sharing duplicated rows stay together.)*
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d4_problem_framing_splits/figures/recall_interval.svg" alt="Interval plot: a 95 percent interval around a true recall of 0.8 is plus or minus 0.26 with 9 test events and plus or minus 0.13 with 34" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d4_problem_framing_splits/figures/recall_interval.svg" alt="Interval plot: a 95 percent interval around a true recall of 0.8 is plus or minus 0.26 with 9 test events and plus or minus 0.13 with 34" width="100%">
 #
 # *What nine test events can tell you. The formula is the one above; the upper ends are clipped at 1.
 # No data is involved, only arithmetic.*
@@ -344,7 +344,7 @@ print("repo root:", REPO_ROOT)
 #
 # The same output as a picture, one dot per fold:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d4_problem_framing_splits/figures/row_vs_experiment.svg" alt="Dot plot of fold scores: row-level folds cluster at PR-AUC 0.98 and ROC-AUC 0.986, experiment-level folds spread from 0.73 to 0.94 with means 0.841 and 0.849" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d4_problem_framing_splits/figures/row_vs_experiment.svg" alt="Dot plot of fold scores: row-level folds cluster at PR-AUC 0.98 and ROC-AUC 0.986, experiment-level folds spread from 0.73 to 0.94 with means 0.841 and 0.849" width="100%">
 #
 # *Real SKAB, development experiments only. Look at the spread as much as the level: the tight orange
 # cluster is four copies of the same leak; the wide blue one is the honest uncertainty of six held-out

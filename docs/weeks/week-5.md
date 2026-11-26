@@ -20,12 +20,12 @@ Six core days of about **2 hours** each (plus an optional hour), and one lighter
 
 | Day | Session | Notebook | Deliverable |
 |---|---|---|---|
-| 1 | **Research experimentation versus production inference** | [`25_inference_pipeline`](../notebooks/25_inference_pipeline.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/25_inference_pipeline.ipynb) | `flowguard predict-batch` with a training/serving parity test. |
-| 2 | **Model artifacts, metadata and versioning** | [`26_artifacts_versioning`](../notebooks/26_artifacts_versioning.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/26_artifacts_versioning.ipynb) | Versioned artifact bundle + load-time compatibility checks + model card draft. |
-| 3 | **Online inference on streams: state, warm-up and parity** | [`27_online_inference`](../notebooks/27_online_inference.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/27_online_inference.ipynb) | Streaming scorer with batch/online parity tests and documented warm-up behaviour. |
-| 4 | **FastAPI I: endpoints, schemas and input validation** | [`28_fastapi_validation`](../notebooks/28_fastapi_validation.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/28_fastapi_validation.ipynb) | `/predict`, `/healthz`, `/readyz` with pydantic schemas and documented error model. |
-| 5 | **FastAPI II: API tests, integration tests and model lifecycle** | [`29_api_testing`](../notebooks/29_api_testing.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/29_api_testing.ipynb) | API and integration test suite running without a network. |
-| 6 | **Project milestone 2: packaged inference + API** | [`30_project_milestone_2`](../notebooks/30_project_milestone_2.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/30_project_milestone_2.ipynb) | Tagged project release candidate; submit for review. |
+| 1 | **Research experimentation versus production inference** | [`25_inference_pipeline`](../notebooks/25_inference_pipeline.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/25_inference_pipeline.ipynb) | `flowguard predict-batch` with a training/serving parity test. |
+| 2 | **Model artifacts, metadata and versioning** | [`26_artifacts_versioning`](../notebooks/26_artifacts_versioning.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/26_artifacts_versioning.ipynb) | Versioned artifact bundle + load-time compatibility checks + model card draft. |
+| 3 | **Online inference on streams: state, warm-up and parity** | [`27_online_inference`](../notebooks/27_online_inference.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/27_online_inference.ipynb) | Streaming scorer with batch/online parity tests and documented warm-up behaviour. |
+| 4 | **FastAPI I: endpoints, schemas and input validation** | [`28_fastapi_validation`](../notebooks/28_fastapi_validation.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/28_fastapi_validation.ipynb) | `/predict`, `/healthz`, `/readyz` with pydantic schemas and documented error model. |
+| 5 | **FastAPI II: API tests, integration tests and model lifecycle** | [`29_api_testing`](../notebooks/29_api_testing.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/29_api_testing.ipynb) | API and integration test suite running without a network. |
+| 6 | **Project milestone 2: packaged inference + API** | [`30_project_milestone_2`](../notebooks/30_project_milestone_2.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/30_project_milestone_2.ipynb) | Tagged project release candidate; submit for review. |
 | 7 | **Review and catch-up (light)** | [review below](#day-7--review-and-catch-up) | Week 5 retrieval sheet; ML system design rep 1 (45 min, rubric after). |
 
 ## What each day is for
@@ -161,7 +161,7 @@ cannot answer, write what you would check; open the key only when all twelve hav
 
 ### 3. Score and choose (10 minutes)
 
-Open [`solutions/labs/w5d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering-/blob/main/solutions/labs/w5d7_review/retrieval_answers.md).
+Open [`solutions/labs/w5d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering/blob/main/solutions/labs/w5d7_review/retrieval_answers.md).
 Mark each answer **solid**, **shaky** or **missing** and record the lists:
 
 ```bash
@@ -196,7 +196,7 @@ Protocol (unchanged)
 
 ### 5. Interview set 5: first ML system design rep (45 minutes, timed)
 
-[`interview/set5_system_design.md`](https://github.com/berdakh/mlengineering-/blob/main/interview/set5_system_design.md):
+[`interview/set5_system_design.md`](https://github.com/berdakh/mlengineering/blob/main/interview/set5_system_design.md):
 
 * **D1 (30 minutes):** design a real-time credit-risk decision for a buy-now-pay-later checkout. The
   domain is new on purpose: delayed labels, outcomes observed only for approved applications, a

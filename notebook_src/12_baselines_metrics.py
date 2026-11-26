@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/12_baselines_metrics.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/12_baselines_metrics.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -145,7 +145,7 @@ print("repo root:", REPO_ROOT)
 # PCA-based artefact removal or spatial whitening (common in multichannel sensor and EEG work), this is
 # the same matrix and the same regularisation problem.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d6_baselines_metrics/figures/mahalanobis_2d.svg" alt="Max-|z| draws a square alarm boundary and misses a probe that breaks the correlation; Mahalanobis draws an ellipse and flags it" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d6_baselines_metrics/figures/mahalanobis_2d.svg" alt="Max-|z| draws a square alarm boundary and misses a probe that breaks the correlation; Mahalanobis draws an ellipse and flags it" width="100%">
 #
 # *Two correlated sensors, SYNTHETIC (r = 0.9), limits at the 99th percentile of normal rows. The orange
 # probe has each value inside its own range (max |z| = 1.3 against a limit of 2.7) but breaks the
@@ -193,7 +193,7 @@ print("repo root:", REPO_ROOT)
 # price is that **PR numbers are not comparable across datasets or slices with different prevalence**:
 # always print the floor next to them. The worked example makes both statements concrete.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d6_baselines_metrics/figures/pr_roc_prevalence.svg" alt="One fixed classifier at three prevalences: the ROC curves coincide while the PR curves collapse towards their floors" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d6_baselines_metrics/figures/pr_roc_prevalence.svg" alt="One fixed classifier at three prevalences: the ROC curves coincide while the PR curves collapse towards their floors" width="100%">
 #
 # *SYNTHETIC, the score distributions of the worked example (part 1). ROC AUC stays at 0.855-0.857;
 # average precision falls from 0.771 to 0.071 as positives go from 35 % to 0.5 % of rows. Dotted lines
@@ -331,7 +331,7 @@ print("repo root:", REPO_ROOT)
 #   earns 813 per 1,000. The same decision rule fed miscalibrated probabilities acts on 80 % of rows
 #   and loses 1,641. The model was not worse at ranking; its numbers did not mean what the rule assumed.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d6_baselines_metrics/figures/reliability.svg" alt="Reliability curves: the plain model sits on the diagonal, the class-weighted one far below it" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d6_baselines_metrics/figures/reliability.svg" alt="Reliability curves: the plain model sits on the diagonal, the class-weighted one far below it" width="100%">
 #
 # *Part 2 as a picture (SYNTHETIC, 4 % positives). The class-weighted model predicts 0.82 where 20 %
 # are positive, and 0.29 where 1.7 % are: same ranking, unusable probabilities.*
@@ -350,7 +350,7 @@ print("repo root:", REPO_ROOT)
 #
 # The protocol every row of the table follows:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-12-01.svg" alt="Diagram 1 of notebook 12" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-12-01.svg" alt="Diagram 1 of notebook 12" style="max-width:100%">
 #
 # Check at any time (offline, synthetic frames, about 10 s):
 
@@ -436,12 +436,12 @@ print("repo root:", REPO_ROOT)
 # test prevalence of anomalous rows (t >= 100): 0.373
 # ```
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d6_baselines_metrics/figures/baseline_ladder.svg" alt="Test PR-AUC per baseline on real SKAB, with the constant floor at 0.373 and the elapsed-time clock highlighted" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d6_baselines_metrics/figures/baseline_ladder.svg" alt="Test PR-AUC per baseline on real SKAB, with the constant floor at 0.373 and the elapsed-time clock highlighted" width="100%">
 #
 # *Real SKAB, the table above as bars (row level, 9 test experiments, no intervals yet). Read PR-AUC
 # against the dashed floor, not against zero. The orange bar uses no sensor at all.*
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d6_baselines_metrics/figures/score_by_class.svg" alt="Histogram of the burn-in flow-rate |z| on test rows: normal rows pile up near 0, anomalous rows spread from 0 to over 30" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d6_baselines_metrics/figures/score_by_class.svg" alt="Histogram of the burn-in flow-rate |z| on test rows: normal rows pile up near 0, anomalous rows spread from 0 to over 30" width="100%">
 #
 # *Real SKAB test rows for the `flow_rate abs z, burn-in` baseline, with the threshold chosen on dev
 # (2.4). Many anomalous rows sit below it and a tail of normal rows sits above: no threshold separates

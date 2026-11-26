@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/32_docker_reproducibility.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/32_docker_reproducibility.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -95,7 +95,7 @@ print("repo root:", REPO_ROOT)
 # therefore a recipe that reads two moving sources. To make the result reproducible you must turn both
 # into fixed content addresses: a digest for the image, a version *and hash* for every package.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-32-01.svg" alt="Diagram 1 of notebook 32" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-32-01.svg" alt="Diagram 1 of notebook 32" style="max-width:100%">
 #
 # ### 2.2 Precise terms
 #
@@ -151,7 +151,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.5 Multi-stage builds: what they are for
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-32-02.svg" alt="Diagram 2 of notebook 32" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-32-02.svg" alt="Diagram 2 of notebook 32" style="max-width:100%">
 #
 # Whatever the builder needed and the runtime does not (compilers, headers, pip's caches, source
 # trees, downloaded archives, a `--mount`ed secret for a private index) stays in the discarded stage.
@@ -176,7 +176,7 @@ print("repo root:", REPO_ROOT)
 # and the model version with `smoke/expected.json`, which was computed by loading the same bundle
 # outside the container.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-32-03.svg" alt="Diagram 3 of notebook 32" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-32-03.svg" alt="Diagram 3 of notebook 32" style="max-width:100%">
 #
 # What a pass proves: the image starts, finds and loads *this* model, has a working dependency stack,
 # and computes the same numbers inside the container as the package computes outside it. What it does
@@ -264,7 +264,7 @@ print("repo root:", REPO_ROOT)
 # 20 of 21 packages differ between the dates; requirements.in did not change.
 # ```
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d2_docker_reproducibility/figures/resolution_drift.svg" alt="The same requirements.in resolves to 20 different versions a year apart and 5 two weeks apart" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d2_docker_reproducibility/figures/resolution_drift.svg" alt="The same requirements.in resolves to 20 different versions a year apart and 5 two weeks apart" width="100%">
 #
 # *Figure 1 (real resolutions, PyPI as of each date).* Orange = differs from today. **Interpretation.**
 # In a year, pandas crossed a major version (2.3.3 to 3.1.1: `pandas>=2.1` allows it), starlette went
@@ -296,12 +296,12 @@ print("repo root:", REPO_ROOT)
 # The lab's reference solution was built and compared with the w6d1 image and with the naive first
 # attempt (`FROM python:3.12`, `COPY . .`, pip cache kept). Raw numbers: `figures/measurements.json`.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d2_docker_reproducibility/figures/image_sizes.svg" alt="python:3.12 makes a 1.9 GB image; slim single-stage 395 MB; slim multi-stage 402 MB" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d2_docker_reproducibility/figures/image_sizes.svg" alt="python:3.12 makes a 1.9 GB image; slim single-stage 395 MB; slim multi-stage 402 MB" width="100%">
 #
 # *Figure 2.* The base decides the size: `python:3.12` (Debian with compilers) alone is 1.62 GB. The
 # multi-stage image is 7 MB *larger* than the single-stage one (section 2.5 explains why).
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d2_docker_reproducibility/figures/dependency_sizes.svg" alt="pandas 82 MB and numpy 67 MB dominate the 172 MB of installed dependencies" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d2_docker_reproducibility/figures/dependency_sizes.svg" alt="pandas 82 MB and numpy 67 MB dominate the 172 MB of installed dependencies" width="100%">
 #
 # *Figure 3 (`du` inside the w6d2 image).* If you need a smaller image, this chart says where to look.
 #

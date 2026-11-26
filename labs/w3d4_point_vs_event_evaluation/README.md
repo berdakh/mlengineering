@@ -1,6 +1,6 @@
 # 16 · Point-level versus event-level evaluation for detection — lab files
 
-**The lesson is notebook [`16_point_vs_event_evaluation`](../../notebooks/16_point_vs_event_evaluation.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/16_point_vs_event_evaluation.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/16_point_vs_event_evaluation.ipynb)).
+**The lesson is notebook [`16_point_vs_event_evaluation`](../../notebooks/16_point_vs_event_evaluation.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/16_point_vs_event_evaluation.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/16_point_vs_event_evaluation.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

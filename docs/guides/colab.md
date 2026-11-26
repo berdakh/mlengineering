@@ -7,7 +7,7 @@ nav_order: 4
 # Running in Google Colab
 
 Every notebook has an **Open in Colab** badge at the top. Click it, sign in with a Google account,
-and run the first code cell: it clones this repository into `/content/mlengineering-`, installs
+and run the first code cell: it clones this repository into `/content/mlengineering`, installs
 `requirements.txt` (about a minute), and moves into the repository root so every later command works.
 
 What works in Colab: everything that runs in Python, including the labs, the checks, the SKAB download
@@ -22,4 +22,4 @@ What does not:
   notebooks; run them in a local terminal.
 
 Editing lab files in Colab: open the file browser on the left, double-click a file under
-`mlengineering-/labs/<session>/lab/`, edit, save, then re-run the notebook's check cell.
+`mlengineering/labs/<session>/lab/`, edit, save, then re-run the notebook's check cell.

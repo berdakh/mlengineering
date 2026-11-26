@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/20_classical_detectors.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/20_classical_detectors.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -107,7 +107,7 @@ print("repo root:", REPO_ROOT)
 # mechanisms (leaks, rotor imbalance, cavitation, temperature). Protocol B in the lab measures what that
 # means in numbers.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-20-01.svg" alt="Diagram 1 of notebook 20" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-20-01.svg" alt="Diagram 1 of notebook 20" style="max-width:100%">
 #
 # ### 2.2 PCA detector: T² and Q
 #
@@ -127,7 +127,7 @@ print("repo root:", REPO_ROOT)
 # couples pressure to flow). T² is a Mahalanobis distance in `k` dimensions; Q is what the model cannot
 # explain.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d2_classical_detectors/figures/t2_q_geometry.svg" alt="SYNTHETIC two-sensor example: a correlated normal cloud with its retained principal direction; point A lies far along that direction with T2 = 7.0 above its limit 6.7 and Q = 0.00; point B lies off the direction with T2 = 0.0 and Q = 2.07 far above its limit 0.22" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d2_classical_detectors/figures/t2_q_geometry.svg" alt="SYNTHETIC two-sensor example: a correlated normal cloud with its retained principal direction; point A lies far along that direction with T2 = 7.0 above its limit 6.7 and Q = 0.00; point B lies off the direction with T2 = 0.0 and Q = 2.07 far above its limit 0.22" width="100%">
 #
 # *Figure 1 (SYNTHETIC).* A is unusual in size but has normal structure: only T² sees it. B is ordinary
 # in size but breaks the relationship between the sensors: only Q sees it. Limits are the 99th
@@ -258,7 +258,7 @@ print("repo root:", REPO_ROOT)
 #    GBT on fault B (unseen)             ROC AUC 0.638
 # ```
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d2_classical_detectors/figures/example_auc.svg" alt="Grouped bars of ROC AUC per detector and fault type from the worked example: PCA T2 0.94 on fault A and 0.52 on fault B; PCA Q 0.67 and 1.00; isolation forest 0.95 and 0.70" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d2_classical_detectors/figures/example_auc.svg" alt="Grouped bars of ROC AUC per detector and fault type from the worked example: PCA T2 0.94 on fault A and 0.52 on fault B; PCA Q 0.67 and 1.00; isolation forest 0.95 and 0.70" width="100%">
 #
 # *Figure 2 (SYNTHETIC, from the worked example).*
 #
@@ -276,7 +276,7 @@ print("repo root:", REPO_ROOT)
 # Work in `lab/src/flowguard/detectors.py`. `windowfeatures.py` (the 40 features) and the Week 3
 # modules are given. Checks: `python wb.py check w4d2`. The starter fails all of them.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-20-02.svg" alt="Diagram 2 of notebook 20" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-20-02.svg" alt="Diagram 2 of notebook 20" style="max-width:100%">
 #
 # **Task 1 — `check_columns` (5 min).** Return the column names; raise `ValueError` naming every
 # forbidden one (identifiers, labels, anything naming elapsed time). Every detector calls it in `fit`.
@@ -328,7 +328,7 @@ print("repo root:", REPO_ROOT)
 # | isolation forest | 0.783 [0.662, 0.906] | 0.831 |
 # | gradient-boosted trees | 0.636 [0.462, 0.836] | 0.920 |
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d2_classical_detectors/figures/protocols.svg" alt="Dumbbell-style interval plot: for each detector, protocol A test PR-AUC and protocol B unseen-family PR-AUC with 95% intervals; gradient-boosted trees drop from 0.920 to 0.636, flow-rate z from 0.886 to 0.640, while isolation forest (0.831 to 0.783) and PCA T2 (0.762 to 0.761) hold" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d2_classical_detectors/figures/protocols.svg" alt="Dumbbell-style interval plot: for each detector, protocol A test PR-AUC and protocol B unseen-family PR-AUC with 95% intervals; gradient-boosted trees drop from 0.920 to 0.636, flow-rate z from 0.886 to 0.640, while isolation forest (0.831 to 0.783) and PCA T2 (0.762 to 0.761) hold" width="100%">
 #
 # *Figure 3 (REAL SKAB).* Protocol A asks "how well on new experiments of the families we trained on?";
 # protocol B "how well on a family we never trained on?". The rankings disagree.
@@ -357,7 +357,7 @@ print("repo root:", REPO_ROOT)
 #   experiments each; not for fault mechanisms outside them. The defensible design is a supervised model
 #   plus a semi-supervised safety net, with protocol B reported next to protocol A.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d2_classical_detectors/figures/skab_scores.svg" alt="Real SKAB test experiment valve1/5: four detector scores as percentiles of their development scores, with each detector's threshold dashed and the labelled fault shaded; the flow-rate z-score and the boosted trees rise sharply in the fault, PCA T2 and the isolation forest rise more gradually and also exceed their thresholds outside the fault" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d2_classical_detectors/figures/skab_scores.svg" alt="Real SKAB test experiment valve1/5: four detector scores as percentiles of their development scores, with each detector's threshold dashed and the labelled fault shaded; the flow-rate z-score and the boosted trees rise sharply in the fault, PCA T2 and the isolation forest rise more gradually and also exceed their thresholds outside the fault" width="100%">
 #
 # *Figure 4 (REAL SKAB, test experiment valve1/5).* Scores are shown as percentiles of each detector's
 # out-of-fold development scores, so they share an axis. The thresholds sit near the 50th-65th

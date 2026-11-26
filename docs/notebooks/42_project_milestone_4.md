@@ -9,8 +9,8 @@ nav_order: 42
 # 42 · Project milestone 4: monitoring demonstration and runbook
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/42_project_milestone_4.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/42_project_milestone_4.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/42_project_milestone_4.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/42_project_milestone_4.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 42
 
 ---
 
-**Week 7 · day 6 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w7d6_project_milestone_4/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d6_project_milestone_4/)
+**Week 7 · day 6 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w7d6_project_milestone_4/`](https://github.com/berdakh/mlengineering/blob/main/labs/w7d6_project_milestone_4/)
 
 **Objective.** Demonstrate monitoring on a replay of held-out experiments and document operating procedures.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -112,7 +112,7 @@ versions of the w7d1-w7d4 modules, so you can work from it or port the checklist
 
 ### 2.1 What the demonstration must show
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-42-01.svg" alt="Diagram 1 of notebook 42" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-42-01.svg" alt="Diagram 1 of notebook 42" style="max-width:100%">
 
 Each event in the scenario tests one link between a problem and the signal that should catch it:
 
@@ -152,7 +152,7 @@ alarm events (event recall 0.5 from 2 faults, which says almost nothing about th
 restarts. A second run produced identical numbers. The full generated report is
 `solutions/labs/w7d6_project_milestone_4/example_demo/monitoring_demo.md`.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d6_project_milestone_4/figures/demo_signals.svg" alt="Alarm rate is above budget only for the real fault and the bad promotion; drift PSI crosses its threshold for the units bug and the 80 % flow replay; only the units bug is out of support" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d6_project_milestone_4/figures/demo_signals.svg" alt="Alarm rate is above budget only for the real fault and the bad promotion; drift PSI crosses its threshold for the units bug and the 80 % flow replay; only the units bug is out of support" width="100%">
 
 *Figure 1. Signals per replayed event in the reference demo (REAL data). Orange bars are above their
 alert line. The missed fault E5 looks exactly like normal operation, which is why the report must say
@@ -165,7 +165,7 @@ of the 27 development experiments. The demo sets the drift threshold at the *lar
 them, 7.53. With 27 exchangeable healthy windows, a new healthy window exceeds the maximum with
 probability about 1/28. That is the false-alarm rate the choice implies.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d6_project_milestone_4/figures/drift_calibration.svg" alt="Calibration PSI of 27 development experiments lies between 3.26 and 7.53; a healthy test experiment reaches 7.38, just under the threshold; the 80 % flow replay reaches 9.62" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d6_project_milestone_4/figures/drift_calibration.svg" alt="Calibration PSI of 27 development experiments lies between 3.26 and 7.53; a healthy test experiment reaches 7.38, just under the threshold; the 80 % flow replay reaches 9.62" width="100%">
 
 *Figure 2. The calibration set (REAL). Single healthy experiments already sit far from the pooled
 reference, because SKAB experiments run at different, nearly constant flow levels. The healthy part of
@@ -180,7 +180,7 @@ less trustworthy, not more.
 
 ### 2.4 Promotion and rollback are process events, not file events
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-42-02.svg" alt="Diagram 2 of notebook 42" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-42-02.svg" alt="Diagram 2 of notebook 42" style="max-width:100%">
 
 A running process loaded its bundle at startup. Changing the pointer changes nothing until the process is
 replaced, and replacing it means stopping the old one. Two of the three planted problems in the starter
@@ -290,7 +290,7 @@ check("w7d6")
 
 ## 5. Independent challenge: submit milestone 4
 
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d6_project_milestone_4/challenge/README.md): fill in `SUBMISSION.md` for your own repository, with the demo
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w7d6_project_milestone_4/challenge/README.md): fill in `SUBMISSION.md` for your own repository, with the demo
 results copied from your `results.json`, every checklist item ticked or justified, a self-review with
 evidence, and a question for the reviewer.
 
@@ -322,8 +322,8 @@ check("w7d6", challenge=True)
 
 ## 6. Progressive hints
 
-[Hint 1 — concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d6_project_milestone_4/hints/hint1_concept.md) · [Hint 2 — approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d6_project_milestone_4/hints/hint2_approach.md) ·
-[Hint 3 — partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d6_project_milestone_4/hints/hint3_partial.md)
+[Hint 1 — concept](https://github.com/berdakh/mlengineering/blob/main/labs/w7d6_project_milestone_4/hints/hint1_concept.md) · [Hint 2 — approach](https://github.com/berdakh/mlengineering/blob/main/labs/w7d6_project_milestone_4/hints/hint2_approach.md) ·
+[Hint 3 — partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w7d6_project_milestone_4/hints/hint3_partial.md)
 
 
 Open one hint at a time, only after a real attempt.
@@ -450,7 +450,7 @@ such as signal quality or a classifier's confidence? When did it mislead?
 **Retrieval question (for the w7d7 review).** The demo showed drift without a change in alarms (E3) and a
 missed fault without any signal (E5). For each, which signal would have revealed the problem, and when?
 
-**Next.** [w7d7 review](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d7_review/README.md), then Week 8: [the completion audit](43_project_completion.html) starts by reproducing
+**Next.** [w7d7 review](https://github.com/berdakh/mlengineering/blob/main/labs/w7d7_review/README.md), then Week 8: [the completion audit](43_project_completion.html) starts by reproducing
 this report and the milestone 1 evaluation from a clean clone.
 
 ## Verification record

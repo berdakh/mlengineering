@@ -9,8 +9,8 @@ nav_order: 17
 # 17 · Uncertainty: cluster bootstrap, paired comparisons, small-n honesty
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/17_uncertainty.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/17_uncertainty.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/17_uncertainty.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/17_uncertainty.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 17
 
 ---
 
-**Week 3 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w3d5_uncertainty/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d5_uncertainty/)
+**Week 3 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w3d5_uncertainty/`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d5_uncertainty/)
 
 **Objective.** Attach defensible intervals to metrics when the independent unit is the experiment, not the sample; compare models with paired resampling.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -116,7 +116,7 @@ Today's intervals condition on the fitted model: they describe **test-set sampli
 the right quantity for "how well does *this* artifact do on new experiments like these". It is the
 wrong quantity for "how good is this *method*", which also needs the second and third rows.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-17-01.svg" alt="Diagram 1 of notebook 17" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-17-01.svg" alt="Diagram 1 of notebook 17" style="max-width:100%">
 
 ### 2.2 Why rows are the wrong unit
 
@@ -132,7 +132,7 @@ The design effect is the factor by which a row-level analysis underestimates the
 *effective sample size* is `G·m / deff`. With `m = 40` and `ρ = 0.5`, 1,200 rows are worth
 `1200 / 20.5 ≈ 59` independent observations; as `ρ → 1` they are worth `G`.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/handbook/figures/h6_6/design_effect.svg" alt="Effective sample size of about 1,200 rows falls steeply with the intraclass correlation and never goes below the number of clusters" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/handbook/figures/h6_6/design_effect.svg" alt="Effective sample size of about 1,200 rows falls steeply with the intraclass correlation and never goes below the number of clusters" width="100%">
 
 *Formula, no data. The same 1,200 rows arranged as 30, 10 or 7 clusters: at an ICC of 0.2 they are
 worth about 136, 48 and 34 independent observations. Source: `handbook/figures/h6_6/make_figures.py`.*
@@ -158,7 +158,7 @@ were what got sampled, so **experiments are what get redrawn**:
 3. Recompute the metric exactly as on the real data.
 4. Repeat `B` times. The 2.5th and 97.5th percentiles of the `B` values are the **percentile interval**.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-17-02.svg" alt="Diagram 2 of notebook 17" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-17-02.svg" alt="Diagram 2 of notebook 17" style="max-width:100%">
 
 Decisions hidden in "recompute the metric exactly":
 
@@ -216,7 +216,7 @@ still allows 70%. The binomial model assumes independent events, so here too cou
 files, if you want to be strict. (Useful to remember: zero failures in `n` trials gives an upper
 95% bound of roughly `3/n` on the failure rate.)
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d5_uncertainty/figures/wilson_widths.svg" alt="Wilson 95 % intervals for detection rates: 9 of 9 still allows 70 %, and only hundreds of events give a narrow interval" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d5_uncertainty/figures/wilson_widths.svg" alt="Wilson 95 % intervals for detection rates: 9 of 9 still allows 70 %, and only hundreds of events give a narrow interval" width="100%">
 
 *Formula, no data (Wilson score interval). The black dot is the observed rate, the bar the interval,
 the number its lower limit. Values in `figures/wilson_widths.csv`.*
@@ -241,7 +241,7 @@ cancels. Three consequences:
 * **The paired bootstrap** draws one set of cluster ids per replicate and applies it to both
   models, then takes the percentile interval of the differences.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d5_uncertainty/figures/paired_differences.svg" alt="Per-cluster PR-AUC differences on real SKAB scatter from about -0.6 to +0.6 while their means are -0.08 and +0.03 with intervals that include zero" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d5_uncertainty/figures/paired_differences.svg" alt="Per-cluster PR-AUC differences on real SKAB scatter from about -0.6 to +0.6 while their means are -0.08 and +0.03 with intervals that include zero" width="100%">
 
 *REAL SKAB results, all 30 independent clusters (logistic-regression scores on development clusters
 are out-of-fold). Each dot is one cluster's difference; the blue line and band are the mean and its
@@ -292,7 +292,7 @@ minimum detectable difference of about 0.25 PR-AUC with 7 clusters, 0.20 with 9,
 0.09 with 34. Differences of a few hundredths, which is what the tables show, are far below what
 this dataset can resolve. That calculation, by simulation, is the challenge.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/handbook/figures/h6_6/power_curve.svg" alt="Simulated power against the number of independent test clusters for two real SKAB comparisons: 30 clusters give power 0.35 and 0.13" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/handbook/figures/h6_6/power_curve.svg" alt="Simulated power against the number of independent test clusters for two real SKAB comparisons: 30 clusters give power 0.35 and 0.13" width="100%">
 
 *Simulation driven by the REAL per-cluster differences (sign-flip permutation test, α = 0.05).
 With the 30 clusters available, power is 0.35 for Mahalanobis versus flow-rate z and 0.13 for
@@ -361,7 +361,7 @@ Reading it:
 * When rows really are independent (ICC 0) and clusters are few, the row bootstrap is the better
   procedure. The cluster bootstrap is not free; it is the price of not knowing the ICC is zero.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d5_uncertainty/figures/coverage.svg" alt="Coverage of nominal 95 % intervals: the row bootstrap falls to about 0.32 at ICC 0.5 while the cluster bootstrap stays near 0.93 with 30 clusters and about 0.87 with 7 or 9" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d5_uncertainty/figures/coverage.svg" alt="Coverage of nominal 95 % intervals: the row bootstrap falls to about 0.32 at ICC 0.5 while the cluster bootstrap stays near 0.93 with 30 clusters and about 0.87 with 7 or 9" width="100%">
 
 *SYNTHETIC simulation (the table above, 1,000 datasets per point). Orange is the wrong unit, blue
 the correct one, in every figure of this lesson. Values in `figures/coverage.csv`.*
@@ -538,7 +538,7 @@ What these results say, as found:
   alarms entirely and is superseded by w3d4's matching.
 * With 7 clusters the percentile intervals above undercover (section 3.1). Treat them as optimistic.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d5_uncertainty/figures/skab_intervals.svg" alt="Real SKAB test set: cluster-bootstrap intervals are 3 to 7 times wider than row-bootstrap intervals for the same four baselines" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d5_uncertainty/figures/skab_intervals.svg" alt="Real SKAB test set: cluster-bootstrap intervals are 3 to 7 times wider than row-bootstrap intervals for the same four baselines" width="100%">
 
 *REAL SKAB, frozen v2 test set (7 experiments, 7 independent clusters), table A above as a picture. The
 row-level bars (orange) look precise and are not; the Mahalanobis interval on the correct unit spans
@@ -563,7 +563,7 @@ check("w3d5")
 
 ## 5. Independent challenge
 
-[`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d5_uncertainty/challenge/README.md): a power analysis by simulation. Given the real
+[`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d5_uncertainty/challenge/README.md): a power analysis by simulation. Given the real
 per-cluster PR-AUC of three detectors (`challenge/per_cluster_pr_auc.csv`), implement `power` and
 `required_experiments`, estimate how many independent test experiments would be needed to
 distinguish the detectors, and write what the project can and cannot claim today.
@@ -648,9 +648,9 @@ check("w3d5", challenge=True)
 
 Open in order, only as far as needed, and note in `progress/notes.md` which level you used.
 
-1. [Conceptual hint](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d5_uncertainty/hints/hint1_concept.md)
-2. [Suggested approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d5_uncertainty/hints/hint2_approach.md)
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d5_uncertainty/hints/hint3_partial.md)
+1. [Conceptual hint](https://github.com/berdakh/mlengineering/blob/main/labs/w3d5_uncertainty/hints/hint1_concept.md)
+2. [Suggested approach](https://github.com/berdakh/mlengineering/blob/main/labs/w3d5_uncertainty/hints/hint2_approach.md)
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w3d5_uncertainty/hints/hint3_partial.md)
 
 Full reference: `solutions/labs/w3d5_uncertainty/` (lab, challenge, answers).
 

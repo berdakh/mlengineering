@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/38_input_monitoring_drift.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/38_input_monitoring_drift.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -95,7 +95,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.1 Three questions, three owners
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-38-01.svg" alt="Diagram 1 of notebook 38" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-38-01.svg" alt="Diagram 1 of notebook 38" style="max-width:100%">
 #
 # * A **schema violation** (a `-9999` sentinel, an infinity, a pressure of 9,000 bar) is a broken input.
 #   It must be counted and kept **out** of the distribution statistics: one sentinel value moves a
@@ -139,7 +139,7 @@ print("repo root:", REPO_ROOT)
 # $p < 0.05$ rises from 5.5 % (independent samples) to 22 % (lag-1 autocorrelation 0.5), 75 % (0.9) and
 # 98.5 % (0.98).
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d2_input_monitoring_drift/figures/ks_autocorrelation.svg" alt="With no drift, the share of KS p < 0.05 windows rises from about 5 % at no autocorrelation to 98 % at phi = 0.98" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d2_input_monitoring_drift/figures/ks_autocorrelation.svg" alt="With no drift, the share of KS p < 0.05 windows rises from about 5 % at no autocorrelation to 98 % at phi = 0.98" width="100%">
 #
 # *Figure 1 (SYNTHETIC: stationary AR(1), reference 2,000 samples, window 240).* The opposite failure
 # appears with large samples: the example finds $p = 3 \times 10^{-8}$ for a 0.01 °C difference between
@@ -151,7 +151,7 @@ print("repo root:", REPO_ROOT)
 # false-alarm rate depends on the window size: with i.i.d. data and a 5,000-sample reference, 98 % of
 # 30-sample windows exceed 0.1, about 27 % of 120-sample windows, and none of the 480-sample ones.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d2_input_monitoring_drift/figures/psi_window_size.svg" alt="Share of stable windows with PSI above 0.1 falls from 98 % at 30 samples to 0 at 480 samples" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d2_input_monitoring_drift/figures/psi_window_size.svg" alt="Share of stable windows with PSI above 0.1 falls from 98 % at 30 samples to 0 at 480 samples" width="100%">
 #
 # *Figure 2 (SYNTHETIC, i.i.d. normal data, 600 windows per size).* A fixed rule therefore means something
 # different at every window size, and nothing at all for autocorrelated data.
@@ -322,11 +322,11 @@ print("repo root:", REPO_ROOT)
 # temperature           1
 # ```
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d2_input_monitoring_drift/figures/alert_rates.svg" alt="Alert rates on real test windows: reference A alerts on 21 % of normal windows (all in the other family) and 14 % of fault windows; reference B on 3 % and 20 %" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d2_input_monitoring_drift/figures/alert_rates.svg" alt="Alert rates on real test windows: reference A alerts on 21 % of normal windows (all in the other family) and 14 % of fault windows; reference B on 3 % and 20 %" width="100%">
 #
 # *Figure 3 (real SKAB, 7 test runs, 38 normal and 35 fully anomalous one-minute windows).*
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d2_input_monitoring_drift/figures/drift_timelines.svg" alt="Two test runs, ratio of the largest statistic to its threshold per minute: valve1/13 never crosses 1 under either reference; other/14 crosses under B when its fault starts" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d2_input_monitoring_drift/figures/drift_timelines.svg" alt="Two test runs, ratio of the largest statistic to its threshold per minute: valve1/13 never crosses 1 under either reference; other/14 crosses under B when its fault starts" width="100%">
 #
 # *Figure 4 (real SKAB).* Shaded minutes are labelled faults; the dashed line is the alert level.
 #

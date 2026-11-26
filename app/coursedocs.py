@@ -104,7 +104,7 @@ class Block:
 
 FENCE = re.compile(r"^```mermaid[ \t]*\n(.*?)^```[ \t]*$", re.S | re.M)
 IMAGE_LINE = re.compile(r"^!\[([^\]]*)\]\(([^)\s]+)\)\s*$|^<img[^>]*?src=\"([^\"]+)\"(?:[^>]*?alt=\"([^\"]*)\")?[^>]*>\s*$", re.M)
-RAW_PREFIX = "https://raw.githubusercontent.com/berdakh/mlengineering-/main/"
+RAW_PREFIX = "https://raw.githubusercontent.com/berdakh/mlengineering/main/"
 
 
 def local_target(target: str, doc_dir: Path, root: Path = ROOT) -> Path | None:

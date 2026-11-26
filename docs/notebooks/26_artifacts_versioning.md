@@ -9,8 +9,8 @@ nav_order: 26
 # 26 · Model artifacts, metadata and versioning
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/26_artifacts_versioning.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/26_artifacts_versioning.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/26_artifacts_versioning.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/26_artifacts_versioning.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 26
 
 ---
 
-**Week 5 · day 2 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w5d2_artifacts_versioning/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d2_artifacts_versioning/)
+**Week 5 · day 2 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w5d2_artifacts_versioning/`](https://github.com/berdakh/mlengineering/blob/main/labs/w5d2_artifacts_versioning/)
 
 **Objective.** Serialise models with the metadata needed to trust and reload them (schema, feature list, versions, data and code hashes); understand pickle risks and alternatives.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -112,7 +112,7 @@ questions that person will ask:
 | Are these the bytes that were saved? | `checksums.json`: SHA-256 of every other file |
 | Can this code interpret them? | `format` and `format_version` in `model.json` |
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-26-01.svg" alt="Diagram 1 of notebook 26" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-26-01.svg" alt="Diagram 1 of notebook 26" style="max-width:100%">
 
 *Figure 1. Bundle anatomy and the two refusals that come before any interpretation.*
 
@@ -168,7 +168,7 @@ Four things version independently, and the bundle records all of them:
 
 ### 2.5 A local registry
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-26-02.svg" alt="Diagram 2 of notebook 26" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-26-02.svg" alt="Diagram 2 of notebook 26" style="max-width:100%">
 
 *Figure 2. The life of a version. Only the pointer moves.*
 
@@ -189,7 +189,7 @@ one, never an empty file. Rollback is a promote of the previous version: no rebu
 MLflow's model registry, SageMaker's and Vertex AI's registries implement the same ideas (immutable
 versions, movable aliases or stages) with a database and access control around them.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-26-03.svg" alt="Diagram 3 of notebook 26" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-26-03.svg" alt="Diagram 3 of notebook 26" style="max-width:100%">
 
 *Figure 3. One release. The service never chooses a file; it resolves a name.*
 
@@ -228,7 +228,7 @@ an alias that the deployment resolves. (Illustrative composite, not a documented
 
 ### 3.1 A demand forecaster, saved as its mathematics
 
-[`example/demand_artifact.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d2_artifacts_versioning/example/demand_artifact.py): a SYNTHETIC weekly demand series (3 years,
+[`example/demand_artifact.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w5d2_artifacts_versioning/example/demand_artifact.py): a SYNTHETIC weekly demand series (3 years,
 trend + yearly season + noise) and a ridge regression on lag-1, lag-52 and a trend term. It saves a JSON
 spec (feature names in order, version, training window, library versions), an `.npz` of the weights and
 a checksum file. It then loads the artifact, verifies it, flips one bit and loads again.
@@ -253,7 +253,7 @@ names resolve to.
 
 ### 3.2 What a pickle does when it is loaded
 
-[`example/pickle_is_code.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d2_artifacts_versioning/example/pickle_is_code.py) builds a payload whose only effects are
+[`example/pickle_is_code.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w5d2_artifacts_versioning/example/pickle_is_code.py) builds a payload whose only effects are
 printing one line and creating an empty marker file in a temporary directory (deleted at the end).
 
 ```python
@@ -352,7 +352,7 @@ Then try the failure paths by hand: run the script again without `--fresh` (regi
 edit the threshold in `results/registry/flowguard-flowrate/1.0.0/model.json` and call
 `load_bundle` on it.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d2_artifacts_versioning/figures/formats.svg" alt="Two bar panels for the real flow-rate detector and logistic candidate: pickle and joblib files are 547 to 1,073 bytes and load in 0.006 to 0.12 ms; the JSON plus npz bundles are about 2.2 to 2.5 kB and load in about 0.2 ms including checksum verification" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d2_artifacts_versioning/figures/formats.svg" alt="Two bar panels for the real flow-rate detector and logistic candidate: pickle and joblib files are 547 to 1,073 bytes and load in 0.006 to 0.12 ms; the JSON plus npz bundles are about 2.2 to 2.5 kB and load in about 0.2 ms including checksum verification" width="100%">
 
 *Figure 4 (real SKAB models trained on development data; times from the authoring host).* The safe
 bundle is about 2.5 times larger than the pickle and loads about 15 times more slowly. It costs 2 kB
@@ -369,7 +369,7 @@ check("w5d2")
 
 ## 5. Independent challenge
 
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d2_artifacts_versioning/challenge/README.md): register the supervised logistic candidate, whose state
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w5d2_artifacts_versioning/challenge/README.md): register the supervised logistic candidate, whose state
 includes a fitted scikit-learn estimator, as `flowguard-logistic 0.1.0` without pickle. The loader
 must refuse a feature layout it does not implement. Then write the compatibility policy. No solution is
 provided until you have attempted it.
@@ -422,8 +422,8 @@ check("w5d2", challenge=True)
 ## 6. Progressive hints
 
 Open one at a time, only after 10 minutes stuck:
-[hint 1, concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d2_artifacts_versioning/hints/hint1_concept.md) · [hint 2, approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d2_artifacts_versioning/hints/hint2_approach.md) ·
-[hint 3, partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d2_artifacts_versioning/hints/hint3_partial.md). The full reference solution is in
+[hint 1, concept](https://github.com/berdakh/mlengineering/blob/main/labs/w5d2_artifacts_versioning/hints/hint1_concept.md) · [hint 2, approach](https://github.com/berdakh/mlengineering/blob/main/labs/w5d2_artifacts_versioning/hints/hint2_approach.md) ·
+[hint 3, partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w5d2_artifacts_versioning/hints/hint3_partial.md). The full reference solution is in
 `solutions/labs/w5d2_artifacts_versioning/` and is for after you have finished.
 
 

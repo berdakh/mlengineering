@@ -9,8 +9,8 @@ nav_order: 37
 # 37 · Structured logging and service metrics
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/37_service_logging_metrics.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/37_service_logging_metrics.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/37_service_logging_metrics.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/37_service_logging_metrics.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 37
 
 ---
 
-**Week 7 · day 1 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w7d1_service_logging_metrics/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d1_service_logging_metrics/)
+**Week 7 · day 1 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w7d1_service_logging_metrics/`](https://github.com/berdakh/mlengineering/blob/main/labs/w7d1_service_logging_metrics/)
 
 **Objective.** Emit structured request and prediction logs with correlation ids; define the service's golden signals (traffic, errors, latency, saturation).
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -111,7 +111,7 @@ formatters), [w5d4](28_fastapi_validation.html) (the service and its request-id 
 
 ### 2.1 Three kinds of telemetry, three different questions
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-37-01.svg" alt="Diagram 1 of notebook 37" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-37-01.svg" alt="Diagram 1 of notebook 37" style="max-width:100%">
 
 * **Metrics** are pre-aggregated numbers: counts, sums, bucketed distributions, current values. They
   answer "how much and how often" and they are what alerts are written on. Their cost grows with the
@@ -189,7 +189,7 @@ In the Prometheus text format each bucket line `x_bucket{le="0.05"} 38` means "3
 `x_count` (Prometheus exposition-format docs, verified from their source). The left panel below is what
 people expect; the right panel is what `/metrics` actually serves, from the real replay in task 5.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d1_service_logging_metrics/figures/histogram_buckets.svg" alt="Per-bucket counts rise and fall; the cumulative le= counts on /metrics never decrease and end at the total of 38 /predict requests" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d1_service_logging_metrics/figures/histogram_buckets.svg" alt="Per-bucket counts rise and fall; the cumulative le= counts on /metrics never decrease and end at the total of 38 /predict requests" width="100%">
 
 *Figure 1 (real replay of two SKAB test runs through the reference service).* All 38 `/predict` requests
 finished within 25 ms; the cumulative series is flat from there on and its last value is `_count`.
@@ -205,7 +205,7 @@ Two consequences:
   the p99 of their combined traffic. Summing the bucket counts first and then estimating gives the right
   answer up to bucket resolution (worked example, Figure 2).
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d1_service_logging_metrics/figures/percentile_averaging.svg" alt="Mean of two instance p99s (529 ms) is below the true p99 (588 ms); the estimate from summed buckets falls in the correct 500-1000 ms bucket" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d1_service_logging_metrics/figures/percentile_averaging.svg" alt="Mean of two instance p99s (529 ms) is below the true p99 (588 ms); the estimate from summed buckets falls in the correct 500-1000 ms bucket" width="100%">
 
 *Figure 2 (SYNTHETIC, worked example).*
 
@@ -233,7 +233,7 @@ outage pages for 168 minutes, a 4-minute total outage does not page at all, and 
 of the budget spent. The factors 14.4/1 h/5 min and 6/6 h/30 min are the SRE workbook's values as
 recalled (not re-verified here); you derive your own in the challenge.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d1_service_logging_metrics/figures/burn_rate.svg" alt="Burn rate over 30 days: the 1-hour and 5-minute windows both exceed 14.4 only during the day-12 incident; budget spent climbs to 42 %" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d1_service_logging_metrics/figures/burn_rate.svg" alt="Burn rate over 30 days: the 1-hour and 5-minute windows both exceed 14.4 only during the day-12 incident; budget spent climbs to 42 %" width="100%">
 
 *Figure 3 (SYNTHETIC: 40 requests/minute, base error rate 0.1 %, SLO 99.5 %).*
 
@@ -242,7 +242,7 @@ quality needs labels, which arrive late (w7d3); input change needs distribution 
 
 ### 2.6 How a request flows through the service, and where the exception goes
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-37-02.svg" alt="Diagram 2 of notebook 37" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-37-02.svg" alt="Diagram 2 of notebook 37" style="max-width:100%">
 
 The non-obvious part: in Starlette, a handler registered for `Exception` runs in `ServerErrorMiddleware`,
 which sits **outside** your middleware. So when the endpoint raises, `call_next` does not return a 500
@@ -425,7 +425,7 @@ request replay-demo-0001: 2 event(s)
 * Duration grows with request size (Figure 4): a client that keeps re-sending a growing run is a latency
   problem in waiting, which is the argument for the stateful streaming endpoint of w5d3/w5d4.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d1_service_logging_metrics/figures/duration_vs_samples.svg" alt="Server-side duration rises from about 3-5 ms at 60 samples to 12-17 ms at 1,100 samples, with a few outliers above 20 ms" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d1_service_logging_metrics/figures/duration_vs_samples.svg" alt="Server-side duration rises from about 3-5 ms at 60 samples to 12-17 ms at 1,100 samples, with a few outliers above 20 ms" width="100%">
 
 *Figure 4 (real replay; one point per successful `/predict` request).* The outliers are single requests,
 the kind of tail a percentile SLI catches and an average hides.
@@ -440,7 +440,7 @@ check("w7d1")
 
 ## 5. Independent challenge: SLOs you can defend
 
-Read [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d1_service_logging_metrics/challenge/README.md). You implement the SLI, budget, burn-rate and multi-window
+Read [challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w7d1_service_logging_metrics/challenge/README.md). You implement the SLI, budget, burn-rate and multi-window
 paging arithmetic in `challenge/slo.py` (inputs are the lab's access events) and write `challenge/SLO.md`:
 who depends on the service, the SLIs and what counts as valid, targets with rationale, a worked budget,
 an alerting policy, and what the SLOs do not cover.
@@ -489,8 +489,8 @@ check("w7d1", challenge=True)
 
 ## 6. Progressive hints
 
-[Hint 1: concepts](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d1_service_logging_metrics/hints/hint1_concept.md) · [Hint 2: approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d1_service_logging_metrics/hints/hint2_approach.md) ·
-[Hint 3: partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d1_service_logging_metrics/hints/hint3_partial.md)
+[Hint 1: concepts](https://github.com/berdakh/mlengineering/blob/main/labs/w7d1_service_logging_metrics/hints/hint1_concept.md) · [Hint 2: approach](https://github.com/berdakh/mlengineering/blob/main/labs/w7d1_service_logging_metrics/hints/hint2_approach.md) ·
+[Hint 3: partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w7d1_service_logging_metrics/hints/hint3_partial.md)
 
 
 Open one hint at a time, only after a real attempt.

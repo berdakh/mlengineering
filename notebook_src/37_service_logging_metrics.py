@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/37_service_logging_metrics.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/37_service_logging_metrics.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -99,7 +99,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.1 Three kinds of telemetry, three different questions
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-37-01.svg" alt="Diagram 1 of notebook 37" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-37-01.svg" alt="Diagram 1 of notebook 37" style="max-width:100%">
 #
 # * **Metrics** are pre-aggregated numbers: counts, sums, bucketed distributions, current values. They
 #   answer "how much and how often" and they are what alerts are written on. Their cost grows with the
@@ -177,7 +177,7 @@ print("repo root:", REPO_ROOT)
 # `x_count` (Prometheus exposition-format docs, verified from their source). The left panel below is what
 # people expect; the right panel is what `/metrics` actually serves, from the real replay in task 5.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d1_service_logging_metrics/figures/histogram_buckets.svg" alt="Per-bucket counts rise and fall; the cumulative le= counts on /metrics never decrease and end at the total of 38 /predict requests" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d1_service_logging_metrics/figures/histogram_buckets.svg" alt="Per-bucket counts rise and fall; the cumulative le= counts on /metrics never decrease and end at the total of 38 /predict requests" width="100%">
 #
 # *Figure 1 (real replay of two SKAB test runs through the reference service).* All 38 `/predict` requests
 # finished within 25 ms; the cumulative series is flat from there on and its last value is `_count`.
@@ -193,7 +193,7 @@ print("repo root:", REPO_ROOT)
 #   the p99 of their combined traffic. Summing the bucket counts first and then estimating gives the right
 #   answer up to bucket resolution (worked example, Figure 2).
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d1_service_logging_metrics/figures/percentile_averaging.svg" alt="Mean of two instance p99s (529 ms) is below the true p99 (588 ms); the estimate from summed buckets falls in the correct 500-1000 ms bucket" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d1_service_logging_metrics/figures/percentile_averaging.svg" alt="Mean of two instance p99s (529 ms) is below the true p99 (588 ms); the estimate from summed buckets falls in the correct 500-1000 ms bucket" width="100%">
 #
 # *Figure 2 (SYNTHETIC, worked example).*
 #
@@ -221,7 +221,7 @@ print("repo root:", REPO_ROOT)
 # of the budget spent. The factors 14.4/1 h/5 min and 6/6 h/30 min are the SRE workbook's values as
 # recalled (not re-verified here); you derive your own in the challenge.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d1_service_logging_metrics/figures/burn_rate.svg" alt="Burn rate over 30 days: the 1-hour and 5-minute windows both exceed 14.4 only during the day-12 incident; budget spent climbs to 42 %" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d1_service_logging_metrics/figures/burn_rate.svg" alt="Burn rate over 30 days: the 1-hour and 5-minute windows both exceed 14.4 only during the day-12 incident; budget spent climbs to 42 %" width="100%">
 #
 # *Figure 3 (SYNTHETIC: 40 requests/minute, base error rate 0.1 %, SLO 99.5 %).*
 #
@@ -230,7 +230,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.6 How a request flows through the service, and where the exception goes
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-37-02.svg" alt="Diagram 2 of notebook 37" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-37-02.svg" alt="Diagram 2 of notebook 37" style="max-width:100%">
 #
 # The non-obvious part: in Starlette, a handler registered for `Exception` runs in `ServerErrorMiddleware`,
 # which sits **outside** your middleware. So when the endpoint raises, `call_next` does not return a 500
@@ -415,7 +415,7 @@ print("repo root:", REPO_ROOT)
 # * Duration grows with request size (Figure 4): a client that keeps re-sending a growing run is a latency
 #   problem in waiting, which is the argument for the stateful streaming endpoint of w5d3/w5d4.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d1_service_logging_metrics/figures/duration_vs_samples.svg" alt="Server-side duration rises from about 3-5 ms at 60 samples to 12-17 ms at 1,100 samples, with a few outliers above 20 ms" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d1_service_logging_metrics/figures/duration_vs_samples.svg" alt="Server-side duration rises from about 3-5 ms at 60 samples to 12-17 ms at 1,100 samples, with a few outliers above 20 ms" width="100%">
 #
 # *Figure 4 (real replay; one point per successful `/predict` request).* The outliers are single requests,
 # the kind of tail a percentile SLI catches and an average hides.

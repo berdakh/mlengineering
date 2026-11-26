@@ -9,8 +9,8 @@ nav_order: 47
 # 47 · Explaining the project and defending tradeoffs
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/47_project_explanation.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/47_project_explanation.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/47_project_explanation.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/47_project_explanation.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 47
 
 ---
 
-**Week 8 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d5_project_explanation/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d5_project_explanation/)
+**Week 8 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d5_project_explanation/`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d5_project_explanation/)
 
 **Objective.** Deliver 5-minute and 20-minute walkthroughs and answer adversarial questions on evaluation, limitations and alternatives.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -97,7 +97,7 @@ this session is about structure, priorities and honesty under pressure.
 
 A technical project story that survives questioning has six beats, always in this order:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-47-01.svg" alt="Diagram 1 of notebook 47" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-47-01.svg" alt="Diagram 1 of notebook 47" style="max-width:100%">
 
 *The arc. Interviewers probe Evidence and Limitation; a script without them invites the question
 you least want.*
@@ -113,7 +113,7 @@ The three lengths are the same arc at different resolution, not three different 
 A spoken 5-minute slot holds about 550-650 words once pauses and a diagram are counted; the reference
 script is 556 words, about four minutes of speech.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d5_project_explanation/figures/speaking_time.svg" alt="Six bars of speaking time for the reference script: Problem 41 s, Constraint 42 s, Decision 49 s, Evidence 53 s, Limitation 30 s, Next step 23 s; all well under 90 s" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d5_project_explanation/figures/speaking_time.svg" alt="Six bars of speaking time for the reference script: Problem 41 s, Constraint 42 s, Decision 49 s, Evidence 53 s, Limitation 30 s, Next step 23 s; all well under 90 s" width="100%">
 
 *Speaking time per beat of the reference 5-minute script, from `example/script_lint.py`. No beat
 exceeds 90 seconds; Evidence is the longest, Next step the shortest.*
@@ -138,7 +138,7 @@ point estimate; the overlapping intervals and the cost columns are the argument.
 
 Hard questions usually target a real weakness. Three moves, in order, keep the answer honest and short:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-47-02.svg" alt="Diagram 2 of notebook 47" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-47-02.svg" alt="Diagram 2 of notebook 47" style="max-width:100%">
 
 *The three moves. Skipping "concede" sounds defensive; skipping "quantify" sounds vague; skipping
 "redirect" leaves the weakness as the last thing said.*
@@ -262,7 +262,7 @@ check("w8d5")
 
 Translate one of **your own** projects (a thesis, course or research project, or a work project) into
 the same structure, plus a translation to industry, and answer five adversarial questions about it. Details
-and acceptance criteria: [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d5_project_explanation/challenge/README.md). Do not use numbers you cannot
+and acceptance criteria: [challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w8d5_project_explanation/challenge/README.md). Do not use numbers you cannot
 source; where your report gave no interval, say so.
 
 
@@ -305,8 +305,8 @@ check("w8d5", challenge=True)
 
 ## 6. Progressive hints
 
-[Hint 1 - concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d5_project_explanation/hints/hint1_concept.md) · [Hint 2 - approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d5_project_explanation/hints/hint2_approach.md) ·
-[Hint 3 - partial](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d5_project_explanation/hints/hint3_partial.md)
+[Hint 1 - concept](https://github.com/berdakh/mlengineering/blob/main/labs/w8d5_project_explanation/hints/hint1_concept.md) · [Hint 2 - approach](https://github.com/berdakh/mlengineering/blob/main/labs/w8d5_project_explanation/hints/hint2_approach.md) ·
+[Hint 3 - partial](https://github.com/berdakh/mlengineering/blob/main/labs/w8d5_project_explanation/hints/hint3_partial.md)
 
 
 Open one hint at a time, only after a real attempt.

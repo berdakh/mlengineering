@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/07_sql_joins_grain.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/07_sql_joins_grain.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -118,7 +118,7 @@ print("repo root:", REPO_ROOT)
 # **The lesson database at a glance** (SYNTHETIC; full schema in [`data/README.md`](../labs/w2d1_sql_joins_grain/data/README.md)).
 # Read each line as "one parent row has zero or more child rows"; the grain of a table is its primary key.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-07-01.svg" alt="Diagram 1 of notebook 07" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-07-01.svg" alt="Diagram 1 of notebook 07" style="max-width:100%">
 #
 # `machines` has two independent children (`work_orders`, `downtime_events`), and `work_orders` has a
 # child of its own (`parts_used`). Those two shapes are where every fan-out in this lesson comes from.
@@ -191,7 +191,7 @@ print("repo root:", REPO_ROOT)
 # (The six-row block is illustrative, not rows of the lesson database.) On the lesson database the same
 # mechanism produces these totals:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d1_sql_joins_grain/figures/fanout_totals.svg" alt="Bar chart: true labour hours 633.8 against 1,218.1 from the naive join; true downtime hours 793.5 against 2,523.8" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d1_sql_joins_grain/figures/fanout_totals.svg" alt="Bar chart: true labour hours 633.8 against 1,218.1 from the naive join; true downtime hours 793.5 against 2,523.8" width="100%">
 #
 # *Both sums are inflated, by different factors, because each child is multiplied by the row count of the
 # other. SYNTHETIC data; regenerate with `python labs/w2d1_sql_joins_grain/figures/make_figures.py`.*
@@ -248,7 +248,7 @@ print("repo root:", REPO_ROOT)
 #
 # Where a condition on the outer-joined table goes decides which rows survive:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-07-02.svg" alt="Diagram 2 of notebook 07" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-07-02.svg" alt="Diagram 2 of notebook 07" style="max-width:100%">
 #
 #
 # ### 2.6 Verifying a query
@@ -264,7 +264,7 @@ print("repo root:", REPO_ROOT)
 #   from the single table at whose grain the measure is defined. This catches fan-out *and* dropped rows.
 # - **Known small cases.** Check one entity by hand, preferably one with zero children and one with many.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-07-03.svg" alt="Diagram 3 of notebook 07" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-07-03.svg" alt="Diagram 3 of notebook 07" style="max-width:100%">
 #
 #
 # ### 2.7 A concrete industry example

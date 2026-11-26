@@ -9,8 +9,8 @@ nav_order: 46
 # 46 · Coding and SQL interviews, timed
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/46_coding_interviews.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/46_coding_interviews.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/46_coding_interviews.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/46_coding_interviews.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 46
 
 ---
 
-**Week 8 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d4_coding_interviews/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/)
+**Week 8 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d4_coding_interviews/`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d4_coding_interviews/)
 
 **Objective.** Solve Python data-structure and SQL problems under time pressure while explaining aloud.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -102,7 +102,7 @@ whether your code is correct at the edges, and whether the interviewer can follo
 interview problems for data roles are variations of about a dozen patterns. Recognising the pattern is
 most of the work; the rest is careful code and your own tests.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-46-01.svg" alt="Diagram 1 of notebook 46" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-46-01.svg" alt="Diagram 1 of notebook 46" style="max-width:100%">
 
 ### 2.2 Precise terms
 
@@ -118,7 +118,7 @@ most of the work; the rest is careful code and your own tests.
 
 ### 2.3 The talk-aloud protocol
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-46-02.svg" alt="Diagram 2 of notebook 46" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-46-02.svg" alt="Diagram 2 of notebook 46" style="max-width:100%">
 
 Spend about two minutes on the first three boxes even when you think you know the answer: interviewers
 score them, and it is where misunderstandings are caught cheaply. When stuck, say what is blocking you and
@@ -131,7 +131,7 @@ Python; O(n log n) is about 3.5 × 10⁶, well under a second. Doubling n double
 slightly more than doubles O(n log n). A log-log plot of time against n has slope 1 for linear and 2 for
 quadratic algorithms:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d4_coding_interviews/figures/scaling.svg" alt="Log-log plot of run time against input size: the brute force rises with slope about 2 and the hash-map version with slope about 1" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d4_coding_interviews/figures/scaling.svg" alt="Log-log plot of run time against input size: the brute force rises with slope about 2 and the hash-map version with slope about 1" width="100%">
 
 *Figure 1 (measured on the authoring machine; your times will differ, the slopes should not).* The worked
 example's brute force against its hash-map version, k = n/10.
@@ -148,9 +148,9 @@ by power is a heap. The interview difference is the time box and the need to say
 
 ### 2.6 SQL rounds: grain first
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-46-03.svg" alt="Diagram 3 of notebook 46" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-46-03.svg" alt="Diagram 3 of notebook 46" style="max-width:100%">
 
-The schema of today's database is in [`data/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/data/README.md) (an ER diagram and the grain of each
+The schema of today's database is in [`data/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d4_coding_interviews/data/README.md) (an ER diagram and the grain of each
 table).
 
 ### 2.7 Limitations and common misconceptions
@@ -168,7 +168,7 @@ table).
 ## 3. Worked example: a repeated reading within k
 
 **Problem (not in the lab).** Flag every index whose value already appeared among the previous `k`
-readings. Code: [`example/repeat_within_k.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/example/repeat_within_k.py).
+readings. Code: [`example/repeat_within_k.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d4_coding_interviews/example/repeat_within_k.py).
 
 **Talk-aloud transcript (abridged).**
 1. *Restate:* "Index i is flagged if some j with i − k ≤ j < i has the same value. Example `[1, 2, 1]`,
@@ -208,7 +208,7 @@ regenerated with `python labs/w8d4_coding_interviews/figures/make_figures.py`.
 
 ## 4. Guided lab — the timed set
 
-All problem statements are in [`PROBLEMS.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/PROBLEMS.md). Starters are in `lab/python/` (one function each;
+All problem statements are in [`PROBLEMS.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d4_coding_interviews/PROBLEMS.md). Starters are in `lab/python/` (one function each;
 the docstring is the specification) and `lab/sql/` (one query each).
 
 **Task 1 — set up.** Read the conditions at the top of `PROBLEMS.md`. Start recording. Create a table in
@@ -241,7 +241,7 @@ your error log. Then read only the "Notes on the timed set" table in
 **Optional extension — P4, P5, P6, Q3.** Same procedure. P4 has a numerical trap; P6 has a
 recursion-depth trap; Q3 is the gaps-and-islands pattern.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d4_coding_interviews/figures/streak.svg" alt="Daily activity of one driver over February to April 2026 with the longest run of consecutive active days highlighted" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d4_coding_interviews/figures/streak.svg" alt="Daily activity of one driver over February to April 2026 with the longest run of consecutive active days highlighted" width="100%">
 
 *Figure 2 (SYNTHETIC rides database).* Q3 on one driver: 13 consecutive days from 28 February. The query
 has to see days, not trips: this driver often completes several trips a day.
@@ -258,7 +258,7 @@ check("w8d4")
 
 ## 5. Independent challenge — a 45-minute mock
 
-[`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/challenge/README.md): two unseen problems (one Python, one SQL) in one 45-minute
+[`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d4_coding_interviews/challenge/README.md): two unseen problems (one Python, one SQL) in one 45-minute
 sitting, recorded, scored with the same rubric. No solution in this directory.
 
 
@@ -305,8 +305,8 @@ check("w8d4", challenge=True)
 
 ## 6. Progressive hints
 
-[Hint 1 — which pattern](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/hints/hint1_concept.md) · [Hint 2 — approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/hints/hint2_approach.md) ·
-[Hint 3 — partial implementations](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/hints/hint3_partial.md). Each hint is split by problem, so reading the
+[Hint 1 — which pattern](https://github.com/berdakh/mlengineering/blob/main/labs/w8d4_coding_interviews/hints/hint1_concept.md) · [Hint 2 — approach](https://github.com/berdakh/mlengineering/blob/main/labs/w8d4_coding_interviews/hints/hint2_approach.md) ·
+[Hint 3 — partial implementations](https://github.com/berdakh/mlengineering/blob/main/labs/w8d4_coding_interviews/hints/hint3_partial.md). Each hint is split by problem, so reading the
 line for one problem does not spoil the others.
 
 
@@ -439,7 +439,7 @@ say and do?
 
 #### Interview rep: the set itself
 
-The timed problems in [`PROBLEMS.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/PROBLEMS.md) and the mock in [`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d4_coding_interviews/challenge/README.md),
+The timed problems in [`PROBLEMS.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d4_coding_interviews/PROBLEMS.md) and the mock in [`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d4_coding_interviews/challenge/README.md),
 talked aloud and recorded. Score each recording with this rubric before reading the reference notes.
 
 | Behaviour | Demonstrated | Partial | Not yet |

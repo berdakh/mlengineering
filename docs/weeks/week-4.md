@@ -20,12 +20,12 @@ Six core days of about **2 hours** each (plus an optional hour), and one lighter
 
 | Day | Session | Notebook | Deliverable |
 |---|---|---|---|
-| 1 | **Time-series fundamentals and forecast-residual detectors** | [`19_timeseries_fundamentals`](../notebooks/19_timeseries_fundamentals.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/19_timeseries_fundamentals.ipynb) | Residual-based detector evaluated with the Week 3 protocol. |
-| 2 | **Classical detectors: PCA/T2-Q, isolation forest, boosted trees on window features** | [`20_classical_detectors`](../notebooks/20_classical_detectors.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/20_classical_detectors.ipynb) | Comparison table with intervals; note on which framing the labels support. |
-| 3 | **A neural comparison, where it is justified** | [`21_neural_comparison`](../notebooks/21_neural_comparison.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/21_neural_comparison.ipynb) | Neural result with seed variance in the comparison table; GPU optional. |
-| 4 | **Experiment tracking and reproducibility at the experiment level** | [`22_experiment_tracking`](../notebooks/22_experiment_tracking.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/22_experiment_tracking.ipynb) | `flowguard sweep` + results table generated from run directories (MLflow as an optional extension). |
-| 5 | **Choosing complexity on evidence** | [`23_model_choice`](../notebooks/23_model_choice.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/23_model_choice.ipynb) | One-page decision memo choosing the model to ship. |
-| 6 | **Project milestone 1: evaluation report** | [`24_project_milestone_1`](../notebooks/24_project_milestone_1.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/24_project_milestone_1.ipynb) | `make evaluate` regenerates the comparison report; submit for review. |
+| 1 | **Time-series fundamentals and forecast-residual detectors** | [`19_timeseries_fundamentals`](../notebooks/19_timeseries_fundamentals.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/19_timeseries_fundamentals.ipynb) | Residual-based detector evaluated with the Week 3 protocol. |
+| 2 | **Classical detectors: PCA/T2-Q, isolation forest, boosted trees on window features** | [`20_classical_detectors`](../notebooks/20_classical_detectors.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/20_classical_detectors.ipynb) | Comparison table with intervals; note on which framing the labels support. |
+| 3 | **A neural comparison, where it is justified** | [`21_neural_comparison`](../notebooks/21_neural_comparison.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/21_neural_comparison.ipynb) | Neural result with seed variance in the comparison table; GPU optional. |
+| 4 | **Experiment tracking and reproducibility at the experiment level** | [`22_experiment_tracking`](../notebooks/22_experiment_tracking.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/22_experiment_tracking.ipynb) | `flowguard sweep` + results table generated from run directories (MLflow as an optional extension). |
+| 5 | **Choosing complexity on evidence** | [`23_model_choice`](../notebooks/23_model_choice.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/23_model_choice.ipynb) | One-page decision memo choosing the model to ship. |
+| 6 | **Project milestone 1: evaluation report** | [`24_project_milestone_1`](../notebooks/24_project_milestone_1.html) · [Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/24_project_milestone_1.ipynb) | `make evaluate` regenerates the comparison report; submit for review. |
 | 7 | **Review and catch-up (light)** | [review below](#day-7--review-and-catch-up) | Week 4 retrieval sheet; interview set 4 (explain your evaluation in 5 minutes, recorded). |
 
 ## What each day is for
@@ -154,7 +154,7 @@ cannot answer, write what you would check; open the key only when all twelve hav
 
 ### 3. Score and choose (10 minutes)
 
-Open [`solutions/labs/w4d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering-/blob/main/solutions/labs/w4d7_review/retrieval_answers.md)
+Open [`solutions/labs/w4d7_review/retrieval_answers.md`](https://github.com/berdakh/mlengineering/blob/main/solutions/labs/w4d7_review/retrieval_answers.md)
 (question 12's full key is answer 9 of `solutions/labs/w3d7_review/retrieval_answers.md`).
 Mark each answer **solid**, **shaky** or **missing** and record the lists:
 
@@ -191,7 +191,7 @@ Protocol (unchanged)
 
 ### 5. Interview set 4 (45 minutes, timed, recorded)
 
-[`interview/set4_explain_evaluation.md`](https://github.com/berdakh/mlengineering-/blob/main/interview/set4_explain_evaluation.md):
+[`interview/set4_explain_evaluation.md`](https://github.com/berdakh/mlengineering/blob/main/interview/set4_explain_evaluation.md):
 
 * **E1:** a five-minute recorded walkthrough of how you evaluated `flowguard` and how far the
   numbers can be trusted, self-scored against a tick-list while listening to the recording;

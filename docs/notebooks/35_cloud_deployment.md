@@ -9,8 +9,8 @@ nav_order: 35
 # 35 · One small cloud deployment on AWS (authorisation-gated)
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/35_cloud_deployment.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/35_cloud_deployment.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/35_cloud_deployment.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/35_cloud_deployment.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 35
 
 ---
 
-**Week 6 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w6d5_cloud_deployment/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d5_cloud_deployment/)
+**Week 6 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w6d5_cloud_deployment/`](https://github.com/berdakh/mlengineering/blob/main/labs/w6d5_cloud_deployment/)
 
 **Objective.** Understand IAM, credentials, registries and cost; deploy the container by one route, or complete the fully local equivalent if cloud use is not authorised.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -112,7 +112,7 @@ ECR** (the registry), one **ECS service** that keeps one **Fargate task** (a con
 compute) running, logs to **CloudWatch Logs**, and a **security group** as the firewall. No load
 balancer, no NAT gateway, no database.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-35-01.svg" alt="Diagram 1 of notebook 35" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-35-01.svg" alt="Diagram 1 of notebook 35" style="max-width:100%">
 
 Everything else in the lesson is about making each arrow safe: who may push (identity), what is pushed
 (an immutable, scanned image), who may connect (no one by default), what it costs (budget first), and
@@ -155,7 +155,7 @@ were unreachable from the authoring environment, so any number here would be unv
 formula already tells you is that $$T$$ dominates. The worked example `task_hours.py` computes the billed
 *units* for four realistic scenarios:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d5_cloud_deployment/figures/billed_units.svg" alt="Billed vCPU-hours for four scenarios: 0.5 for a same-day lab, 16 for a weekend, 182.5 for a forgotten month, 365 for two forgotten tasks" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d5_cloud_deployment/figures/billed_units.svg" alt="Billed vCPU-hours for four scenarios: 0.5 for a same-day lab, 16 for a weekend, 182.5 for a forgotten month, 365 for two forgotten tasks" width="100%">
 
 *Figure 1. Billed vCPU-hours of a 0.25 vCPU task (arithmetic, no prices). A forgotten task bills 365 times
 more than one torn down the same day; "two tasks for availability" doubles it again. Source:
@@ -166,7 +166,7 @@ reminder, and why the teardown is part of the deliverable.
 
 ### 2.4 Credentials: what goes where
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-35-02.svg" alt="Diagram 2 of notebook 35" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-35-02.svg" alt="Diagram 2 of notebook 35" style="max-width:100%">
 
 The rules, in order of how often they are broken: never commit credentials (the lab's checks scan for
 key-shaped strings and 12-digit account ids); never bake them into an image (anyone who can pull it
@@ -276,7 +276,7 @@ teardown costs relative to the demo itself (365 times, at these sizes).
 The image the cloud would run is built from `lab/service/Dockerfile` and started with the task
 definition's settings: same environment variables, 0.25 CPU, 512 MiB, and the same health-check command.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d5_cloud_deployment/figures/startup_timeline.svg" alt="Five local runs: /healthz and /readyz answer 200 after 2.9-3.3 s, Docker reports healthy after 5.6-5.7 s" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d5_cloud_deployment/figures/startup_timeline.svg" alt="Five local runs: /healthz and /readyz answer 200 after 2.9-3.3 s, Docker reports healthy after 5.6-5.7 s" width="100%">
 
 *Figure 2. Five local runs of the image with the task definition's settings (real measurements, Docker
 29.10 on the authoring machine, 2026-11-22). The service answers `/readyz` about 3 s after `docker run`;
@@ -287,7 +287,7 @@ On Fargate, add image pull time and task scheduling to these numbers (not measur
 also explains the task definition's `startPeriod`: health-check failures during the first seconds should
 not count against a container that is still loading its model.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d5_cloud_deployment/figures/image_layers.svg" alt="Image layer sizes: dependencies 180 MB, base OS 87.7 MB, Python 41.4 MB, leftover wheel layer 31.6 MB, application code 57 kB" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d5_cloud_deployment/figures/image_layers.svg" alt="Image layer sizes: dependencies 180 MB, base OS 87.7 MB, Python 41.4 MB, leftover wheel layer 31.6 MB, application code 57 kB" width="100%">
 
 *Figure 3. Layers of the lab's image (`docker history`). The application and model are kilobytes; the
 image is dominated by dependencies and the base. The orange layer is the wheelhouse copied for builds
@@ -302,7 +302,7 @@ Work in `labs/w6d5_cloud_deployment/lab/`. All commands run from that directory 
 Files you edit: `deploy/aws_deploy.py` (tasks 3-6) and `deploy/taskdef.template.json` (task 4).
 Everything else is given; read it.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-35-03.svg" alt="Diagram 3 of notebook 35" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-35-03.svg" alt="Diagram 3 of notebook 35" style="max-width:100%">
 
 **Task 1 - Run the container locally (10 min).**
 
@@ -401,7 +401,7 @@ check("w6d5")
 
 ## 5. Independent challenge: review a colleague's deployment plan
 
-Transfer the same reasoning to a different service and team: [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d5_cloud_deployment/challenge/README.md).
+Transfer the same reasoning to a different service and team: [challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w6d5_cloud_deployment/challenge/README.md).
 You receive a plan for a two-day demo of a demand-forecast API with several cost and security problems, and
 hand back a corrected machine-readable plan and a written review with a go / no-go decision. No AWS access is
 involved. Do it without hints first.
@@ -464,8 +464,8 @@ check("w6d5", challenge=True)
 ## 6. Progressive hints
 
 Open them in order, only when stuck for more than ten minutes:
-[hint 1: concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d5_cloud_deployment/hints/hint1_concept.md) - [hint 2: approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d5_cloud_deployment/hints/hint2_approach.md) -
-[hint 3: partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d5_cloud_deployment/hints/hint3_partial.md). The reference solution is in
+[hint 1: concept](https://github.com/berdakh/mlengineering/blob/main/labs/w6d5_cloud_deployment/hints/hint1_concept.md) - [hint 2: approach](https://github.com/berdakh/mlengineering/blob/main/labs/w6d5_cloud_deployment/hints/hint2_approach.md) -
+[hint 3: partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w6d5_cloud_deployment/hints/hint3_partial.md). The reference solution is in
 `solutions/labs/w6d5_cloud_deployment/` (open it after the checks pass or after a real attempt).
 
 ---

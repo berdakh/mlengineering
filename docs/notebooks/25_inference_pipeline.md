@@ -9,8 +9,8 @@ nav_order: 25
 # 25 · Research experimentation versus production inference
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/25_inference_pipeline.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/25_inference_pipeline.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/25_inference_pipeline.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/25_inference_pipeline.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 25
 
 ---
 
-**Week 5 · day 1 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w5d1_inference_pipeline/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d1_inference_pipeline/)
+**Week 5 · day 1 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w5d1_inference_pipeline/`](https://github.com/berdakh/mlengineering/blob/main/labs/w5d1_inference_pipeline/)
 
 **Objective.** Package preprocessing and model as one inference object used identically in training evaluation and serving; build a batch inference command.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -122,7 +122,7 @@ decisions. Its parameters are only part of it; the rest is preprocessing, featur
 for missing values, post-processing and threshold. Production is correct only if it runs that same
 function.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-25-01.svg" alt="Diagram 1 of notebook 25" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-25-01.svg" alt="Diagram 1 of notebook 25" style="max-width:100%">
 
 *Figure 1. One object, two callers. The parity test keeps the evaluation code and the `Detector` from
 drifting apart.*
@@ -202,7 +202,7 @@ property each one buys:
 | refuse an output directory that holds another input's predictions | a retry pointed at the wrong date cannot overwrite what was already acted on |
 | per-run failure, exit code 3 | one truncated upload does not silence every machine; the scheduler can still tell |
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-25-02.svg" alt="Diagram 2 of notebook 25" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-25-02.svg" alt="Diagram 2 of notebook 25" style="max-width:100%">
 
 *Figure 2. What `predict-batch` does, and the three ways it can end.*
 
@@ -241,7 +241,7 @@ offline pipeline to compare scores row by row. (Illustrative composite, not a do
 
 ## 3. Worked example: two re-implementations of the same scaler
 
-[`example/skew_demo.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d1_inference_pipeline/example/skew_demo.py) uses a SYNTHETIC churn table: `tenure_months`,
+[`example/skew_demo.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w5d1_inference_pipeline/example/skew_demo.py) uses a SYNTHETIC churn table: `tenure_months`,
 `monthly_spend`, `support_tickets` and a churn label, 400 training rows and 10,000 "live" rows. A
 data scientist fits `StandardScaler` + `LogisticRegression`. A serving engineer re-implements the
 scaling "from the notebook". Three serving paths are compared with the trained pipeline at a 0.5
@@ -259,7 +259,7 @@ scaler std (ddof=0) vs pandas std (ddof=1), tenure: 15.4767 vs 15.4961
   C. the trained object itself                       max |dp| = 0.00e+00; decisions flipped: 0
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d1_inference_pipeline/figures/worked_example.svg" alt="Two scatter panels of re-implemented against trained probabilities: path A scatters far from the diagonal with 1704 of 10,000 decisions flipped; path B lies on the diagonal with 1 decision flipped" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d1_inference_pipeline/figures/worked_example.svg" alt="Two scatter panels of re-implemented against trained probabilities: path A scatters far from the diagonal with 1704 of 10,000 decisions flipped; path B lies on the diagonal with 1 decision flipped" width="100%">
 
 *Figure 3 (SYNTHETIC).* Path A is wrong everywhere. Path B looks right and flips one decision in
 10,000. Only path C is the evaluated function.
@@ -352,7 +352,7 @@ identical. The default C parser is not round-trip exact: on this file it changed
 contract says `float_precision="round_trip"` and why the checks compare with a tolerance and demand
 identical alarms.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d1_inference_pipeline/figures/served_run.svg" alt="Two stacked panels for real test run valve1/5: flow rate with the burn-in window and the labelled anomaly shaded; the served score crosses the 7.24 threshold during the fault and the alarm band starts at row 635, 58 rows after the labelled onset at 577" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d1_inference_pipeline/figures/served_run.svg" alt="Two stacked panels for real test run valve1/5: flow rate with the burn-in window and the labelled anomaly shaded; the served score crosses the 7.24 threshold during the fault and the alarm band starts at row 635, 58 rows after the labelled onset at 577" width="100%">
 
 *Figure 4 (real SKAB, test run valve1/5).* Flow rate is quantised to whole litres per minute, so the
 score jumps between a few levels. The alarm band begins at row 635, 58 rows after the labelled onset
@@ -361,7 +361,7 @@ at row 577: the first drop in flow is small. In a batch the whole event is marke
 threshold, which is why w3d4 counts those rows in the detection delay. w5d3 serves the same detector
 as a stream.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d1_inference_pipeline/figures/normalise_away.svg" alt="Line plot on a synthetic run: the score calibrated on burn-in rows jumps to about 6 at the fault; the score calibrated on the whole run stays near 1" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d1_inference_pipeline/figures/normalise_away.svg" alt="Line plot on a synthetic run: the score calibrated on burn-in rows jumps to about 6 at the fault; the score calibrated on the whole run stays near 1" width="100%">
 
 *Figure 5 (SYNTHETIC).* The "normalise the batch" bug. Median score after a 6-SD fault: 5.67 with
 burn-in calibration, 0.93 with whole-run calibration. The detector would report health during the fault.
@@ -376,7 +376,7 @@ check("w5d1")
 
 ## 5. Independent challenge
 
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d1_inference_pipeline/challenge/README.md): the supervised logistic candidate's serving path, written
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w5d1_inference_pipeline/challenge/README.md): the supervised logistic candidate's serving path, written
 by a colleague, has three skew bugs. Write a parity test that would have caught each, fix the code and
 write a skew report. The checks run your test against each bug reintroduced on its own. No solution is
 provided until you have attempted it.
@@ -436,8 +436,8 @@ check("w5d1", challenge=True)
 ## 6. Progressive hints
 
 Open one at a time, only after 10 minutes stuck:
-[hint 1, concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d1_inference_pipeline/hints/hint1_concept.md) · [hint 2, approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d1_inference_pipeline/hints/hint2_approach.md) ·
-[hint 3, partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d1_inference_pipeline/hints/hint3_partial.md). The full reference solution is in
+[hint 1, concept](https://github.com/berdakh/mlengineering/blob/main/labs/w5d1_inference_pipeline/hints/hint1_concept.md) · [hint 2, approach](https://github.com/berdakh/mlengineering/blob/main/labs/w5d1_inference_pipeline/hints/hint2_approach.md) ·
+[hint 3, partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w5d1_inference_pipeline/hints/hint3_partial.md). The full reference solution is in
 `solutions/labs/w5d1_inference_pipeline/` and is for after you have finished.
 
 
@@ -520,7 +520,7 @@ assessment.md (section 7 of this notebook): reasoning questions, a design-choice
 10-15 minute debugging interview rep ("alerts are a third of what offline evaluation predicted").
 Model answers are in `solutions/labs/w5d1_inference_pipeline/assessment_answers.md`.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d1_inference_pipeline/figures/challenge_skew.svg" alt="Horizontal bars: rows of the real test set whose alarm decision differs from the training path, per challenge bug: burn-in hard-coded at today's value 0, clip missing 311, feature order swapped 458, all three 765, fixed 0" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d1_inference_pipeline/figures/challenge_skew.svg" alt="Horizontal bars: rows of the real test set whose alarm decision differs from the training path, per challenge bug: burn-in hard-coded at today's value 0, clip missing 311, feature order swapped 458, all three 765, fixed 0" width="100%">
 
 *Figure 6 (real SKAB test runs; open after the challenge).* What the challenge's bugs do to real
 decisions, one at a time. The hard-coded burn-in changes nothing *today*, because today's model happens

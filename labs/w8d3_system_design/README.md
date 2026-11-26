@@ -1,6 +1,6 @@
 # 45 · ML system design — lab files
 
-**The lesson is notebook [`45_system_design`](../../notebooks/45_system_design.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/45_system_design.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/45_system_design.ipynb)).
+**The lesson is notebook [`45_system_design`](../../notebooks/45_system_design.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/45_system_design.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/45_system_design.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

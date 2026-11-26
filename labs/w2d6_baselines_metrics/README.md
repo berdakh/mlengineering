@@ -1,6 +1,6 @@
 # 12 · Strong simple baselines and metrics that match the decision — lab files
 
-**The lesson is notebook [`12_baselines_metrics`](../../notebooks/12_baselines_metrics.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/12_baselines_metrics.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/12_baselines_metrics.ipynb)).
+**The lesson is notebook [`12_baselines_metrics`](../../notebooks/12_baselines_metrics.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/12_baselines_metrics.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/12_baselines_metrics.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/24_project_milestone_1.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/24_project_milestone_1.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -110,7 +110,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.2 Three stages, two files between them
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-24-01.svg" alt="Diagram 1 of notebook 24" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-24-01.svg" alt="Diagram 1 of notebook 24" style="max-width:100%">
 #
 # Splitting "compute" from "format" buys three things:
 #
@@ -143,7 +143,7 @@ print("repo root:", REPO_ROOT)
 # Tools such as DVC or Snakemake track content hashes. Make is enough to learn the idea, and it is
 # installed everywhere.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-24-02.svg" alt="Diagram 2 of notebook 24" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-24-02.svg" alt="Diagram 2 of notebook 24" style="max-width:100%">
 #
 # ### 2.4 The report's structure
 #
@@ -295,7 +295,7 @@ print("repo root:", REPO_ROOT)
 #
 # The error-analysis section is easier to write with the alarms in view:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d6_project_milestone_1/figures/test_alarm_strips.svg" alt="Seven horizontal strips, one per test run, showing the labelled anomalous segment and the chosen detector's alarms; alarms start inside the anomaly in five runs and never in valve1/8 or valve2/0" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d6_project_milestone_1/figures/test_alarm_strips.svg" alt="Seven horizontal strips, one per test run, showing the labelled anomalous segment and the chosen detector's alarms; alarms start inside the anomaly in five runs and never in valve1/8 or valve2/0" width="100%">
 #
 # *Figure 2 (real SKAB, frozen test set; `figures/make_figures.py`).*
 # * Five of seven faults are caught, each some time after onset.

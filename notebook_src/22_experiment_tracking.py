@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/22_experiment_tracking.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/22_experiment_tracking.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -141,7 +141,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.4 The registry: directories are the truth, the index is derived
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-22-01.svg" alt="Diagram 1 of notebook 22" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-22-01.svg" alt="Diagram 1 of notebook 22" style="max-width:100%">
 #
 # The index (here a CSV; in larger systems SQLite or a server) is a *cache*. It is rebuilt from the run
 # directories every time it is needed and never read back as the source of truth. That way deleting a bad
@@ -151,7 +151,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.5 The life of a run
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-22-02.svg" alt="Diagram 2 of notebook 22" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-22-02.svg" alt="Diagram 2 of notebook 22" style="max-width:100%">
 #
 # Writing `status.json` last, and atomically (write a temporary file, then `os.replace`), means a reader
 # never mistakes a half-finished run for a finished one. "`metrics.json` exists" is not a completion
@@ -241,7 +241,7 @@ print("repo root:", REPO_ROOT)
 # wildly variable; five seeds are a minimum for a rough spread, not a precise one. All four are checks in
 # today's lab.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d4_experiment_tracking/figures/sd_estimate.svg" alt="Median and 10th-90th percentile of the estimated sd for 2 to 20 seeds; the band narrows slowly" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d4_experiment_tracking/figures/sd_estimate.svg" alt="Median and 10th-90th percentile of the estimated sd for 2 to 20 seeds; the band narrows slowly" width="100%">
 #
 # *Figure 1 (SYNTHETIC, 20,000 simulations per n).* How precisely `n` seeds estimate a true seed sd of 0.020.
 
@@ -359,7 +359,7 @@ print("repo root:", REPO_ROOT)
 # Write `lab/SWEEP_NOTES.md`: your table, the reproduced run id and its `max_abs_diff`, and two sentences
 # on what you would sweep next and why.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d4_experiment_tracking/figures/sweep_results.svg" alt="Mahalanobis configurations cluster at 0.705-0.735 by burn-in; isolation forest at 0.63-0.66 with three seeds each" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d4_experiment_tracking/figures/sweep_results.svg" alt="Mahalanobis configurations cluster at 0.705-0.735 by burn-in; isolation forest at 0.63-0.66 with three seeds each" width="100%">
 #
 # *Figure 2 (real SKAB, 27 development experiments).* Each dot is one registered run. Deterministic
 # configurations have one dot; isolation forests have one per seed.

@@ -9,8 +9,8 @@ nav_order: 18
 # 18 · Error analysis and timed transfer exercise
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/18_error_analysis_transfer.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/18_error_analysis_transfer.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/18_error_analysis_transfer.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/18_error_analysis_transfer.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 18
 
 ---
 
-**Week 3 · day 6 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w3d6_error_analysis_transfer/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d6_error_analysis_transfer/)
+**Week 3 · day 6 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w3d6_error_analysis_transfer/`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d6_error_analysis_transfer/)
 
 **Objective.** Turn errors into a ranked failure taxonomy with slices; then run a complete leak-free evaluation on the unfamiliar business table, unassisted, in 90 minutes.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -128,7 +128,7 @@ and found unremarkable. Three rules make it analysis rather than storytelling:
 3. **Quantify, and stay at the unit of independence.** Slices are compared by per-experiment
    (per-customer) values with their sizes, not by pooled rows.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-18-01.svg" alt="Diagram 1 of notebook 18" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-18-01.svg" alt="Diagram 1 of notebook 18" style="max-width:100%">
 
 ### 2.2 The unit table and the two kinds of average
 
@@ -163,7 +163,7 @@ Search enough slices and one will look bad by chance. The worked example simulat
 averages 0.729, and 45 % of searches with no real effect find one at least that bad. The same slice
 re-measured on fresh machines gives 0.764 against 0.800 for the rest.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d6_error_analysis_transfer/figures/slice_hunting.svg" alt="SYNTHETIC: distribution of the worst slice recall found by searching 80 slices when no slice effect exists; the observed worst slice 0.729 sits in the middle of it" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d6_error_analysis_transfer/figures/slice_hunting.svg" alt="SYNTHETIC: distribution of the worst slice recall found by searching 80 slices when no slice effect exists; the observed worst slice 0.729 sits in the middle of it" width="100%">
 
 *SYNTHETIC simulation, 2,000 searches (`example/slice_traps.py`, part 2). A "worst slice" at 0.73 is
 what chance produces here; it is not a finding.*
@@ -192,7 +192,7 @@ comparisons are not driven by rows nobody can get right.
 Per-row errors in event detection are not independent: they come in runs, and the run's position
 relative to the labelled event says what went wrong. The lab classifies each run of wrong rows:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-18-02.svg" alt="Diagram 2 of notebook 18" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-18-02.svg" alt="Diagram 2 of notebook 18" style="max-width:100%">
 
 Each kind has a different cause and fix: *misses* and *late* detections need a more sensitive signal;
 *fragments* point at threshold noise (hysteresis or a hold time) or a transient response; *pre-onset*
@@ -369,17 +369,17 @@ post_event         432    1212             23
 No event is missed outright. If your numbers differ, check the threshold convention (`score >=
 threshold` is flagged) and that `burn_in=100` rows are excluded.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d6_error_analysis_transfer/figures/recall_per_experiment.svg" alt="Per-experiment recall of the flow-rate baseline on 27 real SKAB development experiments ranges from 0.01 to 0.99 around a mean of 0.67, with no family clustering" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d6_error_analysis_transfer/figures/recall_per_experiment.svg" alt="Per-experiment recall of the flow-rate baseline on 27 real SKAB development experiments ranges from 0.01 to 0.99 around a mean of 0.67, with no family clustering" width="100%">
 
 *REAL SKAB, development experiments only. The mean describes almost no experiment; the families are
 interleaved, which is the first hint that "family" will not be the explanation.*
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d6_error_analysis_transfer/figures/failure_kinds.svg" alt="Failure kinds of the flow-rate baseline: fragments account for 3,039 of the wrong rows, pre-onset 1,433 and post-event 1,212; no event is missed" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d6_error_analysis_transfer/figures/failure_kinds.svg" alt="Failure kinds of the flow-rate baseline: fragments account for 3,039 of the wrong rows, pre-onset 1,433 and post-event 1,212; no event is missed" width="100%">
 
 *REAL SKAB, same run. Left: wrong rows by kind; right: number of segments. Rows and segments rank the
 kinds differently for `late`: few segments, each long.*
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d6_error_analysis_transfer/figures/alarm_strips.svg" alt="Score traces for four real SKAB experiments showing a held detection, a dropout after onset, an 80-row late detection, and alarms before the labelled onset" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d6_error_analysis_transfer/figures/alarm_strips.svg" alt="Score traces for four real SKAB experiments showing a held detection, a dropout after onset, an 80-row late detection, and alarms before the labelled onset" width="100%">
 
 *REAL SKAB, development experiments. One experiment per failure kind: `valve1/12` (detected and held), `other/5` (fragment),
 `other/7` (late), `other/13` (pre-onset, the experiment with contradictory labels). Look at the
@@ -403,8 +403,8 @@ check("w3d6")
 
 ## 5. Independent challenge: transfer exercise, part 2 (90 minutes, timed)
 
-[`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d6_error_analysis_transfer/challenge/README.md). LedgerLine, an invented B2B software vendor (SYNTHETIC
-data, schema in [`data/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d6_error_analysis_transfer/data/README.md)), wants to know whether a model could choose its
+[`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d6_error_analysis_transfer/challenge/README.md). LedgerLine, an invented B2B software vendor (SYNTHETIC
+data, schema in [`data/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d6_error_analysis_transfer/data/README.md)), wants to know whether a model could choose its
 15 weekly collection calls better than a simple rule. You implement the evaluation in
 `challenge/evaluate.py` (fixed signatures) and write a one-page `challenge/REPORT.md`: framing, leak
 audit, split, baseline and model, decision metric, interval, one error slice, limitations.
@@ -497,9 +497,9 @@ For the **lab** only, open in order and note in `progress/notes.md` which level 
 also contain challenge hints; using them during the sitting makes it a guided attempt, which you then
 record as `review`, not `independent`.
 
-1. [Conceptual hint](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d6_error_analysis_transfer/hints/hint1_concept.md)
-2. [Suggested approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d6_error_analysis_transfer/hints/hint2_approach.md)
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d6_error_analysis_transfer/hints/hint3_partial.md)
+1. [Conceptual hint](https://github.com/berdakh/mlengineering/blob/main/labs/w3d6_error_analysis_transfer/hints/hint1_concept.md)
+2. [Suggested approach](https://github.com/berdakh/mlengineering/blob/main/labs/w3d6_error_analysis_transfer/hints/hint2_approach.md)
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w3d6_error_analysis_transfer/hints/hint3_partial.md)
 
 Full reference: `solutions/labs/w3d6_error_analysis_transfer/` (lab, reference error analysis,
 challenge reference, scoring guidance, answers).
@@ -715,7 +715,7 @@ the number wrong?
 0.70 for the other 19, and it was the lowest of 12 slices you examined. List three things you must
 check before writing it in a report, and the one-line test you would run on new data.
 
-**Next.** [w3d7 review](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d7_review/README.md), then Week 4: time-series models and evidence-based
+**Next.** [w3d7 review](https://github.com/berdakh/mlengineering/blob/main/labs/w3d7_review/README.md), then Week 4: time-series models and evidence-based
 model choice. The top failure mode here (fragmentation) and the late detections set up w4d1: a
 detector whose score uses temporal context instead of a per-row threshold.
 

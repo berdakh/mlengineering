@@ -9,8 +9,8 @@ nav_order: 32
 # 32 · Docker II: pinned dependencies, multi-stage builds, smoke tests
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/32_docker_reproducibility.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/32_docker_reproducibility.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/32_docker_reproducibility.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/32_docker_reproducibility.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 32
 
 ---
 
-**Week 6 · day 2 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w6d2_docker_reproducibility/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d2_docker_reproducibility/)
+**Week 6 · day 2 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w6d2_docker_reproducibility/`](https://github.com/berdakh/mlengineering/blob/main/labs/w6d2_docker_reproducibility/)
 
 **Objective.** Make the environment reproducible (lockfile, pinned base image digest), reduce image size, and smoke-test the container.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -107,7 +107,7 @@ in your repository. `FROM python:3.12-slim` names whatever image that tag points
 therefore a recipe that reads two moving sources. To make the result reproducible you must turn both
 into fixed content addresses: a digest for the image, a version *and hash* for every package.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-32-01.svg" alt="Diagram 1 of notebook 32" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-32-01.svg" alt="Diagram 1 of notebook 32" style="max-width:100%">
 
 ### 2.2 Precise terms
 
@@ -163,7 +163,7 @@ ERROR: In --require-hashes mode, all requirements must have their versions pinne
 
 ### 2.5 Multi-stage builds: what they are for
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-32-02.svg" alt="Diagram 2 of notebook 32" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-32-02.svg" alt="Diagram 2 of notebook 32" style="max-width:100%">
 
 Whatever the builder needed and the runtime does not (compilers, headers, pip's caches, source
 trees, downloaded archives, a `--mount`ed secret for a private index) stays in the discarded stage.
@@ -188,7 +188,7 @@ expectations. Ours: start the container, poll `/readyz` until 200 (or a timeout)
 and the model version with `smoke/expected.json`, which was computed by loading the same bundle
 outside the container.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-32-03.svg" alt="Diagram 3 of notebook 32" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-32-03.svg" alt="Diagram 3 of notebook 32" style="max-width:100%">
 
 What a pass proves: the image starts, finds and loads *this* model, has a working dependency stack,
 and computes the same numbers inside the container as the package computes outside it. What it does
@@ -276,7 +276,7 @@ uvicorn                           0.38.0              0.54.0              0.54.0
 20 of 21 packages differ between the dates; requirements.in did not change.
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d2_docker_reproducibility/figures/resolution_drift.svg" alt="The same requirements.in resolves to 20 different versions a year apart and 5 two weeks apart" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d2_docker_reproducibility/figures/resolution_drift.svg" alt="The same requirements.in resolves to 20 different versions a year apart and 5 two weeks apart" width="100%">
 
 *Figure 1 (real resolutions, PyPI as of each date).* Orange = differs from today. **Interpretation.**
 In a year, pandas crossed a major version (2.3.3 to 3.1.1: `pandas>=2.1` allows it), starlette went
@@ -308,12 +308,12 @@ instead would break builds on other architectures.
 The lab's reference solution was built and compared with the w6d1 image and with the naive first
 attempt (`FROM python:3.12`, `COPY . .`, pip cache kept). Raw numbers: `figures/measurements.json`.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d2_docker_reproducibility/figures/image_sizes.svg" alt="python:3.12 makes a 1.9 GB image; slim single-stage 395 MB; slim multi-stage 402 MB" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d2_docker_reproducibility/figures/image_sizes.svg" alt="python:3.12 makes a 1.9 GB image; slim single-stage 395 MB; slim multi-stage 402 MB" width="100%">
 
 *Figure 2.* The base decides the size: `python:3.12` (Debian with compilers) alone is 1.62 GB. The
 multi-stage image is 7 MB *larger* than the single-stage one (section 2.5 explains why).
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d2_docker_reproducibility/figures/dependency_sizes.svg" alt="pandas 82 MB and numpy 67 MB dominate the 172 MB of installed dependencies" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d2_docker_reproducibility/figures/dependency_sizes.svg" alt="pandas 82 MB and numpy 67 MB dominate the 172 MB of installed dependencies" width="100%">
 
 *Figure 3 (`du` inside the w6d2 image).* If you need a smaller image, this chart says where to look.
 
@@ -462,7 +462,7 @@ check("w6d2")
 
 ## 5. Independent challenge: the build that drifted
 
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d2_docker_reproducibility/challenge/README.md): a tiny scoring service whose smoke test passed two weeks
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w6d2_docker_reproducibility/challenge/README.md): a tiny scoring service whose smoke test passed two weeks
 ago fails today, with no change in the repository. You get a local package index (`challenge/wheelhouse/`,
 two releases of a SYNTHETIC package), the original `build.sh`, and the scores recorded two weeks ago.
 Find the cause, fix the build with a hash-checked lock so that it is reproducible *and* correct, and
@@ -527,9 +527,9 @@ check("w6d2", challenge=True)
 
 ## 6. Progressive hints
 
-1. [Concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d2_docker_reproducibility/hints/hint1_concept.md)
-2. [Approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d2_docker_reproducibility/hints/hint2_approach.md)
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d2_docker_reproducibility/hints/hint3_partial.md)
+1. [Concept](https://github.com/berdakh/mlengineering/blob/main/labs/w6d2_docker_reproducibility/hints/hint1_concept.md)
+2. [Approach](https://github.com/berdakh/mlengineering/blob/main/labs/w6d2_docker_reproducibility/hints/hint2_approach.md)
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w6d2_docker_reproducibility/hints/hint3_partial.md)
 
 The full reference solution is in `solutions/labs/w6d2_docker_reproducibility/`.
 

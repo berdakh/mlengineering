@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/48_final_assessment.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/48_final_assessment.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -72,7 +72,7 @@ print("repo root:", REPO_ROOT)
 # | B | f4 baseline, f5 leakage, f6 tests/API, f7 memo | 115 + 10 for `SUBMISSION.md` |
 # | T | t1 transfer task | 90 + 10 for the conditions box and commit |
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d6_final_assessment/figures/time_budget.svg" alt="Three bars: sitting A 110 minutes over three sections, sitting B 115 minutes over four, sitting T 100 minutes for the transfer task and its report" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d6_final_assessment/figures/time_budget.svg" alt="Three bars: sitting A 110 minutes over three sections, sitting B 115 minutes over four, sitting T 100 minutes for the transfer task and its report" width="100%">
 #
 # *Time boxes per section and sitting (planning values from the section READMEs, not measurements).*
 
@@ -86,7 +86,7 @@ print("repo root:", REPO_ROOT)
 # column written after the outcome); recognising a pattern in new clothes is exactly the transferable
 # skill.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-48-01.svg" alt="Diagram 1 of notebook 48" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-48-01.svg" alt="Diagram 1 of notebook 48" style="max-width:100%">
 #
 # *Each Week 8 section is scored with the same rubric rows as its Week 1 counterpart; t1 has no Week 1
 # counterpart and is compared with the w3d6 transfer sitting instead.*

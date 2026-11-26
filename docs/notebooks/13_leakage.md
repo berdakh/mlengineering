@@ -9,8 +9,8 @@ nav_order: 13
 # 13 · Leakage: a taxonomy and prevention by construction
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/13_leakage.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/13_leakage.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/13_leakage.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/13_leakage.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 13
 
 ---
 
-**Week 3 · day 1 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w3d1_leakage/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d1_leakage/)
+**Week 3 · day 1 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w3d1_leakage/`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d1_leakage/)
 
 **Objective.** Classify and remove target, preprocessing, temporal, group and selection leakage; use pipelines so the correct thing is the default.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -114,7 +114,7 @@ Two things follow from the definition and are worth holding on to.
 
 ### 2.2 The taxonomy, each kind with a test that detects it
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-13-01.svg" alt="Diagram 1 of notebook 13" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-13-01.svg" alt="Diagram 1 of notebook 13" style="max-width:100%">
 
 | Kind | Mechanism | Detection probe | Prevention by construction |
 |---|---|---|---|
@@ -177,7 +177,7 @@ develops this into nested validation.
 
 ### 2.5 Prevention by construction
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-13-02.svg" alt="Diagram 2 of notebook 13" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-13-02.svg" alt="Diagram 2 of notebook 13" style="max-width:100%">
 
 The common thread: make the leaky version *harder to write than the correct one*. A `Pipeline` makes
 "fit the scaler on the test rows" impossible without deliberately breaking it; a manifest that
@@ -188,7 +188,7 @@ forbidden-feature list makes `t` impossible to slip in.
 
 Found on the real SKAB files in Week 2 and now made into code:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-13-03.svg" alt="Diagram 3 of notebook 13" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-13-03.svg" alt="Diagram 3 of notebook 13" style="max-width:100%">
 
 **Duplicate leakage.** Five pairs of files share 1,290 identical rows (timestamp and all eight sensors);
 the connected components are the four overlap groups above. A split that puts `other/12` in test and
@@ -197,7 +197,7 @@ opposite label. The manifest v1 from w2d4 does exactly that.
 
 **Protocol (clock) leakage.** In 31 of 34 experiments the anomaly starts in rows 550-600.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d1_leakage/figures/skab_onsets.svg" alt="Per-experiment timeline: anomalous segments (coloured) start in a narrow band of rows 550-600 for nearly every experiment" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d1_leakage/figures/skab_onsets.svg" alt="Per-experiment timeline: anomalous segments (coloured) start in a narrow band of rows 550-600 for nearly every experiment" width="100%">
 
 *Real data. Each row is one experiment; the coloured part is the labelled anomaly. Look at the vertical
 alignment: position in the recording almost determines the label. A rule "row >= 570 is anomalous",
@@ -297,7 +297,7 @@ reference out of the test set) and a constraint on features (nothing that tracks
    N = 50  -> 0.647
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d1_leakage/figures/noise_selection.svg" alt="Two panels on pure noise: leaky feature selection climbs towards AUC 0.93 as features increase while the pipeline stays at 0.5; the best of N test scores rises with N" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d1_leakage/figures/noise_selection.svg" alt="Two panels on pure noise: leaky feature selection climbs towards AUC 0.93 as features increase while the pipeline stays at 0.5; the best of N test scores rises with N" width="100%">
 
 *SYNTHETIC; features and labels are independent, so every point above 0.5 is manufactured by the
 procedure. Left: with $$p = 20$$ selecting 20 of 20 is no selection, so both agree; the gap opens with $$p$$.
@@ -455,7 +455,7 @@ check("w3d1")
 A slide says "marketing touches predict lead conversion with AUC 0.9". The analysis behind it,
 `challenge/published_analysis.py`, cross-validates and uses a held-out test set, and its number is still
 meaningless. Measure why, and write the honest estimate. Task and acceptance criteria:
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d1_leakage/challenge/README.md). No solution is given there.
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w3d1_leakage/challenge/README.md). No solution is given there.
 
 ```python
 !python wb.py check w3d1 --challenge
@@ -517,9 +517,9 @@ check("w3d1", challenge=True)
 
 Open in order, and only after a real attempt.
 
-1. [Concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d1_leakage/hints/hint1_concept.md) - the question to ask of each column, row and step.
-2. [Approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d1_leakage/hints/hint2_approach.md) - which probe finds which leak, in what order.
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d1_leakage/hints/hint3_partial.md) - skeletons for `find_overlap_groups` and `honest_eval.py`.
+1. [Concept](https://github.com/berdakh/mlengineering/blob/main/labs/w3d1_leakage/hints/hint1_concept.md) - the question to ask of each column, row and step.
+2. [Approach](https://github.com/berdakh/mlengineering/blob/main/labs/w3d1_leakage/hints/hint2_approach.md) - which probe finds which leak, in what order.
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w3d1_leakage/hints/hint3_partial.md) - skeletons for `find_overlap_groups` and `honest_eval.py`.
 
 
 Open one hint at a time, only after a real attempt.

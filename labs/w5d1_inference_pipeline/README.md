@@ -1,6 +1,6 @@
 # 25 · Research experimentation versus production inference — lab files
 
-**The lesson is notebook [`25_inference_pipeline`](../../notebooks/25_inference_pipeline.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/25_inference_pipeline.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/25_inference_pipeline.ipynb)).
+**The lesson is notebook [`25_inference_pipeline`](../../notebooks/25_inference_pipeline.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/25_inference_pipeline.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/25_inference_pipeline.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

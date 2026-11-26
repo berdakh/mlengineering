@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/18_error_analysis_transfer.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/18_error_analysis_transfer.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -116,7 +116,7 @@ print("repo root:", REPO_ROOT)
 # 3. **Quantify, and stay at the unit of independence.** Slices are compared by per-experiment
 #    (per-customer) values with their sizes, not by pooled rows.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-18-01.svg" alt="Diagram 1 of notebook 18" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-18-01.svg" alt="Diagram 1 of notebook 18" style="max-width:100%">
 #
 # ### 2.2 The unit table and the two kinds of average
 #
@@ -151,7 +151,7 @@ print("repo root:", REPO_ROOT)
 # averages 0.729, and 45 % of searches with no real effect find one at least that bad. The same slice
 # re-measured on fresh machines gives 0.764 against 0.800 for the rest.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d6_error_analysis_transfer/figures/slice_hunting.svg" alt="SYNTHETIC: distribution of the worst slice recall found by searching 80 slices when no slice effect exists; the observed worst slice 0.729 sits in the middle of it" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d6_error_analysis_transfer/figures/slice_hunting.svg" alt="SYNTHETIC: distribution of the worst slice recall found by searching 80 slices when no slice effect exists; the observed worst slice 0.729 sits in the middle of it" width="100%">
 #
 # *SYNTHETIC simulation, 2,000 searches (`example/slice_traps.py`, part 2). A "worst slice" at 0.73 is
 # what chance produces here; it is not a finding.*
@@ -180,7 +180,7 @@ print("repo root:", REPO_ROOT)
 # Per-row errors in event detection are not independent: they come in runs, and the run's position
 # relative to the labelled event says what went wrong. The lab classifies each run of wrong rows:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-18-02.svg" alt="Diagram 2 of notebook 18" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-18-02.svg" alt="Diagram 2 of notebook 18" style="max-width:100%">
 #
 # Each kind has a different cause and fix: *misses* and *late* detections need a more sensitive signal;
 # *fragments* point at threshold noise (hysteresis or a hold time) or a transient response; *pre-onset*
@@ -359,17 +359,17 @@ print("repo root:", REPO_ROOT)
 # No event is missed outright. If your numbers differ, check the threshold convention (`score >=
 # threshold` is flagged) and that `burn_in=100` rows are excluded.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d6_error_analysis_transfer/figures/recall_per_experiment.svg" alt="Per-experiment recall of the flow-rate baseline on 27 real SKAB development experiments ranges from 0.01 to 0.99 around a mean of 0.67, with no family clustering" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d6_error_analysis_transfer/figures/recall_per_experiment.svg" alt="Per-experiment recall of the flow-rate baseline on 27 real SKAB development experiments ranges from 0.01 to 0.99 around a mean of 0.67, with no family clustering" width="100%">
 #
 # *REAL SKAB, development experiments only. The mean describes almost no experiment; the families are
 # interleaved, which is the first hint that "family" will not be the explanation.*
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d6_error_analysis_transfer/figures/failure_kinds.svg" alt="Failure kinds of the flow-rate baseline: fragments account for 3,039 of the wrong rows, pre-onset 1,433 and post-event 1,212; no event is missed" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d6_error_analysis_transfer/figures/failure_kinds.svg" alt="Failure kinds of the flow-rate baseline: fragments account for 3,039 of the wrong rows, pre-onset 1,433 and post-event 1,212; no event is missed" width="100%">
 #
 # *REAL SKAB, same run. Left: wrong rows by kind; right: number of segments. Rows and segments rank the
 # kinds differently for `late`: few segments, each long.*
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d6_error_analysis_transfer/figures/alarm_strips.svg" alt="Score traces for four real SKAB experiments showing a held detection, a dropout after onset, an 80-row late detection, and alarms before the labelled onset" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d6_error_analysis_transfer/figures/alarm_strips.svg" alt="Score traces for four real SKAB experiments showing a held detection, a dropout after onset, an 80-row late detection, and alarms before the labelled onset" width="100%">
 #
 # *REAL SKAB, development experiments. One experiment per failure kind: `valve1/12` (detected and held), `other/5` (fragment),
 # `other/7` (late), `other/13` (pre-onset, the experiment with contradictory labels). Look at the

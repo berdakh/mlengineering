@@ -1,6 +1,6 @@
 # 28 · FastAPI I: endpoints, schemas and input validation — lab files
 
-**The lesson is notebook [`28_fastapi_validation`](../../notebooks/28_fastapi_validation.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/28_fastapi_validation.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/28_fastapi_validation.ipynb)).
+**The lesson is notebook [`28_fastapi_validation`](../../notebooks/28_fastapi_validation.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/28_fastapi_validation.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/28_fastapi_validation.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

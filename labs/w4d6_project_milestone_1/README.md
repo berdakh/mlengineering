@@ -1,6 +1,6 @@
 # 24 · Project milestone 1: evaluation report — lab files
 
-**The lesson is notebook [`24_project_milestone_1`](../../notebooks/24_project_milestone_1.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/24_project_milestone_1.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/24_project_milestone_1.ipynb)).
+**The lesson is notebook [`24_project_milestone_1`](../../notebooks/24_project_milestone_1.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/24_project_milestone_1.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/24_project_milestone_1.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

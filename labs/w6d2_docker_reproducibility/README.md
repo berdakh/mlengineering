@@ -1,6 +1,6 @@
 # 32 · Docker II: pinned dependencies, multi-stage builds, smoke tests — lab files
 
-**The lesson is notebook [`32_docker_reproducibility`](../../notebooks/32_docker_reproducibility.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/32_docker_reproducibility.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/32_docker_reproducibility.ipynb)).
+**The lesson is notebook [`32_docker_reproducibility`](../../notebooks/32_docker_reproducibility.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/32_docker_reproducibility.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/32_docker_reproducibility.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

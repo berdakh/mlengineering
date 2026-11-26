@@ -9,8 +9,8 @@ nav_order: 14
 # 14 · Group-aware and temporal validation
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/14_group_temporal_validation.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/14_group_temporal_validation.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/14_group_temporal_validation.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/14_group_temporal_validation.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 14
 
 ---
 
-**Week 3 · day 2 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w3d2_group_temporal_validation/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d2_group_temporal_validation/)
+**Week 3 · day 2 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w3d2_group_temporal_validation/`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d2_group_temporal_validation/)
 
 **Objective.** Design validation that matches deployment: grouped, temporal, and combined (experiment x time) schemes with purging/embargo where windows overlap.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -113,7 +113,7 @@ and the combination that most industrial systems actually face: **new units, lat
 holds out less than deployment will withhold is optimistic; one that holds out more is pessimistic.
 Neither is "wrong" as arithmetic. It answers a different question from the one you were asked.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-14-01.svg" alt="Diagram 1 of notebook 14" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-14-01.svg" alt="Diagram 1 of notebook 14" style="max-width:100%">
 
 A second axis is easy to miss. The estimand "performance of *the model I will ship*" differs from
 "performance of *this training procedure* at this sample size". K-fold estimates the second: each fold
@@ -200,7 +200,7 @@ away in time.
 Forward chaining with four blocks and a gap, drawn as a timeline (each bar is one fold; "gap" rows are
 in neither set):
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-14-02.svg" alt="Diagram 2 of notebook 14" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-14-02.svg" alt="Diagram 2 of notebook 14" style="max-width:100%">
 
 ### 2.5 Purging and embargo: how many rows to drop
 
@@ -300,7 +300,7 @@ Part A - optimism of row-wise K-fold as within-machine correlation grows (mean o
 | 0.8 | 0.921 | 0.536 | 0.574 | +0.347 |
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d2_group_temporal_validation/figures/optimism_vs_icc.svg" alt="Row-wise K-fold accuracy rises with the intraclass correlation while accuracy on new machines falls; machine-wise K-fold follows the truth" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d2_group_temporal_validation/figures/optimism_vs_icc.svg" alt="Row-wise K-fold accuracy rises with the intraclass correlation while accuracy on new machines falls; machine-wise K-fold follows the truth" width="100%">
 
 *SYNTHETIC. The gap between the orange line and the dashed truth is what a row split would have
 promised and not delivered.*
@@ -352,7 +352,7 @@ true ROC-AUC = 0.500. W = 40, H = 30, n = 6000; mean and s.d. over 10 seeds
 | blocked, 300 blocks, purge = embargo = 69 (W - 1 + H) | 0.503 +- 0.014 |
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d2_group_temporal_validation/figures/purge_demo.svg" alt="Dot plot of pooled ROC-AUC per scheme on unpredictable labels: shuffled 0.66, short blocks without buffer 0.53, one-sided purge 0.52, two-sided buffers about 0.50" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d2_group_temporal_validation/figures/purge_demo.svg" alt="Dot plot of pooled ROC-AUC per scheme on unpredictable labels: shuffled 0.66, short blocks without buffer 0.53, one-sided purge 0.52, two-sided buffers about 0.50" width="100%">
 
 *SYNTHETIC; the truth is 0.5, so every orange point is leakage. Whiskers: one s.d. over 10 seeds.*
 
@@ -462,7 +462,7 @@ development pool: 27 experiments, 27342 usable rows, positive fraction 0.387; te
 | 6 forward by recording day | 2 | 0.637 | 0.727 | train 1 day(s) -> 2020-03-01: 0.478, train 2 day(s) -> 2020-03-09: 0.789 |
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d2_group_temporal_validation/figures/skab_schemes.svg" alt="Two panels, one per model: pooled ROC-AUC under six schemes with per-fold dots; the forest falls from 0.985 (rows shuffled) to 0.818 (experiments held out) and 0.689 (family held out)" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d2_group_temporal_validation/figures/skab_schemes.svg" alt="Two panels, one per model: pooled ROC-AUC under six schemes with per-fold dots; the forest falls from 0.985 (rows shuffled) to 0.818 (experiments held out) and 0.689 (family held out)" width="100%">
 
 *Real SKAB development experiments. Small grey dots are folds; their spread is the honest size of the
 uncertainty you are working with.*
@@ -506,7 +506,7 @@ A retail chain that keeps opening stores retrains a demand model every quarter a
 following eight weeks, for existing stores and for stores opened since. Design and implement the
 validation splitter that answers that question, on a SYNTHETIC store x week panel, and justify it in
 writing. Task, data schema and acceptance criteria:
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d2_group_temporal_validation/challenge/README.md). No solution is given there.
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w3d2_group_temporal_validation/challenge/README.md). No solution is given there.
 
 ```python
 !python wb.py check w3d2 --challenge
@@ -583,9 +583,9 @@ check("w3d2", challenge=True)
 
 Open in order, and only after a real attempt.
 
-1. [Concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d2_group_temporal_validation/hints/hint1_concept.md) - what each part of the deployment sentence withholds.
-2. [Approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d2_group_temporal_validation/hints/hint2_approach.md) - the order in which to build the masks, and how to test them.
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d2_group_temporal_validation/hints/hint3_partial.md) - the skeleton with the two decisive lines left out.
+1. [Concept](https://github.com/berdakh/mlengineering/blob/main/labs/w3d2_group_temporal_validation/hints/hint1_concept.md) - what each part of the deployment sentence withholds.
+2. [Approach](https://github.com/berdakh/mlengineering/blob/main/labs/w3d2_group_temporal_validation/hints/hint2_approach.md) - the order in which to build the masks, and how to test them.
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w3d2_group_temporal_validation/hints/hint3_partial.md) - the skeleton with the two decisive lines left out.
 
 The full reference is in `solutions/labs/w3d2_group_temporal_validation/`.
 

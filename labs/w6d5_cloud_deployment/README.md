@@ -1,6 +1,6 @@
 # 35 · One small cloud deployment on AWS (authorisation-gated) — lab files
 
-**The lesson is notebook [`35_cloud_deployment`](../../notebooks/35_cloud_deployment.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/35_cloud_deployment.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/35_cloud_deployment.ipynb)).
+**The lesson is notebook [`35_cloud_deployment`](../../notebooks/35_cloud_deployment.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/35_cloud_deployment.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/35_cloud_deployment.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

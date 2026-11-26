@@ -9,8 +9,8 @@ nav_order: 6
 # 06 · Independent refactor: a real exploratory notebook becomes the project skeleton
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/06_notebook_to_package.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/06_notebook_to_package.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/06_notebook_to_package.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/06_notebook_to_package.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 6
 
 ---
 
-**Week 1 · day 6 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w1d6_notebook_to_package/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d6_notebook_to_package/)
+**Week 1 · day 6 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w1d6_notebook_to_package/`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d6_notebook_to_package/)
 
 **Objective.** Without step-by-step guidance, refactor an exploratory notebook on the project dataset into the `flowguard` package skeleton using small reviewed Git commits (branch, commit hygiene, .gitignore, lint).
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -134,7 +134,7 @@ The practical consequence for refactoring: **the notebook's printed output is a 
 not a specification.** You pin it so that you can tell when *you* change something, and you expect
 to overturn parts of it.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-01.svg" alt="Diagram 1 of notebook 06" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-06-01.svg" alt="Diagram 1 of notebook 06" style="max-width:100%">
 
 *Hidden state: the same cell gives different results depending on which cells ran before it, and the file on disk does not record which did.*
 
@@ -164,7 +164,7 @@ wrong in ways that make it worthless to preserve. In today's lab the notebook's 
 last kind for several cells, which is why the lab asks for a discrepancy table instead of a golden
 file.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-02.svg" alt="Diagram 2 of notebook 06" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-06-02.svg" alt="Diagram 2 of notebook 06" style="max-width:100%">
 
 *Two kinds of commit. In a refactoring the golden file must not move; in a behaviour change it must, visibly.*
 
@@ -207,7 +207,7 @@ Commit size is governed by one rule: **a commit should be describable in one sen
 word "and"**, and the project should work after it. That makes `git bisect` usable later (every
 commit is a valid state to test) and makes review cheap.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-03.svg" alt="Diagram 3 of notebook 06" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-06-03.svg" alt="Diagram 3 of notebook 06" style="max-width:100%">
 
 *The staging area is where you review yourself before anyone else does.*
 
@@ -293,7 +293,7 @@ d991c63 Extract mean_kwh and peak_days, replace cells with main() (no behaviour 
 c6808c8 Add notebook export and sample data as found
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-06-04.svg" alt="Diagram 4 of notebook 06" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-06-04.svg" alt="Diagram 4 of notebook 06" style="max-width:100%">
 
 *The six commits of the worked example. Only the highlighted one changes what the program prints (3.603 to 1.949).*
 
@@ -336,7 +336,7 @@ moving on is not a formality.
 
 ## 4. Lab (independent): refactor `explore_skab.py`
 
-The notebook export is [`lab/explore_skab.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d6_notebook_to_package/lab/explore_skab.py). It loads the SKAB files,
+The notebook export is [`lab/explore_skab.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d6_notebook_to_package/lab/explore_skab.py). It loads the SKAB files,
 renames columns, concatenates experiments and prints summaries. It runs without error:
 
 ```bash
@@ -404,7 +404,7 @@ Work through these in order. How you do each one is up to you.
 4. **Extract leaf to root.** `load_experiment`, then `load_raw`, then the summary. Write each function's test on a constructed file *first or alongside*; make at least one constructed case hostile (a two-digit file name, shuffled rows, a file without label columns, reordered columns). (30 min)
 5. **Confront the notebook.** For every number where package and notebook disagree, add a row to `NOTES.md`: notebook value, package value, mechanism, which is right and how you know. Fix-commits are separate from extraction-commits. (10 min)
 6. **Command and README.** `flowguard summary`, then a README stub that says what this is, where the data comes from, and the two commands a stranger needs. (10 min)
-7. **Review your history** with [`lab/COMMIT_REVIEW.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d6_notebook_to_package/lab/COMMIT_REVIEW.md). Copy it into your repository, fill it in, commit it. (5 min)
+7. **Review your history** with [`lab/COMMIT_REVIEW.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d6_notebook_to_package/lab/COMMIT_REVIEW.md). Copy it into your repository, fill it in, commit it. (5 min)
 
 ### Checkpoints
 
@@ -426,7 +426,7 @@ Work through these in order. How you do each one is up to you.
 | JSON check fails with "stdout must be exactly one JSON document" | a progress `print` shares stdout with the result | diagnostics go to stderr or logging (w1d4) |
 | A commit contains both moved code and a changed number | hunks were staged together | `git reset --soft HEAD~1`, then `git add -p` and commit twice |
 
-The reference solution's own notes ([`solutions/.../lab/NOTES.md`](https://github.com/berdakh/mlengineering-/blob/main/solutions/labs/w1d6_notebook_to_package/lab/NOTES.md))
+The reference solution's own notes ([`solutions/.../lab/NOTES.md`](https://github.com/berdakh/mlengineering/blob/main/solutions/labs/w1d6_notebook_to_package/lab/NOTES.md))
 contain every discrepancy with real numbers. Open them only after your `NOTES.md` is committed.
 
 ---
@@ -441,7 +441,7 @@ check("w1d6")
 
 ## 5. Independent challenge
 
-[`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d6_notebook_to_package/challenge/README.md): add a sampling-gap report (`flowguard.data.find_gaps`
+[`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d6_notebook_to_package/challenge/README.md): add a sampling-gap report (`flowguard.data.find_gaps`
 and `flowguard gaps`) test-first on a branch, and reconcile it with the notebook cell that printed
 `n gaps > 5 s: 19`. It transfers today's method to behaviour the notebook only gestured at.
 
@@ -509,9 +509,9 @@ check("w1d6", challenge=True)
 Open in order, and only when stuck for more than ten minutes. Opening hint 2 or 3 means the unit is
 recorded as *guided*.
 
-1. [Concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d6_notebook_to_package/hints/hint1_concept.md): what to look for, without saying where.
-2. [Approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d6_notebook_to_package/hints/hint2_approach.md): an extraction order and the hostile test cases.
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d6_notebook_to_package/hints/hint3_partial.md): the shape of `load_experiment` and one test.
+1. [Concept](https://github.com/berdakh/mlengineering/blob/main/labs/w1d6_notebook_to_package/hints/hint1_concept.md): what to look for, without saying where.
+2. [Approach](https://github.com/berdakh/mlengineering/blob/main/labs/w1d6_notebook_to_package/hints/hint2_approach.md): an extraction order and the hostile test cases.
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w1d6_notebook_to_package/hints/hint3_partial.md): the shape of `load_experiment` and one test.
 
 Full reference: `solutions/labs/w1d6_notebook_to_package/` (lab, challenge, notes, answers).
 
@@ -791,7 +791,7 @@ project continues in w2d3 (ingestion and data-quality checks).
 | `python tools/verify_checks.py labs/w1d6_notebook_to_package` | reference passes both parts; 7 lab mutants and 4 challenge mutants rejected |
 | Shipped `lab/` against the checks | fails (no project there by design) |
 
-**Next session:** [w1d7_review](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d7_review/README.md).
+**Next session:** [w1d7_review](https://github.com/berdakh/mlengineering/blob/main/labs/w1d7_review/README.md).
 
 ## Record your progress
 

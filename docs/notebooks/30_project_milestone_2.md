@@ -9,8 +9,8 @@ nav_order: 30
 # 30 · Project milestone 2: packaged inference + API
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/30_project_milestone_2.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/30_project_milestone_2.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/30_project_milestone_2.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/30_project_milestone_2.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 30
 
 ---
 
-**Week 5 · day 6 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w5d6_project_milestone_2/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d6_project_milestone_2/)
+**Week 5 · day 6 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w5d6_project_milestone_2/`](https://github.com/berdakh/mlengineering/blob/main/labs/w5d6_project_milestone_2/)
 
 **Objective.** Integrate artifact, inference pipeline and API in the project with tests and usage documentation.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -105,7 +105,7 @@ it or port the checklist to your own repository.
 
 ### 2.1 Three paths that must agree
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-30-01.svg" alt="Diagram 1 of notebook 30" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-30-01.svg" alt="Diagram 1 of notebook 30" style="max-width:100%">
 
 The numbers in the milestone-1 report came from the evaluation path. Operators will act on the API's
 numbers; analysts will rerun the batch path over history. If the three disagree, the report describes a
@@ -180,7 +180,7 @@ The API contract has its own name (`flowguard-api/1`, w5d5), and the model its o
 
 ### 2.5 A request end to end
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-30-02.svg" alt="Diagram 2 of notebook 30" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-30-02.svg" alt="Diagram 2 of notebook 30" style="max-width:100%">
 
 **Long recordings.** The API accepts at most 3,600 values per request (one hour at 1 Hz). The
 `anomaly-free` recording has 9,405 rows, so a client sends it in chunks, each with the same burn-in; the
@@ -286,7 +286,7 @@ A parity difference of exactly a factor $$\sqrt{n/(n-1)}$$ is a ddof mismatch; a
 experiment usually means the burn-in is taken from the wrong rows. If `/predict` returns 413 on real data,
 you are sending a whole long recording in one request; chunk it.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d6_project_milestone_2/figures/api_traces.svg" alt="Scores from POST /predict for three test experiments: valve1/13 rises above the threshold during its labelled anomaly, valve2/0 never does, other/14 crosses it during most of its anomaly" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d6_project_milestone_2/figures/api_traces.svg" alt="Scores from POST /predict for three test experiments: valve1/13 rises above the threshold during its labelled anomaly, valve2/0 never does, other/14 crosses it during most of its anomaly" width="100%">
 
 *Figure 1 (real data, reference project).* What the fixed API returns. `valve1/13`: scores near 20
 during the anomaly, 313 flagged rows. `valve2/0`: the anomaly barely moves flow rate (maximum score 3.0),
@@ -294,7 +294,7 @@ so nothing is flagged: one of the two missed test events from milestone 1. `othe
 the final rows spike to 246 (clipped in the plot).
 
 <a id="figure-2"></a>
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d6_project_milestone_2/figures/skew_vs_burn_in.svg" alt="API score relative to batch by burn-in size: -29 % at n=2, -5 % at n=10, -0.5 % at n=100; the measured value on SKAB sits on the curve" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d6_project_milestone_2/figures/skew_vs_burn_in.svg" alt="API score relative to batch by burn-in size: -29 % at n=2, -5 % at n=10, -0.5 % at n=100; the measured value on SKAB sits on the curve" width="100%">
 
 *Figure 2 (formula and real measurement).* The starter's API (ddof=1) against the fixed one on all 35
 SKAB experiments: median ratio 0.99499 at $$n = 100$$, identical across experiments, exactly
@@ -303,7 +303,7 @@ $$\sqrt{99/100}$$.
 **Meaningful result.** On the real data, the reference project gives a maximum absolute difference of
 0.0 between evaluation and batch and between evaluation and API over 46,806 rows of 35 experiments, and
 reports version 0.6.0 everywhere
-([parity.json](https://github.com/berdakh/mlengineering-/blob/main/solutions/labs/w5d6_project_milestone_2/example_release/parity.json), open after
+([parity.json](https://github.com/berdakh/mlengineering/blob/main/solutions/labs/w5d6_project_milestone_2/example_release/parity.json), open after
 finishing). On the 7 test experiments, after the burn-in, the raw threshold flags 686 rows, 671 of them
 labelled anomalous: the same detector as milestone 1, now packaged.
 
@@ -317,8 +317,8 @@ check("w5d6")
 
 ## 5. Independent challenge: submit the release candidate
 
-Follow [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d6_project_milestone_2/challenge/README.md): tag your release-candidate commit, fill in
-[challenge/SUBMISSION.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d6_project_milestone_2/challenge/SUBMISSION.md) for your own repository with a scored self-review and
+Follow [challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w5d6_project_milestone_2/challenge/README.md): tag your release-candidate commit, fill in
+[challenge/SUBMISSION.md](https://github.com/berdakh/mlengineering/blob/main/labs/w5d6_project_milestone_2/challenge/SUBMISSION.md) for your own repository with a scored self-review and
 evidence, and push both.
 
 **Acceptance criteria.** `python wb.py check w5d6 --challenge` passes (structure only); the reviewer
@@ -348,8 +348,8 @@ check("w5d6", challenge=True)
 
 ## 6. Progressive hints
 
-[hint 1 (concept)](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d6_project_milestone_2/hints/hint1_concept.md) · [hint 2 (approach)](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d6_project_milestone_2/hints/hint2_approach.md) ·
-[hint 3 (partial implementation)](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d6_project_milestone_2/hints/hint3_partial.md). The reference project, an example release
+[hint 1 (concept)](https://github.com/berdakh/mlengineering/blob/main/labs/w5d6_project_milestone_2/hints/hint1_concept.md) · [hint 2 (approach)](https://github.com/berdakh/mlengineering/blob/main/labs/w5d6_project_milestone_2/hints/hint2_approach.md) ·
+[hint 3 (partial implementation)](https://github.com/berdakh/mlengineering/blob/main/labs/w5d6_project_milestone_2/hints/hint3_partial.md). The reference project, an example release
 (notes, a real server transcript, parity evidence) and a reference submission are in
 `solutions/labs/w5d6_project_milestone_2/`.
 
@@ -496,7 +496,7 @@ GNU make):
   parity report 0.0/0.0 over 46,806 rows; `flowguard evaluate --split test` 686 flagged, 671 true
   positives, 2,487 anomalous rows; a uvicorn server on 127.0.0.1:8765 answered healthz, readyz, version,
   predict (200) and a bad request (422), then was stopped
-  ([transcript](https://github.com/berdakh/mlengineering-/blob/main/solutions/labs/w5d6_project_milestone_2/example_release/API_TRANSCRIPT.md)).
+  ([transcript](https://github.com/berdakh/mlengineering/blob/main/solutions/labs/w5d6_project_milestone_2/example_release/API_TRANSCRIPT.md)).
 * Worked example output copied from a run. Figures regenerated by `figures/make_figures.py`.
 * Not verified: Python 3.11/3.12; `pip install -e` of the project (checks use `PYTHONPATH=src`); time budget.
 

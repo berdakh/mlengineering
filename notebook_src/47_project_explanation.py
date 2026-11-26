@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/47_project_explanation.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/47_project_explanation.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -85,7 +85,7 @@ print("repo root:", REPO_ROOT)
 #
 # A technical project story that survives questioning has six beats, always in this order:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-47-01.svg" alt="Diagram 1 of notebook 47" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-47-01.svg" alt="Diagram 1 of notebook 47" style="max-width:100%">
 #
 # *The arc. Interviewers probe Evidence and Limitation; a script without them invites the question
 # you least want.*
@@ -101,7 +101,7 @@ print("repo root:", REPO_ROOT)
 # A spoken 5-minute slot holds about 550-650 words once pauses and a diagram are counted; the reference
 # script is 556 words, about four minutes of speech.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d5_project_explanation/figures/speaking_time.svg" alt="Six bars of speaking time for the reference script: Problem 41 s, Constraint 42 s, Decision 49 s, Evidence 53 s, Limitation 30 s, Next step 23 s; all well under 90 s" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d5_project_explanation/figures/speaking_time.svg" alt="Six bars of speaking time for the reference script: Problem 41 s, Constraint 42 s, Decision 49 s, Evidence 53 s, Limitation 30 s, Next step 23 s; all well under 90 s" width="100%">
 #
 # *Speaking time per beat of the reference 5-minute script, from `example/script_lint.py`. No beat
 # exceeds 90 seconds; Evidence is the longest, Next step the shortest.*
@@ -126,7 +126,7 @@ print("repo root:", REPO_ROOT)
 #
 # Hard questions usually target a real weakness. Three moves, in order, keep the answer honest and short:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-47-02.svg" alt="Diagram 2 of notebook 47" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-47-02.svg" alt="Diagram 2 of notebook 47" style="max-width:100%">
 #
 # *The three moves. Skipping "concede" sounds defensive; skipping "quantify" sounds vague; skipping
 # "redirect" leaves the weakness as the last thing said.*

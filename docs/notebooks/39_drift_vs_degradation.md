@@ -9,8 +9,8 @@ nav_order: 39
 # 39 · Drift is not degradation: delayed labels and measured performance
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/39_drift_vs_degradation.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/39_drift_vs_degradation.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/39_drift_vs_degradation.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/39_drift_vs_degradation.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 39
 
 ---
 
-**Week 7 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w7d3_drift_vs_degradation/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d3_drift_vs_degradation/)
+**Week 7 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w7d3_drift_vs_degradation/`](https://github.com/berdakh/mlengineering/blob/main/labs/w7d3_drift_vs_degradation/)
 
 **Objective.** Separate input change from measured performance loss; design label backfill, proxy metrics and delayed evaluation.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -112,7 +112,7 @@ alarm), **partially** (missed faults are found only if someone inspects), and **
 investigate the alarms that look worst). Each of these bends the numbers you can compute, always in a
 known direction once you write down how labels are produced.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-39-01.svg" alt="Diagram 1 of notebook 39" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-39-01.svg" alt="Diagram 1 of notebook 39" style="max-width:100%">
 
 ### 2.2 Precise terms
 
@@ -153,11 +153,11 @@ $$M_{\text{reported}}$$ is smaller still, so early estimates are even more optim
 roughly $$1.96\sqrt{r(1-r)/n}$$. At $$r = 0.6$$ that is about ±0.20 at $$n = 20$$ and ±0.10 only at
 $$n \approx 89$$. A window must contain enough *labelled events*, not enough samples.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d3_drift_vs_degradation/figures/power_wilson.svg" alt="Half-width of a 95 % Wilson interval for recall 0.6 against the number of faults: about 0.20 at 20 faults, 0.10 at 89" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d3_drift_vs_degradation/figures/power_wilson.svg" alt="Half-width of a 95 % Wilson interval for recall 0.6 against the number of faults: about 0.20 at 20 faults, 0.10 at 89" width="100%">
 
 *Figure 1 (arithmetic).* One replay period of this lab has 20 faults; pinning recall to ±0.10 takes about 89.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d3_drift_vs_degradation/figures/verification_bias.svg" alt="SYNTHETIC: precision measured on the top-scoring investigated alarms falls from 1.0 towards the true 0.68 only as the investigated fraction approaches 100 %" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d3_drift_vs_degradation/figures/verification_bias.svg" alt="SYNTHETIC: precision measured on the top-scoring investigated alarms falls from 1.0 towards the true 0.68 only as the investigated fraction approaches 100 %" width="100%">
 
 *Figure 2 (SYNTHETIC: 400 alarms, P(true) logistic in peak score).* Investigating the worst-looking half
 of the alarms reports precision near 1.0 against a true 0.68.
@@ -302,7 +302,7 @@ without measured degradation investigates the input; degradation without drift e
 infer one answer from the other.
 *Checkpoint:* all 17 checks pass.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-39-02.svg" alt="Diagram 2 of notebook 39" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-39-02.svg" alt="Diagram 2 of notebook 39" style="max-width:100%">
 
 **Task 6: replay on real data.** With your module in place:
 
@@ -335,7 +335,7 @@ period C  day  65: drift 1/4, caught  4, missed reported 0, recall  nan         
           day 150: drift 1/4, caught  4, missed reported 7, recall 0.36 [0.15, 0.65] (true  4/20) -> inconclusive
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d3_drift_vs_degradation/figures/drift_psi_windows.svg" alt="PSI per 5-day window: period B (recalibrated sensor) sits at 6.1-8.9 against a threshold of 0.66; periods A and C stay below it except the first window of each" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d3_drift_vs_degradation/figures/drift_psi_windows.svg" alt="PSI per 5-day window: period B (recalibrated sensor) sits at 6.1-8.9 against a threshold of 0.66; periods A and C stay below it except the first window of each" width="100%">
 
 *Figure 3 (real recordings, constructed timeline).* The drift monitor flags all four windows of
 period B. The first window of A and of C is flagged too (PSI 1.44): those five recordings
@@ -344,7 +344,7 @@ whose faults the detector misses. The flag and the misses coincide; the level di
 cause the misses (the score is per-run normalised), which is exactly why a flag needs investigation
 rather than a conclusion.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d3_drift_vs_degradation/figures/recall_over_time.svg" alt="Estimated recall against the day it is computed: all three periods start high and settle above their true values only after inspection reports arrive" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d3_drift_vs_degradation/figures/recall_over_time.svg" alt="Estimated recall against the day it is computed: all three periods start high and settle above their true values only after inspection reports arrive" width="100%">
 
 *Figure 4 (real recordings, simulated labels).* Estimates start optimistic and settle late; all
 three settle above the truth (0.61 and 0.73 against 0.55; 0.36 against 0.20) because only 60 % of
@@ -380,7 +380,7 @@ check("w7d3")
 
 ## 5. Independent challenge
 
-Write the monitoring and label-backfill plan for `flowguard`: [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d3_drift_vs_degradation/challenge/README.md).
+Write the monitoring and label-backfill plan for `flowguard`: [challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w7d3_drift_vs_degradation/challenge/README.md).
 No solution is given in this lesson; the rubric is in the solutions folder, to be opened after you
 have written yours.
 
@@ -443,9 +443,9 @@ check("w7d3", challenge=True)
 
 Try each task for at least 10 minutes before opening a hint.
 
-1. [Conceptual hint](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d3_drift_vs_degradation/hints/hint1_concept.md)
-2. [Suggested approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d3_drift_vs_degradation/hints/hint2_approach.md)
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d3_drift_vs_degradation/hints/hint3_partial.md)
+1. [Conceptual hint](https://github.com/berdakh/mlengineering/blob/main/labs/w7d3_drift_vs_degradation/hints/hint1_concept.md)
+2. [Suggested approach](https://github.com/berdakh/mlengineering/blob/main/labs/w7d3_drift_vs_degradation/hints/hint2_approach.md)
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w7d3_drift_vs_degradation/hints/hint3_partial.md)
 
 The full reference solution is in `solutions/labs/w7d3_drift_vs_degradation/lab/`.
 

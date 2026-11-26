@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/46_coding_interviews.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/46_coding_interviews.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -90,7 +90,7 @@ print("repo root:", REPO_ROOT)
 # interview problems for data roles are variations of about a dozen patterns. Recognising the pattern is
 # most of the work; the rest is careful code and your own tests.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-46-01.svg" alt="Diagram 1 of notebook 46" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-46-01.svg" alt="Diagram 1 of notebook 46" style="max-width:100%">
 #
 # ### 2.2 Precise terms
 #
@@ -106,7 +106,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.3 The talk-aloud protocol
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-46-02.svg" alt="Diagram 2 of notebook 46" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-46-02.svg" alt="Diagram 2 of notebook 46" style="max-width:100%">
 #
 # Spend about two minutes on the first three boxes even when you think you know the answer: interviewers
 # score them, and it is where misunderstandings are caught cheaply. When stuck, say what is blocking you and
@@ -119,7 +119,7 @@ print("repo root:", REPO_ROOT)
 # slightly more than doubles O(n log n). A log-log plot of time against n has slope 1 for linear and 2 for
 # quadratic algorithms:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d4_coding_interviews/figures/scaling.svg" alt="Log-log plot of run time against input size: the brute force rises with slope about 2 and the hash-map version with slope about 1" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d4_coding_interviews/figures/scaling.svg" alt="Log-log plot of run time against input size: the brute force rises with slope about 2 and the hash-map version with slope about 1" width="100%">
 #
 # *Figure 1 (measured on the authoring machine; your times will differ, the slopes should not).* The worked
 # example's brute force against its hash-map version, k = n/10.
@@ -136,7 +136,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.6 SQL rounds: grain first
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-46-03.svg" alt="Diagram 3 of notebook 46" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-46-03.svg" alt="Diagram 3 of notebook 46" style="max-width:100%">
 #
 # The schema of today's database is in [`data/README.md`](../labs/w8d4_coding_interviews/data/README.md) (an ER diagram and the grain of each
 # table).
@@ -231,7 +231,7 @@ print("repo root:", REPO_ROOT)
 # **Optional extension — P4, P5, P6, Q3.** Same procedure. P4 has a numerical trap; P6 has a
 # recursion-depth trap; Q3 is the gaps-and-islands pattern.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d4_coding_interviews/figures/streak.svg" alt="Daily activity of one driver over February to April 2026 with the longest run of consecutive active days highlighted" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d4_coding_interviews/figures/streak.svg" alt="Daily activity of one driver over February to April 2026 with the longest run of consecutive active days highlighted" width="100%">
 #
 # *Figure 2 (SYNTHETIC rides database).* Q3 on one driver: 13 consecutive days from 28 February. The query
 # has to see days, not trips: this driver often completes several trips a day.

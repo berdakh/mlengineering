@@ -1,6 +1,6 @@
 # 08 · SQL II: CTEs, window functions and time-series queries — lab files
 
-**The lesson is notebook [`08_sql_windows_timeseries`](../../notebooks/08_sql_windows_timeseries.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/08_sql_windows_timeseries.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/08_sql_windows_timeseries.ipynb)).
+**The lesson is notebook [`08_sql_windows_timeseries`](../../notebooks/08_sql_windows_timeseries.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/08_sql_windows_timeseries.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/08_sql_windows_timeseries.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

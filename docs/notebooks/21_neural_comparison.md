@@ -9,8 +9,8 @@ nav_order: 21
 # 21 · A neural comparison, where it is justified
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/21_neural_comparison.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/21_neural_comparison.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/21_neural_comparison.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/21_neural_comparison.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 21
 
 ---
 
-**Week 4 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w4d3_neural_comparison/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d3_neural_comparison/)
+**Week 4 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w4d3_neural_comparison/`](https://github.com/berdakh/mlengineering/blob/main/labs/w4d3_neural_comparison/)
 
 **Objective.** Train a small 1D-CNN or LSTM autoencoder (PyTorch, CPU) with a fair tuning budget and multiple seeds; report seed variance.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -163,7 +163,7 @@ scored (which normalises the fault away). Both are lab mutants.
 
 ### 2.4 A fair comparison protocol
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-21-01.svg" alt="Diagram 1 of notebook 21" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-21-01.svg" alt="Diagram 1 of notebook 21" style="max-width:100%">
 
 What "fair" means here, item by item:
 
@@ -262,7 +262,7 @@ The review that follows asks for exactly the table in section 4, task 5.
 * "Neural loses, so neural is bad." This comparison is one architecture, one budget, 21 training
   experiments. The claim it supports is narrow: *under this protocol*, no evidence of improvement.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d3_neural_comparison/figures/seed_spread.svg" alt="Five autoencoder seeds spread from 0.682 to 0.837 TEST PR-AUC; Mahalanobis 0.768; flow-rate z 0.884 with a narrower interval" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d3_neural_comparison/figures/seed_spread.svg" alt="Five autoencoder seeds spread from 0.682 to 0.837 TEST PR-AUC; Mahalanobis 0.768; flow-rate z 0.884 with a narrower interval" width="100%">
 
 *Figure 1 (real SKAB, 7 test experiments).* Dots are the five neural seeds; bars are 95% cluster-bootstrap
 intervals for one fitted model of each detector. The neural seed spread alone is about as wide as the gap
@@ -324,7 +324,7 @@ detector will not have in deployment. Expect different exact values on another m
 version; the qualitative results (a spread of several points, monotone best-of-k optimism, 7 rows of
 look-ahead for a 16-row centred window) should hold.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d3_neural_comparison/figures/step_reaction.svg" alt="On a step at row 100 the causal window's score rises at row 100, the centred window's at row 93" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d3_neural_comparison/figures/step_reaction.svg" alt="On a step at row 100 the causal window's score rises at row 100, the centred window's at row 93" width="100%">
 
 *Figure 2 (SYNTHETIC).* The centred window starts reacting half a window before the event.
 
@@ -339,7 +339,7 @@ rest. Run the checks after each task:
 !python wb.py check w4d3
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-21-02.svg" alt="Diagram 2 of notebook 21" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-21-02.svg" alt="Diagram 2 of notebook 21" style="max-width:100%">
 
 ### Task 1 — `make_windows(x, window)` (10 min)
 
@@ -448,12 +448,12 @@ runs with one thread.
 
 Now fill in `lab/NEURAL_REPORT.md` (template provided) with your own output and its four questions.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d3_neural_comparison/figures/learning_curves.svg" alt="Training loss falls for every seed; validation loss settles at different levels; restored epochs 4 to 29" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d3_neural_comparison/figures/learning_curves.svg" alt="Training loss falls for every seed; validation loss settles at different levels; restored epochs 4 to 29" width="100%">
 
 *Figure 3 (real SKAB).* Learning curves of the five seeds. The seed with the lowest validation loss is
 not the best detector on TEST.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d3_neural_comparison/figures/tuning_budget.svg" alt="Four configurations per family on VAL: autoencoder 0.605-0.716, Mahalanobis 0.663-0.666" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d3_neural_comparison/figures/tuning_budget.svg" alt="Four configurations per family on VAL: autoencoder 0.605-0.716, Mahalanobis 0.663-0.666" width="100%">
 
 *Figure 4 (real SKAB, VAL only).* The tuning budget. The neural family varies much more across
 configurations, which is also a cost: more selection, more optimism (w3d3).
@@ -473,7 +473,7 @@ check("w4d3")
 
 ## 5. Independent challenge
 
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d3_neural_comparison/challenge/README.md): write a comparison protocol for a new situation and
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w4d3_neural_comparison/challenge/README.md): write a comparison protocol for a new situation and
 implement seed-variance reporting with a conservative verdict rule, graded by checks. No solution in
 this folder.
 
@@ -542,7 +542,7 @@ check("w4d3", challenge=True)
 ## 6. Progressive hints
 
 Open only as far as you need, in order:
-[1 - concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d3_neural_comparison/hints/hint1_concept.md) · [2 - approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d3_neural_comparison/hints/hint2_approach.md) · [3 - partial code](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d3_neural_comparison/hints/hint3_partial.md)
+[1 - concept](https://github.com/berdakh/mlengineering/blob/main/labs/w4d3_neural_comparison/hints/hint1_concept.md) · [2 - approach](https://github.com/berdakh/mlengineering/blob/main/labs/w4d3_neural_comparison/hints/hint2_approach.md) · [3 - partial code](https://github.com/berdakh/mlengineering/blob/main/labs/w4d3_neural_comparison/hints/hint3_partial.md)
 
 
 Open one hint at a time, only after a real attempt.

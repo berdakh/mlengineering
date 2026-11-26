@@ -9,8 +9,8 @@ nav_order: 8
 # 08 · SQL II: CTEs, window functions and time-series queries
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/08_sql_windows_timeseries.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/08_sql_windows_timeseries.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/08_sql_windows_timeseries.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/08_sql_windows_timeseries.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 8
 
 ---
 
-**Week 2 · day 2 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w2d2_sql_windows_timeseries/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d2_sql_windows_timeseries/)
+**Week 2 · day 2 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w2d2_sql_windows_timeseries/`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d2_sql_windows_timeseries/)
 
 **Objective.** Use window functions for ranking, running statistics, gaps-and-islands and as-of joins on event and sensor tables; reproduce each result in pandas.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -52,7 +52,7 @@ print("repo root:", REPO_ROOT)
 
 **Unit id:** `w2d2` · **Week 2, day 2** · **Content status:** Execution verified (see Verification record)
 **Handbook:** [H3.2 Window functions and time-series SQL](../handbook/ch03_sql_data_pipelines/h3_2_window_functions_timeseries_sql.html)
-**Data:** [`data/coldchain.db`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d2_sql_windows_timeseries/data/README.md) — SYNTHETIC, built to contain specific traps. Results in this lesson show that queries are correct; they say nothing about real equipment.
+**Data:** [`data/coldchain.db`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d2_sql_windows_timeseries/data/README.md) — SYNTHETIC, built to contain specific traps. Results in this lesson show that queries are correct; they say nothing about real equipment.
 
 ---
 
@@ -142,7 +142,7 @@ with a stated grain, exactly as you would name intermediate DataFrames.
 
 The same order as a diagram, with the place where each kind of filter can live:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-08-01.svg" alt="Diagram 1 of notebook 08" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-08-01.svg" alt="Diagram 1 of notebook 08" style="max-width:100%">
 
 
 ### 2.3 Frames, and the default that bites
@@ -249,7 +249,7 @@ another device, which is the same bug as running event extraction across concate
 
 The reference query for Task 5 on one device and one day of the lab database:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d2_sql_windows_timeseries/figures/islands.svg" alt="Line chart of reported temperature for device D01 on 2 March with 21 flagged samples grouped into 5 shaded episodes" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d2_sql_windows_timeseries/figures/islands.svg" alt="Line chart of reported temperature for device D01 on 2 March with 21 flagged samples grouped into 5 shaded episodes" width="100%">
 
 *Twenty-one flagged samples become five episodes. Two of them are a single sample wide: whether those
 deserve to be events is the minimum-duration decision the text above says you owe the reader.
@@ -290,12 +290,12 @@ There is one more that no query can detect: a row whose *timestamp* is in the pa
 Point-in-time correctness is about when information became available, which needs an ingestion
 time. Today's data has only `reading_id` as a proxy for arrival order; H3.2.5 discusses this.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-08-02.svg" alt="Diagram 2 of notebook 08" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-08-02.svg" alt="Diagram 2 of notebook 08" style="max-width:100%">
 
 On the lab database, device D01 changes calibration four times in three days. Each reading is corrected
 with the offset, and compared with the threshold, that were in force when it was measured:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d2_sql_windows_timeseries/figures/asof_calibration.svg" alt="Two stacked panels for device D01: the calibration offset applied steps through five values; the corrected temperature is compared against an alert threshold that steps between 7.5, 8.0 and 8.5 degrees" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d2_sql_windows_timeseries/figures/asof_calibration.svg" alt="Two stacked panels for device D01: the calibration offset applied steps through five values; the corrected temperature is compared against an alert threshold that steps between 7.5, 8.0 and 8.5 degrees" width="100%">
 
 *Joining every reading to the latest calibration row instead would re-score three days of history with
 an offset and threshold that did not exist yet. SYNTHETIC data, same script.*
@@ -346,7 +346,7 @@ and the first model review asks precisely whether any feature could see past the
 
 ## 3. Worked example: scan events on two packaging lines
 
-**File:** [`example/window_tour.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d2_sql_windows_timeseries/example/window_tour.py). Fourteen hand-typed scan events
+**File:** [`example/window_tour.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d2_sql_windows_timeseries/example/window_tour.py). Fourteen hand-typed scan events
 (SYNTHETIC, small enough to follow by eye) in an in-memory SQLite table:
 
 | Column | Type | Meaning |
@@ -425,11 +425,11 @@ apart from the version line.
 
 ## 4. Guided lab: six queries on cold-chain data
 
-**You produce:** six SQL files in [`lab/queries/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d2_sql_windows_timeseries/lab/queries) and three functions in
-[`lab/pandas_equiv.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d2_sql_windows_timeseries/lab/pandas_equiv.py). Each starter file contains the full specification
+**You produce:** six SQL files in [`lab/queries/`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d2_sql_windows_timeseries/lab/queries) and three functions in
+[`lab/pandas_equiv.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d2_sql_windows_timeseries/lab/pandas_equiv.py). Each starter file contains the full specification
 (source, grain, columns, rules) and a placeholder statement.
 
-Read [`data/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d2_sql_windows_timeseries/data/README.md) first (3 minutes): it lists the tables and the properties
+Read [`data/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d2_sql_windows_timeseries/data/README.md) first (3 minutes): it lists the tables and the properties
 built into the data. Then explore:
 
 ```python
@@ -542,8 +542,8 @@ check("w2d2")
 
 ## 5. Independent challenge: a point-in-time-correct feature table
 
-Specification and acceptance criteria: [`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d2_sql_windows_timeseries/challenge/README.md). You write one
-query, [`challenge/features.sql`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d2_sql_windows_timeseries/challenge/features.sql), producing five features for each of the
+Specification and acceptance criteria: [`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d2_sql_windows_timeseries/challenge/README.md). You write one
+query, [`challenge/features.sql`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d2_sql_windows_timeseries/challenge/features.sql), producing five features for each of the
 38 rows of `maintenance_labels`, using only information available at the label time.
 
 ```python
@@ -625,9 +625,9 @@ check("w2d2", challenge=True)
 Open them in order, and only after a real attempt. They apply to the challenge; the lab has its
 own debugging table above.
 
-1. [Hint 1 — concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d2_sql_windows_timeseries/hints/hint1_concept.md)
-2. [Hint 2 — approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d2_sql_windows_timeseries/hints/hint2_approach.md)
-3. [Hint 3 — partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d2_sql_windows_timeseries/hints/hint3_partial.md)
+1. [Hint 1 — concept](https://github.com/berdakh/mlengineering/blob/main/labs/w2d2_sql_windows_timeseries/hints/hint1_concept.md)
+2. [Hint 2 — approach](https://github.com/berdakh/mlengineering/blob/main/labs/w2d2_sql_windows_timeseries/hints/hint2_approach.md)
+3. [Hint 3 — partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w2d2_sql_windows_timeseries/hints/hint3_partial.md)
 
 The full reference solution is in `solutions/labs/w2d2_sql_windows_timeseries/`. Opening it
 before your own version passes means the `independent` flag stays unset for this unit.

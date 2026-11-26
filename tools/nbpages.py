@@ -38,8 +38,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 NB_DIR = REPO_ROOT / "notebooks"
 OUT_DIR = REPO_ROOT / "docs" / "notebooks"
 
-GITHUB = "https://github.com/berdakh/mlengineering-/blob/main/notebooks"
-COLAB = "https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks"
+GITHUB = "https://github.com/berdakh/mlengineering/blob/main/notebooks"
+COLAB = "https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks"
 
 # The Colab badge and its caption open every notebook source. On the site they
 # are replaced by the header this tool writes, so they are stripped.
@@ -76,7 +76,7 @@ def rewrite_links(text: str) -> str:
         # path with no page on the site, so send it to GitHub rather than 404.
         if target.startswith("docs/"):
             return match.group(0)
-        return f"](https://github.com/berdakh/mlengineering-/blob/main/{target})"
+        return f"](https://github.com/berdakh/mlengineering/blob/main/{target})"
 
     # Order matters: the repo rule must run FIRST and skip docs/, or it will
     # match the site-relative links the docs rule has just produced.

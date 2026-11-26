@@ -1,6 +1,6 @@
 # 23 · Choosing complexity on evidence — lab files
 
-**The lesson is notebook [`23_model_choice`](../../notebooks/23_model_choice.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/23_model_choice.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/23_model_choice.ipynb)).
+**The lesson is notebook [`23_model_choice`](../../notebooks/23_model_choice.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/23_model_choice.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/23_model_choice.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

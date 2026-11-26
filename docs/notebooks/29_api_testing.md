@@ -9,8 +9,8 @@ nav_order: 29
 # 29 · FastAPI II: API tests, integration tests and model lifecycle
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/29_api_testing.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/29_api_testing.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/29_api_testing.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/29_api_testing.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 29
 
 ---
 
-**Week 5 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w5d5_api_testing/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d5_api_testing/)
+**Week 5 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w5d5_api_testing/`](https://github.com/berdakh/mlengineering/blob/main/labs/w5d5_api_testing/)
 
 **Objective.** Test the service at the HTTP boundary (happy path, invalid input, model missing), manage model loading at startup, reason about concurrency.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -70,7 +70,7 @@ graded a test suite for signal features by mutation; today the code under test i
 mutations are the defects above.
 
 **Deliverables.**
-* `lab/tests/`: your suite for the service in `lab/service/` (contract in [lab/CONTRACT.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d5_api_testing/lab/CONTRACT.md)).
+* `lab/tests/`: your suite for the service in `lab/service/` (contract in [lab/CONTRACT.md](https://github.com/berdakh/mlengineering/blob/main/labs/w5d5_api_testing/lab/CONTRACT.md)).
 * `challenge/compat.py`, `challenge/test_contract.py`, `challenge/COMPATIBILITY.md`: a breaking-change
   detector for OpenAPI documents, contract tests, and a written compatibility policy.
 
@@ -105,7 +105,7 @@ the service, so you can start even if your own w5d4 service differs.
 A service has more ways to be wrong than a function, so it gets more layers of tests. Each layer
 answers a different question and has a different cost.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-29-01.svg" alt="Diagram 1 of notebook 29" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-29-01.svg" alt="Diagram 1 of notebook 29" style="max-width:100%">
 
 * **Unit tests** check the scoring arithmetic and the bundle loader directly. They are fast and
   precise but know nothing about HTTP.
@@ -125,7 +125,7 @@ recorded session file end to end; a smoke test is the first minute of a live ses
 
 ### 2.2 The contract is the specification, not the code
 
-Write tests from [lab/CONTRACT.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d5_api_testing/lab/CONTRACT.md), not from `service/flowguard/api.py`. A test written
+Write tests from [lab/CONTRACT.md](https://github.com/berdakh/mlengineering/blob/main/labs/w5d5_api_testing/lab/CONTRACT.md), not from `service/flowguard/api.py`. A test written
 by reading the implementation tends to restate it ("the code calls `std()`, so I assert `std()`"), and
 then it passes on whatever the code does. A test written from the contract asserts what a client is
 promised: population standard deviation (the training-time convention), an inclusive threshold, 413 for
@@ -188,7 +188,7 @@ server accepts requests; code after it runs at shutdown. Two consequences for te
   traffic (w6d5, w7d5). A readiness probe that answers 200 before the model is loaded sends real
   traffic to a process that can only fail.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-29-02.svg" alt="Diagram 2 of notebook 29" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-29-02.svg" alt="Diagram 2 of notebook 29" style="max-width:100%">
 
 ### 2.5 Concurrency: what runs at the same time
 
@@ -222,7 +222,7 @@ for i, scores in results:
 ```
 
 <a id="figure-1"></a>
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d5_api_testing/figures/race_fraction.svg" alt="With one client thread the buggy service is always right; from two threads on, 44-82 % of responses belong to another request" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d5_api_testing/figures/race_fraction.svg" alt="With one client thread the buggy service is always right; from two threads on, 44-82 % of responses belong to another request" width="100%">
 
 *Figure 1 (worked-example service, real runs).* Fraction of 96 responses that carry another request's
 result, by number of client threads; band = range over 3 repeats. The correct service is never wrong.
@@ -331,7 +331,7 @@ creates concurrency can see this defect.
 
 The service in `lab/service/flowguard/` is the shipped detector from w4d5 behind the API from w5d4:
 burn-in flow-rate |z| with an alert-budget threshold, a checksummed bundle, `create_app(model_dir)`
-with `/healthz`, `/readyz`, `/version`, `/predict`. Its contract is [lab/CONTRACT.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d5_api_testing/lab/CONTRACT.md).
+with `/healthz`, `/readyz`, `/version`, `/predict`. Its contract is [lab/CONTRACT.md](https://github.com/berdakh/mlengineering/blob/main/labs/w5d5_api_testing/lab/CONTRACT.md).
 Read the contract; treat the code as a black box.
 
 **Run your tests** (from the repository root):
@@ -388,14 +388,14 @@ burn-in (for example `[9.0, 11.0]`: mean 10, std 1).
 seconds and kills 12 of 12 defects. Record which test killed which defect in a comment at the top of
 each test file; you will need that list for the assessment.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d5_api_testing/figures/kill_matrix.svg" alt="Kill matrix: the starter and a happy-path suite kill 0 of 12 defects, a status-code suite 7, the full suite without its concurrency test 11, the reference suite 12" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d5_api_testing/figures/kill_matrix.svg" alt="Kill matrix: the starter and a happy-path suite kill 0 of 12 defects, a status-code suite 7, the full suite without its concurrency test 11, the reference suite 12" width="100%">
 
 <a id="figure-2"></a>*Figure 2 (real runs of the grader).* Rows are test suites, columns the 12
 defects; dark cells are kills. A status-code-only suite misses every defect in the *content* of a 200
 response. The reference suite without its single concurrency test kills 11. Plot your own suite's
 row mentally before looking at the hints.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d5_api_testing/figures/predict_latency.svg" alt="Time per /predict request through TestClient: about 1-1.5 ms median up to 100 values, 2.5 ms at 1,000 and 5 ms at 3,600" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d5_api_testing/figures/predict_latency.svg" alt="Time per /predict request through TestClient: about 1-1.5 ms median up to 100 values, 2.5 ms at 1,000 and 5 ms at 3,600" width="100%">
 
 *Figure 3 (real run, in-process, one machine; noisy).* Time per request through `TestClient`, 200
 requests per batch size after warm-up. Median 1.2 ms for one value, 2.5 ms for 1,000, 5.0 ms for
@@ -418,7 +418,7 @@ check("w5d5")
 as "fully backwards compatible". Without hints first:
 
 1. Implement `breaking_changes(old, new) -> list[str]` in `challenge/compat.py` for OpenAPI documents
-   produced by FastAPI. Rules are in [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d5_api_testing/challenge/README.md).
+   produced by FastAPI. Rules are in [challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w5d5_api_testing/challenge/README.md).
 2. In `challenge/test_contract.py`, write contract tests that would block the release of v2 and that
    pass for compatible changes.
 3. Write `challenge/COMPATIBILITY.md`: the policy and a verdict on v2.
@@ -482,8 +482,8 @@ check("w5d5", challenge=True)
 
 ## 6. Progressive hints
 
-Use them in order and only after a real attempt: [hint 1 (concept)](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d5_api_testing/hints/hint1_concept.md),
-[hint 2 (approach)](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d5_api_testing/hints/hint2_approach.md), [hint 3 (partial implementation)](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d5_api_testing/hints/hint3_partial.md).
+Use them in order and only after a real attempt: [hint 1 (concept)](https://github.com/berdakh/mlengineering/blob/main/labs/w5d5_api_testing/hints/hint1_concept.md),
+[hint 2 (approach)](https://github.com/berdakh/mlengineering/blob/main/labs/w5d5_api_testing/hints/hint2_approach.md), [hint 3 (partial implementation)](https://github.com/berdakh/mlengineering/blob/main/labs/w5d5_api_testing/hints/hint3_partial.md).
 The reference suite and the reference challenge solution are in `solutions/labs/w5d5_api_testing/`.
 
 

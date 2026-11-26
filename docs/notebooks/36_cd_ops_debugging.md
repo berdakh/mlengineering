@@ -9,8 +9,8 @@ nav_order: 36
 # 36 · Delivery and operational debugging; project milestone 3
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/36_cd_ops_debugging.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/36_cd_ops_debugging.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/36_cd_ops_debugging.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/36_cd_ops_debugging.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 36
 
 ---
 
-**Week 6 · day 6 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w6d6_cd_ops_debugging/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d6_cd_ops_debugging/)
+**Week 6 · day 6 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w6d6_cd_ops_debugging/`](https://github.com/berdakh/mlengineering/blob/main/labs/w6d6_cd_ops_debugging/)
 
 **Objective.** Promote an image by tag, configure through environment, read logs to diagnose seeded failures, and roll back.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -100,7 +100,7 @@ worse.
 
 ### 2.1 Intuition: build once, move the same bytes
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-36-01.svg" alt="Diagram 1 of notebook 36" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-36-01.svg" alt="Diagram 1 of notebook 36" style="max-width:100%">
 
 The image is the unit of release. Staging and production run **the same digest** with different
 environment files. If production ran a rebuild of the same commit instead, "tested in staging" would be a
@@ -131,7 +131,7 @@ same unchanged source tree produced three different digests (`sha256:1672158c...
 
 ### 2.3 Configuration: validate format at startup, existence by readiness
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-36-02.svg" alt="Diagram 2 of notebook 36" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-36-02.svg" alt="Diagram 2 of notebook 36" style="max-width:100%">
 
 Two layers, on purpose. A **typo** in a variable name or a malformed value is a configuration bug that
 can never fix itself: stop at once, with the variable's name in the error. A **missing or corrupt model**
@@ -141,7 +141,7 @@ is exactly where you want them.
 
 ### 2.4 The debugging method
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-36-03.svg" alt="Diagram 3 of notebook 36" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-36-03.svg" alt="Diagram 3 of notebook 36" style="max-width:100%">
 
 The habit that matters most is the first box. In each incident of this lab, `fgops.py history` and the
 service's own startup log lines identify the change within a minute; most wasted time in real incidents is
@@ -294,7 +294,7 @@ git diff -- ops/env                  # configuration is version-controlled: what
 Fix tools: `python ops/rollback.py production --apply` (image problems), `python ops/fgops.py reset`
 followed by `python ops/fgops.py deploy production <current release>` (configuration problems).
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d6_cd_ops_debugging/figures/readiness_timeline.svg" alt="Production readiness through the three incidents of the authoring run: 503 during the bad promotion and the MODEL_DIR incident, ready then no answer during the memory incident" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d6_cd_ops_debugging/figures/readiness_timeline.svg" alt="Production readiness through the three incidents of the authoring run: 503 during the bad promotion and the MODEL_DIR incident, ready then no answer during the memory incident" width="100%">
 
 *Figure 1. Production `/readyz` polled every 0.25 s during the authoring replay of all three incidents
 (real run, 2026-11-22; `solutions/.../record/record_incidents.py`). Two incidents fail loudly (503 from the
@@ -309,14 +309,14 @@ gaps are container replacements. Do not use this figure to solve the incidents; 
   outside the tool: redeploy through `fgops.py` so the record is true.
 * When finished: `python ops/fgops.py cleanup` removes every container, the registry and the images.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d6_cd_ops_debugging/figures/deployment_history.svg" alt="Release history of the authoring run: staging and production deployments over time, coloured good, failed or rolled back" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d6_cd_ops_debugging/figures/deployment_history.svg" alt="Release history of the authoring run: staging and production deployments over time, coloured good, failed or rolled back" width="100%">
 
 *Figure 2. The release history at the end of the authoring replay (real). The hotfix release `6c7f7b` failed
 in staging and was promoted by hand anyway; rollback then returned production to `b7c8d9`. The two later
 failures are the same digest `b7c8d9` with broken configuration: rolling back to `a1b2c3` would have been the
 wrong fix.*
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d6_cd_ops_debugging/figures/time_not_ready.svg" alt="Seconds production was not ready per incident in the scripted replay: 20, 20 and 13" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d6_cd_ops_debugging/figures/time_not_ready.svg" alt="Seconds production was not ready per incident in the scripted replay: 20, 20 and 13" width="100%">
 
 *Figure 3. Time production was not ready per incident in the scripted replay (real; the script applied each fix
 immediately). With a person diagnosing, add the minutes the diagnosis takes: the method in section 2.4 is
@@ -340,7 +340,7 @@ check("w6d6")
 
 ## 5. Independent challenge: a blameless postmortem
 
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d6_cd_ops_debugging/challenge/README.md): an incident in a different service (a demand forecaster) whose
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w6d6_cd_ops_debugging/challenge/README.md): an incident in a different service (a demand forecaster) whose
 release passed every operational check and was still wrong for 47 minutes. Write the postmortem. Do it
 without hints first.
 
@@ -392,8 +392,8 @@ check("w6d6", challenge=True)
 {% raw %}
 ## 6. Progressive hints
 
-[hint 1: concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d6_cd_ops_debugging/hints/hint1_concept.md) - [hint 2: approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d6_cd_ops_debugging/hints/hint2_approach.md) -
-[hint 3: partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w6d6_cd_ops_debugging/hints/hint3_partial.md). The reference solution, including a reference
+[hint 1: concept](https://github.com/berdakh/mlengineering/blob/main/labs/w6d6_cd_ops_debugging/hints/hint1_concept.md) - [hint 2: approach](https://github.com/berdakh/mlengineering/blob/main/labs/w6d6_cd_ops_debugging/hints/hint2_approach.md) -
+[hint 3: partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w6d6_cd_ops_debugging/hints/hint3_partial.md). The reference solution, including a reference
 `DEBUG_LOG.md` with the authoring run's real evidence, is in `solutions/labs/w6d6_cd_ops_debugging/`.
 Open it only after your own write-ups are done.
 

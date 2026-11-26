@@ -26,8 +26,8 @@ or use a distribution package for a newer Python. Everything here was executed o
 ## 2. Clone and install
 
 ```bash
-git clone https://github.com/berdakh/mlengineering-.git
-cd mlengineering-
+git clone https://github.com/berdakh/mlengineering.git
+cd mlengineering
 
 python3 -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\activate
 python -m pip install --upgrade pip

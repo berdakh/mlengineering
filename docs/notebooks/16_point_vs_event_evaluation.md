@@ -9,8 +9,8 @@ nav_order: 16
 # 16 · Point-level versus event-level evaluation for detection
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/16_point_vs_event_evaluation.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/16_point_vs_event_evaluation.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/16_point_vs_event_evaluation.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/16_point_vs_event_evaluation.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 16
 
 ---
 
-**Week 3 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w3d4_point_vs_event_evaluation/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d4_point_vs_event_evaluation/)
+**Week 3 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w3d4_point_vs_event_evaluation/`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d4_point_vs_event_evaluation/)
 
 **Objective.** Implement and interpret point-wise metrics, event matching, detection delay and false alarms per hour; explain when each misleads.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -97,7 +97,7 @@ per row, and point metrics (precision, recall, F1, PR-AUC) count rows. But fault
 SKAB each labelled experiment contains exactly one contiguous anomalous segment of 188 to 586 rows.
 The operator does not act on rows either; they act on *alarms*, which are runs of flags.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-16-01.svg" alt="Diagram 1 of notebook 16" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-16-01.svg" alt="Diagram 1 of notebook 16" style="max-width:100%">
 
 Everything after the flags is part of the detector, not of the metric: `merge_gap` and
 `min_duration` are hyperparameters, chosen on development data like the threshold (w3d3).
@@ -152,7 +152,7 @@ at delay zero. The tolerance exists because onsets are labelled imprecisely: SKA
 `changepoint`, and maintenance logs in industry lag the true onset. A tolerance must be set from
 what is known about label timing, stated, and kept fixed.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-16-02.svg" alt="Diagram 2 of notebook 16" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-16-02.svg" alt="Diagram 2 of notebook 16" style="max-width:100%">
 
 ### 2.5 The event-level metrics
 
@@ -230,7 +230,7 @@ Both are complete and run from the repository root.
 
 ### 3.1 Hand-built detectors: the two metrics disagree
 
-[`example/toy_point_vs_event.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d4_point_vs_event_evaluation/example/toy_point_vs_event.py) builds a SYNTHETIC recording (6 h at
+[`example/toy_point_vs_event.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d4_point_vs_event_evaluation/example/toy_point_vs_event.py) builds a SYNTHETIC recording (6 h at
 one row per 2 s, ten events, one of them long) and five hand-built detectors with known behaviour.
 
 ```python
@@ -250,7 +250,7 @@ chattering (50 % of event rows)     1.0   0.521    0.685        10/10    389    
 onset only + 20 stray flags       0.714   0.034    0.065        10/10     30           3.86            0.0
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d4_point_vs_event_evaluation/figures/toy_point_vs_event.svg" alt="Bar charts of point F1 and event recall for five hand-built detectors: the detector that finds only the long event has the highest point F1 and the lowest event recall" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d4_point_vs_event_evaluation/figures/toy_point_vs_event.svg" alt="Bar charts of point F1 and event recall for five hand-built detectors: the detector that finds only the long event has the highest point F1 and the lowest event recall" width="100%">
 
 *Figure 1 (SYNTHETIC).* Read across a row: "long event only" is the best detector by point F1 and the
 worst by events; "onset only" is the reverse. The chattering detector's 389 alarms do not appear in
@@ -262,7 +262,7 @@ precision 0.71 while raising 3.86 false alarms per hour.
 
 ### 3.2 Point-adjust on real labels
 
-[`example/point_adjust_random.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d4_point_vs_event_evaluation/example/point_adjust_random.py) flags rows at random with rate `q`
+[`example/point_adjust_random.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d4_point_vs_event_evaluation/example/point_adjust_random.py) flags rows at random with rate `q`
 on all 34 labelled SKAB experiments (real labels, random detector) and scores the flags raw and after
 point-adjust.
 
@@ -286,7 +286,7 @@ Output (run 2026-11-22):
 Reference points on the same rows: flag everything gives F1 0.518; the best F1 on the SKAB README leaderboard (not point-adjusted) is 0.78.
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d4_point_vs_event_evaluation/figures/point_adjust_inflation.svg" alt="Line chart of point F1 against the random flag rate: raw F1 stays near zero while point-adjusted F1 rises to about 0.99 at one percent of rows flagged" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d4_point_vs_event_evaluation/figures/point_adjust_inflation.svg" alt="Line chart of point F1 against the random flag rate: raw F1 stays near zero while point-adjusted F1 rises to about 0.99 at one percent of rows flagged" width="100%">
 
 *Figure 2 (real SKAB labels, random flags).* The orange curve is the same random detector after
 point-adjust. It crosses the best published non-adjusted F1 at well under 1 % of rows flagged.
@@ -381,14 +381,14 @@ often starts before the onset and becomes a false alarm. Mahalanobis, worst of t
 detectors on point F1, is the best post-processed one: 5 of 7 events, 5 false alarms (4.1 per hour),
 median delay 52 s. Post-processing parameters and the threshold have to be chosen together.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d4_point_vs_event_evaluation/figures/alarms_on_signal.svg" alt="Three stacked panels for test experiment valve1/10: flow rate with the labelled anomalous segment shaded, the burn-in z-score with the threshold, and the alarms before and after post-processing" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d4_point_vs_event_evaluation/figures/alarms_on_signal.svg" alt="Three stacked panels for test experiment valve1/10: flow rate with the labelled anomalous segment shaded, the burn-in z-score with the threshold, and the alarms before and after post-processing" width="100%">
 
 *Figure 3 (real SKAB, test experiment `valve1/10`).* One fault. The raw flags (bottom row) are 28
 separate alarms: one hit, 13 redundant, 14 false. After merging gaps of up to 30 rows and requiring 10
 rows of confirmation, two remain: the hit and one false alarm, which you can see coming from an
 isolated burst of high z-scores in normal operation.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w3d4_point_vs_event_evaluation/figures/tradeoff_dev.svg" alt="Two panels against false alarms per hour on a log scale: event recall rises with the false-alarm rate, and median delay falls; the post-processed curve reaches much higher recall at low false-alarm rates" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w3d4_point_vs_event_evaluation/figures/tradeoff_dev.svg" alt="Two panels against false alarms per hour on a log scale: event recall rises with the false-alarm rate, and median delay falls; the post-processed curve reaches much higher recall at low false-alarm rates" width="100%">
 
 *Figure 4 (real SKAB, 27 development experiments).* The curve an operating point is chosen from. The
 dashed line is a budget of one false alarm per 8 hours. Note that with post-processing recall is not
@@ -416,7 +416,7 @@ check("w3d4")
 
 ## 5. Independent challenge
 
-[`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d4_point_vs_event_evaluation/challenge/README.md), two parts:
+[`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w3d4_point_vs_event_evaluation/challenge/README.md), two parts:
 
 * **A - an alert budget.** Choose threshold, `min_duration` and `merge_gap` on development data so
   the detector raises at most one false alarm per eight hours, evaluate once on test, and write the
@@ -507,9 +507,9 @@ check("w3d4", challenge=True)
 
 ## 6. Progressive hints (open in order, only when stuck)
 
-1. [Concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d4_point_vs_event_evaluation/hints/hint1_concept.md)
-2. [Approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d4_point_vs_event_evaluation/hints/hint2_approach.md)
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w3d4_point_vs_event_evaluation/hints/hint3_partial.md)
+1. [Concept](https://github.com/berdakh/mlengineering/blob/main/labs/w3d4_point_vs_event_evaluation/hints/hint1_concept.md)
+2. [Approach](https://github.com/berdakh/mlengineering/blob/main/labs/w3d4_point_vs_event_evaluation/hints/hint2_approach.md)
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w3d4_point_vs_event_evaluation/hints/hint3_partial.md)
 
 Reference solutions: `solutions/labs/w3d4_point_vs_event_evaluation/`. If you open a hint, the
 work counts as guided, not independent.

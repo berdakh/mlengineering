@@ -24,14 +24,14 @@ heading_anchors: true
 
 aux_links:
   "Notebooks on GitHub":
-    - "https://github.com/berdakh/mlengineering-/tree/main/notebooks"
+    - "https://github.com/berdakh/mlengineering/tree/main/notebooks"
   "Repository":
-    - "https://github.com/berdakh/mlengineering-"
+    - "https://github.com/berdakh/mlengineering"
 aux_links_new_tab: true
 
 nav_external_links:
   - title: Open in Colab
-    url: https://colab.research.google.com/github/berdakh/mlengineering-
+    url: https://colab.research.google.com/github/berdakh/mlengineering
 
 back_to_top: true
 back_to_top_text: "Back to top"

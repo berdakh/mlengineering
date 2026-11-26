@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/35_cloud_deployment.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/35_cloud_deployment.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -100,7 +100,7 @@ print("repo root:", REPO_ROOT)
 # compute) running, logs to **CloudWatch Logs**, and a **security group** as the firewall. No load
 # balancer, no NAT gateway, no database.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-35-01.svg" alt="Diagram 1 of notebook 35" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-35-01.svg" alt="Diagram 1 of notebook 35" style="max-width:100%">
 #
 # Everything else in the lesson is about making each arrow safe: who may push (identity), what is pushed
 # (an immutable, scanned image), who may connect (no one by default), what it costs (budget first), and
@@ -143,7 +143,7 @@ print("repo root:", REPO_ROOT)
 # formula already tells you is that $T$ dominates. The worked example `task_hours.py` computes the billed
 # *units* for four realistic scenarios:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d5_cloud_deployment/figures/billed_units.svg" alt="Billed vCPU-hours for four scenarios: 0.5 for a same-day lab, 16 for a weekend, 182.5 for a forgotten month, 365 for two forgotten tasks" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d5_cloud_deployment/figures/billed_units.svg" alt="Billed vCPU-hours for four scenarios: 0.5 for a same-day lab, 16 for a weekend, 182.5 for a forgotten month, 365 for two forgotten tasks" width="100%">
 #
 # *Figure 1. Billed vCPU-hours of a 0.25 vCPU task (arithmetic, no prices). A forgotten task bills 365 times
 # more than one torn down the same day; "two tasks for availability" doubles it again. Source:
@@ -154,7 +154,7 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.4 Credentials: what goes where
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-35-02.svg" alt="Diagram 2 of notebook 35" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-35-02.svg" alt="Diagram 2 of notebook 35" style="max-width:100%">
 #
 # The rules, in order of how often they are broken: never commit credentials (the lab's checks scan for
 # key-shaped strings and 12-digit account ids); never bake them into an image (anyone who can pull it
@@ -265,7 +265,7 @@ print("repo root:", REPO_ROOT)
 # The image the cloud would run is built from `lab/service/Dockerfile` and started with the task
 # definition's settings: same environment variables, 0.25 CPU, 512 MiB, and the same health-check command.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d5_cloud_deployment/figures/startup_timeline.svg" alt="Five local runs: /healthz and /readyz answer 200 after 2.9-3.3 s, Docker reports healthy after 5.6-5.7 s" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d5_cloud_deployment/figures/startup_timeline.svg" alt="Five local runs: /healthz and /readyz answer 200 after 2.9-3.3 s, Docker reports healthy after 5.6-5.7 s" width="100%">
 #
 # *Figure 2. Five local runs of the image with the task definition's settings (real measurements, Docker
 # 29.10 on the authoring machine, 2026-11-22). The service answers `/readyz` about 3 s after `docker run`;
@@ -276,7 +276,7 @@ print("repo root:", REPO_ROOT)
 # also explains the task definition's `startPeriod`: health-check failures during the first seconds should
 # not count against a container that is still loading its model.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d5_cloud_deployment/figures/image_layers.svg" alt="Image layer sizes: dependencies 180 MB, base OS 87.7 MB, Python 41.4 MB, leftover wheel layer 31.6 MB, application code 57 kB" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d5_cloud_deployment/figures/image_layers.svg" alt="Image layer sizes: dependencies 180 MB, base OS 87.7 MB, Python 41.4 MB, leftover wheel layer 31.6 MB, application code 57 kB" width="100%">
 #
 # *Figure 3. Layers of the lab's image (`docker history`). The application and model are kilobytes; the
 # image is dominated by dependencies and the base. The orange layer is the wheelhouse copied for builds
@@ -292,7 +292,7 @@ print("repo root:", REPO_ROOT)
 # Files you edit: `deploy/aws_deploy.py` (tasks 3-6) and `deploy/taskdef.template.json` (task 4).
 # Everything else is given; read it.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-35-03.svg" alt="Diagram 3 of notebook 35" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-35-03.svg" alt="Diagram 3 of notebook 35" style="max-width:100%">
 #
 # **Task 1 - Run the container locally (10 min).**
 #

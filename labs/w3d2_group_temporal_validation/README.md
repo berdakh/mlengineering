@@ -1,6 +1,6 @@
 # 14 · Group-aware and temporal validation — lab files
 
-**The lesson is notebook [`14_group_temporal_validation`](../../notebooks/14_group_temporal_validation.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/14_group_temporal_validation.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/14_group_temporal_validation.ipynb)).
+**The lesson is notebook [`14_group_temporal_validation`](../../notebooks/14_group_temporal_validation.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/14_group_temporal_validation.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/14_group_temporal_validation.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

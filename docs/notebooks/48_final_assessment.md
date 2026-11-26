@@ -9,8 +9,8 @@ nav_order: 48
 # 48 · Final independent assessment
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/48_final_assessment.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/48_final_assessment.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/48_final_assessment.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/48_final_assessment.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 48
 
 ---
 
-**Week 8 · day 6 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d6_final_assessment/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d6_final_assessment/)
+**Week 8 · day 6 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d6_final_assessment/`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d6_final_assessment/)
 
 **Objective.** Complete a parallel form of the diagnostic and the final transfer task unassisted, for comparison with Week 1 evidence.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -64,7 +64,7 @@ first months of a job do. This sitting is the closest the course gets to that: t
 no assistant, on data you have not seen.
 
 **Deliverable.** Your `lab/` files for every section, `t1_transfer/lab/REPORT.md`, a completed
-[`SUBMISSION.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d6_final_assessment/SUBMISSION.md), and [`COMPARISON.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d6_final_assessment/COMPARISON.md) filled in after review.
+[`SUBMISSION.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d6_final_assessment/SUBMISSION.md), and [`COMPARISON.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d6_final_assessment/COMPARISON.md) filled in after review.
 
 **Completion criteria.**
 
@@ -85,7 +85,7 @@ consecutive days; the w8d7 retrospective follows sitting T.
 | B | f4 baseline, f5 leakage, f6 tests/API, f7 memo | 115 + 10 for `SUBMISSION.md` |
 | T | t1 transfer task | 90 + 10 for the conditions box and commit |
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d6_final_assessment/figures/time_budget.svg" alt="Three bars: sitting A 110 minutes over three sections, sitting B 115 minutes over four, sitting T 100 minutes for the transfer task and its report" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d6_final_assessment/figures/time_budget.svg" alt="Three bars: sitting A 110 minutes over three sections, sitting B 115 minutes over four, sitting T 100 minutes for the transfer task and its report" width="100%">
 
 *Time boxes per section and sitting (planning values from the section READMEs, not measurements).*
 
@@ -98,7 +98,7 @@ schemas, new leaks and a new memo scenario. You may recognise the *patterns* (a 
 column written after the outcome); recognising a pattern in new clothes is exactly the transferable
 skill.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-48-01.svg" alt="Diagram 1 of notebook 48" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-48-01.svg" alt="Diagram 1 of notebook 48" style="max-width:100%">
 
 *Each Week 8 section is scored with the same rubric rows as its Week 1 counterpart; t1 has no Week 1
 counterpart and is compared with the w3d6 transfer sitting instead.*
@@ -142,14 +142,14 @@ loop, as tests are at work.
 
 | Sitting | Section | Task | Time box |
 |---|---|---|---|
-| A | [f1_python](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d6_final_assessment/f1_python/README.md) | debug and refactor a scan-report module | 40 min |
-| A | [f2_sql](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d6_final_assessment/f2_sql/README.md) | five queries on `parcelo.db` | 35 min |
-| A | [f3_cleaning](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d6_final_assessment/f3_cleaning/README.md) | clean a dirty account export | 35 min |
-| B | [f4_baseline](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d6_final_assessment/f4_baseline/README.md) | frame a lapse-risk task, baselines, metric at a call budget | 35 min |
-| B | [f5_leakage](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d6_final_assessment/f5_leakage/README.md) | find the leaks in a colleague's evaluation and fix it | 35 min |
-| B | [f6_testing_api](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d6_final_assessment/f6_testing_api/README.md) | tests graded by what they catch; a request schema; API concepts | 25 min |
-| B | [f7_explain](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d6_final_assessment/f7_explain/README.md) | a 350-word decision memo | 20 min |
-| T | [t1_transfer](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d6_final_assessment/t1_transfer/README.md) | a complete leak-free evaluation of a new problem | 90 min |
+| A | [f1_python](https://github.com/berdakh/mlengineering/blob/main/labs/w8d6_final_assessment/f1_python/README.md) | debug and refactor a scan-report module | 40 min |
+| A | [f2_sql](https://github.com/berdakh/mlengineering/blob/main/labs/w8d6_final_assessment/f2_sql/README.md) | five queries on `parcelo.db` | 35 min |
+| A | [f3_cleaning](https://github.com/berdakh/mlengineering/blob/main/labs/w8d6_final_assessment/f3_cleaning/README.md) | clean a dirty account export | 35 min |
+| B | [f4_baseline](https://github.com/berdakh/mlengineering/blob/main/labs/w8d6_final_assessment/f4_baseline/README.md) | frame a lapse-risk task, baselines, metric at a call budget | 35 min |
+| B | [f5_leakage](https://github.com/berdakh/mlengineering/blob/main/labs/w8d6_final_assessment/f5_leakage/README.md) | find the leaks in a colleague's evaluation and fix it | 35 min |
+| B | [f6_testing_api](https://github.com/berdakh/mlengineering/blob/main/labs/w8d6_final_assessment/f6_testing_api/README.md) | tests graded by what they catch; a request schema; API concepts | 25 min |
+| B | [f7_explain](https://github.com/berdakh/mlengineering/blob/main/labs/w8d6_final_assessment/f7_explain/README.md) | a 350-word decision memo | 20 min |
+| T | [t1_transfer](https://github.com/berdakh/mlengineering/blob/main/labs/w8d6_final_assessment/t1_transfer/README.md) | a complete leak-free evaluation of a new problem | 90 min |
 
 ```python
 !python wb.py check labs/w8d6_final_assessment/f1_python
@@ -157,7 +157,7 @@ loop, as tests are at work.
 ```
 
 Every starter **fails** its checks: that is the intended starting state. Data for all sections is
-SYNTHETIC and documented in [data/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d6_final_assessment/data/README.md).
+SYNTHETIC and documented in [data/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w8d6_final_assessment/data/README.md).
 
 ## 5. Independent challenge
 
@@ -183,7 +183,7 @@ reference, then score again, and record both.
   (pipeline, temporal split, `NOT EXISTS`) automatically, and in which did you have to think it through?
 * **Later retrieval question:** without looking, list the three conditions that make a sitting count
   as "Demonstrated independently".
-* **Next:** [w8d7 retrospective](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d7_retrospective/README.md) turns this comparison into your
+* **Next:** [w8d7 retrospective](https://github.com/berdakh/mlengineering/blob/main/labs/w8d7_retrospective/README.md) turns this comparison into your
   evidence portfolio and the plan for the next eight weeks.
 
 ## Record your progress

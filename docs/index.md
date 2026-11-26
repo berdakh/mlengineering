@@ -13,7 +13,7 @@ test it, evaluate it honestly, serve it, containerise and deploy it, then monito
 
 [Start with Week 1](weeks/week-1.html){: .btn .btn-primary .mr-2 }
 [Browse the notebooks](notebooks/){: .btn .mr-2 }
-[Get the code](https://github.com/berdakh/mlengineering-){: .btn }
+[Get the code](https://github.com/berdakh/mlengineering){: .btn }
 
 All 48 notebooks are **readable on this site** and open in Google Colab with one click: no install and no
 GPU to get started.

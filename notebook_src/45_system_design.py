@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/45_system_design.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/45_system_design.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -92,7 +92,7 @@ print("repo root:", REPO_ROOT)
 # what exactly is predicted, from which data, judged by which number, served how fast, watched how, and
 # replaced how. A structure stops you from spending 30 minutes on the model and 0 minutes on labels.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-01.svg" alt="Diagram 1 of notebook 45" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-45-01.svg" alt="Diagram 1 of notebook 45" style="max-width:100%">
 #
 # The order is a default, not a script. Say it out loud at the start ("I'll clarify requirements, do some
 # numbers, then data and labels, evaluation, serving and monitoring; stop me if you want depth anywhere"),
@@ -143,13 +143,13 @@ print("repo root:", REPO_ROOT)
 # quoted value that minimises expected cost is the quantile $\tau = c_\ell/(c_\ell + c_e)$ of the outcome
 # distribution (D2 uses this).
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d3_system_design/figures/labels_vs_window.svg" alt="Labels available today against the evaluation window for label delays of 1, 7, 14 and 28 days: each line is zero until the window exceeds the delay" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d3_system_design/figures/labels_vs_window.svg" alt="Labels available today against the evaluation window for label delays of 1, 7, 14 and 28 days: each line is zero until the window exceeds the delay" width="100%">
 #
 # *Figure 1 (planning arithmetic, 1,000 predictions a day with 5 % labelled; not data).* With a 28-day
 # delay, a 30-day window holds 100 labels; you need about 36 days just to reach 385 labels, the amount for
 # ±5 points on a proportion near 0.5.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d3_system_design/figures/half_width_vs_n.svg" alt="Ninety-five percent half-width of a proportion against number of labels on log-log axes for base rates 0.5, 0.1 and 0.01" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d3_system_design/figures/half_width_vs_n.svg" alt="Ninety-five percent half-width of a proportion against number of labels on log-log axes for base rates 0.5, 0.1 and 0.01" width="100%">
 #
 # *Figure 2 (formula).* Slopes are −1/2 on log-log axes: every halving of the interval costs four times
 # the labels. Rare outcomes (p = 0.01) have narrow absolute intervals but huge relative ones.
@@ -165,12 +165,12 @@ print("repo root:", REPO_ROOT)
 #
 # ### 2.5 Choosing batch, online or streaming
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-02.svg" alt="Diagram 2 of notebook 45" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-45-02.svg" alt="Diagram 2 of notebook 45" style="max-width:100%">
 #
 # Most production systems are hybrids: heavy features precomputed in batch or streaming jobs, a light
 # model called online. Training/serving parity becomes the main risk in a hybrid:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-03.svg" alt="Diagram 3 of notebook 45" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-45-03.svg" alt="Diagram 3 of notebook 45" style="max-width:100%">
 #
 # ### 2.6 An industry example and the 45-minute plan
 #
@@ -180,7 +180,7 @@ print("repo root:", REPO_ROOT)
 # that skipped that question shipped a model with excellent AUC that nobody could act on: the prediction
 # arrived after dispatch. The time plan below protects the parts that matter.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-04.svg" alt="Diagram 4 of notebook 45" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-45-04.svg" alt="Diagram 4 of notebook 45" style="max-width:100%">
 #
 # ### 2.7 Limitations and common misconceptions
 #
@@ -224,7 +224,7 @@ print("repo root:", REPO_ROOT)
 # Audits for +/-0.1 pt on the miss rate  1.96^2 p(1-p) / 0.001^2                   15,305 (~0.9 weeks)
 # ```
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d3_system_design/figures/latency_budget.svg" alt="Assumed p99 per component of the listing-moderation request path; image fetch and image embedding dominate and the model takes 12 ms" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d3_system_design/figures/latency_budget.svg" alt="Assumed p99 per component of the listing-moderation request path; image fetch and image embedding dominate and the model takes 12 ms" width="100%">
 #
 # *Figure 3 (assumed numbers from the worked example).* The model is 12 of 292 ms.
 #

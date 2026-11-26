@@ -9,8 +9,8 @@ nav_order: 43
 # 43 · Project completion audit: reproduce from a clean clone
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/43_project_completion.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/43_project_completion.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/43_project_completion.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/43_project_completion.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 43
 
 ---
 
-**Week 8 · day 1 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d1_project_completion/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d1_project_completion/)
+**Week 8 · day 1 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d1_project_completion/`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d1_project_completion/)
 
 **Objective.** Audit the project against the deliverables checklist and reproduce every headline number from a fresh clone.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -118,7 +118,7 @@ ordinary machine can regenerate it without asking you anything. Each word exclud
 | **Generated numbers** | a number typed or "rounded up" in a report | w4d6, w7d6: reports built from `results.json` |
 | **Deterministic execution** | unseeded randomness, thread counts, iteration order | w1d4 (seeds), w4d3 and w4d5 (thread pinning), w5d1 (CSV `float_precision`) |
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-43-01.svg" alt="Diagram 1 of notebook 43" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-43-01.svg" alt="Diagram 1 of notebook 43" style="max-width:100%">
 
 ### 2.2 Precise terms
 
@@ -176,7 +176,7 @@ An audit always finds gaps. The professional move is to decide, in writing, what
 what to drop, with the time you actually have. A deliberate "out of scope, because..." reads as judgement; a
 silent half-finished deliverable reads as a mistake.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-43-02.svg" alt="Diagram 2 of notebook 43" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-43-02.svg" alt="Diagram 2 of notebook 43" style="max-width:100%">
 
 ### 2.8 Limitations and misconceptions
 
@@ -221,7 +221,7 @@ The same procedure, automated and run for real against the reference flowguard e
 solution, a fully pinned lock from `pip freeze`, the SKAB download script, and the committed
 `results.json` as the expected file) passed: 18 headline values, maximum difference 0, 75 s in total.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d1_project_completion/figures/audit_timeline.svg" alt="Real clean-clone audit of the reference evaluation: about 5 s to clone and install, 7 s to download the data, 63 s to evaluate; verdict PASS" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d1_project_completion/figures/audit_timeline.svg" alt="Real clean-clone audit of the reference evaluation: about 5 s to clone and install, 7 s to download the data, 63 s to evaluate; verdict PASS" width="100%">
 
 *Real run (2026-11-22, Python 3.13.18); values in `figures/figure_data.csv`. Most of the time is the
 evaluation itself, with 2000 bootstrap replicates; the environment and data steps are cheap enough to run on
@@ -232,7 +232,7 @@ every release.*
 The checks run your tool against seven SYNTHETIC git repositories (built in a temporary directory by
 `checks/synthetic_repo.py`): one reproducible project and six that each carry one defect.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d1_project_completion/figures/findings_matrix.svg" alt="SYNTHETIC projects: the reference tool flags absolute_path (plus the missing file it causes), unpinned_requirement, missing_dependency, missing_file, headline_mismatch, and nondeterministic (plus a mismatch); the good project passes" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d1_project_completion/figures/findings_matrix.svg" alt="SYNTHETIC projects: the reference tool flags absolute_path (plus the missing file it causes), unpinned_requirement, missing_dependency, missing_file, headline_mismatch, and nondeterministic (plus a mismatch); the good project passes" width="100%">
 
 *SYNTHETIC repositories; produced by running the reference tool (`figures/make_figures.py`). Two defects
 produce a second, consequential finding: the absolute path also makes the file missing in the clone, and an
@@ -273,7 +273,7 @@ check("w8d1")
 
 ## 5. Independent challenge: gap list and scoping memo
 
-See [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d1_project_completion/challenge/README.md). From your audit log and `DELIVERABLES.md`, decide with a stated
+See [challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w8d1_project_completion/challenge/README.md). From your audit log and `DELIVERABLES.md`, decide with a stated
 number of hours what you fix now, defer or scope out, and what you will say about it. No hints.
 
 
@@ -313,9 +313,9 @@ check("w8d1", challenge=True)
 
 ## 6. Progressive hints
 
-1. [Concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d1_project_completion/hints/hint1_concept.md)
-2. [Approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d1_project_completion/hints/hint2_approach.md)
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d1_project_completion/hints/hint3_partial.md)
+1. [Concept](https://github.com/berdakh/mlengineering/blob/main/labs/w8d1_project_completion/hints/hint1_concept.md)
+2. [Approach](https://github.com/berdakh/mlengineering/blob/main/labs/w8d1_project_completion/hints/hint2_approach.md)
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w8d1_project_completion/hints/hint3_partial.md)
 
 
 Open one hint at a time, only after a real attempt.

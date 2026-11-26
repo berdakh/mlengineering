@@ -9,8 +9,8 @@ nav_order: 28
 # 28 · FastAPI I: endpoints, schemas and input validation
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/28_fastapi_validation.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/28_fastapi_validation.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/28_fastapi_validation.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/28_fastapi_validation.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 28
 
 ---
 
-**Week 5 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w5d4_fastapi_validation/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d4_fastapi_validation/)
+**Week 5 · day 4 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w5d4_fastapi_validation/`](https://github.com/berdakh/mlengineering/blob/main/labs/w5d4_fastapi_validation/)
 
 **Objective.** Expose predictions through a typed HTTP API: request/response models, validation errors versus server errors, health and readiness endpoints.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -114,7 +114,7 @@ Only then does the model run. If anything fails *after* that point, it is the se
 and the client is told so without being told internals. If the model is not loaded, the honest
 answer is 503: "try again later or elsewhere".
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-28-01.svg" alt="Diagram 1 of notebook 28" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-28-01.svg" alt="Diagram 1 of notebook 28" style="max-width:100%">
 
 *Diagram 1. Every path through the service ends in one of a small set of documented answers.*
 
@@ -154,7 +154,7 @@ answer is 503: "try again later or elsewhere".
 The rule of thumb: **4xx means "change your request", 5xx means "it is not your fault".** A client
 retries 503 and 429, fixes and resends 400/422, and reports 500 with the request id.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-28-02.svg" alt="Diagram 2 of notebook 28" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-28-02.svg" alt="Diagram 2 of notebook 28" style="max-width:100%">
 
 *Diagram 2. The decision order the lab implements. The order is part of the contract: a request to a
 service without a model gets 422 if its body is invalid, because validation runs first.*
@@ -396,14 +396,14 @@ exceeding samples: 313 first at row 612
 313 exceeding samples is exactly what the streaming replay of w5d3 counted for the same experiment.
 Five repeated requests took 10.2-10.7 ms each as measured by curl on the same host.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d4_fastapi_validation/figures/predict_latency.svg" alt="Two log-log panels: median time per /predict request rises from 3 ms at 1 sample to 45 ms at 5,000 samples; time per sample falls from 3,000 µs to about 9-11 µs above 1,000 samples" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d4_fastapi_validation/figures/predict_latency.svg" alt="Two log-log panels: median time per /predict request rises from 3 ms at 1 sample to 45 ms at 5,000 samples; time per sample falls from 3,000 µs to about 9-11 µs above 1,000 samples" width="100%">
 
 *Figure 1 (REAL SKAB rows, in-process TestClient, host-dependent).* A request has a fixed cost of
 about 3 ms; above about 1,000 samples the cost is about 10 µs per sample. Sending samples one per
 request would cost 300 times more per sample than batching them: one reason the challenge's streaming
 endpoint is a different design, not a free one.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w5d4_fastapi_validation/figures/latency_breakdown.svg" alt="Horizontal bars for one 1,140-sample request: parse and validate 2.0 ms, objects to DataFrame 2.8 ms, detector.score_batch 0.8 ms, build and serialise response 3.7 ms" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w5d4_fastapi_validation/figures/latency_breakdown.svg" alt="Horizontal bars for one 1,140-sample request: parse and validate 2.0 ms, objects to DataFrame 2.8 ms, detector.score_batch 0.8 ms, build and serialise response 3.7 ms" width="100%">
 
 *Figure 2 (same conditions).* The model is the smallest of the four stages. Before optimising a
 model for latency, measure where the time goes.
@@ -420,7 +420,7 @@ check("w5d4")
 
 ## 5. Independent challenge: a stateful streaming endpoint
 
-Read [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d4_fastapi_validation/challenge/README.md). In short: copy your finished lab into `challenge/`,
+Read [challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w5d4_fastapi_validation/challenge/README.md). In short: copy your finished lab into `challenge/`,
 add the w5d3 streaming module (yours, or the snapshot in `challenge/given/`), and expose
 `PUT/GET/DELETE /streams/{machine_id}` and `POST /streams/{machine_id}/samples`, so that every
 exception of the streaming contract becomes the right status code, and streamed scores equal
@@ -491,9 +491,9 @@ check("w5d4", challenge=True)
 
 ## 6. Progressive hints
 
-1. [Hint 1 - concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d4_fastapi_validation/hints/hint1_concept.md)
-2. [Hint 2 - approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d4_fastapi_validation/hints/hint2_approach.md)
-3. [Hint 3 - partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d4_fastapi_validation/hints/hint3_partial.md)
+1. [Hint 1 - concept](https://github.com/berdakh/mlengineering/blob/main/labs/w5d4_fastapi_validation/hints/hint1_concept.md)
+2. [Hint 2 - approach](https://github.com/berdakh/mlengineering/blob/main/labs/w5d4_fastapi_validation/hints/hint2_approach.md)
+3. [Hint 3 - partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w5d4_fastapi_validation/hints/hint3_partial.md)
 
 Reference solutions and the wrong submissions the checks were validated against are in
 `solutions/labs/w5d4_fastapi_validation/`. Open them after submitting.

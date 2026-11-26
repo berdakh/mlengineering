@@ -9,8 +9,8 @@ nav_order: 23
 # 23 · Choosing complexity on evidence
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/23_model_choice.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/23_model_choice.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/23_model_choice.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/23_model_choice.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 23
 
 ---
 
-**Week 4 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w4d5_model_choice/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d5_model_choice/)
+**Week 4 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w4d5_model_choice/`](https://github.com/berdakh/mlengineering/blob/main/labs/w4d5_model_choice/)
 
 **Objective.** Decide between candidates using effect size versus uncertainty, error costs, latency, size and maintenance burden.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -127,7 +127,7 @@ does not change".
 
 With an interval `[lo, hi]` for (candidate - reference), higher is better, there are four readings:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d5_model_choice/figures/interval_rule.svg" alt="Four intervals against a shaded band from -MPID to +MPID: one wholly above (better), one inside (equivalent), one excluding zero but reaching into the band (inconclusive), one wide (inconclusive), one wholly below (worse)" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d5_model_choice/figures/interval_rule.svg" alt="Four intervals against a shaded band from -MPID to +MPID: one wholly above (better), one inside (equivalent), one excluding zero but reaching into the band (inconclusive), one wide (inconclusive), one wholly below (worse)" width="100%">
 
 *Figure 1 (SYNTHETIC schematic). Read the whole interval, not its centre or whether it excludes zero.*
 
@@ -223,7 +223,7 @@ put those numbers in one table before the decision, not in a post-incident revie
 * **"Test results decide between candidates."** That is selection on the test set (w3d3). The choice
   is made on development data; the test set confirms the chosen model once.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-23-01.svg" alt="Diagram 1 of notebook 23" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-23-01.svg" alt="Diagram 1 of notebook 23" style="max-width:100%">
 
 ## 3. Worked example: a demand-forecasting choice
 
@@ -341,12 +341,12 @@ better, so the simplest candidate that is not shown to be worse.*
 * The logistic model's interval excludes zero but reaches inside the practically-equivalent band.
 * The isolation forest is the only candidate shown to differ, and it is worse.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d5_model_choice/figures/pareto.svg" alt="Scatter of PR-AUC with confidence intervals against p95 latency on a log scale; flow-rate and logistic are on the Pareto front, Mahalanobis and isolation forest are dominated" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d5_model_choice/figures/pareto.svg" alt="Scatter of PR-AUC with confidence intervals against p95 latency on a log scale; flow-rate and logistic are on the Pareto front, Mahalanobis and isolation forest are dominated" width="100%">
 
 *Figure 3 (real SKAB, development data; latency from the authoring host).* The front keeps two
 candidates. Choosing between them takes the MPID and the complexity ranking.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w4d5_model_choice/figures/costs.svg" alt="Three bar panels on log scales: p95 latency, pickled size and fit time per candidate; the isolation forest is about 20x slower and about 700x larger than the others" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w4d5_model_choice/figures/costs.svg" alt="Three bar panels on log scales: p95 latency, pickled size and fit time per candidate; the isolation forest is about 20x slower and about 700x larger than the others" width="100%">
 
 *Figure 4 (real SKAB; host-dependent costs).* The isolation forest's step holds 100 trees per
 calibrated run: 759 kB against a few hundred bytes for the z-score.
@@ -386,7 +386,7 @@ check("w4d5")
 
 ## 5. Independent challenge
 
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d5_model_choice/challenge/README.md): a churn-model decision for an invented subscription
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w4d5_model_choice/challenge/README.md): a churn-model decision for an invented subscription
 business (SYNTHETIC). Model B scores about 0.01 AUC higher than model A, is about 20 times slower,
 and needs a GPU model server. You write `analyse()` (graded by checks on four variants of the case)
 and a one-page memo. No solution is provided until you have attempted it.
@@ -457,8 +457,8 @@ check("w4d5", challenge=True)
 ## 6. Progressive hints
 
 Open one at a time, only after 10 minutes stuck:
-[hint 1, concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d5_model_choice/hints/hint1_concept.md) · [hint 2, approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d5_model_choice/hints/hint2_approach.md) ·
-[hint 3, partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w4d5_model_choice/hints/hint3_partial.md). The full reference solution is in
+[hint 1, concept](https://github.com/berdakh/mlengineering/blob/main/labs/w4d5_model_choice/hints/hint1_concept.md) · [hint 2, approach](https://github.com/berdakh/mlengineering/blob/main/labs/w4d5_model_choice/hints/hint2_approach.md) ·
+[hint 3, partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w4d5_model_choice/hints/hint3_partial.md). The full reference solution is in
 `solutions/labs/w4d5_model_choice/` and is for after you have finished.
 
 

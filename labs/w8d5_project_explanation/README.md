@@ -1,6 +1,6 @@
 # 47 · Explaining the project and defending tradeoffs — lab files
 
-**The lesson is notebook [`47_project_explanation`](../../notebooks/47_project_explanation.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/47_project_explanation.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/47_project_explanation.ipynb)).
+**The lesson is notebook [`47_project_explanation`](../../notebooks/47_project_explanation.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/47_project_explanation.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/47_project_explanation.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/31_docker_basics.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/31_docker_basics.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -93,7 +93,7 @@ print("repo root:", REPO_ROOT)
 # filesystem, its own process tree and its own network interface, plus a thin writable layer that is
 # thrown away with the container.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-31-01.svg" alt="Diagram 1 of notebook 31" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-31-01.svg" alt="Diagram 1 of notebook 31" style="max-width:100%">
 #
 # The image is built once and run many times, identically: on your laptop, in CI, in the cloud. That is
 # the whole point, and it is also why everything that *differs* between those places (the model
@@ -119,7 +119,7 @@ print("repo root:", REPO_ROOT)
 # Change the input of one instruction and that layer *and every layer after it* is rebuilt. So order
 # instructions from "changes rarely" to "changes often":
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-31-02.svg" alt="Diagram 2 of notebook 31" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-31-02.svg" alt="Diagram 2 of notebook 31" style="max-width:100%">
 #
 # If the cost of a layer is *c<sub>i</sub>* and a change hits layer *k*, the rebuild costs
 # Σ<sub>i ≥ k</sub> *c<sub>i</sub>*. Putting the expensive, stable step (dependency install) before the
@@ -157,7 +157,7 @@ print("repo root:", REPO_ROOT)
 #   handler and shuts down gracefully; a plain Python script must install its own (section 3.1 shows
 #   both cases).
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-31-03.svg" alt="Diagram 3 of notebook 31" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-31-03.svg" alt="Diagram 3 of notebook 31" style="max-width:100%">
 #
 # With exec form the same sequence is: SIGTERM to uvicorn, uvicorn stops accepting connections, finishes
 # in-flight requests, runs the lifespan shutdown, exits 0. In an orchestrator that restarts or scales
@@ -176,7 +176,7 @@ print("repo root:", REPO_ROOT)
 # documentation also warns that published ports bypass `ufw` firewall rules. On a laptop, publish on
 # loopback only: `-p 127.0.0.1:8000:8000`.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-31-04.svg" alt="Diagram 4 of notebook 31" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-31-04.svg" alt="Diagram 4 of notebook 31" style="max-width:100%">
 #
 # ### 2.7 Where the model and the configuration live
 #
@@ -287,24 +287,24 @@ print("repo root:", REPO_ROOT)
 # and then varied one property at a time. Raw numbers are in `figures/measurements.json`; the figures
 # are drawn by `python labs/w6d1_docker_basics/figures/make_figures.py`.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d1_docker_basics/figures/stop_time.svg" alt="Exec form stops in about half a second; both shell forms take just over 10 s" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d1_docker_basics/figures/stop_time.svg" alt="Exec form stops in about half a second; both shell forms take just over 10 s" width="100%">
 #
 # *Figure 1 (measured, 3 runs each).* `docker stop` returns in 0.5 s when uvicorn is PID 1 (exit code 0,
 # log ends with "Finished server process") and in 10.2-10.4 s with either shell form (exit code 137 =
 # 128 + SIGKILL). A shell wrapper is fine if it ends with `exec uvicorn ...`.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d1_docker_basics/figures/rebuild_time.svg" alt="Copying requirements.txt first makes a code edit rebuild in about 2 s instead of 21 s" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d1_docker_basics/figures/rebuild_time.svg" alt="Copying requirements.txt first makes a code edit rebuild in about 2 s instead of 21 s" width="100%">
 #
 # *Figure 2 (measured, 3 runs).* Rebuild after appending a comment to `src/flowguard/api.py`. With
 # `COPY . .` before `pip install` every edit reinstalls numpy and pandas.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d1_docker_basics/figures/image_layers.svg" alt="The image is 178 MB of base and 171 MB of dependencies; code, model and user are kilobytes" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d1_docker_basics/figures/image_layers.svg" alt="The image is 178 MB of base and 171 MB of dependencies; code, model and user are kilobytes" width="100%">
 #
 # *Figure 3 (`docker history`).* What the 395 MB (on disk; 90 MB compressed) image consists of. Your
 # own code is 70 kB. Making the image smaller therefore means a smaller base or fewer dependencies, not
 # cleverer COPYs; w6d2 measures what a multi-stage build does and does not buy.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w6d1_docker_basics/figures/dockerignore_effect.svg" alt="Without .dockerignore, COPY . . sends 360 MB and the compressed image grows from 90 MB to 450 MB" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w6d1_docker_basics/figures/dockerignore_effect.svg" alt="Without .dockerignore, COPY . . sends 360 MB and the compressed image grows from 90 MB to 450 MB" width="100%">
 #
 # *Figure 4 (measured).* A copy of the lab with 300 MB of `data/raw`, 40 MB of `runs/`, 20 MB of `.git`
 # and a `.venv` added, built with a `COPY . .` Dockerfile. With the targeted copies of the reference

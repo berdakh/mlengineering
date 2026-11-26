@@ -9,8 +9,8 @@ nav_order: 45
 # 45 · ML system design
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/45_system_design.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/45_system_design.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/45_system_design.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/45_system_design.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 45
 
 ---
 
-**Week 8 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d3_system_design/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d3_system_design/)
+**Week 8 · day 3 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w8d3_system_design/`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d3_system_design/)
 
 **Objective.** Apply a repeatable structure (requirements, data, labels, evaluation, serving, monitoring, iteration) to two timed designs, one in an unfamiliar domain.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -55,7 +55,7 @@ print("repo root:", REPO_ROOT)
 **Prerequisites:** Weeks 5-7, in particular [w5d1](25_inference_pipeline.html) (one pipeline for
 training and serving), [w6d4](34_latency_resources.html) (Little's law, latency budgets),
 [w7d3](39_drift_vs_degradation.html) (delayed labels), [w7d4](40_model_updates_rollback.html)
-(safe rollout); interview set 5 from the [w5d7 review](https://github.com/berdakh/mlengineering-/blob/main/labs/w5d7_review/README.md) (your first design rep).
+(safe rollout); interview set 5 from the [w5d7 review](https://github.com/berdakh/mlengineering/blob/main/labs/w5d7_review/README.md) (your first design rep).
 
 ---
 
@@ -104,7 +104,7 @@ business problem and listens for whether you can turn it into a system that work
 what exactly is predicted, from which data, judged by which number, served how fast, watched how, and
 replaced how. A structure stops you from spending 30 minutes on the model and 0 minutes on labels.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-01.svg" alt="Diagram 1 of notebook 45" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-45-01.svg" alt="Diagram 1 of notebook 45" style="max-width:100%">
 
 The order is a default, not a script. Say it out loud at the start ("I'll clarify requirements, do some
 numbers, then data and labels, evaluation, serving and monitoring; stop me if you want depth anywhere"),
@@ -155,13 +155,13 @@ planning bound for a sequential path.
 quoted value that minimises expected cost is the quantile $$\tau = c_\ell/(c_\ell + c_e)$$ of the outcome
 distribution (D2 uses this).
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d3_system_design/figures/labels_vs_window.svg" alt="Labels available today against the evaluation window for label delays of 1, 7, 14 and 28 days: each line is zero until the window exceeds the delay" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d3_system_design/figures/labels_vs_window.svg" alt="Labels available today against the evaluation window for label delays of 1, 7, 14 and 28 days: each line is zero until the window exceeds the delay" width="100%">
 
 *Figure 1 (planning arithmetic, 1,000 predictions a day with 5 % labelled; not data).* With a 28-day
 delay, a 30-day window holds 100 labels; you need about 36 days just to reach 385 labels, the amount for
 ±5 points on a proportion near 0.5.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d3_system_design/figures/half_width_vs_n.svg" alt="Ninety-five percent half-width of a proportion against number of labels on log-log axes for base rates 0.5, 0.1 and 0.01" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d3_system_design/figures/half_width_vs_n.svg" alt="Ninety-five percent half-width of a proportion against number of labels on log-log axes for base rates 0.5, 0.1 and 0.01" width="100%">
 
 *Figure 2 (formula).* Slopes are −1/2 on log-log axes: every halving of the interval costs four times
 the labels. Rare outcomes (p = 0.01) have narrow absolute intervals but huge relative ones.
@@ -177,12 +177,12 @@ experiment if the system breaks at 3 a.m.
 
 ### 2.5 Choosing batch, online or streaming
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-02.svg" alt="Diagram 2 of notebook 45" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-45-02.svg" alt="Diagram 2 of notebook 45" style="max-width:100%">
 
 Most production systems are hybrids: heavy features precomputed in batch or streaming jobs, a light
 model called online. Training/serving parity becomes the main risk in a hybrid:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-03.svg" alt="Diagram 3 of notebook 45" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-45-03.svg" alt="Diagram 3 of notebook 45" style="max-width:100%">
 
 ### 2.6 An industry example and the 45-minute plan
 
@@ -192,7 +192,7 @@ because that fixes the prediction time, the acceptable latency and the cost of e
 that skipped that question shipped a model with excellent AUC that nobody could act on: the prediction
 arrived after dispatch. The time plan below protects the parts that matter.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-45-04.svg" alt="Diagram 4 of notebook 45" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-45-04.svg" alt="Diagram 4 of notebook 45" style="max-width:100%">
 
 ### 2.7 Limitations and common misconceptions
 
@@ -214,7 +214,7 @@ arrived after dispatch. The time plan below protects the parts that matter.
 **Scenario (constructed).** A marketplace receives 3 million new listings a day; a model must flag rule-
 breaking listings within 400 ms at p99 before they go live; moderators review flagged listings, and a
 0.1 % random sample of unflagged listings is audited to find misses. All numbers are stated assumptions
-at the top of [`example/estimate_listing_moderation.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d3_system_design/example/estimate_listing_moderation.py).
+at the top of [`example/estimate_listing_moderation.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d3_system_design/example/estimate_listing_moderation.py).
 
 ```python
 !python labs/w8d3_system_design/example/estimate_listing_moderation.py
@@ -235,7 +235,7 @@ Misses found by audits per week        audit labels x 0.4 % violation rate      
 Audits for +/-0.1 pt on the miss rate  1.96^2 p(1-p) / 0.001^2                   15,305 (~0.9 weeks)
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w8d3_system_design/figures/latency_budget.svg" alt="Assumed p99 per component of the listing-moderation request path; image fetch and image embedding dominate and the model takes 12 ms" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w8d3_system_design/figures/latency_budget.svg" alt="Assumed p99 per component of the listing-moderation request path; image fetch and image embedding dominate and the model takes 12 ms" width="100%">
 
 *Figure 3 (assumed numbers from the worked example).* The model is 12 of 292 ms.
 
@@ -262,7 +262,7 @@ Audits for +/-0.1 pt on the miss rate  1.96^2 p(1-p) / 0.001^2                  
 The lab has two parts: a small worksheet that makes your estimates fast and correct, and the first timed
 design.
 
-**Task 1 — the estimation worksheet.** Open [`lab/estimates.py`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d3_system_design/lab/estimates.py). Implement the six
+**Task 1 — the estimation worksheet.** Open [`lab/estimates.py`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d3_system_design/lab/estimates.py). Implement the six
 functions; each docstring states the formula and the units. Every function must raise `ValueError` for
 inputs that make the estimate meaningless (zero or negative volumes, fractions outside (0, 1], NaN).
 
@@ -284,7 +284,7 @@ an over-budget design should be visible.
 **Task 2 — use it.** Reproduce three rows of the worked example's table with your functions in a Python
 shell, and check them against the output above.
 
-**Task 3 — D1 under exam conditions.** Open [`DESIGN_PROMPTS.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d3_system_design/DESIGN_PROMPTS.md), set a 45-minute timer,
+**Task 3 — D1 under exam conditions.** Open [`DESIGN_PROMPTS.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d3_system_design/DESIGN_PROMPTS.md), set a 45-minute timer,
 record yourself, and design D1 (knowledge-base search ranking). Use `estimates.py` for the numbers.
 Keep 8 minutes for the follow-ups.
 
@@ -307,7 +307,7 @@ check("w8d3")
 
 ## 5. Independent challenge — review a flawed design
 
-[`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d3_system_design/challenge/README.md): a colleague's design doc for routing support tickets with a
+[`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d3_system_design/challenge/README.md): a colleague's design doc for routing support tickets with a
 model. Write a review (findings with severity and concrete fixes, a verdict, a summary). It transfers the
 structure from producing a design to critiquing one, which is what a design review at work and the
 "what is wrong with this design?" interview variant both ask for. No solution in this directory.
@@ -346,8 +346,8 @@ check("w8d3", challenge=True)
 
 ## 6. Progressive hints
 
-[Hint 1 — concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d3_system_design/hints/hint1_concept.md) · [Hint 2 — approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d3_system_design/hints/hint2_approach.md) ·
-[Hint 3 — partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d3_system_design/hints/hint3_partial.md)
+[Hint 1 — concept](https://github.com/berdakh/mlengineering/blob/main/labs/w8d3_system_design/hints/hint1_concept.md) · [Hint 2 — approach](https://github.com/berdakh/mlengineering/blob/main/labs/w8d3_system_design/hints/hint2_approach.md) ·
+[Hint 3 — partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w8d3_system_design/hints/hint3_partial.md)
 
 
 Open one hint at a time, only after a real attempt.
@@ -465,7 +465,7 @@ minutes, and what to do instead.
 
 #### Interview rep (the session's main event)
 
-The two timed designs in [`DESIGN_PROMPTS.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w8d3_system_design/DESIGN_PROMPTS.md), 45 minutes each, recorded, self-scored
+The two timed designs in [`DESIGN_PROMPTS.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w8d3_system_design/DESIGN_PROMPTS.md), 45 minutes each, recorded, self-scored
 against part A of `solutions/labs/w8d3_system_design/DESIGN_ANSWERS.md` before you read part B.
 Log in `progress/notes.md`: area scores, the follow-up you handled worst, and one structural habit to
 change on the next attempt.

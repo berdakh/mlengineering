@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/05_testing_ml_code.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/05_testing_ml_code.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -106,7 +106,7 @@ print("repo root:", REPO_ROOT)
 # alarm) is **flaky** or **over-specified**; a suite that passes on defective code (miss) is
 # **weak**. "All tests pass" tells you nothing until you know the suite's sensitivity.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d5_testing_ml_code/figures/kill_matrix.svg" alt="Real harness runs: six test suites against 14 injected defects; starter, runs-without-error and self-comparison detect 0, the end-to-end metric suite 1, loose tolerances 13, the reference suite 14" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w1d5_testing_ml_code/figures/kill_matrix.svg" alt="Real harness runs: six test suites against 14 injected defects; starter, runs-without-error and self-comparison detect 0, the end-to-end metric suite 1, loose tolerances 13, the reference suite 14" width="100%">
 #
 # *Real runs of this lesson's grading harness. All six suites pass on the correct package; a suite is only as good as the defects it notices. Defects are numbered rather than named so the figure does not give the lab away. Regenerate with `python labs/w1d5_testing_ml_code/figures/make_figures.py` (about a minute).*
 #
@@ -172,7 +172,7 @@ print("repo root:", REPO_ROOT)
 # loose tolerances for tests whose claim is itself approximate ("interpolating three missing
 # samples changes RMS by < 5 %"), and say so in a comment.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d5_testing_ml_code/figures/tolerance_regions.svg" alt="Largest error that passes as a function of the expected value, for an absolute tolerance of 1e-9, a relative tolerance of 1e-6 and their combination; the two cross at an expected value of 1e-3" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w1d5_testing_ml_code/figures/tolerance_regions.svg" alt="Largest error that passes as a function of the expected value, for an absolute tolerance of 1e-9, a relative tolerance of 1e-6 and their combination; the two cross at an expected value of 1e-3" width="100%">
 #
 # *Arithmetic, not data. Below `|b| = abs / rel` the absolute term decides; above it the relative term does. An expected value of exactly zero needs an absolute tolerance.*
 #
@@ -202,11 +202,11 @@ print("repo root:", REPO_ROOT)
 # probability of the wrong class" (AUC ≈ 0) and "labels misaligned with features" (AUC ≈ 0.5).
 # Real performance thresholds belong in the evaluation stage, with uncertainty attached.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-05-01.svg" alt="Diagram 1 of notebook 05" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-05-01.svg" alt="Diagram 1 of notebook 05" style="max-width:100%">
 #
 # *The line that matters runs between the two boxes: above it a red result is a defect, below it a red result may be an unlucky split.*
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d5_testing_ml_code/figures/auc_over_seeds.svg" alt="SYNTHETIC pump data: test ROC AUC of the correct code for 20 split seeds ranges from 0.9464 to 1.0; one seed falls below the 0.95 assertion threshold" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w1d5_testing_ml_code/figures/auc_over_seeds.svg" alt="SYNTHETIC pump data: test ROC AUC of the correct code for 20 split seeds ranges from 0.9464 to 1.0; one seed falls below the 0.95 assertion threshold" width="100%">
 #
 # *SYNTHETIC data. The same correct code under 20 split seeds: `assert auc > 0.95` fails once (seed 4) with no defect present.*
 #
@@ -337,7 +337,7 @@ print("repo root:", REPO_ROOT)
 # - `checks/bugs.py` lists the defects. Reading it first turns this lab into guided
 #   practice — your call, but record it honestly in the workbench.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-05-02.svg" alt="Diagram 2 of notebook 05" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-05-02.svg" alt="Diagram 2 of notebook 05" style="max-width:100%">
 #
 # *How the lab grades you: your tests are the detector, the injected defects are the ground truth.*
 #

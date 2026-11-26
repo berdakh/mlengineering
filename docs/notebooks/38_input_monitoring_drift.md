@@ -9,8 +9,8 @@ nav_order: 38
 # 38 · Input monitoring and drift statistics
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/38_input_monitoring_drift.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/38_input_monitoring_drift.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/38_input_monitoring_drift.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/38_input_monitoring_drift.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 38
 
 ---
 
-**Week 7 · day 2 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w7d2_input_monitoring_drift/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d2_input_monitoring_drift/)
+**Week 7 · day 2 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w7d2_input_monitoring_drift/`](https://github.com/berdakh/mlengineering/blob/main/labs/w7d2_input_monitoring_drift/)
 
 **Objective.** Detect schema violations, range and missingness changes and distribution shift (PSI, KS, Wasserstein) with windows and thresholds chosen for an acceptable false-alarm rate.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -107,7 +107,7 @@ used only by the checks and the worked example).
 
 ### 2.1 Three questions, three owners
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-38-01.svg" alt="Diagram 1 of notebook 38" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-38-01.svg" alt="Diagram 1 of notebook 38" style="max-width:100%">
 
 * A **schema violation** (a `-9999` sentinel, an infinity, a pressure of 9,000 bar) is a broken input.
   It must be counted and kept **out** of the distribution statistics: one sentinel value moves a
@@ -151,7 +151,7 @@ more evidence than it has. In the worked example, with **no drift at all**, the 
 $$p < 0.05$$ rises from 5.5 % (independent samples) to 22 % (lag-1 autocorrelation 0.5), 75 % (0.9) and
 98.5 % (0.98).
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d2_input_monitoring_drift/figures/ks_autocorrelation.svg" alt="With no drift, the share of KS p < 0.05 windows rises from about 5 % at no autocorrelation to 98 % at phi = 0.98" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d2_input_monitoring_drift/figures/ks_autocorrelation.svg" alt="With no drift, the share of KS p < 0.05 windows rises from about 5 % at no autocorrelation to 98 % at phi = 0.98" width="100%">
 
 *Figure 1 (SYNTHETIC: stationary AR(1), reference 2,000 samples, window 240).* The opposite failure
 appears with large samples: the example finds $$p = 3 \times 10^{-8}$$ for a 0.01 °C difference between
@@ -163,7 +163,7 @@ practice with large monthly samples. PSI under **no** drift grows like $$(k-1)(1
 false-alarm rate depends on the window size: with i.i.d. data and a 5,000-sample reference, 98 % of
 30-sample windows exceed 0.1, about 27 % of 120-sample windows, and none of the 480-sample ones.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d2_input_monitoring_drift/figures/psi_window_size.svg" alt="Share of stable windows with PSI above 0.1 falls from 98 % at 30 samples to 0 at 480 samples" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d2_input_monitoring_drift/figures/psi_window_size.svg" alt="Share of stable windows with PSI above 0.1 falls from 98 % at 30 samples to 0 at 480 samples" width="100%">
 
 *Figure 2 (SYNTHETIC, i.i.d. normal data, 600 windows per size).* A fixed rule therefore means something
 different at every window size, and nothing at all for autocorrelated data.
@@ -332,11 +332,11 @@ accelerometer1_rms    1
 temperature           1
 ```
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d2_input_monitoring_drift/figures/alert_rates.svg" alt="Alert rates on real test windows: reference A alerts on 21 % of normal windows (all in the other family) and 14 % of fault windows; reference B on 3 % and 20 %" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d2_input_monitoring_drift/figures/alert_rates.svg" alt="Alert rates on real test windows: reference A alerts on 21 % of normal windows (all in the other family) and 14 % of fault windows; reference B on 3 % and 20 %" width="100%">
 
 *Figure 3 (real SKAB, 7 test runs, 38 normal and 35 fully anomalous one-minute windows).*
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w7d2_input_monitoring_drift/figures/drift_timelines.svg" alt="Two test runs, ratio of the largest statistic to its threshold per minute: valve1/13 never crosses 1 under either reference; other/14 crosses under B when its fault starts" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w7d2_input_monitoring_drift/figures/drift_timelines.svg" alt="Two test runs, ratio of the largest statistic to its threshold per minute: valve1/13 never crosses 1 under either reference; other/14 crosses under B when its fault starts" width="100%">
 
 *Figure 4 (real SKAB).* Shaded minutes are labelled faults; the dashed line is the alert level.
 
@@ -368,7 +368,7 @@ check("w7d2")
 
 ## 5. Independent challenge: expected and unexpected drift
 
-Read [challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d2_input_monitoring_drift/challenge/README.md). A SYNTHETIC shop's feature stream (70 days, 400 sessions
+Read [challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w7d2_input_monitoring_drift/challenge/README.md). A SYNTHETIC shop's feature stream (70 days, 400 sessions
 a day) contains a planned price increase listed in a change calendar, two unplanned bugs and a
 missing-data outage. You write `challenge/stream_monitor.py` so that the planned change is annotated
 rather than alerted, monitoring of the changed feature resumes after a re-baseline, and the unplanned
@@ -427,8 +427,8 @@ check("w7d2", challenge=True)
 
 ## 6. Progressive hints
 
-[Hint 1: concepts](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d2_input_monitoring_drift/hints/hint1_concept.md) · [Hint 2: approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d2_input_monitoring_drift/hints/hint2_approach.md) ·
-[Hint 3: partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w7d2_input_monitoring_drift/hints/hint3_partial.md)
+[Hint 1: concepts](https://github.com/berdakh/mlengineering/blob/main/labs/w7d2_input_monitoring_drift/hints/hint1_concept.md) · [Hint 2: approach](https://github.com/berdakh/mlengineering/blob/main/labs/w7d2_input_monitoring_drift/hints/hint2_approach.md) ·
+[Hint 3: partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w7d2_input_monitoring_drift/hints/hint3_partial.md)
 
 
 Open one hint at a time, only after a real attempt.

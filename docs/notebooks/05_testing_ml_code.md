@@ -9,8 +9,8 @@ nav_order: 5
 # 05 · Testing ML code with pytest: what a unit test can and cannot tell you
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/05_testing_ml_code.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/05_testing_ml_code.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/05_testing_ml_code.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/05_testing_ml_code.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 5
 
 ---
 
-**Week 1 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w1d5_testing_ml_code/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d5_testing_ml_code/)
+**Week 1 · day 5 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w1d5_testing_ml_code/`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d5_testing_ml_code/)
 
 **Objective.** Write a pytest suite that catches realistic defects in signal-feature and splitting code, and separate deterministic unit tests from statistical performance checks.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -118,7 +118,7 @@ The same analogy gives the two error types. A suite that fails on correct code (
 alarm) is **flaky** or **over-specified**; a suite that passes on defective code (miss) is
 **weak**. "All tests pass" tells you nothing until you know the suite's sensitivity.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d5_testing_ml_code/figures/kill_matrix.svg" alt="Real harness runs: six test suites against 14 injected defects; starter, runs-without-error and self-comparison detect 0, the end-to-end metric suite 1, loose tolerances 13, the reference suite 14" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w1d5_testing_ml_code/figures/kill_matrix.svg" alt="Real harness runs: six test suites against 14 injected defects; starter, runs-without-error and self-comparison detect 0, the end-to-end metric suite 1, loose tolerances 13, the reference suite 14" width="100%">
 
 *Real runs of this lesson's grading harness. All six suites pass on the correct package; a suite is only as good as the defects it notices. Defects are numbered rather than named so the figure does not give the lab away. Regenerate with `python labs/w1d5_testing_ml_code/figures/make_figures.py` (about a minute).*
 
@@ -184,7 +184,7 @@ Fix the input (`fs=256`, `N=128` → 2 Hz bins; use 24, 40, 92 Hz), not the tole
 loose tolerances for tests whose claim is itself approximate ("interpolating three missing
 samples changes RMS by < 5 %"), and say so in a comment.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d5_testing_ml_code/figures/tolerance_regions.svg" alt="Largest error that passes as a function of the expected value, for an absolute tolerance of 1e-9, a relative tolerance of 1e-6 and their combination; the two cross at an expected value of 1e-3" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w1d5_testing_ml_code/figures/tolerance_regions.svg" alt="Largest error that passes as a function of the expected value, for an absolute tolerance of 1e-9, a relative tolerance of 1e-6 and their combination; the two cross at an expected value of 1e-3" width="100%">
 
 *Arithmetic, not data. Below `|b| = abs / rel` the absolute term decides; above it the relative term does. An expected value of exactly zero needs an absolute tolerance.*
 
@@ -214,11 +214,11 @@ stating that it checks wiring, not quality. `auc >= 0.9` on such a frame catches
 probability of the wrong class" (AUC ≈ 0) and "labels misaligned with features" (AUC ≈ 0.5).
 Real performance thresholds belong in the evaluation stage, with uncertainty attached.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-05-01.svg" alt="Diagram 1 of notebook 05" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-05-01.svg" alt="Diagram 1 of notebook 05" style="max-width:100%">
 
 *The line that matters runs between the two boxes: above it a red result is a defect, below it a red result may be an unlucky split.*
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w1d5_testing_ml_code/figures/auc_over_seeds.svg" alt="SYNTHETIC pump data: test ROC AUC of the correct code for 20 split seeds ranges from 0.9464 to 1.0; one seed falls below the 0.95 assertion threshold" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w1d5_testing_ml_code/figures/auc_over_seeds.svg" alt="SYNTHETIC pump data: test ROC AUC of the correct code for 20 split seeds ranges from 0.9464 to 1.0; one seed falls below the 0.95 assertion threshold" width="100%">
 
 *SYNTHETIC data. The same correct code under 20 split seeds: `assert auc > 0.95` fails once (seed 4) with no defect present.*
 
@@ -270,7 +270,7 @@ challenge (`>` vs `>=`).
 
 ## 3. Worked example — testing a rolling z-score from its specification
 
-Different code from the lab, same method. Files: [`example/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d5_testing_ml_code/example).
+Different code from the lab, same method. Files: [`example/`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d5_testing_ml_code/example).
 
 **Function under test.** `rolling_zscore(x, window)` scores each sample against the
 `window` samples *before* it (a trailing baseline, as used in equipment monitoring and in
@@ -347,7 +347,7 @@ always grade your *tests* against the reference copy in `checks/reference_pkg/`.
 - `checks/bugs.py` lists the defects. Reading it first turns this lab into guided
   practice — your call, but record it honestly in the workbench.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-05-02.svg" alt="Diagram 2 of notebook 05" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-05-02.svg" alt="Diagram 2 of notebook 05" style="max-width:100%">
 
 *How the lab grades you: your tests are the detector, the injected defects are the ground truth.*
 
@@ -479,7 +479,7 @@ check("w1d5")
 
 ## 5. Independent challenge — test and repair an event extractor *(optional extension, 40 min)*
 
-Task and acceptance criteria: [`challenge/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d5_testing_ml_code/challenge/README.md).
+Task and acceptance criteria: [`challenge/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w1d5_testing_ml_code/challenge/README.md).
 
 In short: `challenge/eventkit/events.py` converts a per-sample anomaly score into events
 (threshold → merge close runs → drop short ones) — the step between a detector's output and
@@ -581,9 +581,9 @@ check("w1d5", challenge=True)
 
 Open in order, and only as far as you need. Note in your progress which level you used.
 
-1. [Conceptual hint](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d5_testing_ml_code/hints/hint1_concept.md) — how to think about each family of defect.
-2. [Suggested approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d5_testing_ml_code/hints/hint2_approach.md) — which test design kills what, without code.
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w1d5_testing_ml_code/hints/hint3_partial.md) — fixture and several complete tests; skeleton for the challenge.
+1. [Conceptual hint](https://github.com/berdakh/mlengineering/blob/main/labs/w1d5_testing_ml_code/hints/hint1_concept.md) — how to think about each family of defect.
+2. [Suggested approach](https://github.com/berdakh/mlengineering/blob/main/labs/w1d5_testing_ml_code/hints/hint2_approach.md) — which test design kills what, without code.
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w1d5_testing_ml_code/hints/hint3_partial.md) — fixture and several complete tests; skeleton for the challenge.
 4. Full reference solutions (separate tree): `solutions/labs/w1d5_testing_ml_code/lab/` and `.../challenge/`.
 
 ---

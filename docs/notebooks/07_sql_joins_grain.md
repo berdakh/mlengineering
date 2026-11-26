@@ -9,8 +9,8 @@ nav_order: 7
 # 07 · SQL I: grain, joins, aggregation and NULL semantics
 {: .no_toc }
 
-[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/07_sql_joins_grain.ipynb){: .btn .btn-primary .mr-2 target=_blank }
-[View the .ipynb](https://github.com/berdakh/mlengineering-/blob/main/notebooks/07_sql_joins_grain.ipynb){: .btn target=_blank }
+[Run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/07_sql_joins_grain.ipynb){: .btn .btn-primary .mr-2 target=_blank }
+[View the .ipynb](https://github.com/berdakh/mlengineering/blob/main/notebooks/07_sql_joins_grain.ipynb){: .btn target=_blank }
 
 {: .note }
 > You are reading this notebook. To **run** it, open it in Colab with the button above - no install, no GPU needed for most of them - or clone the repository and open it in Jupyter.
@@ -20,7 +20,7 @@ nav_order: 7
 
 ---
 
-**Week 2 · day 1 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w2d1_sql_joins_grain/`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d1_sql_joins_grain/)
+**Week 2 · day 1 · 2 h essential path + up to 1 h optional** · lab files: [`labs/w2d1_sql_joins_grain/`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d1_sql_joins_grain/)
 
 **Objective.** Write correct multi-table queries by reasoning about table grain first; recognise fan-out, NULL and anti-join traps.
 
@@ -35,11 +35,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -52,7 +52,7 @@ print("repo root:", REPO_ROOT)
 
 **Unit id:** `w2d1` · **Week 2, day 1** · **Content status:** Execution verified (see Verification record)
 **Handbook:** [H3.1 Grain, joins, aggregation and NULLs](../handbook/ch03_sql_data_pipelines/h3_1_grain_joins_aggregation_nulls.html)
-**Data:** `data/maintenance.db` — SYNTHETIC ([schema](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d1_sql_joins_grain/data/README.md)). Totals in this lesson are properties of a generator; they say nothing about real maintenance operations.
+**Data:** `data/maintenance.db` — SYNTHETIC ([schema](https://github.com/berdakh/mlengineering/blob/main/labs/w2d1_sql_joins_grain/data/README.md)). Totals in this lesson are properties of a generator; they say nothing about real maintenance operations.
 
 ---
 
@@ -127,10 +127,10 @@ of this lesson is to make the grain explicit before writing the `SELECT`.
 - **Cardinality** of a relationship: one-to-one, one-to-many, many-to-many. It determines what a
   join does to the row count.
 
-**The lesson database at a glance** (SYNTHETIC; full schema in [`data/README.md`](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d1_sql_joins_grain/data/README.md)).
+**The lesson database at a glance** (SYNTHETIC; full schema in [`data/README.md`](https://github.com/berdakh/mlengineering/blob/main/labs/w2d1_sql_joins_grain/data/README.md)).
 Read each line as "one parent row has zero or more child rows"; the grain of a table is its primary key.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-07-01.svg" alt="Diagram 1 of notebook 07" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-07-01.svg" alt="Diagram 1 of notebook 07" style="max-width:100%">
 
 `machines` has two independent children (`work_orders`, `downtime_events`), and `work_orders` has a
 child of its own (`parts_used`). Those two shapes are where every fan-out in this lesson comes from.
@@ -203,7 +203,7 @@ work_orders (machine 7)        downtime_events (machine 7)        machines ⋈ w
 (The six-row block is illustrative, not rows of the lesson database.) On the lesson database the same
 mechanism produces these totals:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d1_sql_joins_grain/figures/fanout_totals.svg" alt="Bar chart: true labour hours 633.8 against 1,218.1 from the naive join; true downtime hours 793.5 against 2,523.8" width="100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d1_sql_joins_grain/figures/fanout_totals.svg" alt="Bar chart: true labour hours 633.8 against 1,218.1 from the naive join; true downtime hours 793.5 against 2,523.8" width="100%">
 
 *Both sums are inflated, by different factors, because each child is multiplied by the row count of the
 other. SYNTHETIC data; regenerate with `python labs/w2d1_sql_joins_grain/figures/make_figures.py`.*
@@ -260,7 +260,7 @@ that has no machines at all.
 
 Where a condition on the outer-joined table goes decides which rows survive:
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-07-02.svg" alt="Diagram 2 of notebook 07" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-07-02.svg" alt="Diagram 2 of notebook 07" style="max-width:100%">
 
 
 ### 2.6 Verifying a query
@@ -276,7 +276,7 @@ Treat a query like code under test (W1D5). Useful oracles:
   from the single table at whose grain the measure is defined. This catches fan-out *and* dropped rows.
 - **Known small cases.** Check one entity by hand, preferably one with zero children and one with many.
 
-<img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-07-03.svg" alt="Diagram 3 of notebook 07" style="max-width:100%">
+<img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-07-03.svg" alt="Diagram 3 of notebook 07" style="max-width:100%">
 
 
 ### 2.7 A concrete industry example
@@ -408,7 +408,7 @@ on a second database with different rows, so reason about the schema, not about 
 
 ### Task 1 — Orient: write down grains and prove the keys (8 min)
 
-Read [data/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d1_sql_joins_grain/data/README.md). For `work_orders`, `parts_used` and `downtime_events` run a
+Read [data/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w2d1_sql_joins_grain/data/README.md). For `work_orders`, `parts_used` and `downtime_events` run a
 uniqueness check of the key you believe in, for example:
 
 ```sql
@@ -494,7 +494,7 @@ check("w2d1")
 
 ## 5. Independent challenge
 
-[challenge/README.md](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d1_sql_joins_grain/challenge/README.md): five unseen questions on the same schema. For each you
+[challenge/README.md](https://github.com/berdakh/mlengineering/blob/main/labs/w2d1_sql_joins_grain/challenge/README.md): five unseen questions on the same schema. For each you
 declare the grain and the minimal key of the result; the checks verify the result on both databases
 and that your declared key is unique and minimal. No step-by-step guidance. Aim for 40 minutes
 without hints.
@@ -566,9 +566,9 @@ check("w2d1", challenge=True)
 
 Open only as far as you need, and record which level you used.
 
-1. [Concept](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d1_sql_joins_grain/hints/hint1_concept.md) — the question to ask of every join.
-2. [Approach](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d1_sql_joins_grain/hints/hint2_approach.md) — a query-building routine and which trap each question hides.
-3. [Partial implementation](https://github.com/berdakh/mlengineering-/blob/main/labs/w2d1_sql_joins_grain/hints/hint3_partial.md) — CTE skeletons with the aggregations left out.
+1. [Concept](https://github.com/berdakh/mlengineering/blob/main/labs/w2d1_sql_joins_grain/hints/hint1_concept.md) — the question to ask of every join.
+2. [Approach](https://github.com/berdakh/mlengineering/blob/main/labs/w2d1_sql_joins_grain/hints/hint2_approach.md) — a query-building routine and which trap each question hides.
+3. [Partial implementation](https://github.com/berdakh/mlengineering/blob/main/labs/w2d1_sql_joins_grain/hints/hint3_partial.md) — CTE skeletons with the aggregations left out.
 
 The full reference queries are in `solutions/labs/w2d1_sql_joins_grain/` (open after attempting).
 

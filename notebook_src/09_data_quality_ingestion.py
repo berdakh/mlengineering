@@ -1,5 +1,5 @@
 # %% [markdown]
-# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/09_data_quality_ingestion.ipynb)
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/09_data_quality_ingestion.ipynb)
 #
 # *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
 
@@ -21,11 +21,11 @@ import sys
 from pathlib import Path
 
 if "google.colab" in sys.modules:
-    if not Path("/content/mlengineering-").exists():
+    if not Path("/content/mlengineering").exists():
         subprocess.run(["git", "clone", "--depth", "1",
-                        "https://github.com/berdakh/mlengineering-.git",
-                        "/content/mlengineering-"], check=True)
-    os.chdir("/content/mlengineering-")
+                        "https://github.com/berdakh/mlengineering.git",
+                        "/content/mlengineering"], check=True)
+    os.chdir("/content/mlengineering")
     subprocess.run([sys.executable, "-m", "pip", "install", "-q",
                     "-r", "requirements.txt"], check=True)
 
@@ -113,7 +113,7 @@ print("repo root:", REPO_ROOT)
 # never overwritten by the filtered version, and a derivative is always traceable to it. Ingestion is
 # the same discipline applied to tables.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-09-01.svg" alt="Diagram 1 of notebook 09" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-09-01.svg" alt="Diagram 1 of notebook 09" style="max-width:100%">
 #
 #
 # ### 2.2 Parsing is a set of decisions; make each one in code
@@ -193,7 +193,7 @@ print("repo root:", REPO_ROOT)
 # recur. If a repair is ever adopted (say, "keep the last of duplicated rows"), it is a separate,
 # named, tested transformation with its own line in the report: how many rows it touched.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-09-02.svg" alt="Diagram 2 of notebook 09" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-09-02.svg" alt="Diagram 2 of notebook 09" style="max-width:100%">
 #
 #
 # ### 2.5 Idempotence and provenance
@@ -213,7 +213,7 @@ print("repo root:", REPO_ROOT)
 # limit: byte-identical output is guaranteed within one environment; a different pandas version may
 # format a float differently, which is why the code and library versions are part of the record.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/docs/assets/diagrams/mmd-09-03.svg" alt="Diagram 3 of notebook 09" style="max-width:100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-09-03.svg" alt="Diagram 3 of notebook 09" style="max-width:100%">
 #
 #
 # ### 2.6 Data validation is not model evaluation
@@ -441,7 +441,7 @@ print("repo root:", REPO_ROOT)
 # Findings 1 and 2 in one picture, and one the table does not show: the anomalous segment starts at nearly
 # the same elapsed time in almost every experiment.
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d3_data_quality_ingestion/figures/experiment_timelines.svg" alt="Timeline of the 34 labelled SKAB experiments: a grey bar for normal operation and an orange bar for the anomalous segment, which starts near 600 seconds in most experiments; nine black ticks mark sampling gaps in six files" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d3_data_quality_ingestion/figures/experiment_timelines.svg" alt="Timeline of the 34 labelled SKAB experiments: a grey bar for normal operation and an orange bar for the anomalous segment, which starts near 600 seconds in most experiments; nine black ticks mark sampling gaps in six files" width="100%">
 #
 # *Real data. The anomaly begins at row 550-600 in 31 of 34 experiments, so position in the recording
 # predicts the label. That is an artefact of the experimental protocol, not a property of faults; it is
@@ -449,7 +449,7 @@ print("repo root:", REPO_ROOT)
 #
 # Finding 4, per family, on normal rows only:
 #
-# <img src="https://raw.githubusercontent.com/berdakh/mlengineering-/main/labs/w2d3_data_quality_ingestion/figures/sensor_levels_by_family.svg" alt="Eight small box plots, one per sensor, comparing normal-operation values across valve1, valve2, other and the anomaly-free recording" width="100%">
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/labs/w2d3_data_quality_ingestion/figures/sensor_levels_by_family.svg" alt="Eight small box plots, one per sensor, comparing normal-operation values across valve1, valve2, other and the anomaly-free recording" width="100%">
 #
 # *Real data. The two valve families run at about 32 L/min with low vibration; the `other` family and the
 # fault-free recording run at about 126 L/min. A threshold on raw values separates operating regimes

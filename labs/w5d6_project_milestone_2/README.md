@@ -1,6 +1,6 @@
 # 30 · Project milestone 2: packaged inference + API — lab files
 
-**The lesson is notebook [`30_project_milestone_2`](../../notebooks/30_project_milestone_2.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/30_project_milestone_2.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/30_project_milestone_2.ipynb)).
+**The lesson is notebook [`30_project_milestone_2`](../../notebooks/30_project_milestone_2.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/30_project_milestone_2.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/30_project_milestone_2.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 

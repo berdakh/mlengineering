@@ -1,6 +1,6 @@
 # 44 · Technical report and model limitations — lab files
 
-**The lesson is notebook [`44_report_limitations`](../../notebooks/44_report_limitations.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering-/notebooks/44_report_limitations.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering-/blob/main/notebooks/44_report_limitations.ipynb)).
+**The lesson is notebook [`44_report_limitations`](../../notebooks/44_report_limitations.ipynb)** ([read it on the course site](https://berdakh.github.io/mlengineering/notebooks/44_report_limitations.html), [run it in Colab](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/44_report_limitations.ipynb)).
 
 This folder holds the files that notebook uses. You edit `lab/` and `challenge/`; the notebook runs the checks.
 
