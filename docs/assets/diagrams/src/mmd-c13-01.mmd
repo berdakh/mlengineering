@@ -1,0 +1,4 @@
+flowchart LR
+  P["Past<br/>orders on or before the cutoff<br/>(what we know)"] --> C(["Cutoff<br/>2025-09-30"]) --> F["Next 90 days<br/>2025-10-01 to 2025-12-29<br/>(what we predict)"]
+  P -. "features come from here" .-> X["features"]
+  F -. "label comes from here" .-> Y["churned?"]

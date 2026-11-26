@@ -1,0 +1,7 @@
+flowchart LR
+  A["main code<br/>try: total = load()"] --> B["load()"]
+  B --> C["parse_price('abc')"]
+  C -- "raise ValueError" --> B
+  B -- "not caught here,<br/>passes up" --> A
+  A -- "except ValueError:<br/>handled" --> D["program continues"]
+  A -. "no except:<br/>traceback, program stops" .-> E["error message"]

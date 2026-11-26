@@ -1,0 +1,10 @@
+flowchart LR
+  T["orders<br/>4744 rows"] -- "split" --> S1["channel = web"]
+  T -- "split" --> S2["channel = mobile_app"]
+  T -- "split" --> S3["channel = marketplace"]
+  S1 -- "apply size()" --> A1["2339"]
+  S2 -- "apply size()" --> A2["1671"]
+  S3 -- "apply size()" --> A3["734"]
+  A1 -- "combine" --> C["one row per channel"]
+  A2 -- "combine" --> C
+  A3 -- "combine" --> C

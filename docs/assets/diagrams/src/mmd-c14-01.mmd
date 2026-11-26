@@ -1,0 +1,2 @@
+flowchart LR
+  W365["365-day window<br/>(cutoff - 365 d, cutoff]"] --- W90["90-day window<br/>(cutoff - 90 d, cutoff]"] --- W30["30-day window<br/>(cutoff - 30 d, cutoff]"] --> C(["Cutoff"]) -.-> N["after the cutoff:<br/>never used for features"]

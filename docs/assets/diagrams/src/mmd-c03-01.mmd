@@ -1,0 +1,6 @@
+flowchart LR
+  W["Working folder<br/>files you edit"] -- "git add" --> S["Staging area<br/>changes chosen for<br/>the next commit"]
+  S -- "git commit" --> R["Local repository<br/>history of commits<br/>(the .git folder)"]
+  R -- "git push" --> G["Remote on GitHub<br/>shared copy"]
+  G -- "git pull" --> W
+  R -- "git restore file" --> W

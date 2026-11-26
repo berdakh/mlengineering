@@ -1,0 +1,6 @@
+flowchart LR
+  R["raw export<br/>(never edited)"] --> C["cleaning<br/>functions that CHANGE data:<br/>missing codes, duplicates,<br/>formats, units"]
+  C --> V{"validation<br/>checks that only LOOK:<br/>unique ids? prices above 0?<br/>valid statuses?"}
+  V -- "all pass" --> M["clean table<br/>for features and models"]
+  V -- "a check fails" --> S["stop and investigate<br/>(new problem in the data)"]
+  S -. "add a cleaning step" .-> C

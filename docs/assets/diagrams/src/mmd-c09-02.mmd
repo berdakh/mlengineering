@@ -1,0 +1,4 @@
+flowchart LR
+  A["CTE 1: line_totals<br/>one row per order item"] --> B["CTE 2: order_totals<br/>one row per order"]
+  B --> C["CTE 3: ranked<br/>ROW_NUMBER per group"]
+  C --> D["final SELECT<br/>keep rn 1 to 3"]

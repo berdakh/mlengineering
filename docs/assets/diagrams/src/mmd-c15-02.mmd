@@ -1,0 +1,7 @@
+flowchart TB
+  D["labelled table"] --> S{"train_test_split<br/>(stratified)"}
+  S --> TR["train rows"] --> FIT["pipeline.fit<br/>imputer, scaler, encoder<br/>and model learn here only"]
+  S --> TE["test rows<br/>(locked away)"]
+  FIT --> E1["score on train = E_in"]
+  FIT --> P["pipeline.predict"]
+  TE --> P --> E2["score on test ≈ E_out"]

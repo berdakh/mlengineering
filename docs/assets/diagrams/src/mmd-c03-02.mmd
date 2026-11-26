@@ -1,0 +1,5 @@
+flowchart LR
+  A(("1<br/>README")) --> B(("2<br/>usage")) --> C(("3<br/>.gitignore")) --> D(("4<br/>feature.txt"))
+  M1["main before merge"] -.-> C
+  F["feature"] -.-> D
+  M2["main after git merge feature<br/>(fast-forward)"] -.-> D

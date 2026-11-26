@@ -1,0 +1,6 @@
+flowchart LR
+  DB[("shop.db")] --> L["1 · labels<br/>at the cutoff"]
+  DB --> F["2 · features<br/>only from the past"]
+  L --> T["3 · labelled table<br/>one row per customer"]
+  F --> T
+  T --> S["4 · stratified split"] --> P["5 · pipeline"] --> R["6 · fit on train,<br/>report vs baseline"]

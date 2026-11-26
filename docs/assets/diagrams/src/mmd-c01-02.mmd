@@ -1,0 +1,8 @@
+flowchart LR
+  B["Your browser<br/>shows the notebook"] <--> R
+  subgraph R ["Colab runtime: a temporary machine"]
+    M["memory<br/>variables, models"]
+    D["disk /content<br/>files your code writes"]
+  end
+  R <-- "mount, save a copy" --> G["Google Drive<br/>permanent"]
+  R <-- "git clone / push" --> H["GitHub<br/>permanent"]

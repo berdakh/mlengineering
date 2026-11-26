@@ -1,0 +1,1237 @@
+order_id,customer_id,order_date,city,status,product,quantity,unit_price,price_unit,discount
+1,368,2024-08-31, Almaty,shipped,Kettle,2,35.0,dollars,0.0
+2,155,16/10/2025,almaty,shipped,Kettle,1,35.0,dollars,0.05
+3,112,2025-09-01,Karaganda  ,DELIVERED,Hand cream,3,7.0,dollars,-
+4,311,04/11/2024,Aktobe, delivered,Hand cream,1,7.0,dollars,-
+5,177,08/07/2025,Shymkent,delivered,USB-C cable,1,8.0,dollars,0.0
+6,143,2024-10-27,Almaty,returned,Hand cream,-1,7.0,dollars,0.0
+7,185,"March 19, 2024",Aktobe,cancelled,USB-C cable,1,8.0,dollars,0.2
+8,224,"April 16, 2025",Aktobe,delivered,Hand cream,1,7.0,dollars,0.05
+9,181,12/01/2024,Astana,delivered,Hand cream,1,7.0,dollars,0.0
+10,190,26/08/2025,shymkent,DELIVERED,Headphones,1,45.0,dollars,0.0
+11,358,2024-04-17,TARAZ,delivered  ,Headphones,2,45.0,dollars,0.0
+12,18,2025-11-22,Taraz,DELIVERED,Desk lamp,3,25.0,dollars,0.0
+13,139,2025-08-11,Aktobe,delivered,Kettle,1,35.0,dollars,0.0
+14,114,2025-08-04,Aktobe  ,DELIVERED,Hand cream,1,700.0,cents,0.2
+15,263,"June 15, 2025",Shymkent, cancelled,Yoga mat,3,28.0,dollars,0.0
+16,59,2025-08-13,Taraz, delivered,Headphones,2,4500.0,cents,0.0
+17,4,2025-05-03,Astana,delivered,Headphones,1,45.0,dollars,0.1
+18,17,"October 4, 2024", Almaty,delivered,Desk lamp,1,25.0,dollars,-
+19,2,19/11/2024,Shymkent,delivered,Kettle,1,35.0,dollars,0.0
+20,360,2024-07-01,almaty,cancelled,Headphones,2,45.0,dollars,0.0
+21,287,19/01/2024,Astana,delivered,Desk lamp,1,25.0,dollars,0.1
+22,270,2024-05-06,AKTOBE, delivered,Hand cream,2,7.0,dollars,0.0
+23,19,"July 2, 2024", Karaganda,delivered,Headphones,-1,45.0,dollars,0.0
+24,233,01/09/2024,Aktobe,delivered,USB-C cable,1,8.0,dollars,0.2
+25,354,2025-01-11,Astana  ,delivered  ,Hand cream,1,7.0,dollars,0.05
+26,369,"December 3, 2025",KARAGANDA,DELIVERED,Power bank,1,30.0,dollars,0.0
+27,137,"May 30, 2024",TARAZ,delivered,Novel,3,14.0,dollars,0.1
+28,298,26/01/2025,Astana,shipped,Desk lamp,1,25.0,dollars,0.05
+29,36,"May 7, 2025", Karaganda,shipped,USB-C cable,1,8.0,dollars,0.0
+30,44,2024-07-13,N/A, delivered,Yoga mat,2,28.0,dollars,0.0
+31,251,2024-02-06,Shymkent,delivered,Novel,2,14.0,dollars,0.0
+32,231,2024-10-08,Almaty,delivered,USB-C cable,1,8.0,dollars,0.0
+33,373,2024-09-28,almaty,delivered,USB-C cable,4,8.0,dollars,0.0
+34,285,2025-10-08,Aktobe,delivered,Kettle,3,35.0,dollars,0.05
+35,22,2024-06-29,Karaganda,delivered,USB-C cable,1,800.0,cents,0.0
+36,52,11/06/2025,Almaty, delivered,Novel,3,14.0,dollars,0.0
+37,279,2024-04-24,Taraz,delivered,Kettle,1,35.0,dollars,0.1
+38,271,13/09/2024,Karaganda, delivered,Novel,1,14.0,dollars,0.0
+39,272,2025-05-10,Taraz,shipped  ,Headphones,-1,45.0,dollars,0.0
+40,40,2025-03-30,almaty,delivered,USB-C cable,4,8.0,dollars,0.0
+41,33,"December 2, 2024",ALMATY,DELIVERED,Novel,1,14.0,dollars,0.0
+42,107,11/05/2025,Astana,delivered,Novel,1,1400.0,cents,0.0
+43,108,2025-12-08,Shymkent, delivered,Hand cream,-1,7.0,dollars,0.0
+44,31,30/06/2025,Taraz,delivered,Desk lamp,1,25.0,dollars,0.0
+45,60,2024-02-03,Astana,delivered,Headphones,1,45.0,dollars,0.0
+46,177,2024-10-24,Karaganda,delivered,Yoga mat,3,28.0,dollars,0.1
+47,388,2024-04-01,Karaganda, shipped,Headphones,-1,4500.0,cents,0.1
+48,275,05/11/2025,Shymkent,cancelled,Headphones,2,45.0,dollars,0.0
+49,311,"January 30, 2025",Taraz,delivered  ,Novel,1,14.0,dollars,0.0
+50,329,2024-02-13,taraz,delivered,Kettle,2,35.0,dollars,0.0
+51,108,2025-04-22,Almaty,delivered,Novel,1,14.0,dollars,0.0
+52,164,22/10/2025, Astana,delivered,Kettle,1,35.0,dollars,0.0
+53,115,30/06/2024,Almaty,delivered,USB-C cable,2,800.0,cents,0.0
+54,373,12/05/2025,Aktobe,delivered,Novel,2,14.0,dollars,-
+55,129,2024-03-14, Shymkent,delivered  ,Novel,2,14.0,dollars,0.0
+56,301,"August 11, 2024",Aktobe  ,delivered  ,Power bank,1,30.0,dollars,0.05
+57,177,2024-07-08,Karaganda,DELIVERED,USB-C cable,1,800.0,cents,0.0
+58,325,2024-05-26,KARAGANDA,delivered,USB-C cable,3,8.0,dollars,0.2
+59,383,2025-04-19,Shymkent,shipped,Power bank,1,30.0,dollars,0.0
+60,251,2024-05-14,Karaganda,delivered,Kettle,-2,35.0,dollars,0.0
+61,20,12/12/2024,TARAZ, delivered,Headphones,2,45.0,dollars,-
+62,31,"July 31, 2025",shymkent,cancelled,Desk lamp,2,25.0,dollars,
+63,233,2025-11-12,Astana  ,delivered,Hand cream,2,7.0,dollars,0.0
+64,307,2025-06-26, Astana,delivered,Kettle,-1,35.0,dollars,
+65,204,2025-12-27,Taraz,delivered  ,Yoga mat,2,2800.0,cents,0.0
+66,41,20/11/2024,Karaganda  ,delivered,Novel,-1,14.0,dollars,0.0
+67,250,"May 6, 2024",Karaganda, delivered,Headphones,4,45.0,dollars,0.0
+68,25,2024-07-01,Taraz,delivered,Power bank,2,30.0,dollars,0.1
+69,99,2024-04-19,Astana,delivered,Hand cream,4,7.0,dollars,0.1
+70,227,2025-05-04,Shymkent,delivered,Desk lamp,1,2500.0,cents,0.0
+71,86,2025-03-28, Taraz,shipped,Kettle,2,35.0,dollars,0.2
+72,48,2025-09-10,Karaganda  ,delivered,Headphones,3,0.0,dollars,0.0
+73,354,27/08/2025,SHYMKENT,delivered  ,Desk lamp,1,25.0,dollars,0.05
+74,172,2024-10-03,Taraz,shipped  ,Kettle,1,35.0,dollars,0.0
+75,39,2025-06-25,AKTOBE,delivered,Power bank,1,30.0,dollars,0.1
+76,54,2024-04-30,Aktobe,delivered,Hand cream,1,-7.0,dollars,0.1
+77,378,2025-01-14,,DELIVERED,USB-C cable,1,8.0,dollars,0.1
+78,89,2024-08-06,Astana,delivered,Power bank,1,30.0,dollars,0.0
+79,153,2024-12-25,Karaganda,delivered  ,Hand cream,2,700.0,cents,0.0
+80,338,2025-12-08,Almaty,delivered,USB-C cable,3,800.0,cents,0.0
+81,241,26/11/2024,Aktobe,cancelled,Desk lamp,-5,25.0,dollars,0.0
+82,394,"December 18, 2024",Aktobe,DELIVERED,Power bank,1,30.0,dollars,0.0
+83,62,"June 22, 2025", Karaganda, delivered,Desk lamp,2,25.0,dollars,0.1
+84,91,2024-11-18, Taraz,delivered,Kettle,1,35.0,dollars,0.0
+85,90,14/12/2024,karaganda,delivered,USB-C cable,1,8.0,dollars,0.0
+86,254,2025-03-10,Karaganda,shipped  ,Kettle,-5,35.0,dollars,0.0
+87,76,"December 20, 2024", Shymkent,delivered,Hand cream,1,7.0,dollars,0.0
+88,348,"April 2, 2025",ALMATY,delivered  ,Novel,1,14.0,dollars,0.0
+89,289,28/10/2025,Karaganda,delivered,Yoga mat,1,28.0,dollars,0.0
+354,187,2024-03-04,Taraz  ,delivered,Hand cream,3,700.0,cents,0.0
+90,360,2024-06-14,karaganda,delivered,Novel,1,14.0,dollars,0.05
+91,109,"April 13, 2024",Almaty,delivered,USB-C cable,3,8.0,dollars,0.0
+92,176,"September 25, 2024",astana,DELIVERED,Novel,1,14.0,dollars,0.0
+93,191,"March 26, 2024",Astana,delivered,Desk lamp,1,25.0,dollars,0.0
+94,389,2025-08-02,-,delivered,Hand cream,1,7.0,dollars,0.0
+95,249,2025-12-16,Shymkent,delivered,Novel,2,14.0,dollars,0.2
+96,234,2024-12-10,Almaty,delivered,Kettle,1,35.0,dollars,0.05
+97,199,2024-06-29,AKTOBE,delivered  ,Headphones,2,-4500.0,cents,N/A
+98,280,30/11/2024,Astana,delivered,Desk lamp,-1,25.0,dollars,0.0
+99,268,2025-02-19,TARAZ,DELIVERED,Headphones,1,45.0,dollars,0.0
+100,116,2024-07-01,Aktobe,returned,Power bank,1,30.0,dollars,0.0
+101,246,"May 26, 2025",Almaty,delivered,USB-C cable,1,8.0,dollars,0.0
+102,99,2024-11-08,Aktobe,delivered,Power bank,2,30.0,dollars,0.0
+103,216,04/06/2025,Aktobe,DELIVERED,Kettle,1,35.0,dollars,0.0
+104,334,2025-03-20,Taraz,delivered,Power bank,3,30.0,dollars,0.0
+105,257,2024-07-26,Karaganda,delivered,Novel,2,14.0,dollars,0.0
+106,117,"August 13, 2025",Karaganda,delivered,Novel,2,14.0,dollars,0.0
+107,367,2025-02-27,Aktobe,delivered,USB-C cable,1,8.0,dollars,0.0
+108,66,"December 1, 2025",Almaty,delivered,USB-C cable,1,8.0,dollars,0.1
+109,63,2024-08-08,Aktobe, delivered,Hand cream,2,7.0,dollars,0.0
+110,204,2024-09-06,Aktobe,DELIVERED,Desk lamp,1,25.0,dollars,0.0
+111,321,2024-09-02,Astana,delivered,Kettle,2,35.0,dollars,0.0
+112,205,27/02/2024,Astana,DELIVERED,Hand cream,1,7.0,dollars,0.0
+113,163,31/08/2024,Shymkent, delivered,Yoga mat,2,28.0,dollars,0.0
+114,246,2025-07-23,Astana,shipped,Yoga mat,1,2800.0,cents,0.0
+115,367,2025-04-16,Shymkent,delivered,Hand cream,2,7.0,dollars,0.0
+116,28,"November 6, 2025",Aktobe,delivered,Kettle,2,35.0,dollars,
+117,47,29/05/2025, Karaganda,delivered,Power bank,-1,30.0,dollars,0.0
+118,318,2024-03-26, Aktobe,delivered  ,Novel,1,1400.0,cents,0.0
+119,156,"July 15, 2024",Karaganda,delivered,Headphones,1,45.0,dollars,0.0
+120,191,2024-06-17,Shymkent,CANCELLED,Novel,1,14.0,dollars,0.05
+121,333,31/08/2025,, delivered,Power bank,4,30.0,dollars,0.0
+122,203,14/09/2024,Shymkent,delivered,Power bank,2,30.0,dollars,0.1
+123,265,16/05/2024,karaganda,delivered,Yoga mat,1,2800.0,cents,0.0
+124,176,2025-05-15,karaganda,delivered,Headphones,2,45.0,dollars,0.1
+125,261,03/07/2025,Almaty,DELIVERED,USB-C cable,-1,8.0,dollars,0.1
+126,30,2024-08-22,shymkent,delivered,Novel,1,14.0,dollars,0.0
+127,217,24/10/2025,Astana  , delivered,USB-C cable,1,8.0,dollars,
+128,261,2024-02-13,KARAGANDA,cancelled,Yoga mat,1,28.0,dollars,0.0
+129,243,"December 11, 2025",astana,delivered,Novel,1,14.0,dollars,0.0
+130,388,29/03/2025,Aktobe,DELIVERED,Kettle,1,35.0,dollars,0.0
+131,165,"September 22, 2024",Karaganda,delivered,Yoga mat,2,28.0,dollars,0.0
+132,127,17/07/2024,Taraz,delivered  ,Desk lamp,2,25.0,dollars,0.1
+133,381,2024-04-23,Aktobe,delivered  ,Headphones,1,45.0,dollars,0.0
+134,250,"April 29, 2025",Karaganda,delivered,Hand cream,1,7.0,dollars,0.0
+135,225,28/04/2024, Karaganda,delivered,Hand cream,2,7.0,dollars,0.0
+136,320,2024-08-28,N/A,delivered,Novel,2,14.0,dollars,N/A
+137,24,2024-06-22,Shymkent,DELIVERED,USB-C cable,4,8.0,dollars,0.0
+138,143,2025-11-20,Karaganda, delivered,Desk lamp,1,25.0,dollars,0.0
+139,89,24/08/2024,Aktobe, delivered,Yoga mat,-2,28.0,dollars,0.05
+140,321,15/12/2025,Astana,cancelled,Desk lamp,-1,25.0,dollars,0.0
+141,382,2025-06-24,Karaganda,delivered,Yoga mat,1,2800.0,cents,0.1
+142,184,2024-06-28,Taraz,delivered  ,Desk lamp,2,25.0,dollars,0.1
+143,216,19/11/2024,taraz,delivered,Headphones,-1,4500.0,cents,0.0
+144,300,2024-06-08,AKTOBE,delivered  ,Novel,2,14.0,dollars,0.0
+145,238,"February 2, 2025",shymkent,delivered,Yoga mat,2,28.0,dollars,0.0
+146,303,12/12/2025,Astana,delivered,Kettle,2,35.0,dollars,0.0
+147,198,04/11/2024,aktobe,delivered,Hand cream,2,7.0,dollars,0.0
+148,11,09/04/2024,almaty,delivered,Desk lamp,1,25.0,dollars,0.0
+149,8,2024-10-25,Karaganda,delivered  ,USB-C cable,3,8.0,dollars,0.0
+150,378,24/02/2025,Shymkent,delivered,Power bank,1,3000.0,cents,0.1
+151,4,2025-10-17,Astana,shipped,Headphones,1,45.0,dollars,0.1
+642,60,05/01/2025,Shymkent,delivered  ,Power bank,1,30.0,dollars,0.0
+152,49,2024-03-12,Aktobe,shipped,Power bank,1,30.0,dollars,0.0
+153,125,2024-01-20,Astana  , shipped,Desk lamp,1,25.0,dollars,0.0
+154,67,2024-06-24,Karaganda,delivered,Novel,1,14.0,dollars,0.0
+155,321,24/10/2024,Aktobe,delivered,USB-C cable,1,8.0,dollars,0.0
+156,159,2025-12-20,Astana, delivered,Kettle,2,35.0,dollars,-
+157,297,"December 6, 2024", Almaty,delivered,Yoga mat,1,28.0,dollars,0.0
+158,171,2025-12-29,Almaty,delivered,Desk lamp,4,25.0,dollars,0.0
+159,358,2024-08-28,Astana, delivered,Yoga mat,1,28.0,dollars,0.0
+160,165,2024-03-23, Almaty,DELIVERED,Hand cream,4,7.0,dollars,0.0
+161,320,2024-03-20,taraz,returned,Headphones,1,4500.0,cents,0.0
+162,111,11/01/2024, Astana,delivered,Hand cream,1,7.0,dollars,N/A
+163,304,2025-02-23,Shymkent,delivered,Power bank,1,30.0,dollars,0.0
+164,226,2025-12-02,SHYMKENT,delivered,Headphones,1,45.0,dollars,0.0
+165,142,"July 16, 2025",Shymkent,cancelled,Yoga mat,3,28.0,dollars,-
+166,358,07/06/2024,karaganda,delivered,Desk lamp,-2,25.0,dollars,0.0
+167,267,12/10/2025, Astana,delivered  ,Headphones,1,45.0,dollars,0.0
+168,357,2025-12-21,Taraz,shipped,Desk lamp,1,2500.0,cents,0.1
+169,181,12/05/2024,Karaganda,delivered,Desk lamp,2,25.0,dollars,0.0
+170,235,2025-08-12,SHYMKENT,shipped,Desk lamp,1,25.0,dollars,0.0
+171,26,2025-03-26,Karaganda,shipped,Power bank,2,30.0,dollars,0.0
+172,384,2025-06-26, Almaty,DELIVERED,Power bank,2,30.0,dollars,0.0
+173,398,2025-02-12, Astana,DELIVERED,Novel,1,14.0,dollars,0.05
+174,133,2025-04-12,karaganda,delivered,Yoga mat,1,28.0,dollars,N/A
+175,220,2024-01-24,ALMATY,delivered,Power bank,1,30.0,dollars,0.05
+176,37,2025-09-13,Aktobe,delivered,Yoga mat,1,28.0,dollars,0.0
+1013,262,2024-03-10,Taraz,delivered,Power bank,2,30.0,dollars,0.0
+177,188,2025-07-03, Shymkent,DELIVERED,Power bank,-1,30.0,dollars,0.0
+178,377,"April 11, 2025",Aktobe,cancelled,USB-C cable,1,8.0,dollars,0.0
+179,106,2024-01-24,Karaganda,delivered,USB-C cable,1,8.0,dollars,0.0
+180,387,2025-09-06,Aktobe,DELIVERED,Novel,2,14.0,dollars,0.1
+181,179,2025-01-15,AKTOBE,returned,Novel,-3,14.0,dollars,0.0
+182,280,"November 13, 2025",Karaganda,delivered  ,Hand cream,1,7.0,dollars,
+183,258,17/01/2025,Almaty  , delivered,Power bank,2,30.0,dollars,0.0
+184,364,2025-08-11,taraz,delivered,Headphones,1,4500.0,cents,0.0
+185,20,2024-01-01,TARAZ,DELIVERED,Hand cream,1,7.0,dollars,0.05
+186,351,2025-12-20,shymkent,cancelled,Headphones,3,45.0,dollars,0.0
+187,75,19/03/2024,-,cancelled,Desk lamp,1,2500.0,cents,0.0
+188,50,"March 28, 2025",Shymkent  ,delivered,Novel,2,14.0,dollars,0.0
+189,64,2024-10-02,Taraz,delivered  ,Desk lamp,3,25.0,dollars,0.0
+190,233,2024-10-17,Aktobe,returned,Kettle,1,35.0,dollars,0.0
+191,309,2024-12-15,ALMATY, delivered,Power bank,1,30.0,dollars,0.0
+192,97,"September 27, 2025",Shymkent  ,SHIPPED,Kettle,1,35.0,dollars,0.1
+193,43,2024-12-26,Almaty,delivered,Power bank,3,30.0,dollars,-
+194,387,2024-10-04,Karaganda,delivered,USB-C cable,1,8.0,dollars,0.0
+195,99,05/09/2025,KARAGANDA,delivered,Headphones,1,45.0,dollars,0.1
+196,208,2024-04-28,Karaganda  ,delivered,Power bank,1,30.0,dollars,0.0
+197,205,22/10/2024,Karaganda,DELIVERED,Desk lamp,1,25.0,dollars,0.05
+198,73,07/06/2024,Karaganda  , delivered,Novel,1,1400.0,cents,0.0
+199,171,2024-01-29,Karaganda,delivered  ,Yoga mat,2,28.0,dollars,0.1
+200,343,02/06/2025,Karaganda,DELIVERED,Yoga mat,1,28.0,dollars,0.0
+201,377,11/11/2025,Shymkent,shipped,Novel,1,14.0,dollars,0.0
+202,323,2024-03-17,Astana,delivered,Kettle,4,35.0,dollars,0.0
+203,152,03/12/2024,-,delivered,Kettle,2,35.0,dollars,0.1
+10,190,26/08/2025,shymkent,DELIVERED,Headphones,1,45.0,dollars,0.0
+204,118,"February 9, 2024", Karaganda,delivered,Hand cream,1,7.0,dollars,0.0
+205,133,01/03/2025,aktobe,shipped,Yoga mat,2,28.0,dollars,0.0
+206,349,2024-05-24,TARAZ,delivered,USB-C cable,-1,8.0,dollars,0.0
+207,233,22/03/2025,taraz,delivered,Headphones,3,45.0,dollars,0.0
+208,146,2025-12-08,Almaty,delivered,Desk lamp,1,-25.0,dollars,0.0
+209,52,2024-07-19,Almaty,returned,Headphones,1,45.0,dollars,0.05
+210,254,"February 16, 2024",almaty,delivered,Headphones,1,45.0,dollars,0.0
+211,130,2024-04-26,karaganda,delivered  ,Desk lamp,-1,25.0,dollars,
+212,317,"April 29, 2025",-,delivered,Novel,2,14.0,dollars,0.0
+213,220,2024-03-14,TARAZ,delivered,Novel,1,14.0,dollars,0.0
+214,10,"December 27, 2025",Almaty, delivered,Hand cream,1,7.0,dollars,0.0
+215,261,2024-09-08,Astana,delivered,USB-C cable,1,8.0,dollars,0.1
+216,203,"December 29, 2025",Astana,delivered,USB-C cable,1,800.0,cents,0.0
+217,224,2025-03-08,Almaty,delivered,Headphones,1,45.0,dollars,0.0
+218,171,2024-07-01,Almaty, delivered,Hand cream,2,7.0,dollars,0.0
+219,230,2024-01-07, Shymkent,delivered,Kettle,1,35.0,dollars,-
+220,381,2025-11-22,Almaty,cancelled,Yoga mat,1,28.0,dollars,-
+221,15,2025-04-10,N/A,delivered,Yoga mat,2,28.0,dollars,0.0
+222,165,2025-10-22,Taraz,delivered  ,Desk lamp,1,2500.0,cents,N/A
+223,236,02/04/2025,Shymkent, delivered,USB-C cable,2,8.0,dollars,0.05
+224,185,2024-10-04,aktobe,cancelled,Power bank,1,30.0,dollars,0.1
+225,180,2024-08-06,Astana,returned,Desk lamp,1,25.0,dollars,-
+226,119,2024-09-04,AKTOBE,delivered,Yoga mat,1,28.0,dollars,
+227,174,20/11/2025,taraz,delivered,Power bank,3,30.0,dollars,0.0
+228,185,2024-05-02,almaty,DELIVERED,Novel,2,14.0,dollars,0.0
+229,40,2025-02-11,Taraz,DELIVERED,Desk lamp,2,25.0,dollars,0.1
+230,19,2024-09-08,Astana,delivered,USB-C cable,-5,8.0,dollars,N/A
+231,372,2024-10-07,almaty,shipped,USB-C cable,1,8.0,dollars,0.1
+232,355,2024-04-23,Karaganda,delivered,Novel,3,14.0,dollars,0.0
+233,393,2025-12-30,TARAZ,delivered,USB-C cable,1,8.0,dollars,0.0
+234,239,2025-10-07,shymkent,delivered,Kettle,2,35.0,dollars,0.1
+235,254,"January 11, 2024", Taraz, cancelled,Kettle,1,35.0,dollars,0.1
+236,157,2024-03-16, Astana,delivered,Headphones,1,45.0,dollars,0.0
+237,303,25/05/2025,Aktobe,DELIVERED,Novel,2,14.0,dollars,0.0
+238,180,2024-06-09,Astana,returned,Novel,1,14.0,dollars,0.0
+239,369,2025-03-07,ASTANA,delivered,Desk lamp,1,25.0,dollars,0.0
+240,206,14/03/2024,Karaganda,delivered,Headphones,-3,45.0,dollars,0.0
+241,292,2024-10-26,shymkent,delivered,Kettle,-2,0.0,cents,0.0
+242,349,12/02/2025,Aktobe,delivered,Hand cream,1,7.0,dollars,0.0
+243,264,2024-11-10,Taraz  ,delivered,Novel,1,14.0,dollars,-
+244,396,2024-05-11,,delivered,Yoga mat,2,28.0,dollars,0.05
+245,70,2025-03-04,Karaganda,delivered,Hand cream,1,7.0,dollars,0.0
+246,219,2024-04-02,Aktobe,delivered,Power bank,-1,30.0,dollars,0.2
+247,57,2024-01-22,SHYMKENT,delivered,Yoga mat,1,28.0,dollars,0.0
+248,74,16/03/2024,astana,DELIVERED,Hand cream,1,7.0,dollars,0.05
+249,319,2024-07-06, Shymkent,cancelled,Kettle,1,35.0,dollars,0.0
+250,152,21/11/2024,Aktobe, delivered,Hand cream,3,7.0,dollars,0.0
+251,158,2025-10-27,aktobe,delivered  ,Hand cream,3,7.0,dollars,0.05
+252,174,2024-12-06,astana,delivered,Headphones,1,45.0,dollars,0.0
+253,290,2025-08-08,karaganda,delivered,Power bank,1,30.0,dollars,0.0
+254,19,2025-07-05,Aktobe,delivered,Headphones,1,45.0,dollars,0.05
+255,370,"June 10, 2024",Shymkent, delivered,Hand cream,1,7.0,dollars,0.0
+256,323,2024-05-28,Aktobe,delivered,Power bank,1,3000.0,cents,0.1
+257,156,2024-03-22,karaganda, delivered,Yoga mat,1,28.0,dollars,0.0
+258,140,2024-04-07,KARAGANDA,delivered,Hand cream,2,7.0,dollars,0.0
+259,21,"August 12, 2024",Taraz,DELIVERED,Kettle,-2,3500.0,cents,0.0
+260,57,2025-12-11,aktobe,delivered,Kettle,1,35.0,dollars,0.0
+261,92,"August 15, 2024",Taraz,returned,Novel,3,14.0,dollars,0.0
+262,32,"May 18, 2024",Astana,DELIVERED,USB-C cable,2,8.0,dollars,0.0
+263,285,04/06/2024,Shymkent,DELIVERED,Headphones,3,-45.0,dollars,0.1
+264,318,2025-03-25,Astana, cancelled,Power bank,2,30.0,dollars,0.0
+265,151,"August 12, 2025",ASTANA,delivered,Yoga mat,3,28.0,dollars,0.0
+266,351,03/04/2024,Astana  ,delivered,Power bank,1,3000.0,cents,0.0
+267,217,2024-10-18,Almaty,delivered,Headphones,1,0.0,dollars,0.0
+268,368,2024-11-04,shymkent, delivered,Hand cream,1,7.0,dollars,0.05
+269,370,2025-08-22,Aktobe,delivered,Novel,2,14.0,dollars,0.0
+270,110,"July 20, 2024",aktobe,delivered,Headphones,1,45.0,dollars,0.05
+271,200,23/12/2025,ALMATY,delivered,Kettle,3,35.0,dollars,0.0
+272,162,2024-09-06,Almaty  , shipped,Power bank,1,30.0,dollars,0.0
+273,46,"August 1, 2024",TARAZ,shipped,Hand cream,1,700.0,cents,0.0
+274,205,2025-10-18,ASTANA,delivered,Hand cream,3,700.0,cents,0.0
+275,271,2025-11-07,Karaganda, delivered,Novel,2,14.0,dollars,0.0
+276,345,2024-06-12,Shymkent  ,delivered,Power bank,1,30.0,dollars,0.05
+277,280,15/02/2025,Astana, cancelled,Kettle,1,3500.0,cents,0.05
+278,396,2025-11-16,Aktobe,delivered,USB-C cable,3,8.0,dollars,0.0
+279,158,18/07/2024,Astana,delivered,Yoga mat,1,28.0,dollars,0.05
+280,66,2025-03-22, Aktobe,delivered,Novel,1,1400.0,cents,0.0
+281,88,2025-07-09,Aktobe,delivered,USB-C cable,1,8.0,dollars,0.1
+282,9,2025-05-14,Almaty,DELIVERED,Kettle,1,3500.0,cents,0.0
+283,217,2025-05-15,TARAZ,delivered,Novel,4,14.0,dollars,0.0
+284,259,26/02/2024,KARAGANDA, shipped,USB-C cable,3,8.0,dollars,0.1
+285,98,14/08/2024,Taraz,delivered,Kettle,1,35.0,dollars,0.0
+286,136,2025-09-25,shymkent,delivered,Kettle,1,35.0,dollars,0.0
+287,49,2025-09-17,karaganda,delivered  ,Novel,-1,14.0,dollars,0.2
+288,164,2025-05-11,Astana,delivered,Hand cream,3,700.0,cents,0.0
+289,146,2025-04-28,shymkent,cancelled,Power bank,1,30.0,dollars,0.0
+290,266,2024-08-07,Taraz  ,delivered,Hand cream,1,700.0,cents,0.0
+291,375,2024-05-19,,delivered,USB-C cable,1,8.0,dollars,0.1
+292,191,21/09/2024, Karaganda, delivered,Kettle,2,35.0,dollars,0.0
+293,262,2024-04-28,Almaty,delivered,USB-C cable,1,8.0,dollars,0.0
+294,19,2025-12-17,Taraz,shipped,Desk lamp,1,25.0,dollars,0.0
+295,120,20/03/2024,Karaganda,delivered  ,Kettle,1,35.0,dollars,
+296,25,"July 29, 2024",almaty,delivered,Power bank,1,30.0,dollars,0.1
+297,395,2025-05-24, Almaty,DELIVERED,Headphones,1,45.0,dollars,0.0
+298,232,2025-01-20,Shymkent  ,cancelled,Headphones,1,45.0,dollars,0.0
+299,89,2025-03-13,aktobe,delivered,Desk lamp,1,25.0,dollars,0.2
+300,74,"January 2, 2024", Taraz,delivered,Power bank,1,30.0,dollars,0.0
+301,69,11/07/2025,ALMATY,delivered,Hand cream,1,7.0,dollars,0.2
+302,340,19/11/2024,aktobe,delivered,Hand cream,1,7.0,dollars,0.0
+303,291,2024-05-08,Aktobe,delivered,Headphones,2,45.0,dollars,0.0
+304,199,2024-04-05,Taraz,delivered,USB-C cable,1,8.0,dollars,0.2
+305,200,2024-07-12,Shymkent,cancelled,Power bank,1,30.0,dollars,0.0
+306,172,2025-11-18,Karaganda  ,DELIVERED,Headphones,1,45.0,dollars,0.1
+307,130,2024-04-21,Taraz,delivered,Yoga mat,1,28.0,dollars,0.1
+308,194,2025-03-26,TARAZ,delivered,USB-C cable,3,8.0,dollars,0.1
+309,124,2024-11-11,almaty,delivered,Yoga mat,2,28.0,dollars,0.0
+310,132,"June 6, 2025",Almaty,delivered  ,Hand cream,1,7.0,dollars,0.2
+311,380,2024-08-31,Aktobe  ,delivered,Hand cream,1,7.0,dollars,0.1
+312,93,"May 10, 2024",Shymkent,shipped  ,Kettle,2,35.0,dollars,0.0
+313,334,2024-02-14,Astana,delivered,Kettle,1,35.0,dollars,N/A
+314,381,"October 21, 2025",Aktobe,delivered,Hand cream,1,7.0,dollars,0.0
+315,40,2025-09-11,Karaganda, delivered,Kettle,2,3500.0,cents,0.0
+316,302,2024-12-05,Astana,delivered,USB-C cable,1,8.0,dollars,0.0
+317,371,25/03/2024,Almaty,delivered,Headphones,3,45.0,dollars,0.0
+318,321,2024-05-11,taraz,delivered,Headphones,2,45.0,dollars,0.1
+319,31,25/01/2024, Karaganda,delivered,Hand cream,2,7.0,dollars,0.0
+320,251,"July 31, 2025",Taraz,delivered,Kettle,1,3500.0,cents,0.0
+321,206,"August 6, 2024",Karaganda  ,delivered,Novel,1,1400.0,cents,0.0
+322,328,2024-07-08, Almaty,delivered,Novel,1,14.0,dollars,0.0
+323,135,2024-09-04, Aktobe,DELIVERED,Hand cream,1,7.0,dollars,0.1
+548,319,2024-08-07,karaganda,cancelled,Yoga mat,1,28.0,dollars,0.0
+324,140,2025-06-12,Astana,cancelled,USB-C cable,1,8.0,dollars,-
+325,50,09/02/2025,Taraz,delivered,Yoga mat,-1,28.0,dollars,0.0
+326,69,2024-12-22,Aktobe,RETURNED,Power bank,1,30.0,dollars,0.05
+327,192,"July 5, 2025",Shymkent,delivered,Power bank,1,30.0,dollars,0.0
+328,234,2024-03-07, Karaganda,delivered,Yoga mat,1,28.0,dollars,0.0
+329,167,2025-04-13,Shymkent,shipped,Headphones,1,45.0,dollars,0.0
+619,50,"July 17, 2025",aktobe,delivered,Novel,1,14.0,dollars,0.0
+330,395,2024-12-16,shymkent,delivered,Hand cream,1,7.0,dollars,0.0
+331,57,2024-09-21,Aktobe,delivered,Headphones,3,45.0,dollars,0.0
+332,23,2024-12-23, Aktobe,delivered,Novel,2,14.0,dollars,0.1
+333,267,"March 31, 2025",ALMATY,returned,Hand cream,1,7.0,dollars,0.2
+334,82,28/10/2024,Taraz,delivered,Desk lamp,1,2500.0,cents,0.0
+335,151,2024-04-26,almaty,DELIVERED,Headphones,1,45.0,dollars,0.0
+336,392,2024-01-16,,delivered,Novel,2,1400.0,cents,
+337,117,2025-08-15,astana,delivered,Yoga mat,1,28.0,dollars,0.05
+338,335,2024-02-20,Almaty,cancelled  ,Desk lamp,1,25.0,dollars,0.1
+339,230,06/07/2024, Almaty,delivered,Hand cream,1,7.0,dollars,0.0
+340,341,2025-06-23, Karaganda,DELIVERED,USB-C cable,3,8.0,dollars,0.1
+341,253,2024-11-10,Aktobe,delivered,Power bank,1,3000.0,cents,0.05
+342,107,2025-05-29,-,delivered,USB-C cable,1,8.0,dollars,0.0
+343,196,2025-05-20,Karaganda,delivered  ,Power bank,3,30.0,dollars,0.0
+344,285,"March 1, 2025", Taraz,delivered,Headphones,1,45.0,dollars,N/A
+345,332,2024-12-27,KARAGANDA,delivered,Headphones,1,45.0,dollars,0.0
+346,95,2025-11-18,taraz,delivered,Desk lamp,1,25.0,dollars,0.0
+347,1,13/09/2024,Taraz,delivered,USB-C cable,2,8.0,dollars,0.0
+348,239,08/02/2025,Karaganda,delivered,Kettle,2,3500.0,cents,0.0
+349,233,2024-08-09,Karaganda,delivered,USB-C cable,1,8.0,dollars,0.0
+350,243,2024-02-22,Karaganda,delivered,USB-C cable,2,8.0,dollars,0.0
+351,74,22/10/2025,Astana,CANCELLED,Headphones,1,45.0,dollars,0.0
+352,34,2024-02-19,Taraz,delivered,USB-C cable,1,800.0,cents,0.0
+353,285,2025-12-18,astana,delivered,Power bank,1,30.0,dollars,0.0
+354,187,2024-03-04,Taraz  ,delivered,Hand cream,3,700.0,cents,0.0
+355,50,12/07/2025,Karaganda,delivered  ,Headphones,2,45.0,dollars,0.0
+356,237,"July 29, 2025",Shymkent,DELIVERED,Kettle,2,35.0,dollars,0.0
+357,141,20/09/2025,,delivered,Desk lamp,1,25.0,dollars,
+358,281,2025-04-10,Karaganda,delivered,Novel,1,14.0,dollars,0.0
+359,380,"May 9, 2025",karaganda,delivered,Kettle,3,35.0,dollars,0.0
+360,169,"April 18, 2024",Almaty,delivered,Desk lamp,1,25.0,dollars,
+361,80,16/11/2025,Astana,delivered,Yoga mat,-1,28.0,dollars,N/A
+362,312,2024-10-21,Almaty, cancelled,USB-C cable,3,8.0,dollars,0.0
+363,44,29/09/2024,Taraz,delivered  ,Yoga mat,3,28.0,dollars,0.0
+364,99,2025-06-12,TARAZ,delivered,Yoga mat,1,28.0,dollars,0.0
+365,193,16/03/2025,Aktobe,delivered,Headphones,1,45.0,dollars,0.05
+366,297,29/05/2025,Karaganda, delivered,Kettle,4,35.0,dollars,0.05
+367,152,05/01/2025,shymkent,delivered  ,USB-C cable,1,800.0,cents,0.0
+368,159,17/12/2024,Taraz,shipped,Headphones,2,45.0,dollars,0.0
+369,133,2025-06-03,Taraz,delivered,USB-C cable,1,8.0,dollars,0.2
+370,180,18/07/2025,ALMATY,delivered,Power bank,1,30.0,dollars,0.0
+371,135,"October 8, 2025",Almaty, delivered,USB-C cable,1,8.0,dollars,0.1
+372,290,"June 18, 2025",Shymkent,delivered,Kettle,1,35.0,dollars,N/A
+373,277,"April 8, 2024",Aktobe,delivered,Kettle,1,35.0,dollars,0.0
+374,305,2025-06-07,Astana,delivered,Desk lamp,-1,25.0,dollars,0.0
+375,379,2024-10-14, Taraz, delivered,USB-C cable,3,8.0,dollars,0.1
+376,332,2025-10-20,Shymkent,delivered,Headphones,1,45.0,dollars,0.0
+377,146,"July 26, 2025",ASTANA,delivered,Novel,1,14.0,dollars,0.0
+679,260,"November 13, 2024",ASTANA,delivered,Novel,1,14.0,dollars,0.0
+378,220,19/09/2025,Aktobe  , delivered,Power bank,1,30.0,dollars,0.05
+379,54,10/09/2024,Aktobe,delivered  ,USB-C cable,4,8.0,dollars,0.0
+380,202,2024-05-14,Shymkent,delivered,Novel,1,14.0,dollars,0.1
+381,82,07/05/2025,Aktobe,delivered,Hand cream,2,7.0,dollars,0.0
+797,22,"August 9, 2024",ALMATY, delivered,Desk lamp,1,25.0,dollars,0.0
+382,151,2025-08-11,AKTOBE,returned,Desk lamp,3,25.0,dollars,0.0
+383,53,2025-03-08,Aktobe,DELIVERED,Novel,3,14.0,dollars,0.0
+384,166,29/04/2024,Taraz,delivered,Headphones,4,45.0,dollars,0.0
+385,86,2025-05-27,Astana, delivered,Desk lamp,1,2500.0,cents,0.0
+386,311,2024-03-12,Astana,delivered,Power bank,1,30.0,dollars,0.2
+387,60,2025-07-03,Shymkent,delivered  ,Power bank,3,30.0,dollars,0.0
+388,52,2025-12-20,Aktobe,delivered,Power bank,1,30.0,dollars,0.0
+389,193,21/05/2024,taraz,delivered,Yoga mat,1,28.0,dollars,0.0
+390,372,2024-03-27,Astana,delivered,Hand cream,2,7.0,dollars,0.0
+391,163,2025-12-07,-,delivered,Hand cream,-1,7.0,dollars,0.05
+392,389,"April 26, 2024",Astana,delivered,Hand cream,1,7.0,dollars,N/A
+393,229,2024-06-18,Shymkent,shipped,Hand cream,-1,700.0,cents,0.0
+394,117,2024-11-29,Almaty, delivered,Kettle,1,35.0,dollars,0.1
+395,200,"September 26, 2024",Aktobe, delivered,Headphones,-2,45.0,dollars,0.0
+396,6,23/08/2025,Shymkent,DELIVERED,Kettle,2,3500.0,cents,0.0
+397,394,29/07/2025,Astana,delivered,Novel,-1,14.0,dollars,0.0
+398,397,09/01/2025,Astana,delivered,Hand cream,2,7.0,dollars,0.1
+399,384,18/09/2025,shymkent,cancelled,Kettle,1,35.0,dollars,0.0
+400,18,"November 4, 2025",Shymkent,delivered,Kettle,1,35.0,dollars,0.0
+401,54,2025-12-25,Shymkent,delivered,Novel,1,0.0,dollars,0.0
+402,49,04/01/2025,Aktobe,delivered  ,Desk lamp,-1,2500.0,cents,0.05
+403,73,01/06/2025,-,delivered,Desk lamp,3,2500.0,cents,0.0
+404,277,2025-05-08,Shymkent,delivered,Headphones,1,45.0,dollars,0.0
+405,105,2025-09-09,Taraz,cancelled,USB-C cable,1,8.0,dollars,-
+406,78,"September 6, 2024",taraz,delivered  ,Novel,2,0.0,dollars,0.0
+407,49,"May 19, 2024",Astana,shipped,Headphones,1,45.0,dollars,0.0
+408,351,12/10/2025,-, delivered,Headphones,2,45.0,dollars,0.0
+409,18,13/05/2025,Astana,delivered,Novel,4,14.0,dollars,0.05
+410,264,"September 21, 2025",Almaty,delivered,Kettle,-1,35.0,dollars,0.1
+411,231,2024-10-01,Karaganda,delivered,Power bank,1,30.0,dollars,0.0
+412,118,2024-06-22,almaty,delivered,Novel,1,14.0,dollars,0.0
+413,246,2024-11-10,Karaganda,delivered,Desk lamp,1,25.0,dollars,-
+414,154,26/04/2024,AKTOBE, delivered,Hand cream,2,7.0,dollars,0.0
+415,345,"March 30, 2025",Aktobe,delivered,Headphones,1,45.0,dollars,0.05
+416,341,2024-04-30,Shymkent  , delivered,Yoga mat,1,28.0,dollars,0.0
+417,197,2025-03-09, Karaganda,delivered,Desk lamp,3,25.0,dollars,0.0
+418,157,2025-01-25,astana,delivered,Hand cream,1,7.0,dollars,0.0
+419,80,26/05/2025,AKTOBE,delivered  ,Yoga mat,2,28.0,dollars,0.0
+701,277,2024-01-22,ASTANA,delivered,Headphones,3,45.0,dollars,0.0
+420,24,2024-01-14,Shymkent,returned,Hand cream,1,7.0,dollars,0.1
+421,175,2024-12-08,Aktobe,CANCELLED,Kettle,2,35.0,dollars,0.05
+422,16,"April 21, 2025",N/A,delivered,Desk lamp,1,25.0,dollars,0.0
+423,26,"August 30, 2025",aktobe,delivered,Power bank,4,30.0,dollars,0.0
+424,252,2024-12-16,Shymkent,delivered  ,USB-C cable,1,800.0,cents,0.2
+425,244,10/09/2024,SHYMKENT, delivered,Hand cream,1,7.0,dollars,0.0
+426,130,2024-12-27,Karaganda  , delivered,Novel,3,1400.0,cents,0.0
+427,299,2024-10-21,karaganda,delivered,USB-C cable,1,800.0,cents,0.05
+428,156,2025-05-26,Astana  ,cancelled,Desk lamp,2,25.0,dollars,0.0
+429,353,30/12/2025, Taraz,delivered,USB-C cable,-1,8.0,dollars,0.1
+430,32,2024-09-07,Taraz  ,delivered,Hand cream,-2,7.0,dollars,0.0
+431,64,2024-11-15,Almaty  ,CANCELLED,Headphones,1,45.0,dollars,-
+432,201,2024-09-13,Aktobe  ,cancelled,Novel,-3,14.0,dollars,0.0
+433,178,2024-10-11,Almaty,delivered,USB-C cable,1,800.0,cents,0.0
+434,304,2025-10-15,Almaty,delivered,Kettle,1,35.0,dollars,-
+435,225,2025-07-14,Aktobe,delivered,Desk lamp,1,2500.0,cents,0.0
+436,234,22/10/2024,Aktobe, returned,Headphones,1,45.0,dollars,0.0
+437,365,2024-08-16,shymkent,delivered  ,Power bank,3,30.0,dollars,0.0
+438,65,2025-03-05, Taraz,delivered,USB-C cable,1,8.0,dollars,0.1
+439,227,"May 12, 2024",SHYMKENT,cancelled,Desk lamp,1,25.0,dollars,0.0
+440,69,2024-03-16,Karaganda,delivered,Hand cream,1,7.0,dollars,0.0
+441,2,2024-10-07,Aktobe,delivered,Desk lamp,1,25.0,dollars,0.2
+442,25,2025-10-20,Almaty,DELIVERED,Kettle,1,35.0,dollars,0.0
+443,352,2025-06-24, Astana,delivered,Novel,2,14.0,dollars,0.05
+444,50,2025-02-22,aktobe,delivered  ,Headphones,1,45.0,dollars,-
+445,45,2024-09-21,Aktobe,delivered,Hand cream,1,7.0,dollars,0.0
+446,305,2025-11-20,Karaganda, delivered,Headphones,1,45.0,dollars,0.2
+447,161,2024-01-10,Aktobe,shipped,USB-C cable,2,8.0,dollars,0.0
+448,284,30/10/2025,Taraz, shipped,Novel,1,14.0,dollars,0.0
+449,32,03/11/2024,-,cancelled,USB-C cable,3,8.0,dollars,0.1
+450,276,2025-05-08,Astana  ,delivered,Desk lamp,2,25.0,dollars,0.0
+451,382,2025-04-12,Aktobe,cancelled,Novel,2,14.0,dollars,0.0
+452,313,"October 31, 2025",Astana,delivered,USB-C cable,2,800.0,cents,0.05
+453,50,2025-12-09,Shymkent,delivered,Power bank,1,30.0,dollars,0.0
+454,324,2024-12-21,Aktobe, delivered,Hand cream,2,700.0,cents,N/A
+455,143,22/05/2024,astana, cancelled,Headphones,1,45.0,dollars,0.05
+456,332,04/07/2024,AKTOBE,delivered,Hand cream,3,7.0,dollars,0.1
+457,314,2025-12-07,Aktobe,delivered,Hand cream,2,700.0,cents,0.05
+458,1,15/02/2025, Almaty,returned,Hand cream,1,7.0,dollars,0.0
+459,182,2025-04-05,karaganda,delivered,Kettle,1,35.0,dollars,0.0
+460,156,2024-06-16,Taraz  ,delivered,Desk lamp,1,25.0,dollars,0.0
+461,20,2025-09-26,N/A,delivered,Kettle,1,3500.0,cents,0.0
+462,194,2024-11-22,Taraz,delivered,Power bank,2,30.0,dollars,0.0
+463,256,2024-11-30,Shymkent,DELIVERED,Hand cream,2,7.0,dollars,0.0
+464,88,"December 11, 2024",Almaty,delivered,Hand cream,1,7.0,dollars,0.05
+465,189,"June 9, 2025",almaty,delivered,Kettle,1,35.0,dollars,0.0
+466,286,2024-06-17,AKTOBE,cancelled,Hand cream,1,7.0,dollars,0.05
+467,289,2025-04-28,Karaganda,delivered,Hand cream,1,7.0,dollars,0.0
+468,207,"June 24, 2024",,delivered,Headphones,2,45.0,dollars,0.0
+469,30,2025-06-22,Astana  ,DELIVERED,Headphones,4,45.0,dollars,0.2
+470,347,2025-11-13,Karaganda,delivered,USB-C cable,4,8.0,dollars,0.05
+471,107,2025-05-27,Almaty  ,DELIVERED,Desk lamp,1,25.0,dollars,0.0
+472,369,2024-12-05,Karaganda,delivered,Headphones,2,45.0,dollars,0.0
+473,141,2024-02-18,KARAGANDA,delivered,Novel,1,14.0,dollars,0.0
+474,176,2025-01-01,Aktobe,delivered,Novel,2,14.0,dollars,0.0
+475,348,"January 14, 2025", Taraz,delivered,Power bank,1,3000.0,cents,0.1
+476,185,"July 17, 2025",Almaty,delivered,Power bank,1,30.0,dollars,0.2
+477,355,03/03/2024,ALMATY,delivered,Kettle,1,35.0,dollars,0.0
+478,266,2024-03-19,AKTOBE,delivered,Headphones,1,45.0,dollars,
+479,6,2024-08-11,Almaty,DELIVERED,Novel,1,14.0,dollars,0.0
+480,389,2024-05-17,TARAZ,delivered,Yoga mat,3,28.0,dollars,0.1
+481,72,2025-12-23,Karaganda,delivered,Power bank,3,30.0,dollars,0.1
+482,119,10/03/2025,aktobe,cancelled,Power bank,-1,30.0,dollars,0.0
+483,241,01/02/2025,Shymkent,delivered,Novel,1,14.0,dollars,0.0
+484,247,2025-01-04,shymkent,DELIVERED,Headphones,1,45.0,dollars,0.0
+485,358,2025-08-06,-,delivered,Power bank,1,30.0,dollars,0.1
+486,198,2024-10-29,Astana,delivered  ,Yoga mat,1,28.0,dollars,0.2
+487,349,"November 12, 2025",ASTANA,DELIVERED,Hand cream,3,7.0,dollars,0.0
+488,115,"April 8, 2024",karaganda,delivered  ,Power bank,3,30.0,dollars,0.1
+489,245,08/04/2024,Shymkent,cancelled,Novel,1,14.0,dollars,0.0
+490,317,23/09/2025,,DELIVERED,Kettle,1,35.0,dollars,0.05
+491,346,2025-02-02,Karaganda  , delivered,Headphones,1,45.0,dollars,0.0
+492,165,"April 10, 2025",Aktobe,delivered,Headphones,4,4500.0,cents,0.0
+493,110,2025-11-23, Astana, delivered,Headphones,3,4500.0,cents,0.05
+494,197,19/09/2025,Karaganda,delivered,Yoga mat,1,2800.0,cents,0.0
+495,288,"July 30, 2025",SHYMKENT, delivered,Headphones,1,45.0,dollars,0.1
+496,345,2024-04-15,Taraz,delivered,Headphones,1,45.0,dollars,0.05
+497,60,2024-03-05,Shymkent,delivered,Hand cream,2,7.0,dollars,0.05
+498,88,2024-12-19,Karaganda,DELIVERED,Yoga mat,1,2800.0,cents,0.05
+499,235,2024-04-24,Almaty,delivered  ,Kettle,1,35.0,dollars,0.2
+500,211,30/06/2025,ASTANA, delivered,Novel,3,1400.0,cents,0.0
+501,83,25/08/2024,Aktobe, delivered,Desk lamp,1,25.0,dollars,0.0
+502,196,2024-02-13,Astana,delivered,Headphones,1,45.0,dollars,0.0
+503,211,2025-09-25,karaganda,delivered,USB-C cable,1,8.0,dollars,0.0
+504,318,2024-09-10,Almaty,delivered,Kettle,1,35.0,dollars,0.1
+505,251,22/07/2024,Aktobe,cancelled,Power bank,2,30.0,dollars,0.1
+506,25,2025-12-06,Shymkent  ,shipped,Desk lamp,1,25.0,dollars,0.1
+507,323,2025-12-27,almaty,delivered  ,USB-C cable,1,8.0,dollars,0.0
+508,287,2025-10-10,Astana,delivered,Kettle,1,35.0,dollars,0.0
+509,210,2024-07-26,Astana,DELIVERED,Desk lamp,3,25.0,dollars,0.05
+510,229,2025-12-14,Shymkent,DELIVERED,Power bank,1,30.0,dollars,
+511,355,"May 31, 2024",,delivered,Novel,1,14.0,dollars,0.1
+512,142,2024-08-30,Taraz,cancelled,Kettle,1,3500.0,cents,0.0
+513,313,14/01/2025,Karaganda,DELIVERED,Desk lamp,2,25.0,dollars,0.0
+514,9,2025-01-07,Taraz,delivered,Novel,2,14.0,dollars,0.0
+515,242,2024-09-01,Aktobe,delivered,Novel,1,1400.0,cents,0.1
+516,5,2025-03-11,Astana,DELIVERED,Kettle,1,35.0,dollars,0.0
+517,278,2025-08-02,Aktobe,delivered,USB-C cable,1,0.0,dollars,0.1
+518,50,2024-05-12,ALMATY,delivered,Power bank,1,30.0,dollars,0.1
+519,336,2025-04-06,,delivered,Desk lamp,4,25.0,dollars,0.0
+520,277,2025-03-25,Almaty,delivered,Desk lamp,1,25.0,dollars,0.0
+521,323,2025-04-07,Astana,delivered,Kettle,1,35.0,dollars,0.0
+522,31,24/12/2024,Taraz, returned,USB-C cable,3,8.0,dollars,0.0
+523,220,2024-06-22,almaty,delivered,Yoga mat,3,28.0,dollars,0.0
+524,41,06/10/2025,shymkent,delivered,Kettle,-1,35.0,dollars,0.05
+525,342,"November 27, 2025",almaty,delivered,Power bank,1,30.0,dollars,
+183,258,17/01/2025,Almaty  , delivered,Power bank,2,30.0,dollars,0.0
+526,395,07/08/2025,Astana,shipped  ,Hand cream,1,7.0,dollars,0.0
+527,222,27/11/2024,Karaganda,delivered,Headphones,1,45.0,dollars,0.2
+528,64,2024-07-04,Almaty,delivered,Yoga mat,1,28.0,dollars,0.0
+529,271,2025-05-14, Almaty,DELIVERED,Desk lamp,1,25.0,dollars,0.0
+530,161,"August 29, 2025",Taraz  ,delivered,Headphones,3,45.0,dollars,0.0
+531,54,2025-09-16,Shymkent,DELIVERED,Desk lamp,2,25.0,dollars,0.0
+532,254,2025-01-05, Karaganda,delivered,Yoga mat,1,28.0,dollars,0.0
+533,261,"May 29, 2024",SHYMKENT,delivered,Yoga mat,3,28.0,dollars,-
+534,148,2025-07-05,Karaganda, delivered,Novel,1,14.0,dollars,0.0
+535,336,"July 18, 2025",karaganda,delivered  ,USB-C cable,-1,8.0,dollars,0.0
+536,169,2025-01-23,Shymkent  ,delivered,Headphones,2,45.0,dollars,0.05
+537,265,2025-11-30,, delivered,USB-C cable,1,8.0,dollars,0.1
+538,147,2025-10-27, Shymkent,delivered  ,Novel,1,14.0,dollars,0.1
+539,122,2024-10-06, Karaganda, shipped,Novel,1,1400.0,cents,0.0
+540,215,"November 27, 2024",Karaganda,delivered,Power bank,1,30.0,dollars,0.0
+541,169,2024-03-19,Karaganda  , delivered,Novel,1,14.0,dollars,0.0
+542,176,05/12/2025,taraz,delivered,Hand cream,1,7.0,dollars,0.1
+543,337,"December 2, 2024",Astana,delivered,Desk lamp,1,25.0,dollars,0.0
+544,283,2024-05-24,Astana,shipped,Kettle,2,35.0,dollars,0.05
+545,37,2024-11-24,almaty, returned,Novel,1,14.0,dollars,0.0
+753,356,05/07/2025,karaganda,delivered,Desk lamp,1,25.0,dollars,0.0
+546,361,2025-09-18,Karaganda  ,delivered,Power bank,1,30.0,dollars,0.05
+547,142,2024-05-07, Almaty,delivered,USB-C cable,3,8.0,dollars,0.0
+548,319,2024-08-07,karaganda,cancelled,Yoga mat,1,28.0,dollars,0.0
+549,309,2025-09-17,Aktobe,shipped,Kettle,2,35.0,dollars,0.0
+550,208,28/12/2025, Taraz,DELIVERED,Power bank,-1,30.0,dollars,0.1
+551,6,27/03/2025,Shymkent,delivered,Kettle,3,35.0,dollars,0.0
+552,16,2025-06-02, Aktobe,delivered,Kettle,-1,35.0,dollars,0.1
+553,138,2024-04-24,Almaty,delivered,Novel,1,14.0,dollars,0.0
+27,137,"May 30, 2024",TARAZ,delivered,Novel,3,14.0,dollars,0.1
+554,49,21/12/2024,Aktobe,delivered,Novel,1,14.0,dollars,0.05
+175,220,2024-01-24,ALMATY,delivered,Power bank,1,30.0,dollars,0.05
+561,258,06/06/2024,Karaganda,delivered,Hand cream,1,7.0,dollars,0.1
+555,26,2025-08-31,Karaganda,delivered,Headphones,1,45.0,dollars,0.0
+556,30,2025-01-10,Shymkent,RETURNED,Desk lamp,2,25.0,dollars,0.0
+557,249,2024-11-29,Taraz,delivered,Kettle,1,35.0,dollars,0.0
+558,158,01/07/2025, Astana,cancelled,Kettle,1,35.0,dollars,0.1
+559,25,16/04/2024,almaty,delivered,Power bank,-1,30.0,dollars,0.1
+560,152,2025-11-08, Almaty,delivered,USB-C cable,3,8.0,dollars,0.0
+561,258,06/06/2024,Karaganda,delivered,Hand cream,1,7.0,dollars,0.1
+562,307,2024-08-27,Almaty,returned,Yoga mat,1,28.0,dollars,0.0
+563,398,2024-03-07,astana,delivered,Yoga mat,4,28.0,dollars,-
+564,323,2024-08-10, Aktobe,shipped  ,USB-C cable,1,8.0,dollars,0.05
+565,159,2025-12-05,-,delivered  ,Desk lamp,2,25.0,dollars,0.0
+566,93,2024-09-14,taraz,delivered,Power bank,1,30.0,dollars,0.1
+567,33,2024-01-17,Astana,delivered,USB-C cable,2,8.0,dollars,0.05
+568,357,2024-12-14,Shymkent  ,delivered,USB-C cable,2,8.0,dollars,0.0
+569,339,"January 31, 2024", Astana,delivered,Headphones,2,4500.0,cents,0.0
+570,156,2024-04-19,ASTANA,delivered,Novel,1,14.0,dollars,0.05
+571,397,23/09/2024,almaty,delivered,Desk lamp,1,0.0,dollars,0.0
+572,290,2025-10-28,KARAGANDA,delivered  ,Novel,3,14.0,dollars,0.0
+573,257,24/03/2025,Astana,delivered,Yoga mat,1,28.0,dollars,0.2
+574,197,2025-07-31,KARAGANDA,delivered,Desk lamp,-1,25.0,dollars,0.05
+575,16,2024-05-07,Karaganda  ,delivered,Power bank,-1,30.0,dollars,0.2
+576,38,2024-06-22,Aktobe  ,delivered,Hand cream,2,7.0,dollars,0.05
+577,393,2024-05-05, Aktobe,cancelled,Kettle,1,35.0,dollars,0.05
+578,140,2024-05-17,Almaty,delivered,Desk lamp,1,25.0,dollars,0.0
+579,274,26/05/2024,Aktobe,delivered,Yoga mat,3,28.0,dollars,0.1
+580,326,"April 30, 2025",almaty,delivered,Novel,1,14.0,dollars,0.0
+581,297,2025-03-18,Astana,delivered,Hand cream,1,7.0,dollars,0.05
+582,300,2024-05-31,N/A,delivered,USB-C cable,3,8.0,dollars,0.0
+583,73,2024-12-10, Shymkent,delivered  ,Kettle,3,35.0,dollars,0.2
+584,385,2024-09-11,N/A,delivered,Yoga mat,4,28.0,dollars,0.05
+585,309,2025-03-20,Almaty, cancelled,Hand cream,1,7.0,dollars,0.0
+586,199,"May 27, 2025",-,delivered,Desk lamp,1,25.0,dollars,0.2
+587,119,14/03/2024,shymkent,delivered,Hand cream,2,7.0,dollars,0.0
+588,105,2025-10-19,Aktobe,delivered,Hand cream,1,700.0,cents,0.0
+589,57,2024-10-23,astana,delivered,USB-C cable,2,8.0,dollars,0.0
+590,330,2025-01-06,Almaty  ,cancelled,Power bank,1,30.0,dollars,0.1
+591,58,2025-12-14, Astana,shipped  ,USB-C cable,1,8.0,dollars,0.2
+592,56,2025-08-27,taraz,delivered,Kettle,1,35.0,dollars,0.0
+593,358,12/09/2024,Karaganda,delivered,Novel,1,14.0,dollars,0.0
+594,388,2024-04-14,Karaganda,delivered,Hand cream,2,7.0,dollars,0.1
+943,217,26/10/2025,Astana,cancelled,Hand cream,2,7.0,dollars,0.2
+884,298,19/12/2025,Almaty, delivered,Power bank,2,30.0,dollars,
+595,116,2025-05-29,Shymkent, delivered,Novel,2,14.0,dollars,0.0
+596,179,25/08/2025,Astana,SHIPPED,Kettle,2,35.0,dollars,0.0
+597,229,"January 13, 2024",Karaganda  ,delivered,Hand cream,1,7.0,dollars,0.1
+598,201,2025-01-15,Astana,delivered,Yoga mat,3,28.0,dollars,0.0
+599,253,"October 2, 2025",karaganda,delivered,Headphones,3,4500.0,cents,0.0
+600,252,2025-10-23,Astana,delivered  ,Yoga mat,1,28.0,dollars,
+601,335,"October 29, 2025",Karaganda,delivered,Yoga mat,1,28.0,dollars,0.0
+602,319,30/09/2024,Almaty,delivered,Power bank,1,30.0,dollars,0.1
+603,274,03/02/2024,Almaty,delivered,Kettle,1,3500.0,cents,0.0
+604,375,2025-02-19,Shymkent,cancelled,Headphones,1,45.0,dollars,0.1
+605,273,2025-11-30,Karaganda,delivered,Power bank,1,30.0,dollars,0.0
+606,95,2025-12-10, Shymkent,delivered,Headphones,1,45.0,dollars,0.0
+607,192,12/02/2025,ALMATY,delivered,Kettle,3,35.0,dollars,0.0
+608,25,20/12/2024,Taraz,returned,Yoga mat,2,28.0,dollars,0.0
+609,390,13/01/2025,ASTANA,delivered,Yoga mat,2,28.0,dollars,0.0
+610,388,2025-03-24,Aktobe  ,delivered,Hand cream,1,7.0,dollars,-
+611,255,"August 17, 2024",shymkent,delivered,Novel,2,14.0,dollars,0.0
+612,259,2025-09-01, Aktobe,delivered,USB-C cable,1,0.0,dollars,0.0
+613,384,2025-02-08,Taraz,delivered,Power bank,2,30.0,dollars,0.0
+614,86,2024-02-20,Taraz,delivered,USB-C cable,1,8.0,dollars,0.0
+615,330,2024-05-15,taraz,DELIVERED,USB-C cable,3,8.0,dollars,0.05
+616,67,06/06/2025,Aktobe,DELIVERED,Desk lamp,3,25.0,dollars,-
+617,296,2025-01-30,Almaty,delivered,Hand cream,1,7.0,dollars,0.0
+618,102,30/09/2025,Karaganda, delivered,Headphones,2,45.0,dollars,0.0
+619,50,"July 17, 2025",aktobe,delivered,Novel,1,14.0,dollars,0.0
+620,138,2025-08-23,,delivered  ,Yoga mat,1,28.0,dollars,0.1
+621,89,2025-04-07,Taraz,cancelled,Hand cream,4,7.0,dollars,0.0
+622,376,"July 20, 2024",Astana,delivered  ,Power bank,3,30.0,dollars,0.0
+623,279,2025-02-27,Shymkent,delivered  ,Yoga mat,2,28.0,dollars,0.0
+624,63,2024-08-23,Aktobe,delivered,Power bank,2,3000.0,cents,0.0
+625,267,2025-07-17,Astana,delivered,Headphones,1,4500.0,cents,0.1
+626,116,2025-01-01,Karaganda,delivered,Novel,4,14.0,dollars,0.0
+627,36,2025-09-18,Taraz,delivered,Hand cream,2,7.0,dollars,N/A
+628,40,21/04/2025,Almaty,delivered,Headphones,1,45.0,dollars,0.2
+629,304,"September 9, 2024",Aktobe,delivered,Headphones,3,45.0,dollars,0.0
+630,49,2025-04-22,Shymkent,delivered,Desk lamp,2,25.0,dollars,0.0
+631,330,19/04/2025,AKTOBE, delivered,Yoga mat,1,2800.0,cents,0.0
+632,187,2024-05-03,SHYMKENT,delivered  ,Yoga mat,3,28.0,dollars,0.0
+1023,347,2025-12-21,almaty,DELIVERED,Power bank,3,30.0,dollars,0.0
+633,396,06/01/2024,KARAGANDA, delivered,Desk lamp,1,25.0,dollars,0.0
+634,154,2025-01-02, Almaty,delivered,Hand cream,-1,7.0,dollars,0.0
+635,63,2025-04-16,Taraz,DELIVERED,Desk lamp,2,0.0,dollars,0.0
+636,208,2025-11-17,Taraz,delivered,USB-C cable,2,-8.0,dollars,-
+637,137,"February 4, 2025",SHYMKENT,delivered,Yoga mat,1,28.0,dollars,0.0
+638,6,29/04/2024,aktobe,DELIVERED,Desk lamp,1,2500.0,cents,0.0
+639,239,2025-07-02,Shymkent  , cancelled,Headphones,-1,45.0,dollars,N/A
+309,124,2024-11-11,almaty,delivered,Yoga mat,2,28.0,dollars,0.0
+640,254,2025-05-21,Karaganda,delivered,Headphones,2,45.0,dollars,0.0
+641,258,2025-01-04,Aktobe  ,DELIVERED,Kettle,3,35.0,dollars,0.0
+642,60,05/01/2025,Shymkent,delivered  ,Power bank,1,30.0,dollars,0.0
+643,106,2024-01-31,N/A,delivered,Power bank,1,30.0,dollars,0.0
+644,229,2024-07-27,Karaganda,delivered,Hand cream,1,7.0,dollars,0.0
+645,83,30/11/2025,Karaganda,shipped  ,Headphones,4,4500.0,cents,0.0
+646,283,07/11/2024, Astana,delivered  ,Kettle,3,35.0,dollars,0.0
+647,333,2025-10-14,Astana,cancelled,Desk lamp,4,25.0,dollars,-
+648,331,2025-02-17,Astana, delivered,Yoga mat,2,28.0,dollars,0.0
+649,83,09/05/2024,Taraz  ,DELIVERED,Headphones,2,45.0,dollars,0.0
+650,367,2025-08-26,-,shipped,USB-C cable,1,8.0,dollars,0.0
+651,114,2025-04-04,Astana,delivered,Novel,1,14.0,dollars,0.2
+652,239,21/05/2024,Astana,returned,Power bank,1,30.0,dollars,
+653,145,2025-05-06,Almaty,returned,USB-C cable,2,8.0,dollars,0.2
+654,210,2025-06-24,shymkent,delivered,Kettle,2,35.0,dollars,0.0
+655,222,2025-05-18,Karaganda, shipped,Yoga mat,1,28.0,dollars,0.05
+656,39,30/10/2024, Aktobe, delivered,Power bank,1,3000.0,cents,0.2
+657,215,14/08/2024,Shymkent,delivered,Headphones,1,4500.0,cents,0.1
+658,251,"December 1, 2025",,delivered,Kettle,3,35.0,dollars,0.0
+659,261,2024-06-20,Shymkent,DELIVERED,Kettle,1,35.0,dollars,0.1
+660,223,2024-08-25,Aktobe,DELIVERED,Novel,1,1400.0,cents,0.2
+661,44,2024-09-24,ALMATY,delivered,Power bank,1,30.0,dollars,0.0
+662,148,2025-08-06,Aktobe,delivered,Kettle,1,35.0,dollars,
+663,240,26/04/2024,AKTOBE,delivered,Kettle,2,-35.0,dollars,0.0
+664,330,2025-09-12,Shymkent  ,delivered,Hand cream,3,7.0,dollars,0.0
+665,362,"May 2, 2024",Almaty,delivered,Headphones,3,45.0,dollars,0.0
+666,320,2024-10-24,Taraz,delivered,Kettle,1,35.0,dollars,0.0
+667,226,2024-01-12,Shymkent,delivered  ,Hand cream,-1,700.0,cents,0.05
+668,195,2024-07-24,Karaganda, delivered,Novel,2,14.0,dollars,0.0
+669,19,2025-06-25,-,delivered,Power bank,1,30.0,dollars,0.0
+670,115,"November 1, 2024", Almaty,delivered,Desk lamp,1,25.0,dollars,0.1
+671,94,2025-03-16,taraz,DELIVERED,Power bank,1,0.0,dollars,0.0
+672,269,"November 18, 2024",Aktobe,delivered,Kettle,3,3500.0,cents,0.1
+673,173,2024-07-17,Aktobe  ,DELIVERED,Power bank,2,30.0,dollars,0.0
+674,296,2024-06-23,Taraz,delivered,Desk lamp,1,25.0,dollars,0.1
+675,86,21/05/2025,Astana  ,delivered,Desk lamp,1,25.0,dollars,0.0
+676,8,2024-01-20,Taraz,DELIVERED,Novel,1,14.0,dollars,-
+677,156,2025-07-29,Astana,shipped,Novel,2,14.0,dollars,0.0
+678,365,06/05/2025,Taraz,delivered,Novel,1,14.0,dollars,0.05
+679,260,"November 13, 2024",ASTANA,delivered,Novel,1,14.0,dollars,0.0
+680,282,2024-05-28,ALMATY,delivered  ,Kettle,2,35.0,dollars,0.0
+681,331,2024-06-30,Aktobe,shipped,Yoga mat,1,2800.0,cents,0.0
+682,332,2025-10-16,N/A,delivered,Desk lamp,1,25.0,dollars,0.0
+683,60,2024-11-12,ALMATY, delivered,Kettle,1,35.0,dollars,0.0
+684,356,2025-10-30, Taraz,delivered  ,Kettle,1,3500.0,cents,0.0
+685,360,09/03/2025,Shymkent  ,shipped,Desk lamp,1,25.0,dollars,0.0
+686,202,"October 3, 2025",Taraz,returned,Yoga mat,-1,28.0,dollars,0.0
+687,271,2025-04-14,SHYMKENT,DELIVERED,Power bank,1,30.0,dollars,0.0
+688,331,"November 21, 2024", Taraz,delivered,Yoga mat,1,28.0,dollars,
+689,272,2024-06-07,Almaty,DELIVERED,Kettle,1,35.0,dollars,0.0
+690,20,"August 21, 2024",Shymkent,delivered,Novel,2,14.0,dollars,0.0
+691,111,2024-01-10,Almaty,DELIVERED,USB-C cable,2,8.0,dollars,
+692,247,2024-10-23,Almaty  ,DELIVERED,Hand cream,3,7.0,dollars,0.1
+693,277,28/10/2024,Aktobe,delivered,Novel,2,14.0,dollars,0.05
+694,253,03/02/2025,Taraz,shipped,Novel,1,14.0,dollars,0.0
+695,60,"September 18, 2024",KARAGANDA,cancelled,Yoga mat,-3,28.0,dollars,0.0
+696,76,"August 1, 2024",Astana,delivered,Yoga mat,1,28.0,dollars,N/A
+697,156,"October 12, 2024",Aktobe,delivered,USB-C cable,3,800.0,cents,0.0
+698,219,09/02/2025,aktobe,DELIVERED,Hand cream,2,7.0,dollars,0.05
+699,345,2025-09-30,ASTANA,delivered  ,Headphones,1,45.0,dollars,0.0
+700,197,09/01/2024,Karaganda,delivered,Desk lamp,4,25.0,dollars,0.0
+98,280,30/11/2024,Astana,delivered,Desk lamp,-1,25.0,dollars,0.0
+701,277,2024-01-22,ASTANA,delivered,Headphones,3,45.0,dollars,0.0
+702,302,01/11/2024,Astana,delivered,Desk lamp,2,25.0,dollars,0.1
+703,86,2025-07-10,Taraz,delivered,Novel,1,14.0,dollars,0.0
+704,260,"November 30, 2024",Karaganda,delivered,Hand cream,4,7.0,dollars,-
+705,237,16/04/2025,Karaganda, delivered,Kettle,1,35.0,dollars,0.0
+706,191,2025-01-25,Karaganda,delivered,USB-C cable,-1,8.0,dollars,0.0
+707,170,2025-03-19,Taraz,delivered,Power bank,2,30.0,dollars,0.1
+708,238,2025-01-26, Karaganda,DELIVERED,Yoga mat,4,28.0,dollars,0.05
+709,374,2024-07-06,Aktobe  , delivered,Desk lamp,2,25.0,dollars,0.0
+710,25,2025-01-30,Aktobe  ,DELIVERED,Novel,2,14.0,dollars,0.0
+711,103,16/03/2024,Shymkent  , delivered,Headphones,1,45.0,dollars,0.0
+712,234,2024-04-15, Taraz,delivered  ,Power bank,1,30.0,dollars,0.0
+713,94,2024-11-03,TARAZ,delivered  ,Desk lamp,2,25.0,dollars,0.0
+714,367,2025-02-24,Shymkent,cancelled,Kettle,3,35.0,dollars,0.0
+715,146,2025-02-03,Aktobe,delivered,USB-C cable,-1,8.0,dollars,0.05
+716,13,2024-12-16,Almaty,delivered,Hand cream,1,7.0,dollars,0.0
+717,362,05/08/2024,Shymkent,shipped,Kettle,1,35.0,dollars,0.0
+718,168,20/01/2024,Aktobe,delivered,Yoga mat,2,28.0,dollars,0.0
+719,80,2024-07-04,Astana,delivered,Desk lamp,1,25.0,dollars,0.0
+720,208,2025-10-16,ASTANA,DELIVERED,Headphones,1,45.0,dollars,0.0
+721,349,2025-12-26,KARAGANDA,delivered,Headphones,2,45.0,dollars,0.05
+722,98,19/09/2025,Taraz, delivered,Kettle,2,35.0,dollars,0.0
+723,291,01/09/2025,Karaganda,delivered,Yoga mat,1,28.0,dollars,0.1
+724,277,2025-07-11,Astana,delivered,Desk lamp,1,25.0,dollars,0.0
+725,38,2025-08-01,Shymkent,delivered,Kettle,1,35.0,dollars,0.0
+726,248,2024-12-03, Karaganda,delivered,Novel,1,14.0,dollars,0.1
+727,26,2025-06-23,astana,delivered,Kettle,1,35.0,dollars,0.0
+728,269,2025-08-14,Taraz,delivered,Yoga mat,2,28.0,dollars,0.0
+729,153,2025-04-17,Taraz,delivered,Yoga mat,3,28.0,dollars,0.0
+730,349,2025-03-02,Aktobe, delivered,Yoga mat,1,28.0,dollars,0.2
+731,198,16/03/2025,Karaganda, delivered,USB-C cable,1,8.0,dollars,0.1
+732,112,2024-05-17, Almaty,delivered,Kettle,-3,35.0,dollars,0.0
+733,370,2025-04-21,Almaty,DELIVERED,Headphones,1,45.0,dollars,0.05
+734,162,2024-12-06,Shymkent,delivered  ,Headphones,1,0.0,dollars,0.0
+735,79,2025-01-29,aktobe,delivered,Desk lamp,1,25.0,dollars,0.0
+736,268,2024-12-17,SHYMKENT,delivered,Power bank,3,30.0,dollars,0.0
+737,32,2025-08-27,ASTANA, delivered,Desk lamp,1,0.0,dollars,-
+738,49,2025-05-09,Almaty,delivered,Headphones,2,45.0,dollars,0.0
+739,263,2025-07-19,TARAZ, delivered,Kettle,1,35.0,dollars,0.05
+740,4,2024-10-28,Taraz  ,DELIVERED,Headphones,1,45.0,dollars,0.1
+741,11,2024-07-24, Almaty,delivered,Novel,2,14.0,dollars,0.0
+742,359,2024-09-14,Shymkent,delivered,Novel,1,1400.0,cents,0.1
+743,385,"February 2, 2025",Aktobe, delivered,Power bank,1,30.0,dollars,0.1
+744,318,2024-08-21,Taraz,delivered,Hand cream,1,7.0,dollars,0.0
+745,41,2025-09-01,Almaty,shipped,Kettle,3,35.0,dollars,0.0
+746,254,2024-02-29,Taraz,delivered,Novel,2,14.0,dollars,0.0
+747,388,2024-12-09,astana,delivered,Kettle,1,35.0,dollars,0.0
+748,379,"September 22, 2025",Karaganda,DELIVERED,Desk lamp,2,25.0,dollars,0.0
+749,250,2024-03-01,Karaganda  ,delivered,Yoga mat,3,2800.0,cents,0.0
+750,394,2024-04-23,TARAZ, delivered,Power bank,2,30.0,dollars,0.1
+751,357,2025-09-27,Astana,delivered,Power bank,4,30.0,dollars,0.0
+752,40,2025-10-16,Aktobe,delivered,Headphones,1,4500.0,cents,0.0
+753,356,05/07/2025,karaganda,delivered,Desk lamp,1,25.0,dollars,0.0
+754,325,2024-09-02,Almaty,delivered,Power bank,2,3000.0,cents,0.0
+755,168,2025-02-22, Aktobe,delivered,Hand cream,3,7.0,dollars,0.0
+756,343,"July 8, 2025",Karaganda,delivered,USB-C cable,2,8.0,dollars,0.0
+757,339,"August 31, 2025",SHYMKENT, delivered,Power bank,1,30.0,dollars,0.0
+758,348,2025-05-15,aktobe,delivered,Novel,1,14.0,dollars,0.0
+759,180,2025-08-17,Taraz,delivered  ,USB-C cable,2,8.0,dollars,0.05
+760,21,2025-01-07,Shymkent,cancelled,Desk lamp,4,25.0,dollars,0.0
+761,399,2024-09-22,N/A,shipped,USB-C cable,1,8.0,dollars,0.05
+762,83,"September 9, 2025",Shymkent  ,returned,Desk lamp,1,25.0,dollars,-
+763,258,2025-01-31,Shymkent,delivered  ,Power bank,1,3000.0,cents,0.0
+764,390,"May 9, 2024",Shymkent  ,delivered,Novel,2,14.0,dollars,0.0
+765,103,"January 13, 2024",Almaty,delivered  ,Headphones,3,45.0,dollars,0.05
+766,16,"October 10, 2025",Astana,delivered,Novel,1,14.0,dollars,0.05
+767,126,2025-08-06,Karaganda,delivered,USB-C cable,2,8.0,dollars,0.0
+768,221,2024-12-25,ALMATY,delivered,Hand cream,1,700.0,cents,0.0
+769,306,2025-07-02,aktobe,delivered,Power bank,2,30.0,dollars,0.0
+770,80,2024-08-27,Taraz,delivered,Yoga mat,1,2800.0,cents,0.1
+771,147,2024-06-01,Karaganda,delivered,Hand cream,2,7.0,dollars,0.0
+772,94,2024-05-15, Almaty,shipped,Headphones,2,45.0,dollars,0.1
+773,57,2025-05-04,astana,delivered,Kettle,1,35.0,dollars,0.05
+774,303,2024-11-22,Shymkent,delivered,Desk lamp,2,2500.0,cents,0.05
+775,171,2025-05-27, Aktobe,delivered,Desk lamp,1,25.0,dollars,0.05
+776,276,2024-09-06,Shymkent,delivered,USB-C cable,1,8.0,dollars,0.05
+777,150,23/09/2024,Taraz,DELIVERED,Kettle,2,3500.0,cents,N/A
+778,320,21/11/2025,Taraz, delivered,Kettle,1,35.0,dollars,0.0
+779,153,2025-02-28,Aktobe,DELIVERED,Power bank,2,3000.0,cents,0.0
+780,318,2024-03-23,almaty,shipped,Kettle,1,35.0,dollars,0.0
+781,192,2024-06-12,TARAZ,delivered,Hand cream,2,7.0,dollars,0.0
+782,226,17/01/2024,Taraz,delivered,Novel,2,14.0,dollars,0.0
+783,375,"November 20, 2024",Aktobe  ,delivered,Novel,1,14.0,dollars,0.0
+784,46,2025-02-26,aktobe,delivered,Power bank,3,30.0,dollars,0.05
+785,100,2025-06-16,SHYMKENT, delivered,Hand cream,1,7.0,dollars,0.1
+786,390,17/09/2025,Shymkent,shipped,Hand cream,2,7.0,dollars,0.1
+787,385,2025-04-24,Shymkent,delivered,Headphones,3,45.0,dollars,0.0
+788,257,2024-03-15,Shymkent,delivered,Headphones,2,45.0,dollars,0.2
+789,344,01/09/2024,Almaty,delivered,Headphones,1,45.0,dollars,-
+790,57,2024-07-29,Astana,delivered,Novel,2,14.0,dollars,0.0
+791,47,2024-08-25,Karaganda  ,DELIVERED,USB-C cable,1,800.0,cents,0.0
+792,164,2025-03-18,aktobe,delivered,Novel,2,14.0,dollars,0.0
+793,121,12/06/2024,Astana,DELIVERED,Headphones,1,45.0,dollars,0.2
+794,90,2024-01-15,Shymkent,delivered,Yoga mat,3,28.0,dollars,0.0
+795,325,2024-04-03,Karaganda  ,delivered,Power bank,1,30.0,dollars,0.0
+796,97,2024-07-04,Karaganda,delivered,Kettle,1,35.0,dollars,-
+797,22,"August 9, 2024",ALMATY, delivered,Desk lamp,1,25.0,dollars,0.0
+798,276,2025-03-15,taraz,delivered,Kettle,1,35.0,dollars,0.0
+799,309,"August 16, 2024", Astana,delivered,Desk lamp,1,2500.0,cents,0.0
+420,24,2024-01-14,Shymkent,returned,Hand cream,1,7.0,dollars,0.1
+800,129,13/02/2025,Aktobe,delivered,Power bank,1,30.0,dollars,0.0
+801,52,17/03/2024,Shymkent,delivered,Novel,2,14.0,dollars,0.05
+802,74,2024-10-14,Almaty,DELIVERED,Power bank,1,30.0,dollars,0.0
+803,197,20/01/2024,Aktobe,delivered,Headphones,1,45.0,dollars,0.0
+804,83,11/03/2025,Aktobe,delivered  ,Headphones,1,45.0,dollars,0.05
+805,382,2025-04-20,shymkent,returned  ,Novel,2,14.0,dollars,0.0
+806,65,2025-11-15,Almaty  ,delivered,Hand cream,1,7.0,dollars,0.1
+807,108,2024-11-27,Shymkent,shipped,Kettle,1,35.0,dollars,0.0
+808,352,01/09/2025,astana,RETURNED,Kettle,2,0.0,dollars,0.0
+809,240,"July 18, 2024",Shymkent, shipped,USB-C cable,3,800.0,cents,0.1
+810,371,17/06/2025,Taraz,delivered  ,Novel,1,14.0,dollars,0.1
+811,160,2025-11-21,karaganda,DELIVERED,Desk lamp,1,25.0,dollars,0.0
+812,302,"November 3, 2024",Shymkent,delivered,Desk lamp,-1,25.0,dollars,
+813,85,2025-12-23,TARAZ,RETURNED,Headphones,1,45.0,dollars,0.0
+814,265,2025-06-19,KARAGANDA,delivered,USB-C cable,1,800.0,cents,0.0
+815,115,07/05/2025,Karaganda,DELIVERED,Yoga mat,2,28.0,dollars,0.0
+816,220,2025-08-04,Aktobe,delivered,Novel,3,1400.0,cents,0.0
+817,281,2024-02-29,N/A,delivered  ,Power bank,1,30.0,dollars,0.0
+818,75,2024-09-26,taraz,cancelled,USB-C cable,1,8.0,dollars,0.0
+819,146,2024-10-16,Karaganda,delivered,Yoga mat,2,28.0,dollars,0.2
+820,398,2024-03-13,Taraz,delivered,Desk lamp,1,25.0,dollars,0.2
+821,42,"July 22, 2024",Taraz,shipped  ,Novel,2,1400.0,cents,0.0
+822,130,2024-10-05,ALMATY,CANCELLED,Power bank,2,3000.0,cents,0.0
+823,46,2025-12-07,Astana,delivered,USB-C cable,2,8.0,dollars,0.0
+824,108,13/03/2025,Astana,delivered  ,Hand cream,1,7.0,dollars,0.0
+825,278,24/11/2025,Taraz, delivered,Desk lamp,1,25.0,dollars,0.0
+826,185,2024-07-08,Karaganda  ,delivered,Hand cream,3,7.0,dollars,0.1
+827,107,2024-02-20,aktobe,cancelled,USB-C cable,1,8.0,dollars,N/A
+416,341,2024-04-30,Shymkent  , delivered,Yoga mat,1,28.0,dollars,0.0
+828,242,2024-11-06,Shymkent,DELIVERED,Power bank,3,30.0,dollars,0.0
+829,275,08/02/2025,N/A,delivered,Hand cream,1,7.0,dollars,0.0
+830,325,14/12/2024,Taraz,DELIVERED,USB-C cable,1,8.0,dollars,0.0
+831,224,02/08/2025,Taraz,delivered,Desk lamp,1,25.0,dollars,0.05
+832,257,21/03/2025,Karaganda,delivered,Power bank,1,30.0,dollars,0.0
+833,155,2025-06-19,Almaty,delivered,Power bank,3,30.0,dollars,0.0
+834,192,2024-03-17,Taraz,shipped,Yoga mat,1,28.0,dollars,0.0
+835,117,2025-04-17,Taraz,delivered,USB-C cable,2,8.0,dollars,0.0
+836,78,"September 26, 2025",Taraz,delivered  ,Desk lamp,-1,25.0,dollars,0.1
+837,277,"August 5, 2024", Aktobe,delivered,Yoga mat,1,28.0,dollars,0.05
+838,254,2025-01-16,Almaty,delivered,Kettle,2,35.0,dollars,
+839,75,2025-04-28,Astana, delivered,Headphones,2,45.0,dollars,0.1
+840,167,2024-05-16,shymkent,delivered,USB-C cable,2,8.0,dollars,0.0
+841,262,2025-01-03,almaty,CANCELLED,Headphones,1,45.0,dollars,0.0
+842,135,2025-06-03,aktobe,delivered,Headphones,1,45.0,dollars,0.0
+843,5,"October 1, 2025",Shymkent, delivered,Yoga mat,1,28.0,dollars,0.0
+844,376,25/12/2025,ALMATY,delivered,Novel,1,14.0,dollars,0.1
+845,107,2024-12-13,Karaganda,delivered,Yoga mat,1,28.0,dollars,0.0
+672,269,"November 18, 2024",Aktobe,delivered,Kettle,3,3500.0,cents,0.1
+846,136,2024-04-22,Aktobe,RETURNED,Kettle,1,35.0,dollars,0.1
+847,162,"May 24, 2025", Shymkent,delivered,USB-C cable,1,8.0,dollars,0.0
+848,242,10/11/2024,Almaty,shipped,Power bank,1,30.0,dollars,0.0
+849,246,27/03/2025,KARAGANDA,delivered,Headphones,2,4500.0,cents,0.0
+850,101,25/10/2024,Almaty,cancelled,Power bank,3,30.0,dollars,0.1
+851,287,2025-01-07,Almaty,delivered  ,Desk lamp,1,2500.0,cents,0.1
+852,276,2025-01-16, Shymkent,delivered,Headphones,1,45.0,dollars,0.0
+853,286,"November 19, 2025",Astana,delivered,Novel,3,14.0,dollars,0.1
+854,166,"May 8, 2024",Astana,delivered,USB-C cable,2,8.0,dollars,0.0
+855,295,2025-12-10,Karaganda,delivered,Desk lamp,1,2500.0,cents,0.2
+856,332,2025-02-25,Karaganda,delivered,Kettle,2,35.0,dollars,0.0
+857,134,2025-10-19,Almaty,delivered,Novel,1,14.0,dollars,0.0
+858,225,2025-06-27,taraz,delivered  ,Kettle,1,35.0,dollars,0.05
+859,374,2024-04-03,Taraz,delivered,Kettle,1,35.0,dollars,0.0
+860,173,"December 29, 2024",Karaganda  , delivered,USB-C cable,2,8.0,dollars,0.0
+861,372,10/11/2024,Shymkent,DELIVERED,USB-C cable,2,8.0,dollars,0.1
+862,276,2024-10-29,Taraz,cancelled,Novel,3,-14.0,dollars,0.0
+863,167,26/06/2024,KARAGANDA,DELIVERED,USB-C cable,2,8.0,dollars,0.1
+864,118,2024-02-05, Shymkent,shipped,Yoga mat,2,28.0,dollars,0.0
+865,220,2025-07-07,,delivered,Yoga mat,2,28.0,dollars,0.0
+866,207,17/06/2024,Taraz, delivered,USB-C cable,1,8.0,dollars,0.0
+867,79,2024-01-12,almaty, delivered,Yoga mat,1,28.0,dollars,0.0
+868,177,2024-08-04,Astana,delivered,Kettle,1,35.0,dollars,0.0
+869,242,"December 10, 2025",Astana,cancelled,Power bank,1,30.0,dollars,0.0
+870,340,2025-12-15, Shymkent, delivered,Kettle,1,3500.0,cents,0.0
+871,175,2025-07-24, Aktobe,delivered,Headphones,2,4500.0,cents,0.1
+872,301,2025-03-22,Shymkent,delivered,Power bank,2,30.0,dollars,0.05
+873,198,2024-12-22,KARAGANDA,delivered,Desk lamp,1,25.0,dollars,0.0
+874,349,"September 23, 2024",Karaganda,delivered  ,Hand cream,2,7.0,dollars,0.0
+875,54,02/02/2025, Shymkent, delivered,Yoga mat,3,28.0,dollars,0.0
+876,237,2024-08-17,Almaty,cancelled,Kettle,1,35.0,dollars,0.0
+877,206,2025-09-02,Almaty,delivered,Power bank,2,30.0,dollars,
+878,325,12/05/2024,Karaganda,delivered,USB-C cable,2,8.0,dollars,0.05
+879,143,2025-07-16,Aktobe, delivered,Yoga mat,1,28.0,dollars,0.0
+895,51,2024-01-08,ASTANA, cancelled,USB-C cable,1,8.0,dollars,0.0
+880,36,31/10/2024,Taraz,delivered,Kettle,1,3500.0,cents,0.0
+881,74,2024-11-04,Taraz,delivered,Headphones,3,4500.0,cents,0.0
+882,46,2024-12-23,Shymkent  ,delivered,USB-C cable,-3,8.0,dollars,0.0
+883,334,2025-10-01, Astana,delivered,Power bank,1,30.0,dollars,0.0
+884,298,19/12/2025,Almaty, delivered,Power bank,2,30.0,dollars,
+885,327,2025-06-12,Astana,delivered,Yoga mat,2,28.0,dollars,0.0
+886,378,2024-03-15,aktobe,delivered,Hand cream,1,7.0,dollars,0.0
+887,196,2025-09-22,taraz, delivered,Headphones,3,45.0,dollars,0.05
+888,11,14/09/2024, Karaganda,delivered,Headphones,2,45.0,dollars,0.2
+889,249,2024-02-01,Karaganda,returned,Kettle,2,35.0,dollars,0.05
+890,85,2025-10-05,almaty,delivered,Novel,2,14.0,dollars,0.0
+891,290,01/12/2024,astana,delivered,Power bank,1,30.0,dollars,0.1
+892,64,2024-04-16, Taraz,DELIVERED,Headphones,1,45.0,dollars,0.1
+1137,338,"December 30, 2024",SHYMKENT, delivered,Hand cream,2,7.0,dollars,0.05
+893,93,"November 30, 2024",Almaty,delivered,Desk lamp,2,25.0,dollars,0.0
+894,131,2024-01-04,Taraz  ,delivered,Novel,1,14.0,dollars,0.0
+895,51,2024-01-08,ASTANA, cancelled,USB-C cable,1,8.0,dollars,0.0
+896,100,2024-10-24,taraz,delivered  ,USB-C cable,1,800.0,cents,0.1
+897,22,"May 23, 2024",Taraz,delivered,Headphones,1,45.0,dollars,0.0
+898,382,2025-06-17,Almaty,delivered,Novel,2,14.0,dollars,0.0
+899,110,26/05/2025,aktobe,delivered  ,Yoga mat,3,28.0,dollars,0.0
+900,328,2024-10-16,KARAGANDA,delivered,Kettle,-1,35.0,dollars,0.1
+901,317,2025-08-11,N/A,delivered,Power bank,1,30.0,dollars,0.0
+902,243,"March 12, 2025",Taraz,DELIVERED,Desk lamp,4,25.0,dollars,0.0
+903,3,20/11/2025,Karaganda,delivered,Kettle,1,35.0,dollars,0.1
+904,290,29/03/2024,Karaganda,delivered,Yoga mat,1,28.0,dollars,0.1
+905,346,2025-11-18,taraz,cancelled,Headphones,1,45.0,dollars,0.0
+906,252,2025-02-01,Astana,delivered,USB-C cable,3,8.0,dollars,0.0
+907,262,23/10/2025,Aktobe,cancelled,Desk lamp,2,25.0,dollars,0.0
+908,392,27/05/2024,Karaganda,delivered,Power bank,1,30.0,dollars,0.2
+909,178,16/06/2024,Astana,delivered,Yoga mat,-1,28.0,dollars,0.05
+910,350,"December 12, 2024",Shymkent,delivered,Yoga mat,4,28.0,dollars,0.0
+911,300,2024-02-20,SHYMKENT,shipped,Headphones,1,45.0,dollars,0.0
+912,70,2024-03-23,Shymkent,delivered,Novel,3,14.0,dollars,0.1
+913,23,2024-05-13,Karaganda,DELIVERED,Headphones,1,45.0,dollars,0.0
+914,156,2024-03-07, Aktobe, delivered,Hand cream,1,7.0,dollars,0.0
+915,26,2025-01-15,Aktobe, delivered,Novel,2,14.0,dollars,
+916,236,2024-06-13,Astana,delivered,USB-C cable,1,8.0,dollars,0.0
+917,168,"June 29, 2024",Aktobe,delivered  ,Novel,-1,14.0,dollars,
+918,53,07/03/2024, Almaty, delivered,Power bank,1,30.0,dollars,0.05
+919,167,2024-01-13,TARAZ,delivered,Desk lamp,2,25.0,dollars,0.0
+920,77,2025-07-17,Taraz,delivered,Power bank,3,30.0,dollars,0.0
+921,50,13/06/2024,TARAZ,delivered,Desk lamp,1,25.0,dollars,0.1
+922,129,20/06/2025,,DELIVERED,Hand cream,2,7.0,dollars,0.0
+923,187,16/10/2024,Karaganda,delivered,Kettle,1,35.0,dollars,0.2
+924,117,2025-06-27,Shymkent,DELIVERED,Power bank,1,30.0,dollars,0.0
+925,21,23/08/2025,SHYMKENT,returned,Kettle,1,35.0,dollars,0.0
+926,394,12/10/2025,-,delivered,Headphones,1,45.0,dollars,0.0
+927,349,2024-02-14,ASTANA,delivered,Novel,1,14.0,dollars,0.0
+928,151,2025-09-27,Shymkent,delivered,Kettle,1,35.0,dollars,0.0
+929,272,15/12/2025,Astana,DELIVERED,Novel,1,14.0,dollars,0.05
+930,302,"December 30, 2025",taraz,delivered,Headphones,1,45.0,dollars,0.0
+931,323,13/07/2025,Shymkent,cancelled,Headphones,1,4500.0,cents,0.0
+932,355,2024-10-17,aktobe,delivered,Headphones,3,45.0,dollars,0.0
+933,253,2025-09-02, Aktobe,shipped,Novel,-1,14.0,dollars,0.0
+934,196,25/09/2025, Almaty, delivered,Kettle,3,35.0,dollars,0.0
+935,187,2025-05-17,,delivered,Headphones,1,45.0,dollars,0.05
+936,182,2025-07-22,Karaganda  , delivered,Power bank,1,30.0,dollars,0.1
+937,66,04/07/2024,ASTANA,CANCELLED,Hand cream,1,7.0,dollars,0.1
+938,359,"December 14, 2024",Astana,delivered,Power bank,1,30.0,dollars,0.0
+939,171,2024-02-05,AKTOBE,delivered,Desk lamp,3,25.0,dollars,0.0
+940,290,2025-06-06,aktobe,delivered,Novel,-1,14.0,dollars,0.05
+941,155,2025-07-03,Astana  ,delivered  ,Headphones,1,45.0,dollars,0.0
+942,221,25/10/2025,Shymkent,delivered,Power bank,1,3000.0,cents,0.0
+943,217,26/10/2025,Astana,cancelled,Hand cream,2,7.0,dollars,0.2
+944,353,10/02/2025,Astana,DELIVERED,Desk lamp,1,25.0,dollars,0.0
+945,390,2025-07-06,Astana,delivered,Kettle,1,35.0,dollars,0.0
+946,363,2024-04-08,SHYMKENT,delivered,Power bank,2,30.0,dollars,0.0
+947,91,2024-05-17,Astana,delivered,USB-C cable,1,8.0,dollars,0.1
+948,362,2025-06-12,Shymkent  , delivered,Power bank,1,30.0,dollars,0.05
+949,175,2025-04-01,Shymkent,returned,Novel,2,14.0,dollars,N/A
+950,83,2025-09-09, Karaganda,delivered,Desk lamp,4,25.0,dollars,0.0
+951,44,2025-04-30,Karaganda,shipped,Novel,1,14.0,dollars,0.2
+952,119,09/03/2025,Taraz  ,DELIVERED,Power bank,1,30.0,dollars,0.1
+953,354,2024-03-16,Aktobe,delivered  ,Headphones,1,45.0,dollars,0.2
+954,203,2024-07-03,Aktobe,RETURNED,USB-C cable,4,8.0,dollars,0.0
+955,236,2025-06-14,ALMATY,DELIVERED,Kettle,1,35.0,dollars,0.05
+956,372,2025-11-09,aktobe,shipped  ,Novel,1,14.0,dollars,0.1
+957,160,2025-05-31,Taraz,delivered,Yoga mat,2,28.0,dollars,0.0
+958,18,"February 16, 2025",Aktobe,delivered  ,Hand cream,1,7.0,dollars,0.0
+959,165,2025-11-08,Astana,delivered,Power bank,2,0.0,dollars,0.1
+960,90,2024-11-22, Taraz,DELIVERED,Desk lamp,1,25.0,dollars,0.0
+961,324,2024-05-15,Taraz,cancelled,Kettle,3,35.0,dollars,0.0
+962,202,"October 2, 2025",SHYMKENT,shipped,USB-C cable,1,8.0,dollars,0.0
+963,229,"July 25, 2024",Aktobe,cancelled,Novel,1,14.0,dollars,0.2
+964,158,"February 21, 2025",Astana, cancelled,Desk lamp,1,25.0,dollars,0.0
+965,120,"October 26, 2024",Shymkent,cancelled,Power bank,2,30.0,dollars,0.0
+966,193,2024-06-06,almaty,shipped,USB-C cable,-1,800.0,cents,0.0
+967,111,"December 14, 2024",ALMATY,delivered  ,Novel,2,14.0,dollars,0.0
+968,110,2025-03-19,karaganda,delivered,Yoga mat,2,28.0,dollars,0.1
+969,180,2024-07-26,KARAGANDA,DELIVERED,Power bank,1,30.0,dollars,N/A
+970,194,2025-09-12,Shymkent  ,cancelled,Headphones,1,45.0,dollars,0.1
+971,43,2025-07-06, Taraz,delivered,USB-C cable,3,8.0,dollars,0.0
+972,18,20/10/2025,almaty,DELIVERED,Hand cream,1,7.0,dollars,0.0
+973,10,2024-07-25,SHYMKENT,delivered,USB-C cable,1,8.0,dollars,0.0
+974,32,2024-12-12, Almaty,shipped,USB-C cable,2,8.0,dollars,0.0
+975,230,09/11/2024, Taraz,delivered,Novel,1,14.0,dollars,0.1
+976,364,2025-05-29, Aktobe, shipped,Hand cream,2,7.0,dollars,0.0
+977,106,2024-12-22,N/A,delivered,Power bank,1,30.0,dollars,0.0
+978,41,2024-07-17,Shymkent, delivered,Headphones,3,4500.0,cents,0.0
+979,10,2025-11-26,Astana,DELIVERED,Hand cream,-1,7.0,dollars,0.0
+980,325,"October 26, 2025",ASTANA, delivered,Kettle,1,35.0,dollars,0.0
+981,337,2024-12-21,Almaty  ,delivered,USB-C cable,2,8.0,dollars,N/A
+88,348,"April 2, 2025",ALMATY,delivered  ,Novel,1,14.0,dollars,0.0
+982,237,"August 21, 2024",shymkent,delivered,Hand cream,1,700.0,cents,0.0
+983,260,2025-08-10,Aktobe,delivered,Desk lamp,2,25.0,dollars,0.0
+984,301,2024-10-16,ASTANA,delivered,Kettle,-1,35.0,dollars,-
+985,351,2025-03-14,almaty,delivered,USB-C cable,1,8.0,dollars,0.0
+986,132,29/07/2024,Shymkent,delivered,Headphones,-1,45.0,dollars,0.0
+987,100,2024-09-06,Almaty,delivered,Kettle,1,35.0,dollars,0.05
+988,19,2024-02-27,Karaganda,returned,Hand cream,3,700.0,cents,0.0
+989,377,07/05/2025,shymkent,delivered,Novel,1,14.0,dollars,0.05
+990,88,2025-05-06,Shymkent, delivered,Kettle,1,35.0,dollars,0.2
+991,123,2024-07-29,Aktobe, delivered,Kettle,3,35.0,dollars,0.05
+992,84,23/04/2024,Aktobe,delivered,Headphones,-1,45.0,dollars,0.0
+993,42,2025-12-04,aktobe,delivered  ,Hand cream,1,7.0,dollars,0.2
+994,117,2024-07-07,Aktobe,delivered,Desk lamp,2,2500.0,cents,0.0
+995,299,22/02/2025,Almaty,delivered,Novel,2,14.0,dollars,0.0
+996,360,"January 4, 2025",taraz, delivered,USB-C cable,1,8.0,dollars,0.05
+997,221,2024-03-03, Taraz,delivered,USB-C cable,3,8.0,dollars,0.0
+998,47,2025-01-03,Karaganda  ,shipped,Hand cream,1,7.0,dollars,0.0
+999,187,19/03/2025,ALMATY,delivered,Yoga mat,1,28.0,dollars,0.2
+1000,201,2025-02-14,Taraz,delivered,Hand cream,1,7.0,dollars,0.2
+1001,265,2024-08-28,taraz,delivered  ,Desk lamp,2,25.0,dollars,0.2
+1002,203,20/11/2024,KARAGANDA,delivered,Hand cream,1,7.0,dollars,0.0
+1003,210,"April 29, 2024",Aktobe,delivered,USB-C cable,1,8.0,dollars,0.0
+1004,289,29/12/2024,Almaty,delivered,USB-C cable,1,8.0,dollars,0.1
+1005,185,"June 17, 2025",,returned,USB-C cable,1,8.0,dollars,0.1
+1006,127,2025-03-29, Taraz,delivered,Kettle,1,35.0,dollars,0.0
+1007,372,2024-06-28,aktobe,shipped,Kettle,2,3500.0,cents,0.1
+1008,312,2024-10-16,shymkent,delivered,USB-C cable,3,8.0,dollars,0.0
+1009,166,2024-04-16,Shymkent,delivered,Yoga mat,1,28.0,dollars,0.0
+1010,19,"July 31, 2024",ALMATY,cancelled,Hand cream,1,700.0,cents,0.0
+1011,377,2025-01-18,Taraz,cancelled,Desk lamp,2,-25.0,dollars,0.0
+1012,272,23/06/2024,Aktobe,DELIVERED,Novel,1,14.0,dollars,0.0
+1013,262,2024-03-10,Taraz,delivered,Power bank,2,30.0,dollars,0.0
+1014,379,20/04/2024,Almaty,delivered,Yoga mat,1,2800.0,cents,0.1
+1015,269,21/06/2025,Almaty,delivered,Novel,2,1400.0,cents,0.0
+1016,258,28/09/2024,Karaganda,delivered,Yoga mat,3,28.0,dollars,0.0
+1006,127,2025-03-29, Taraz,delivered,Kettle,1,35.0,dollars,0.0
+1017,13,2025-12-24, Aktobe,shipped,Kettle,1,35.0,dollars,0.0
+1018,277,13/05/2025,Karaganda,delivered,Headphones,1,45.0,dollars,0.2
+1019,226,20/02/2024, Aktobe,delivered,USB-C cable,1,8.0,dollars,0.0
+1020,73,2025-11-12,Shymkent,delivered,Kettle,2,35.0,dollars,0.05
+1021,285,"January 5, 2025",taraz,delivered,Novel,1,14.0,dollars,0.0
+1022,160,17/11/2025,AKTOBE,returned,Power bank,1,30.0,dollars,0.0
+1023,347,2025-12-21,almaty,DELIVERED,Power bank,3,30.0,dollars,0.0
+1024,369,2025-01-03,Shymkent,delivered,Yoga mat,1,28.0,dollars,0.1
+1025,311,2024-04-16,Shymkent, delivered,Desk lamp,1,25.0,dollars,0.2
+1026,11,14/02/2024,Taraz,delivered,Kettle,1,35.0,dollars,0.1
+1027,162,24/12/2025,,delivered,Kettle,-1,35.0,dollars,0.2
+1028,308,"November 26, 2024",Almaty,delivered  ,USB-C cable,1,8.0,dollars,0.2
+1102,312,"June 27, 2024", Karaganda,delivered,Novel,1,1400.0,cents,0.0
+1029,139,2024-08-22,Astana,delivered  ,Novel,1,14.0,dollars,0.0
+1030,350,2025-03-04,Astana,shipped,Power bank,1,30.0,dollars,0.05
+1031,44,13/09/2024,Astana,delivered,Power bank,3,3000.0,cents,0.0
+1032,280,2024-11-21,Shymkent,cancelled  ,Novel,-1,14.0,dollars,0.0
+1033,364,2024-03-19,Karaganda,delivered,Yoga mat,1,28.0,dollars,0.0
+1034,40,"January 13, 2024",Astana,CANCELLED,Power bank,1,30.0,dollars,0.0
+1035,283,14/01/2024,SHYMKENT, shipped,Kettle,2,35.0,dollars,0.0
+1036,129,2025-06-13,Taraz,delivered,Novel,-1,14.0,dollars,0.0
+1037,238,"December 15, 2024",astana,delivered,Novel,2,14.0,dollars,0.0
+1038,228,2025-09-02,taraz,DELIVERED,USB-C cable,1,8.0,dollars,0.05
+1039,370,2025-10-25,Almaty,delivered,Headphones,2,45.0,dollars,0.0
+1040,189,2024-03-05,shymkent,DELIVERED,Novel,1,14.0,dollars,0.05
+1041,65,"December 17, 2024",shymkent,delivered,Novel,2,14.0,dollars,
+1042,2,2025-09-19,almaty,cancelled,Kettle,1,35.0,dollars,0.0
+1043,92,"April 28, 2024",Taraz,delivered,Power bank,1,30.0,dollars,0.0
+52,164,22/10/2025, Astana,delivered,Kettle,1,35.0,dollars,0.0
+1044,310,08/10/2024,Shymkent, delivered,Power bank,2,30.0,dollars,0.0
+1045,125,"August 26, 2025",Shymkent,delivered  ,USB-C cable,1,8.0,dollars,0.0
+1046,371,13/11/2024,ALMATY, shipped,Hand cream,1,7.0,dollars,0.0
+1047,376,06/07/2024,Astana,delivered,Novel,1,14.0,dollars,0.0
+1048,216,2025-03-14,Aktobe,delivered,USB-C cable,2,8.0,dollars,0.0
+1049,31,05/10/2024, Shymkent,DELIVERED,USB-C cable,3,8.0,dollars,0.0
+1050,273,2025-05-23,karaganda,delivered,Novel,1,14.0,dollars,0.05
+1051,367,"March 8, 2025",Almaty,delivered,Hand cream,1,7.0,dollars,0.1
+1052,68,2024-08-23,Astana,delivered,Yoga mat,2,28.0,dollars,
+1053,176,2025-06-03,Astana,delivered,Yoga mat,3,28.0,dollars,0.0
+1054,106,"March 1, 2025",Almaty,DELIVERED,Kettle,1,35.0,dollars,0.0
+1055,57,2025-09-20,Shymkent,delivered,Headphones,1,4500.0,cents,0.0
+1056,11,2025-04-09,Almaty,delivered,Hand cream,3,7.0,dollars,-
+1057,20,20/07/2025,taraz,shipped  ,Headphones,2,45.0,dollars,0.0
+1058,80,14/01/2025,Astana,cancelled,Kettle,1,35.0,dollars,0.0
+1059,123,2024-09-06,Taraz,cancelled  ,Headphones,2,45.0,dollars,0.0
+1060,241,2024-03-22,Karaganda,delivered,Desk lamp,-1,25.0,dollars,0.0
+1061,309,2025-12-12,Shymkent,delivered,Desk lamp,-1,25.0,dollars,0.0
+1062,100,2024-03-28,Shymkent,delivered  ,Yoga mat,1,28.0,dollars,0.0
+1063,254,2025-09-15,Shymkent,delivered,USB-C cable,1,8.0,dollars,0.1
+1064,247,2025-04-09,,delivered,Desk lamp,1,25.0,dollars,N/A
+1065,374,25/04/2024,ASTANA, delivered,Headphones,1,45.0,dollars,
+1066,363,"May 28, 2025",aktobe,delivered,Headphones,4,45.0,dollars,0.0
+1067,355,24/11/2024, Taraz,delivered,USB-C cable,1,8.0,dollars,
+1068,171,"February 7, 2025",shymkent,returned,Hand cream,-1,7.0,dollars,-
+1069,117,"June 1, 2024",Aktobe,cancelled,Hand cream,2,7.0,dollars,0.0
+1070,340,18/10/2025, Shymkent,delivered,Yoga mat,2,28.0,dollars,0.0
+1071,182,17/12/2025,Astana  ,delivered,Power bank,1,30.0,dollars,0.05
+1072,383,2025-04-01,SHYMKENT,shipped,USB-C cable,1,8.0,dollars,N/A
+1073,186,"April 13, 2025",Taraz,delivered,USB-C cable,-3,8.0,dollars,0.0
+1189,168,27/02/2025,ALMATY,DELIVERED,Desk lamp,1,25.0,dollars,0.0
+1074,108,07/08/2025,almaty,DELIVERED,Power bank,2,30.0,dollars,0.2
+1075,92,"January 1, 2024",Astana,cancelled,Novel,1,14.0,dollars,0.0
+1076,262,2024-11-23, Taraz,DELIVERED,USB-C cable,1,8.0,dollars,0.1
+1077,61,2024-09-01,Taraz,DELIVERED,Novel,-1,14.0,dollars,0.0
+1078,46,26/05/2024,aktobe,delivered,Yoga mat,1,28.0,dollars,0.0
+1079,88,"January 21, 2024", Shymkent,shipped  ,Headphones,4,45.0,dollars,0.05
+1080,203,2024-01-20,Aktobe,delivered,Kettle,1,3500.0,cents,0.0
+1081,315,2025-11-28,TARAZ,delivered,USB-C cable,2,8.0,dollars,0.0
+1082,82,2025-07-31, Aktobe,delivered,USB-C cable,1,8.0,dollars,0.0
+1083,119,2024-10-16,Karaganda,DELIVERED,Power bank,1,30.0,dollars,0.1
+1084,339,02/02/2025,KARAGANDA, delivered,Novel,-2,14.0,dollars,0.0
+1085,179,2024-12-11,astana,shipped,USB-C cable,2,800.0,cents,0.0
+1086,212,"November 4, 2025",Taraz,delivered,USB-C cable,3,8.0,dollars,0.0
+1087,215,2025-04-04,-,delivered,Desk lamp,2,25.0,dollars,0.1
+1088,5,2024-05-06,Aktobe,delivered,Novel,2,1400.0,cents,0.0
+1089,17,2025-08-02, Astana,DELIVERED,Kettle,2,35.0,dollars,0.05
+1090,250,16/12/2025,Karaganda,delivered,Power bank,3,30.0,dollars,0.0
+1091,153,2024-01-13,Almaty,delivered,Novel,4,14.0,dollars,N/A
+133,381,2024-04-23,Aktobe,delivered  ,Headphones,1,45.0,dollars,0.0
+1092,149,2024-07-11,Taraz,delivered,Yoga mat,-1,2800.0,cents,0.0
+963,229,"July 25, 2024",Aktobe,cancelled,Novel,1,14.0,dollars,0.2
+1093,207,2025-09-25,Karaganda,delivered,USB-C cable,1,8.0,dollars,0.0
+1094,69,2024-05-31,Astana,delivered,Kettle,1,35.0,dollars,0.0
+1095,398,2025-07-10,aktobe, delivered,Kettle,1,35.0,dollars,0.2
+1096,210,14/04/2025,karaganda,delivered,Headphones,1,45.0,dollars,0.0
+1097,108,2024-04-10, Aktobe,shipped,Headphones,1,4500.0,cents,0.0
+1098,72,2025-05-05,Karaganda,delivered,USB-C cable,2,8.0,dollars,0.0
+1099,136,"May 21, 2024",Shymkent  ,cancelled,Headphones,1,45.0,dollars,0.0
+1100,139,22/10/2024,Shymkent,delivered,Desk lamp,2,25.0,dollars,
+1101,372,03/09/2024,Astana,delivered,Hand cream,1,7.0,dollars,0.0
+1102,312,"June 27, 2024", Karaganda,delivered,Novel,1,1400.0,cents,0.0
+1103,362,2025-03-28,Astana,DELIVERED,Novel,2,14.0,dollars,0.1
+1104,9,2024-05-31,Karaganda,shipped,Kettle,2,35.0,dollars,0.0
+1105,152,2024-02-13,ASTANA,delivered,Desk lamp,1,25.0,dollars,0.0
+1106,240,"August 25, 2024",Shymkent, delivered,Novel,3,14.0,dollars,0.2
+1107,375,22/10/2024,Almaty  ,delivered,Power bank,1,30.0,dollars,0.1
+1108,288,2025-07-25,Astana,delivered,Power bank,3,3000.0,cents,0.0
+1109,114,2024-09-18,taraz,cancelled,Power bank,2,3000.0,cents,0.0
+1110,140,2024-09-21,,DELIVERED,Desk lamp,1,-25.0,dollars,0.0
+1111,154,2024-10-09,Shymkent,delivered,Headphones,1,45.0,dollars,0.0
+1112,175,08/06/2025,Astana, cancelled,Yoga mat,1,28.0,dollars,0.0
+1113,343,"August 9, 2025",Astana,DELIVERED,Yoga mat,2,2800.0,cents,0.0
+1114,1,"November 23, 2024",Astana,delivered,Yoga mat,1,28.0,dollars,0.0
+1115,222,2025-04-08,taraz,cancelled,Desk lamp,1,2500.0,cents,0.0
+448,284,30/10/2025,Taraz, shipped,Novel,1,14.0,dollars,0.0
+1116,26,2024-03-01, Almaty,DELIVERED,Kettle,1,35.0,dollars,0.1
+1117,38,2025-03-19,Taraz,delivered,USB-C cable,2,8.0,dollars,0.0
+1118,98,2024-11-16, Aktobe,delivered,Power bank,1,30.0,dollars,0.0
+1119,205,2024-03-20, Karaganda,delivered,Kettle,1,35.0,dollars,0.0
+1120,34,2025-11-17,Almaty  ,delivered,USB-C cable,2,8.0,dollars,0.0
+1121,308,15/10/2024,Almaty,delivered,USB-C cable,1,800.0,cents,0.0
+1122,307,2025-10-01,Shymkent,delivered,Headphones,2,45.0,dollars,0.0
+1123,343,2025-06-07,karaganda,delivered,Novel,-5,14.0,dollars,0.0
+1124,374,2025-10-04,karaganda,delivered,Desk lamp,1,25.0,dollars,0.05
+1125,227,2024-03-24,Karaganda  ,DELIVERED,Novel,1,1400.0,cents,0.1
+1126,337,2024-11-19,Astana,delivered,Hand cream,1,7.0,dollars,0.0
+1127,169,"March 21, 2025",astana,delivered,Novel,1,14.0,dollars,0.0
+1128,209,2025-05-09,astana,delivered,USB-C cable,1,8.0,dollars,0.2
+1129,271,"November 22, 2025",Taraz  ,delivered,Kettle,1,35.0,dollars,0.05
+1130,246,"October 27, 2024",Astana  , delivered,Hand cream,1,7.0,dollars,0.0
+1131,124,01/02/2025,Astana,cancelled,Yoga mat,1,28.0,dollars,0.05
+1132,97,2025-05-05,Taraz,delivered,Headphones,1,45.0,dollars,0.0
+1133,276,"September 6, 2024",Almaty,delivered,Kettle,1,35.0,dollars,0.0
+1134,246,07/06/2025,AKTOBE,delivered,Desk lamp,3,25.0,dollars,0.0
+1135,105,2025-09-18,astana,delivered,Hand cream,1,700.0,cents,0.0
+1136,205,2024-06-27,Almaty  ,delivered,Desk lamp,1,25.0,dollars,0.0
+1137,338,"December 30, 2024",SHYMKENT, delivered,Hand cream,2,7.0,dollars,0.05
+372,290,"June 18, 2025",Shymkent,delivered,Kettle,1,35.0,dollars,N/A
+1138,168,17/06/2024,Almaty,delivered,Kettle,-1,35.0,dollars,0.0
+1139,376,2024-02-09,almaty,delivered,Novel,1,14.0,dollars,0.1
+1140,33,2024-06-11,Taraz,delivered  ,Power bank,2,30.0,dollars,0.05
+1141,311,"August 2, 2025",almaty,delivered,Yoga mat,1,28.0,dollars,0.0
+1142,265,02/10/2024,Astana,delivered  ,Headphones,1,45.0,dollars,0.0
+1143,41,2025-11-09,KARAGANDA, delivered,Kettle,1,35.0,dollars,0.0
+1144,17,2025-12-02,karaganda, delivered,Novel,1,14.0,dollars,0.05
+1145,286,22/05/2024,Astana, delivered,Novel,3,14.0,dollars,0.0
+1146,93,2024-11-01,Astana,delivered,Kettle,1,35.0,dollars,0.05
+1147,361,2024-02-23,Shymkent,delivered  ,USB-C cable,1,8.0,dollars,0.1
+1148,92,2024-08-20,Almaty,delivered,Headphones,2,45.0,dollars,0.0
+1149,49,2025-08-21,Karaganda,delivered,Kettle,1,35.0,dollars,0.0
+1150,272,2024-05-28,Aktobe, shipped,Yoga mat,2,28.0,dollars,0.0
+1151,256,2024-06-09,Taraz,delivered,Yoga mat,4,0.0,dollars,0.0
+1152,360,"May 4, 2025",Almaty,delivered,Yoga mat,3,2800.0,cents,0.1
+1153,326,2025-10-22,N/A,DELIVERED,USB-C cable,4,8.0,dollars,0.1
+1154,86,26/05/2025, Almaty, delivered,USB-C cable,1,8.0,dollars,0.1
+1155,286,2024-01-07,Shymkent  ,delivered,Novel,1,-14.0,dollars,0.0
+1035,283,14/01/2024,SHYMKENT, shipped,Kettle,2,35.0,dollars,0.0
+1156,150,2024-08-24,Shymkent  ,cancelled,Novel,1,14.0,dollars,0.1
+1157,358,2024-03-24,Shymkent,delivered,USB-C cable,2,8.0,dollars,0.0
+1158,111,2024-12-11, Karaganda,delivered,Desk lamp,1,25.0,dollars,0.05
+1159,8,2024-09-20,Almaty,DELIVERED,Hand cream,1,7.0,dollars,-
+1160,159,2025-04-02,Aktobe,shipped,Hand cream,1,7.0,dollars,0.0
+1161,38,01/03/2025,Taraz,delivered,Kettle,1,35.0,dollars,0.0
+1162,46,2025-09-16,KARAGANDA,shipped,Hand cream,4,7.0,dollars,0.0
+1163,275,26/06/2024,Shymkent  ,delivered  ,Kettle,1,35.0,dollars,0.1
+1164,53,2025-01-26,karaganda,delivered  ,Novel,2,1400.0,cents,0.0
+1165,287,2025-01-21,Aktobe,delivered,Hand cream,2,700.0,cents,
+1166,65,30/09/2024,almaty, delivered,Novel,1,1400.0,cents,N/A
+1167,9,2024-02-14,KARAGANDA,cancelled,Power bank,1,30.0,dollars,0.0
+1168,286,20/01/2024,Aktobe,delivered,Desk lamp,2,25.0,dollars,0.1
+1169,244,2025-05-26,Almaty, delivered,Headphones,1,45.0,dollars,0.0
+1170,240,2024-10-28,aktobe,delivered,Kettle,1,35.0,dollars,0.1
+1171,223,2024-04-29,astana, delivered,Desk lamp,1,25.0,dollars,0.1
+1172,217,2025-02-26,Astana,delivered,Headphones,1,4500.0,cents,N/A
+1173,107,"July 15, 2025",Almaty  ,delivered,Yoga mat,1,28.0,dollars,0.0
+1174,173,2025-02-26,Shymkent,delivered  ,USB-C cable,1,8.0,dollars,0.0
+1175,42,2025-10-28,N/A,DELIVERED,Desk lamp,1,25.0,dollars,0.0
+1176,351,03/01/2024,Karaganda,DELIVERED,Yoga mat,3,28.0,dollars,0.0
+1177,118,2024-05-10,Astana,delivered,Hand cream,1,7.0,dollars,N/A
+1178,44,"March 31, 2025",Astana,delivered,Yoga mat,1,28.0,dollars,0.0
+1179,340,2024-10-28,Astana, delivered,Yoga mat,1,28.0,dollars,0.0
+1180,77,06/02/2025,Aktobe  ,DELIVERED,Novel,1,1400.0,cents,0.0
+1181,228,2025-06-06,taraz,delivered,Desk lamp,1,25.0,dollars,0.0
+1182,241,2025-07-10,aktobe,DELIVERED,Power bank,-5,3000.0,cents,0.0
+1183,54,2025-11-19,Astana,delivered,USB-C cable,2,8.0,dollars,0.0
+1184,302,2025-08-12,N/A,delivered,Hand cream,1,7.0,dollars,0.0
+1176,351,03/01/2024,Karaganda,DELIVERED,Yoga mat,3,28.0,dollars,0.0
+1185,35,08/09/2024,Shymkent,delivered,Kettle,1,35.0,dollars,0.0
+1186,112,2024-07-20,Aktobe  ,DELIVERED,Power bank,2,30.0,dollars,0.1
+1187,269,2025-04-06,Astana,shipped,Desk lamp,1,25.0,dollars,0.0
+1188,323,2024-01-01,Astana, delivered,Desk lamp,1,25.0,dollars,0.0
+1189,168,27/02/2025,ALMATY,DELIVERED,Desk lamp,1,25.0,dollars,0.0
+1190,161,2025-07-01,Aktobe,delivered,Novel,1,1400.0,cents,0.0
+1191,89,2024-01-08,shymkent,SHIPPED,Headphones,1,45.0,dollars,0.0
+1192,303,2024-02-22,Shymkent,CANCELLED,Headphones,2,45.0,dollars,0.05
+1193,269,2024-03-23,-,DELIVERED,Headphones,2,45.0,dollars,0.0
+1194,96,12/08/2024,ALMATY,SHIPPED,Power bank,1,30.0,dollars,0.0
+677,156,2025-07-29,Astana,shipped,Novel,2,14.0,dollars,0.0
+1195,247,2025-04-04,ASTANA,delivered,Yoga mat,1,28.0,dollars,0.1
+1196,100,2025-08-12,Taraz,delivered,USB-C cable,1,8.0,dollars,0.0
+1197,215,21/01/2025,Aktobe,delivered,Kettle,1,3500.0,cents,
+1198,116,2024-01-08, Aktobe, delivered,Yoga mat,1,28.0,dollars,0.0
+1199,14,31/08/2025,Astana,CANCELLED,Novel,1,14.0,dollars,0.2
+1200,26,2025-09-26, Astana,delivered,Novel,1,14.0,dollars,0.05

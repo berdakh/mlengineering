@@ -1,0 +1,7 @@
+flowchart LR
+  X["X: one row per customer<br/>numeric + text columns"] --> CT{{"ColumnTransformer"}}
+  CT -- "numeric columns" --> N1["SimpleImputer<br/>(median)"] --> N2["StandardScaler"]
+  CT -- "categorical columns" --> C1["SimpleImputer<br/>(most frequent)"] --> C2["OneHotEncoder<br/>(handle_unknown='ignore')"]
+  N2 --> M["numbers only,<br/>no NaN"]
+  C2 --> M
+  M --> LR["LogisticRegression"]

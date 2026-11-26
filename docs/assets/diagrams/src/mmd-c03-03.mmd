@@ -1,0 +1,6 @@
+flowchart LR
+  A["git switch -c fix-typo<br/>commit on your branch"] --> B["git push<br/>branch goes to GitHub"]
+  B --> C["Open a pull request<br/>fix-typo into main"]
+  C --> D["Teammates review<br/>comments and CI checks"]
+  D -- "changes requested" --> A
+  D -- "approved" --> E["Merge into main<br/>everyone pulls"]
