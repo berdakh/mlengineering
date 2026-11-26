@@ -425,10 +425,11 @@ grade("w10.lab_workflow", LAB / ".github" / "workflows" / "ci.yml")
 # On Windows PowerShell, use `curl.exe` instead of `curl`, or open `http://localhost:8000/docs` and use the page.
 #
 # When we built the reference solution of this lab with Docker 29.10 on Linux (with the model trained by this
-# notebook on our machine), the build took about 20 seconds with an empty cache, `docker ps` showed
-# `Up About a minute (healthy)`, and the image used about 470 MB of disk, most of it scikit-learn, NumPy and SciPy.
-# We also ran both jobs' commands locally, in a fresh virtual environment, and they passed; we did not run the
-# workflow on GitHub. To see it there, put the folder in a new public GitHub repository and push (notebook 39's
+# notebook on our machine), the build took 55 seconds with an empty cache (31 of them for `pip install`),
+# `docker ps` showed `Up 35 seconds (healthy)`, `/predict` returned the same `return_risk` as the notebook, and
+# the image used 570 MB of disk, most of it scikit-learn, NumPy and SciPy. We also ran both jobs' commands
+# locally (the tests in a fresh virtual environment, then the build and the smoke test) and they passed, and the
+# workflow file passes `actionlint`, a checker for workflow files; we did not run the workflow on GitHub. To see it there, put the folder in a new public GitHub repository and push (notebook 39's
 # last section): the `test` job turns green, then the `docker` job builds and smoke-tests the image.
 
 # %%

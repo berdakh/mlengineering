@@ -5,8 +5,8 @@
 
 title: Applied ML Engineering
 description: >-
-  An eight-week, hands-on program: develop, evaluate and deliver machine-learning models as
-  reliable software - from a research script to a monitored prediction service.
+  A 12-week, self-paced course in applied ML engineering: SQL, pandas, feature pipelines, honest validation,
+  testing, packaging, APIs, Docker, CI, cloud basics and monitoring, in notebooks that run in Google Colab.
 lang: en
 
 remote_theme: just-the-docs/just-the-docs@v0.10.1
@@ -23,8 +23,8 @@ heading_anchors: true
 
 
 aux_links:
-  "Notebooks on GitHub":
-    - "https://github.com/berdakh/mlengineering/tree/main/notebooks"
+  "Start in Colab":
+    - "https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/01_welcome_and_colab.ipynb"
   "Repository":
     - "https://github.com/berdakh/mlengineering"
 aux_links_new_tab: true
