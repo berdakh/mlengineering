@@ -1,0 +1,9 @@
+flowchart LR
+  T["orders<br/>4,744 rows"] --> D["delivered rows<br/>COUNT = 3,816"]
+  T --> S["shipped rows<br/>COUNT = 375"]
+  T --> C["cancelled rows<br/>COUNT = 354"]
+  T --> R["returned rows<br/>COUNT = 199"]
+  D --> O["result:<br/>one row per status"]
+  S --> O
+  C --> O
+  R --> O

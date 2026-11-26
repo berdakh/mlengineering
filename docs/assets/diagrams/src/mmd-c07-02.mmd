@@ -1,0 +1,5 @@
+flowchart LR
+  P["payments<br/>order 7 · amount 30<br/>(1 row)"] --> J{"JOIN order_items<br/>ON order_id"}
+  I["order_items<br/>order 7 has 3 lines"] --> J
+  J --> R["3 rows:<br/>order 7 · 30 · line A<br/>order 7 · 30 · line B<br/>order 7 · 30 · line C"]
+  R --> S["SUM(amount) = 90<br/>true total = 30"]

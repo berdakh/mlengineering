@@ -42,6 +42,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -183,6 +184,12 @@ def build_notebook(src: Path, student: bool = True) -> dict:
             cell["source"] = _as_source_lines(strip_solutions(body, student))
     if not cells:
         raise ValueError(f"{src.name} produced no cells - is it percent-formatted?")
+    if not student:  # solved copies live one folder deeper (solutions/notebooks/): fix relative links
+        for cell in cells:
+            if cell["cell_type"] == "markdown":
+                body = re.sub(r"\]\(\.\./(?!\.\./)", "](../../", "".join(cell["source"]))
+                body = re.sub(r'(src=")\.\./(?!\.\./)', r"\1../../", body)
+                cell["source"] = _as_source_lines(body)
     for i, cell in enumerate(cells):
         cell["id"] = f"c{i:03d}"  # stable ids: required by nbformat 4.5+, and keep diffs small
     return {

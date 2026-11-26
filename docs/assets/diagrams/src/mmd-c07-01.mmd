@@ -1,0 +1,14 @@
+flowchart LR
+  subgraph IN["INNER JOIN"]
+    I1["Ann · order 1"]
+    I2["Ann · order 2"]
+    I3["Bob · order 3"]
+  end
+  subgraph LJ["LEFT JOIN"]
+    L1["Ann · order 1"]
+    L2["Ann · order 2"]
+    L3["Bob · order 3"]
+    L4["Cara · NULL"]
+  end
+  C["customers: Ann, Bob, Cara<br/>orders: 1 and 2 by Ann, 3 by Bob"] --> IN
+  C --> LJ

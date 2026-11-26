@@ -1,0 +1,48 @@
+erDiagram
+  customers ||--o{ orders : "places"
+  customers ||--o{ support_tickets : "opens"
+  orders ||--|{ order_items : "contains"
+  products ||--o{ order_items : "appears in"
+  orders ||--o{ payments : "is paid by"
+  customers {
+    int customer_id PK
+    text name
+    text city
+    text signup_date
+    text segment
+    text email
+  }
+  orders {
+    int order_id PK
+    int customer_id FK
+    text order_date
+    text status
+    text channel
+  }
+  order_items {
+    int order_id FK
+    int product_id FK
+    int quantity
+    real unit_price
+    real discount
+  }
+  products {
+    int product_id PK
+    text name
+    text category
+    real price
+  }
+  payments {
+    int payment_id PK
+    int order_id FK
+    real amount
+    text method
+    text paid_at
+  }
+  support_tickets {
+    int ticket_id PK
+    int customer_id FK
+    text opened_at
+    text topic
+    text resolved_at
+  }
