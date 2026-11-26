@@ -1,0 +1,691 @@
+# %% [markdown]
+# [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/41_cloud_deployment_basics.ipynb)
+#
+# *Click the badge to run this notebook in Google Colab - no install required. The first code cell sets everything up.*
+
+# %% [markdown]
+# # 41 · Deploying to the cloud safely
+#
+# **Week 11 · lesson · about 90 minutes**
+#
+# Last week your prediction API ran in a container on your own computer. "Deploying" means running that same
+# container somewhere other people's programs can reach, all the time, with someone paying the bill. This lesson
+# prepares a deployment on **Amazon Web Services (AWS)** the way a careful engineer does: the plan, the
+# configuration, the permissions and the cost estimate come first.
+#
+# > **Nothing in this notebook creates a cloud resource or costs money.** You need no AWS account. You will
+# > write and check configuration, not run it. If you later deploy for real, do it only after you understand the
+# > bill (section 5), with a budget alert in place, and remove everything when you are done. Cloud prices change:
+# > always read the provider's current pricing page; the prices in this notebook are invented for practice.
+#
+# **What you will learn in this notebook**
+#
+# - What deploying a model service involves, and how a virtual machine, a container service and serverless differ.
+# - How cloud identity works (users, roles, temporary credentials) and why least privilege matters.
+# - Where secrets may and may not live, and how to find hard-coded ones.
+# - How to check a deployment configuration and write a least-privilege permission policy.
+# - How to estimate a monthly bill, and how to roll back a bad release.
+#
+# **What you need:** Week 9 (the FastAPI service) and Week 10 (Docker, CI). No cloud experience is assumed.
+#
+# **How grading works:** after each exercise there is a grader cell. Run it and it tells you immediately
+# whether your answer works, and if not, what to look at.
+
+# %%
+# --- Setup: works in Google Colab AND on your own computer. Safe to re-run. ---
+# In Colab this downloads the course (about 30 s) and installs what it needs (about a minute, once
+# per session). On your computer it just finds the course folder.
+import os, sys, subprocess
+from pathlib import Path
+
+if "google.colab" in sys.modules and not Path("/content/mlengineering").exists():
+    subprocess.run(["git", "clone", "--depth", "1",
+                    "https://github.com/berdakh/mlengineering.git", "/content/mlengineering"], check=True)
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-r",
+                    "/content/mlengineering/requirements.txt"], check=True)
+REPO_ROOT = Path("/content/mlengineering") if "google.colab" in sys.modules else next(
+    p for p in [Path.cwd(), *Path.cwd().parents] if (p / "src" / "mlcourse").is_dir())
+os.chdir(REPO_ROOT)
+sys.path.insert(0, str(REPO_ROOT / "src"))
+from mlcourse.grader import grade, quiz
+print("Ready. Course folder:", REPO_ROOT)
+
+# %%
+import json
+import re
+
+from mlcourse.graders.w11 import use
+
+# %% [markdown]
+# ## 1. What "deploying" means, and three ways to do it
+#
+# **Why.** "Can you deploy the model?" is a question you will hear in your first month. You need to know which
+# pieces that involves and which kind of platform fits, before anyone opens a cloud console.
+#
+# **Idea.** A deployed model service is more than the model. It has five pieces:
+#
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-c41-01.svg" alt="Code and model are built into a container image by CI, pushed to a registry (Amazon ECR) and run by a container service (ECS on Fargate) that also receives configuration and a network rule, and sends logs and metrics to CloudWatch; a budget alert is set up first" style="max-width:100%">
+#
+# 1. an **artifact**: the container image you built in Week 10, tagged with the Git commit it came from;
+# 2. a **registry** that stores images (on AWS: Elastic Container Registry, **ECR**);
+# 3. **compute** that keeps the container running and restarts it when it fails;
+# 4. **configuration**: environment variables, and references to secrets (never the secrets themselves);
+# 5. **observability**: logs and metrics, so you can see what it does (notebook 42).
+#
+# There are three common kinds of compute. The difference is **who manages what**:
+#
+# | | Virtual machine (VM) | Managed container service | Serverless functions |
+# |---|---|---|---|
+# | AWS example | EC2 | ECS on Fargate, App Runner | Lambda |
+# | You give it | a whole server | a container image | a function (or image) per event |
+# | Who patches the operating system | **you** | the provider | the provider |
+# | Runs | all the time | all the time (N copies) | only when called |
+# | You pay for | every hour it is on | every hour the containers run | each call and its duration |
+# | Good for | special hardware, full control | a steady web service | spiky, rare, short jobs |
+# | Watch out for | patching, disks, restarts are yours | a minimum bill even with no traffic | time limit per call (15 min on Lambda), cold starts |
+#
+# This course's path (the same as in the handbook) is **ECR + ECS on Fargate**: the image you tested locally runs
+# unchanged, with health checks and logs. App Runner is simpler still; check its current availability in the AWS
+# documentation before choosing it.
+#
+# In *Learning from Data* terms, nothing here changes the model: E_out is decided by the data and the training.
+# Deployment decides whether that model answers reliably, safely and at a known cost.
+#
+# **See it.** A small helper that answers "who patches the OS?" from the table.
+
+# %%
+WHO_PATCHES = {"vm": "you", "container_service": "provider", "serverless": "provider"}
+for option, who in WHO_PATCHES.items():
+    print(f"{option:18} -> operating system patched by {who}")
+
+# %% [markdown]
+# **Try it.** A nightly job scores 2 million rows and takes 40 minutes. Look at the table's last row: which option
+# is *ruled out*, and why? (Answer below the next exercise.)
+#
+# ### Exercise 1 · pick a platform
+#
+# Write `pick_option(needs_os_control, traffic, seconds_per_request)` that applies these rules **in order**:
+#
+# 1. if `needs_os_control` is `True` (special drivers, GPUs, a custom OS), return `"vm"`;
+# 2. else if `traffic == "spiky"` and `seconds_per_request <= 900` (Lambda's 15-minute limit), return `"serverless"`;
+# 3. otherwise return `"container_service"`.
+#
+# `traffic` must be `"steady"` or `"spiky"`; anything else raises `ValueError`.
+
+# %%
+def pick_option(needs_os_control, traffic, seconds_per_request):
+    ### BEGIN SOLUTION
+    if traffic not in ("steady", "spiky"):
+        raise ValueError(f"traffic must be 'steady' or 'spiky', got {traffic!r}")
+    if needs_os_control:
+        return "vm"
+    if traffic == "spiky" and seconds_per_request <= 900:
+        return "serverless"
+    return "container_service"
+    ### END SOLUTION
+
+
+# %%
+grade("w11.pick_option", pick_option)
+
+# %% [markdown]
+# (Try it: serverless is ruled out for one 40-minute call, because of the 15-minute limit. A scheduled container
+# task or batch job fits.)
+#
+# ## 2. Identity: who is allowed to do what
+#
+# **Why.** Most expensive cloud accidents in small teams are not about models. They are a leaked key, or an
+# identity allowed to do far more than its job. Getting identity right is the first step of any deployment.
+#
+# **Idea.** AWS checks every action ("push this image", "read this file") against an **identity** and its
+# **permissions**. Words you need:
+#
+# * **Account**: the container for all your resources and the bill. Its **root user** (the email you signed up
+#   with) can do anything, including closing the account: protect it with MFA (a second factor, such as a phone
+#   app) and never use it for daily work.
+# * **IAM** (Identity and Access Management): the AWS service that holds identities and permissions.
+# * **IAM user**: a long-lived identity. It can have **access keys**: an id that starts with `AKIA` plus a secret.
+#   Keys work until someone deletes them. This is what usually leaks.
+# * **Role**: an identity with no permanent credentials. A person or a service *assumes* it and receives
+#   **temporary credentials** that expire (typically within hours). People sign in through **IAM Identity
+#   Center** (single sign-on); a running ECS service gets a **task role**.
+# * **Policy**: a JSON document listing what an identity may do (section 4).
+# * **Least privilege**: give each identity only the permissions its task needs, on only the resources it needs.
+#
+# <img src="https://raw.githubusercontent.com/berdakh/mlengineering/main/docs/assets/diagrams/mmd-c41-02.svg" alt="Avoid: an IAM user with a long-lived access key that ends up in files and commits. Prefer: a person signs in with MFA through IAM Identity Center into a role and gets temporary credentials; the running service uses a task role with automatically renewed temporary credentials" style="max-width:100%">
+#
+# A **region** (for example `eu-central-1`, Frankfurt) is where resources physically run. Prices differ a little
+# between regions, and data may have to stay in a region by law; pick one and use it everywhere.
+#
+# ## 3. Secrets: where they may live
+#
+# **Why.** A model service needs secrets: a database password, an API token. If one lands in Git, it is public in
+# minutes: automated scanners watch public repositories for keys, and history keeps a key even after you delete
+# the line.
+#
+# **Idea.** The rule is short: **code reads secrets from its environment; the environment gets them from a secret
+# store.** Never the other way round.
+#
+# | Place | OK? |
+# |---|---|
+# | AWS Secrets Manager or Parameter Store, referenced by ARN (Amazon Resource Name, the unique id of a resource) | yes |
+# | An environment variable set by the platform from the secret store | yes |
+# | Your shell, for temporary credentials from `aws sso login` | acceptable |
+# | Source code, a notebook, a config file in Git, a Docker image, a log line, a chat message | **never** |
+#
+# If a key does leak: **deactivate it first** (in IAM), then clean up. Deleting the line from the code is not
+# enough; the old commit still has it.
+#
+# **See it.** Reading a setting from the environment, with a clear error when it is missing.
+
+# %%
+os.environ["MODEL_URI"] = "s3://course-models-example/churn_v3/"   # in real life the platform sets this
+print(os.environ.get("MODEL_URI"))
+print(os.environ.get("NOT_SET_ANYWHERE"))   # None: get() does not crash on a missing variable
+
+# %% [markdown]
+# **Try it.** Run `os.environ["NOT_SET_ANYWHERE"]` (square brackets instead of `.get`). What error do you get, and
+# is it helpful to the person who has to fix the deployment?
+
+# %%
+try:
+    os.environ["NOT_SET_ANYWHERE"]
+except KeyError as err:
+    print("KeyError:", err)
+
+# %% [markdown]
+# ### Exercise 2 · read a setting safely
+#
+# Write `read_setting(name, default=None)`:
+#
+# * if the environment variable `name` is set and not empty, return its value;
+# * otherwise, if `default` is not `None`, return `default`;
+# * otherwise raise `RuntimeError` with a message that **names the missing setting** (for example
+#   `"the setting DB_URL is missing: set the environment variable DB_URL"`). Never put a secret's *value* in an
+#   error message.
+
+# %%
+def read_setting(name, default=None):
+    ### BEGIN SOLUTION
+    value = os.environ.get(name)
+    if value:
+        return value
+    if default is not None:
+        return default
+    raise RuntimeError(f"the setting {name} is missing: set the environment variable {name}")
+    ### END SOLUTION
+
+
+# %%
+grade("w11.read_setting", read_setting)
+
+# %% [markdown]
+# ### Exercise 3 · find hard-coded secrets
+#
+# Secret scanners (such as the ones GitHub runs) combine **patterns** with extra checks. Write a small one.
+# `find_secrets(text)` returns the **line numbers** (counting from 1) of lines that contain either:
+#
+# 1. an AWS access key id: `AKIA` or `ASIA` followed by exactly 16 upper-case letters or digits, as a whole word.
+#    Use the regular expression `KEY_ID` below;
+# 2. a name containing `secret`, `password`, `passwd`, `token` or `api_key` (any case) **assigned a non-empty
+#    quoted value** with `=` or `:`. Use `SECRET_ASSIGN` below.
+#
+# A **regular expression** is a small pattern language for text; `re.search(pattern, line)` returns a match or
+# `None`. You do not need to write the patterns, only use them. Note what is *not* flagged:
+# `password = os.environ["DB_PASSWORD"]` (read from the environment) and `token = ''` (empty).
+
+# %%
+KEY_ID = re.compile(r"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b")
+SECRET_ASSIGN = re.compile(r"(?i)(secret|password|passwd|token|api_key)\w*['\"]?\s*[:=]\s*[\"'][^\"']+[\"']")
+
+sample = '''import os
+DB_PASSWORD = os.environ["DB_PASSWORD"]
+api_key = "sk-live-1234"
+aws_access_key_id = AKIAABCDEFGHIJKLMNOP
+token = ''
+'''
+
+
+def find_secrets(text):
+    ### BEGIN SOLUTION
+    found = []
+    for number, line in enumerate(text.splitlines(), start=1):
+        if KEY_ID.search(line) or SECRET_ASSIGN.search(line):
+            found.append(number)
+    return found
+    ### END SOLUTION
+
+
+use(find_secrets, sample)
+
+# %%
+grade("w11.find_secrets", find_secrets)
+
+# %% [markdown]
+# Lines 3 and 4 are flagged. Real scanners also check whether a key is *live* with the provider, because patterns
+# alone give false alarms (a 20-character product code can look like a key id) and miss secrets with no pattern.
+#
+# ## 4. Checking a configuration before it ships
+#
+# **Why.** Many incidents come from one line of configuration: a storage bucket left public, an admin port open to
+# the whole internet, no budget alert. A ten-line check run in CI catches them before a person has to.
+#
+# **Idea.** We describe a deployment with a small, simplified dict (real tools such as Terraform or AWS
+# CloudFormation use bigger versions of the same idea):
+#
+# ```python
+# {"environment": {"MODEL_VERSION": "churn_v3", "DB_PASSWORD": "arn:aws:secretsmanager:..."},
+#  "buckets": [{"name": "models", "public": False}],          # S3 storage buckets
+#  "ingress": [{"port": 8000, "cidr": "10.0.0.0/16"}],         # who may connect, on which port
+#  "budget_alert_usd": 20}                                    # alert when the monthly bill passes this
+# ```
+#
+# `cidr` is a range of network addresses. `10.0.0.0/16` is a private range inside your own network;
+# `0.0.0.0/0` (and `::/0` for IPv6) means **the whole internet**. Ports 22 (SSH, remote shell) and 3389 (remote
+# desktop) are **admin ports**: open to the world, they are attacked within minutes.
+
+# %% [markdown]
+# ### Exercise 4 · configuration problems
+#
+# Write `config_problems(cfg)` returning a **sorted list** of the problems found, using these labels:
+#
+# * `"hardcoded_secret"`: some environment value matches `KEY_ID`, **or** its name (upper-cased) contains
+#   `SECRET`, `PASSWORD`, `TOKEN`, `API_KEY` or `ACCESS_KEY` and its value is non-empty and does **not** start with
+#   `"arn:aws:secretsmanager:"` or `"arn:aws:ssm:"` (those are references to a secret store, which is fine);
+# * `"public_bucket"`: some bucket has `"public": True`;
+# * `"open_admin_port"`: some ingress rule has port 22 or 3389 **and** cidr `"0.0.0.0/0"` or `"::/0"`;
+# * `"no_budget"`: `budget_alert_usd` is missing, `None`, or not greater than 0.
+#
+# A missing section (no `"buckets"` key, say) counts as empty. Each label appears at most once.
+
+# %%
+def config_problems(cfg):
+    ### BEGIN SOLUTION
+    found = set()
+    for name, value in (cfg.get("environment") or {}).items():
+        value = "" if value is None else str(value)
+        if KEY_ID.search(value):
+            found.add("hardcoded_secret")
+        elif any(part in name.upper() for part in ("SECRET", "PASSWORD", "TOKEN", "API_KEY", "ACCESS_KEY")):
+            if value and not value.startswith(("arn:aws:secretsmanager:", "arn:aws:ssm:")):
+                found.add("hardcoded_secret")
+    for bucket in cfg.get("buckets") or []:
+        if bucket.get("public"):
+            found.add("public_bucket")
+    for rule in cfg.get("ingress") or []:
+        if rule.get("port") in (22, 3389) and rule.get("cidr") in ("0.0.0.0/0", "::/0"):
+            found.add("open_admin_port")
+    budget = cfg.get("budget_alert_usd")
+    if budget is None or not budget > 0:
+        found.add("no_budget")
+    return sorted(found)
+    ### END SOLUTION
+
+
+# %%
+grade("w11.config_problems", config_problems)
+
+# %% [markdown]
+# **See it.** A configuration a hurried teammate might write:
+
+# %%
+unsafe_config = {
+    "environment": {"MODEL_VERSION": "churn_v3", "DB_PASSWORD": "hunter2"},
+    "buckets": [{"name": "models", "public": False}, {"name": "debug-dumps", "public": True}],
+    "ingress": [{"port": 8000, "cidr": "10.0.0.0/16"}, {"port": 22, "cidr": "0.0.0.0/0"}],
+    "budget_alert_usd": None,
+}
+use(config_problems, unsafe_config)
+
+# %% [markdown]
+# ### Exercise 5 · fix it
+#
+# Write `fixed_config`: the same service, with every problem removed. Keep `MODEL_VERSION`, keep a `DB_PASSWORD`
+# entry but as a Secrets Manager reference (for example
+# `"arn:aws:secretsmanager:eu-central-1:123456789012:secret:churn-db"`; `123456789012` is the placeholder account
+# number AWS uses in its documentation), keep port 8000 reachable from inside the network, and set a budget alert.
+# Remove what the service does not need.
+
+# %%
+### BEGIN SOLUTION
+fixed_config = {
+    "environment": {"MODEL_VERSION": "churn_v3",
+                    "DB_PASSWORD": "arn:aws:secretsmanager:eu-central-1:123456789012:secret:churn-db"},
+    "buckets": [{"name": "models", "public": False}],
+    "ingress": [{"port": 8000, "cidr": "10.0.0.0/16"}],
+    "budget_alert_usd": 20,
+}
+### STARTER
+fixed_config = None   # YOUR CODE HERE: a dict like unsafe_config, without its problems
+### END SOLUTION
+
+# %%
+grade("w11.fixed_config", fixed_config)
+
+# %% [markdown]
+# ### Least-privilege policies
+#
+# **Idea.** An IAM **policy** is JSON with a fixed shape:
+#
+# ```json
+# {"Version": "2012-10-17",
+#  "Statement": [{"Effect": "Allow", "Action": ["s3:GetObject"], "Resource": "arn:aws:s3:::my-bucket/*"}]}
+# ```
+#
+# * `Version` is always the string `"2012-10-17"` (the version of the policy language, not today's date);
+# * each **statement** has an `Effect` (`"Allow"` or `"Deny"`), one or more `Action`s (`service:Operation`), and
+#   one or more `Resource`s (ARNs);
+# * `"*"` means "everything". `"s3:*"` is every S3 action, including deleting every file. `Resource: "*"` is every
+#   resource in the account.
+#
+# For S3 (AWS's file storage, organised in **buckets**) one detail trips everyone up: **listing** acts on the
+# bucket (`arn:aws:s3:::my-bucket`), **reading a file** acts on objects inside it (`arn:aws:s3:::my-bucket/*`).
+#
+# ### Exercise 6 · a read-only policy for the model bucket
+#
+# The service only needs to list and download model files from the bucket `course-models-example`. Write
+# `policy` allowing exactly `s3:ListBucket` on the bucket and `s3:GetObject` on its objects, and nothing else.
+
+# %%
+### BEGIN SOLUTION
+policy = {
+    "Version": "2012-10-17",
+    "Statement": [
+        {"Effect": "Allow", "Action": "s3:ListBucket", "Resource": "arn:aws:s3:::course-models-example"},
+        {"Effect": "Allow", "Action": "s3:GetObject", "Resource": "arn:aws:s3:::course-models-example/*"},
+    ],
+}
+### STARTER
+policy = None   # YOUR CODE HERE: a dict with Version and Statement
+### END SOLUTION
+print(json.dumps(policy, indent=2))
+
+# %%
+grade("w11.policy", policy)
+
+# %% [markdown]
+# ### Exercise 7 · a policy linter
+#
+# Write `policy_warnings(policy)` returning a sorted list of warnings for the **Allow** statements (ignore
+# `Deny`):
+#
+# * `"wildcard_action"`: an action that is `"*"` or whose operation part (after `service:`) ends with `*`
+#   (`"s3:*"`, `"s3:Get*"`);
+# * `"wildcard_resource"`: a resource that is exactly `"*"`;
+# * `"allows_write"`: an action that is `"*"`, or whose operation is `"*"` or starts with `Put`, `Delete`,
+#   `Create` or `Update`.
+#
+# `Statement` may be one dict or a list of dicts; `Action` and `Resource` may be a string or a list. Turn each into
+# a list first: the helper `as_list` does it.
+
+# %%
+def as_list(x):
+    if x is None:
+        return []
+    return [x] if isinstance(x, (str, dict)) else list(x)
+
+
+def policy_warnings(policy):
+    ### BEGIN SOLUTION
+    found = set()
+    for statement in as_list(policy.get("Statement")):
+        if statement.get("Effect") != "Allow":
+            continue
+        for action in as_list(statement.get("Action")):
+            operation = action.split(":", 1)[-1]
+            if action == "*" or operation.endswith("*"):
+                found.add("wildcard_action")
+            if action == "*" or operation == "*" or operation.startswith(("Put", "Delete", "Create", "Update")):
+                found.add("allows_write")
+        for resource in as_list(statement.get("Resource")):
+            if resource == "*":
+                found.add("wildcard_resource")
+    return sorted(found)
+    ### END SOLUTION
+
+
+use(policy_warnings, {"Version": "2012-10-17", "Statement": {"Effect": "Allow", "Action": "s3:*", "Resource": "*"}})
+
+# %%
+grade("w11.policy_warnings", policy_warnings)
+
+# %% [markdown]
+# ## 5. What will it cost?
+#
+# **Why.** Unlike your laptop, the cloud bills by the hour whether anyone uses the service or not. Knowing the
+# monthly bill before you deploy is part of the job, and the first thing a manager will ask.
+#
+# **Idea.** For a container service such as Fargate, the main cost is
+#
+# $$\text{compute} = \text{tasks} \times \text{hours} \times (\text{vCPU} \times \text{price per vCPU-hour} + \text{memory GB} \times \text{price per GB-hour})$$
+#
+# plus smaller items: log storage (per GB), the image in the registry (per GB-month), data sent out, and a load
+# balancer if you add one (it has its own hourly price). A month has about **730 hours** (24 × 365 / 12).
+#
+# **The prices below are invented for this exercise.** Real prices depend on the region and change over time:
+# for a real estimate read the AWS pricing pages (or the AWS Pricing Calculator) on the day you decide.
+
+# %%
+PRICES = {"vcpu_hour": 0.05, "gb_hour": 0.005, "log_gb": 0.50}   # HYPOTHETICAL prices in USD, not AWS's
+
+# %% [markdown]
+# ### Exercise 8 · a monthly estimate
+#
+# Write `monthly_cost(vcpu, memory_gb, hours, n_tasks, prices, log_gb=0.0)` returning the formula above plus
+# `log_gb * prices["log_gb"]` (use 0 if `prices` has no `"log_gb"`), **rounded to 2 decimals**. Raise `ValueError`
+# if any size, count, hours or `log_gb` is negative.
+
+# %%
+def monthly_cost(vcpu, memory_gb, hours, n_tasks, prices, log_gb=0.0):
+    ### BEGIN SOLUTION
+    if min(vcpu, memory_gb, hours, n_tasks, log_gb) < 0:
+        raise ValueError("sizes, hours and counts cannot be negative")
+    compute = n_tasks * hours * (vcpu * prices["vcpu_hour"] + memory_gb * prices["gb_hour"])
+    return round(compute + log_gb * prices.get("log_gb", 0.0), 2)
+    ### END SOLUTION
+
+
+use(monthly_cost, 0.5, 1.0, 730, 2, PRICES, log_gb=2.0)
+
+# %%
+grade("w11.monthly_cost", monthly_cost)
+
+# %% [markdown]
+# With these invented prices, two small tasks (0.5 vCPU, 1 GB each) running all month plus 2 GB of logs come to
+# 44.80. The same calculation with real prices is what you would put in a deployment proposal.
+#
+# **Try it.** What happens to the bill if you double the memory but keep the vCPU? If you run one task instead of
+# two? (One task saves money but leaves no copy running while the other restarts.)
+#
+# ### Exercise 9 · only when needed
+#
+# An internal demo is used only on working days, 10 hours a day (22 × 10 = 220 hours a month). Compute
+# `savings_per_month`: the cost of running the service above (2 tasks, 0.5 vCPU, 1 GB, 2 GB of logs) for all 730
+# hours, minus running it only for those 220 hours. Use your `monthly_cost`.
+
+# %%
+### BEGIN SOLUTION
+savings_per_month = (use(monthly_cost, 0.5, 1.0, 730, 2, PRICES, log_gb=2.0)
+                     - use(monthly_cost, 0.5, 1.0, 220, 2, PRICES, log_gb=2.0))
+### STARTER
+savings_per_month = None   # YOUR CODE HERE
+### END SOLUTION
+print(round(savings_per_month, 2) if savings_per_month is not None else None)
+
+# %%
+grade("w11.savings", savings_per_month)
+
+# %% [markdown]
+# Running only in office hours saves 30.60 of the 44.80 a month, about two thirds: the same service, fewer hours.
+
+# %% [markdown]
+# **The safety rules for a real deployment**, which the [cloud tool guide](../docs/tools/cloud-aws.md) explains
+# step by step:
+#
+# 1. a **budget with an alert** exists before anything billable (AWS Budgets; the alert itself is free);
+# 2. you sign in with temporary credentials (Identity Center), never with root, never with a key in a file;
+# 3. every resource you create is written down, with the command that **removes** it;
+# 4. nothing is opened to the internet unless that is the explicit goal and someone approved it;
+# 5. when the demo is over, you remove everything and check the next day's bill shows nothing still running.
+#
+# ## 6. Releases and rollback
+#
+# **Why.** Some releases go wrong: the new image crashes, or answers slowly. The fastest fix is almost never a new
+# fix; it is going back to the last version that worked.
+#
+# **Idea.** Because every image is tagged with its Git commit and kept in the registry, "the previous version" is
+# one known image. A **rollback** points the service back at it. Keep a deployment history: version, time,
+# status. Before each release, write down how to roll back; after it, watch the health check and the metrics.
+#
+# A short **deployment checklist** (keep it in your repository):
+#
+# - [ ] CI is green for this commit; the image tag is the commit id.
+# - [ ] Configuration checked (no secrets, no public buckets, no open admin ports, budget alert present).
+# - [ ] Health check endpoint answers; logs arrive.
+# - [ ] The previous healthy version is known, and the rollback command is written down.
+# - [ ] Someone watches the metrics for the first 30 minutes.
+#
+# ### Exercise 10 · which version to roll back to
+#
+# `history` is a list of releases, oldest first, each `{"version": ..., "status": ...}`; the **last** one is what
+# runs now. Write `rollback_target(history)` returning the version of the most recent **earlier** release whose
+# status is `"healthy"`, or `None` if there is none (or no earlier release).
+
+# %%
+def rollback_target(history):
+    ### BEGIN SOLUTION
+    for release in reversed(history[:-1]):
+        if release.get("status") == "healthy":
+            return release["version"]
+    return None
+    ### END SOLUTION
+
+
+use(rollback_target, [{"version": "v1", "status": "healthy"}, {"version": "v2", "status": "failed"},
+                      {"version": "v3", "status": "failed"}])
+
+# %%
+grade("w11.rollback_target", rollback_target)
+
+# %% [markdown]
+# ## Quiz
+#
+# Put the letter of your answer between the quotes and run the cell. Each answer explains itself.
+#
+# **Q1.** Why are roles with temporary credentials safer than an IAM user's access key?
+#
+# - a) Roles are faster.
+# - b) Temporary credentials expire and are tied to a sign-in; a leaked access key works until someone deletes it.
+# - c) Roles always have fewer permissions.
+# - d) Access keys only work inside AWS.
+
+# %%
+### BEGIN SOLUTION
+answer = "b"
+### STARTER
+answer = "?"  # put your letter between the quotes
+### END SOLUTION
+quiz("w11.41_q1", answer)
+
+# %% [markdown]
+# **Q2.** You pushed a commit containing an access key to a public repository. What do you do first?
+#
+# - a) Delete the line and push a new commit.
+# - b) Make the repository private.
+# - c) Deactivate (rotate) the key in IAM, then clean up the repository.
+# - d) Rename the variable.
+
+# %%
+### BEGIN SOLUTION
+answer = "c"
+### STARTER
+answer = "?"  # put your letter between the quotes
+### END SOLUTION
+quiz("w11.41_q2", answer)
+
+# %% [markdown]
+# **Q3.** Which item must exist **before** anything billable is created?
+#
+# - a) A budget with an alert.
+# - b) A custom domain name.
+# - c) Autoscaling.
+# - d) A load balancer.
+
+# %%
+### BEGIN SOLUTION
+answer = "a"
+### STARTER
+answer = "?"  # put your letter between the quotes
+### END SOLUTION
+quiz("w11.41_q3", answer)
+
+# %% [markdown]
+# **Q4.** Version v7 went out ten minutes ago and 5 % of requests now fail. What is the best first move?
+#
+# - a) Debug v7 in production until it is fixed.
+# - b) Rebuild v6 from its source code and deploy it.
+# - c) Delete the service.
+# - d) Point the service back at the v6 image that is still in the registry, then investigate v7.
+
+# %%
+### BEGIN SOLUTION
+answer = "d"
+### STARTER
+answer = "?"  # put your letter between the quotes
+### END SOLUTION
+quiz("w11.41_q4", answer)
+
+# %% [markdown]
+# **Q5.** A container service runs 24/7. You switch it to run only 12 hours a day. Roughly what happens to its
+# compute cost?
+#
+# - a) It goes up, because a bigger instance is needed.
+# - b) It barely changes, because logs dominate the bill.
+# - c) It roughly halves: the cost is size × tasks × hours.
+# - d) It depends only on the region.
+
+# %%
+### BEGIN SOLUTION
+answer = "c"
+### STARTER
+answer = "?"  # put your letter between the quotes
+### END SOLUTION
+quiz("w11.41_q5", answer)
+
+# %% [markdown]
+# ## Recap
+#
+# - A deployed service = image + registry + compute + configuration + observability, with a budget alert first.
+# - VM: you manage the server. Container service: you give it an image. Serverless: you pay per call, with time
+#   limits. A steady web API fits a container service (this course: ECR + ECS on Fargate).
+# - Identity: protect root, prefer roles with temporary credentials over access keys, grant least privilege.
+# - Secrets live in a secret store; code reads them from the environment; a leaked key is deactivated first.
+# - A small configuration check catches public buckets, open admin ports, hard-coded secrets and missing budgets.
+# - IAM policies: `Version`, `Statement`, `Effect`, `Action`, `Resource`; avoid `*`; bucket vs object ARNs.
+# - Cost ≈ tasks × hours × size × unit price; check real prices on the provider's pricing page.
+# - Rollback = point the service back at the last healthy image; write the command down before you release.
+#
+# ## On the job
+#
+# Before a first deployment, an ML engineer usually writes a one-page plan: which service, which region, which
+# roles and permissions, where secrets live, the expected monthly cost, how to roll back, and how to tear it all
+# down. A senior colleague or the platform team reviews it. Writing that page, and the configuration checks that
+# run in CI, is exactly what you practised here.
+#
+# ## Going further
+#
+# - Tool guide: [Cloud basics (AWS)](../docs/tools/cloud-aws.md): accounts, the AWS CLI, ECR and ECS step by step,
+#   budgets and teardown.
+# - Handbook: [13. One cloud deployment path](../docs/handbook/ch13_cloud_deployment/index.md) (identity,
+#   credentials, cost; registry and container service).
+# - Advanced track: notebook 35 (cloud deployment) in `advanced/notebooks/`.
+# - Next: [42 · Logging and monitoring a model service](42_logging_monitoring.ipynb).
+
+# %% [markdown]
+# ## Record your progress
+
+# %%
+from mlcourse.progress import mark
+
+# mark("41", "reading")
+# mark("41", "guided")

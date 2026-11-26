@@ -925,7 +925,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install
         run: python -m pip install -r requirements.txt
       - name: Test
@@ -936,7 +936,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 """
     cases = [("test", ["python -m pip install -r requirements.txt", "python -m pytest -q",
                        "python -m pytest --doctest-modules src"]),
@@ -1021,9 +1021,9 @@ def _workflow_problems(text: str, matrix: bool = False, docker: bool = False, ha
     co, sp = _uses_index(steps, "actions/checkout"), _uses_index(steps, "actions/setup-python")
     inst, test = _run_index(steps, r"pip install"), _run_index(steps, r"pytest")
     if co is None:
-        problems.append("the job never checks out your code (uses: actions/checkout@v4)")
+        problems.append("the job never checks out your code (uses: actions/checkout@v7)")
     if sp is None:
-        problems.append("the job never sets up Python (uses: actions/setup-python@v5)")
+        problems.append("the job never sets up Python (uses: actions/setup-python@v7)")
     if inst is None:
         problems.append("the job never installs the dependencies (pip install -r requirements.txt)")
     elif not re.search(r"-r\s+\S*requirements", str(steps[inst].get("run", ""))):
@@ -1164,7 +1164,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Safe
         env:
           TOKEN: ${{ secrets.DEPLOY_TOKEN }}
@@ -1521,3 +1521,8 @@ register_quiz(
     {"a": "Jobs without needs run in parallel, so the image could be built from failing code.",
      "b": "needs controls order and dependency, not the runner.",
      "c": "Both jobs still check out the code themselves; needs does not share files."})
+
+
+# The notebook-38 helpers, ready-made for the lab (notebook 40), so the lab does not depend on finished lessons.
+nb38_helpers = types.SimpleNamespace(parse_dockerfile=_parse_dockerfile, is_pinned=_is_pinned,
+                                     find_secrets=_find_secrets)

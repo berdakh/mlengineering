@@ -674,7 +674,7 @@ def _t_monthly_cost(fn):
         want = _ref_monthly_cost(*c)
         assert isinstance(got, (int, float)), "return a number"
         assert abs(got - want) < 0.006, (f"monthly_cost{c[:4]} with log_gb={c[5]} gave {got}, expected {want}. "
-                                        "Do you multiply by the number of tasks and by the hours?")
+                                        "Check each part: tasks x hours x (vCPU x price + GB x price), plus log GB x log price.")
     assert fn(1, 2, 730, 1, {"vcpu_hour": 0.05, "gb_hour": 0.005}) == _ref_monthly_cost(
         1, 2, 730, 1, {"vcpu_hour": 0.05, "gb_hour": 0.005}), \
         "log_gb should default to 0, and a price list without 'log_gb' should still work"
