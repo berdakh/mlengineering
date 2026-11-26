@@ -1,14 +1,28 @@
 ---
-title: "The portfolio project"
+title: "The project"
 parent: Guides
-nav_order: 8
+nav_order: 7
 ---
 
-# Portfolio project: `flowguard` - fault detection on a water-circulation testbed
+# The project: fault detection on a water-circulation testbed
 
-Status: **brief and dataset verified; every deliverable below has a lesson, and each milestone lesson
-(w4d6, w5d6, w6d6, w7d6, w8d1-w8d2) has a verified reference implementation in `solutions/`.**
-Everything below marked "decision" is a starting position you are expected to challenge in w2d4.
+**In the 12-week course** the project runs through four notebooks, each graded offline on small synthetic
+readings so grading never needs the download:
+
+| Notebook | Milestone |
+|---|---|
+| [28 · Project milestone 1](../notebooks/28_project_m1_fault_detection.html) | Load SKAB, respect the experiment-level split, a burn-in z-score detector and one model, PR-AUC and event detection with a bootstrap interval |
+| [36 · Project milestone 2](../notebooks/36_project_m2_prediction_api.html) | The detector behind a validated, tested `POST /score` API |
+| [44 · Project milestone 3](../notebooks/44_project_m3_monitoring.html) | Logging the detector's outputs, input drift, a dashboard and an operations note |
+| [45 · Capstone](../notebooks/45_capstone_build.html) | The whole project end to end, then the README, report and model card in notebook 46 |
+
+It is an **educational prototype** built on a laboratory testbed, not a system for any real plant.
+
+**In the advanced track** the same project, called `flowguard`, goes much further. Session ids below (`w2d4`,
+`w4d6` ...) refer to the [advanced schedule](../advanced/schedule.html). Status there: brief and dataset verified;
+every deliverable has a session, and each milestone session (w4d6, w5d6, w6d6, w7d6, w8d1-w8d2) has a verified
+reference implementation in `solutions/labs/`. Everything below marked "decision" is a starting position you are
+expected to challenge.
 
 ## Why this dataset
 
@@ -128,9 +142,9 @@ this project must report intervals (w3d5) and must not claim small differences b
 5. **Not a forecasting project.** The labels are anomaly segments, not future values; forecasting models
    appear only as a means of producing residual scores.
 
-## Deliverables checklist
+## Deliverables checklist (advanced track)
 
-| Deliverable | Session | Your progress |
+| Deliverable | Advanced session | Your progress |
 |---|---|---|
 | Problem statement and stakeholder needs | w2d4 | [ ] |
 | Dataset provenance and data dictionary | this file, extended in w2d3 | [ ] |
@@ -148,7 +162,7 @@ this project must report intervals (w3d5) and must not claim small differences b
 | Monitoring demonstration | w7d6 | [ ] |
 | README, model limitations, short technical report | w8d1-w8d2 | [ ] |
 
-## Transfer exercise (small, not a second capstone)
+## Transfer exercise (advanced track; small, not a second capstone)
 
 Two short sittings on an unfamiliar **tabular business** problem: baseline (w2d6) and a complete
 leak-free evaluation in 90 minutes (w3d6). Candidate public dataset: UCI Bank Marketing. Its licence

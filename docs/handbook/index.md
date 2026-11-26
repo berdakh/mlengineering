@@ -33,6 +33,29 @@ status. Section ids (`H2.1`) are stable and are what lessons link to.
 | 15. Logging, monitoring and model updates | [H15.1 Service logs and metrics](ch15_logging_monitoring_updates/h15_1_service_logs_and_metrics.md)<br>[H15.2 Operational debugging](ch15_logging_monitoring_updates/h15_2_operational_debugging.md)<br>[H15.3 Input monitoring and drift statistics](ch15_logging_monitoring_updates/h15_3_input_monitoring_drift.md)<br>[H15.4 Drift versus degradation, delayed labels](ch15_logging_monitoring_updates/h15_4_drift_vs_degradation_delayed_labels.md)<br>[H15.5 Updates and rollback](ch15_logging_monitoring_updates/h15_5_updates_and_rollback.md)<br>[H15.6 Reliability patterns for ML services](ch15_logging_monitoring_updates/h15_6_reliability_patterns.md) |
 | 16. ML system design and technical communication | [H16.1 Decision memos](ch16_system_design_communication/h16_1_decision_memos.md)<br>[H16.2 Reports and limitations](ch16_system_design_communication/h16_2_reports_and_limitations.md)<br>[H16.3 System design structure](ch16_system_design_communication/h16_3_system_design_structure.md)<br>[H16.4 Interview problem patterns](ch16_system_design_communication/h16_4_interview_problem_patterns.md) |
 
+## Reading alongside the 12-week course
+
+The lessons teach the essentials; these chapters go deeper. Read them after the week, when a lesson's
+"Going further" points there, or when something did not quite land.
+
+| Course week | Handbook chapters |
+|---|---|
+| [1 · Your engineering workbench](../weeks/week-1.html) | [2. Maintainable Python](ch02_maintainable_python/index.md) (H2.1, H2.3) |
+| [2 · SQL from zero](../weeks/week-2.html) | [3. SQL and data pipelines](ch03_sql_data_pipelines/index.md) (H3.1) |
+| [3 · Advanced SQL and pandas](../weeks/week-3.html) | [3. SQL and data pipelines](ch03_sql_data_pipelines/index.md) (H3.2, H3.3); [4. Data quality](ch04_data_quality_eda/index.md) |
+| [4 · From data to features](../weeks/week-4.html) | [4. Data quality and EDA](ch04_data_quality_eda/index.md); [3.](ch03_sql_data_pipelines/index.md) H3.4 feature pipelines |
+| [5 · Framing, baselines, metrics](../weeks/week-5.html) | [1. Problem formulation](ch01_problem_formulation/index.md); [5. Baselines](ch05_classical_ml_baselines/index.md) (H5.1, H5.2); [6.](ch06_evaluation_leakage_uncertainty/index.md) H6.2 thresholds |
+| [6 · Validation and leakage](../weeks/week-6.html) | [6. Evaluation, leakage and uncertainty](ch06_evaluation_leakage_uncertainty/index.md) (H6.1, H6.3, H6.4) |
+| [7 · Models, uncertainty, error analysis](../weeks/week-7.html) | [5.](ch05_classical_ml_baselines/index.md) H5.3, H5.4; [6.](ch06_evaluation_leakage_uncertainty/index.md) H6.5-H6.7; [7. Time series](ch07_timeseries_grouped_modeling/index.md) |
+| [8 · Code you can trust](../weeks/week-8.html) | [2.](ch02_maintainable_python/index.md) H2.1, H2.2; [8. Reproducible experiments](ch08_reproducible_experiments/index.md); [9. Testing](ch09_testing_ml_systems/index.md) (H9.1) |
+| [9 · Serving models](../weeks/week-9.html) | [10. Inference](ch10_batch_online_inference/index.md); [11. FastAPI](ch11_fastapi_input_validation/index.md); [9.](ch09_testing_ml_systems/index.md) H9.2 |
+| [10 · Containers and CI](../weeks/week-10.html) | [12. Docker](ch12_docker_reproducible_environments/index.md); [14. CI/CD](ch14_cicd/index.md) |
+| [11 · Deploy and operate](../weeks/week-11.html) | [13. Cloud deployment](ch13_cloud_deployment/index.md); [15. Logging, monitoring, updates](ch15_logging_monitoring_updates/index.md) |
+| [12 · Capstone and career](../weeks/week-12.html) | [16. System design and communication](ch16_system_design_communication/index.md) |
+
+The handbook was first written for the [advanced track](../advanced/), so some examples use its project
+(`flowguard`) and session ids such as `w3d4`.
+
 All 55 sections are written. Each ends with its sources and verification status; most were
 checked against official documentation sources, and anything written from memory is labelled there.
 

@@ -1,55 +1,55 @@
 ---
 title: Cheat sheet
 parent: Guides
-nav_order: 5
+nav_order: 4
 ---
 
 # Cheat sheet
 
-## Every day
+## In every notebook
 
-| Do | Command |
+| Do | How |
 |---|---|
-| What to study next | `python wb.py next` |
-| All sessions and your flags | `python wb.py status` |
-| Check your lab / challenge | `python wb.py check w3d4` · `python wb.py check w3d4 --challenge` |
-| Record progress | `python wb.py mark w3d4 reading` (flags: `reading`, `guided`, `independent`, `review`) |
-| Clear a flag | `python wb.py mark w3d4 review off` |
-| Dated note | `python wb.py note w3d4 "what tripped me up"` |
-| Open a notebook | `jupyter lab notebooks/16_point_vs_event_evaluation.ipynb` |
-| Study app | `streamlit run app/study_app.py` |
+| Start | Run the first code cell (setup). In Colab, wait for `Ready. Course folder: ...` |
+| Grade an exercise | Run the cell under it: `grade("w02.cheap_products", query)` |
+| Answer a quiz | Put a letter between the quotes, `answer = "b"`, then run `quiz("w02.05_q1", answer)` |
+| Read a result | ✅ passed · ❌ what is wrong, with a hint · ⏳ not attempted yet |
+| Start again | *Runtime → Restart session* (Colab) or *Restart* (VS Code / Jupyter), then run from the top |
+| Check a solution | `solutions/notebooks/<same name>.ipynb`, after a real attempt |
+| Record progress | `from mlcourse.progress import mark` then `mark("05", "guided")` |
+| Add a note | `from mlcourse.progress import note` then `note("05", "what tripped me up")` |
 
-Inside a notebook the same things are Python calls:
+Progress flags: `reading`, `guided` (you finished the exercises), `independent` (you did them without hints or
+solutions), `review` (come back to this). They are stored in `progress/progress.json`; in Colab, download that
+file if you want to keep it.
 
-```python
-from mlcourse.checks import check
-from mlcourse.progress import mark, note, status
-
-check("w3d4")                  # guided lab
-check("w3d4", challenge=True)  # independent challenge
-mark("w3d4", "guided")
-```
-
-Session ids: `w<week>d<day>`, e.g. `w3d4` is week 3, day 4, notebook 16. The
-[full schedule](schedule.html) lists them all.
-
-## Where things live
+## Inside the course folder
 
 | Path | What |
 |---|---|
-| `notebooks/` | One notebook per core session (built from `notebook_src/`) |
-| `labs/<session>/` | Lab and challenge starters you edit, worked-example scripts, data, checks |
-| `diagnostic/` | The diagnostic sections (notebooks 01-02) |
-| `solutions/` | Reference solutions, model answers, exercise and checkpoint answers. Attempt first |
-| `docs/` | This site: weeks, handbook, guides |
-| `interview/` | Interview prompt sets and their test harnesses |
-| `progress/` | Your flags (`progress.json`), notes and skills ledger. Commit them |
+| `notebooks/` | The 48 notebooks you work in |
+| `solutions/notebooks/` | The same notebooks, solved |
+| `data/course/` | The synthetic shop database (`shop.db`) and other small course datasets |
+| `src/mlcourse/` | `grader`, `sql` (`sql()`, `tables()`, `schema()`), `progress` |
+| `docs/` | This site |
 
-## Maintenance (`make help` lists all)
+## Each tool's cheat sheet
 
-| `make test` | course tests: helpers, tools, site markup |
-| `make notebooks` | rebuild `notebooks/*.ipynb` from `notebook_src/*.py` |
-| `make pages` | render notebooks into site pages |
-| `make diagrams` | render Mermaid sources into SVGs (needs Node + Playwright) |
-| `make check` | everything CI checks, without the long lab verification |
-| `make verify` | every reference solution passes and every wrong submission is rejected (about 30 min) |
+Every tool guide ends with a one-page cheat sheet:
+[Colab](../tools/colab.html) · [Python](../tools/python-for-engineers.html) · [terminal](../tools/terminal.html) ·
+[Git](../tools/git-github.html) · [SQL](../tools/sql.html) · [pandas](../tools/pandas.html) ·
+[matplotlib](../tools/matplotlib.html) · [scikit-learn](../tools/scikit-learn.html) ·
+[packaging](../tools/packaging.html) · [pytest](../tools/pytest.html) · [FastAPI](../tools/fastapi.html) ·
+[VS Code](../tools/vscode.html) · [Docker](../tools/docker.html) · [GitHub Actions](../tools/github-actions.html) ·
+[AWS](../tools/cloud-aws.html) · [monitoring](../tools/monitoring.html)
+
+## Maintainers (`make help` lists all)
+
+| Command | Does |
+|---|---|
+| `python tools/nbbuild.py 05` | Build `notebooks/05_*.ipynb` and `solutions/notebooks/05_*.ipynb` from `notebook_src/` |
+| `python tools/verify_notebooks.py 05` | Solved copy passes every grader; student copy fails them, only with `NotImplementedError` |
+| `python tools/check_notebooks.py` | Valid JSON, code parses, links and images exist, Colab badges right |
+| `python tools/check_links.py` | Every relative link in the repository resolves |
+| `make diagrams` | Render Mermaid sources to SVG (needs Node and Playwright) |
+| `python wb.py check <session>` | Advanced track: run one lab's checks |

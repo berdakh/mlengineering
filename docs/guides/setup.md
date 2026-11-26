@@ -1,7 +1,7 @@
 ---
 title: Setup
 parent: Guides
-nav_order: 3
+nav_order: 2
 ---
 
 # Setup
@@ -12,57 +12,64 @@ nav_order: 3
 
 ---
 
-## 1. Python 3.11 or newer
+## Weeks 1-9 and 12: Google Colab, nothing to install
+
+1. Open a notebook's **Open in Colab** badge (start with
+   [notebook 01](https://colab.research.google.com/github/berdakh/mlengineering/blob/main/notebooks/01_welcome_and_colab.ipynb)).
+2. Sign in with a Google account.
+3. Run the first code cell. It downloads the course into `/content/mlengineering` (about 30 s), installs
+   `requirements.txt` (about a minute, once per Colab session) and prints `Ready. Course folder: ...`.
+4. Work top to bottom. To keep your answers, use **File → Save a copy in Drive**.
+
+The [Google Colab tool guide](../tools/colab.html) explains runtimes, files, shortcuts and common errors.
+
+## Weeks 10-11: your own computer with VS Code
+
+Week 10 moves you to a local setup, the way most teams work. [Notebook 37](../notebooks/37_vscode_local_setup.html)
+walks through it step by step on Linux, macOS and Windows, and the [VS Code guide](../tools/vscode.html) is the
+reference. In brief:
+
+1. Install **Python 3.11 or newer**, **Git** and **VS Code** (with its Python and Jupyter extensions).
+2. Clone the course and create a virtual environment:
+
+   ```bash
+   git clone https://github.com/berdakh/mlengineering.git
+   cd mlengineering
+   python3 -m venv .venv
+   source .venv/bin/activate        # Windows (PowerShell): .venv\Scripts\Activate.ps1
+   python -m pip install --upgrade pip
+   pip install -r requirements.txt
+   ```
+
+3. `code .` opens the folder in VS Code. Open a notebook in `notebooks/`, pick the `.venv` interpreter as the
+   kernel, and run the first cell. It finds the course folder by itself; nothing else changes.
+4. Check that grading works: `python -m pytest tests -q` runs the course's own tests.
+
+Docker is optional: install Docker Desktop (macOS, Windows) or Docker Engine (Linux) from Docker's official
+instructions if you want to run the Week 10 containers yourself; see the [Docker guide](../tools/docker.html).
+
+`requirements.txt` has lower bounds. `requirements-lock.txt` pins the exact versions the material was tested with;
+use it if a newer release behaves differently.
+
+## The project data
+
+The project notebooks (28, 36, 44, 45) download the SKAB dataset when they need it:
 
 ```bash
-python3 --version
-```
-
-Ubuntu 22.04 and the distributions built on it ship Python 3.10, which is too old (the labs use `tomllib`, added in 3.11). Options,
-explained in [handbook H2.1](../handbook/ch02_maintainable_python/h2_1_project_structure_environments.html):
-upgrade to a release that ships 3.11+ (for example Ubuntu 24.04, Python 3.12), install a newer interpreter with `uv python install 3.12`,
-or use a distribution package for a newer Python. Everything here was executed on Python 3.13.
-
-## 2. Clone and install
-
-```bash
-git clone https://github.com/berdakh/mlengineering.git
-cd mlengineering
-
-python3 -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\activate
-python -m pip install --upgrade pip
-pip install -r requirements-lock.txt      # the exact versions the course was tested with
-pip install -r requirements-dev.txt       # JupyterLab and friends, for running notebooks locally
-
-python scripts/check_env.py               # what this machine can run
-jupyter lab notebooks/01_diagnostic_a.ipynb
-```
-
-`requirements.txt` has lower bounds instead of exact pins; use it if the locked versions do not
-install on your platform.
-
-## 3. The project data (from notebook 06 on)
-
-```bash
-python project/get_skab.py            # about 4 MB into data/raw/skab/, with SHA-256 manifest
+python project/get_skab.py            # about 4 MB into data/raw/skab/, with a SHA-256 manifest
 python project/get_skab.py --verify   # re-check the files at any time
 ```
 
-SKAB is GPL-3.0; it is downloaded from its source and never committed to this repository.
+SKAB is GPL-3.0; it is downloaded from its source and never committed to this repository. Grading never needs it.
 
-## 4. Optional extras, when a notebook asks for them
+## The advanced track
+
+The [advanced track](../advanced/) uses the same environment plus a few extras:
 
 | For | Install |
 |---|---|
-| Notebook 21 (neural comparison) | `pip install -r requirements-neural.txt` (CPU-only PyTorch is enough) |
-| Notebooks 31-36 (containers, CI, delivery) | Docker Engine: follow Docker's official instructions for your system (Docker Desktop on macOS and Windows) |
-| Notebook 35 live step (optional) | An AWS account, the AWS CLI v2, and the notebook's cost and credential briefing first |
-| The study app | `pip install -r requirements-app.txt`, then `streamlit run app/study_app.py` |
-
-## 5. Check that everything works
-
-```bash
-python wb.py status                         # all 56 sessions and your progress flags
-python wb.py check diagnostic/a1_python     # fails on the fresh starter, as it should
-make test                                   # the course's own tests
-```
+| Its neural-comparison session | `pip install -r requirements-neural.txt` (CPU-only PyTorch is enough) |
+| Its container sessions | Docker Engine or Docker Desktop |
+| Its optional AWS step | An AWS account and the AWS CLI v2, after reading that session's cost and credential briefing |
+| Its study app | `pip install -r requirements-app.txt`, then `streamlit run app/study_app.py` |
+| Running its lab checks | `pip install -r requirements-dev.txt`, then `python wb.py check <session>` |

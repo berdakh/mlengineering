@@ -1,124 +1,91 @@
 ---
-title: "How the program is designed"
+title: "How the course is designed"
 parent: Guides
-nav_order: 10
+nav_order: 9
 ---
 
-# Eight-week roadmap: applied machine learning as reliable software
+# How the course is designed
+{: .no_toc }
 
-The session-by-session table (objective, deliverable, prerequisites, status for all 56 sessions) is in
-[roadmap/SCHEDULE.md](schedule.md). This page explains the design behind it.
+The binding details (notebook layout, grader rules, quality bar) are in the
+[course specification](../maintainers/course-spec.html). This page explains the choices behind them.
 
-## What the course is for
+1. TOC
+{:toc}
 
-Evidence, produced by you, that you can do each of these without step-by-step help:
+---
 
-| # | Target capability | Main evidence artifact | Weeks |
-|---|---|---|---|
-| 1 | Translate a practical problem into an ML task | Problem statement, label and split definitions | 2 |
-| 2 | Build a reproducible data pipeline | `flowguard ingest` + feature pipeline with tests | 2 |
-| 3 | Establish and evaluate meaningful baselines | Baseline table with intervals | 2-3 |
-| 4 | Train, compare and analyse models correctly | Comparison report, error analysis, decision memo | 3-4 |
-| 5 | Package preprocessing and inference consistently | Inference pipeline + parity tests | 5 |
-| 6 | Write useful tests and maintainable code | Test suites graded by mutation; project history | 1 onward |
-| 7 | Expose predictions through an API | FastAPI service with validation and tests | 5 |
-| 8 | Containerise and deploy a small service | Image, CI, runbook, optional AWS deployment | 6 |
-| 9 | Measure latency, failures and model behaviour | Load-test report, monitoring demonstration | 6-7 |
-| 10 | Explain decisions, limitations and tradeoffs | Report, recorded walkthrough, design reps | 4, 8 |
+## Who it is for, and the gap it fills
 
-The course does not promise job readiness. Progress is judged by independent performance on
-challenges and by the artifacts above, never by time spent or lessons read.
+An introductory machine-learning course teaches *why* models generalise: training vs test error, overfitting,
+regularisation, validation. It usually stops at a clean dataset in a notebook. Teams spend most of their time on
+everything around that: getting data out of a database, cleaning it, making features that do not leak, checking
+that a result is real, and turning a model into a service that someone can rely on.
 
-## Rhythm
+The course is for students who have the first part and none of the second. It assumes intro-ML ideas and basic
+Python, and assumes **no** industry tool: SQL, Git, pytest, packaging, APIs, Docker, CI and the cloud all start
+from zero. Wherever a lesson touches modelling it connects back to what the student already knows ("in
+*Learning from Data* terms, the test set is a one-time estimate of E_out") and then shows what changes with real,
+messy data.
 
-* **Six core days and one light day per week.** Day 7 is retrieval practice, one redo of something that
-  failed, and a mixed interview set. It is also the catch-up buffer.
-* **A core session = a 2-hour essential path + an optional extension of up to 1 hour.** The essential
-  path is: read (20-30 min), worked example (15-20 min), guided lab (45-55 min), independent challenge
-  start (15-20 min), assessment and reflection (10-15 min). Each lesson states its own budget.
-* **One primary objective, one deliverable, explicit completion criteria** per session.
-* **Four progress flags, kept separate:** reading completed, guided practice completed, independent
-  skill demonstrated, review needed. Passing supplied checks earns "guided" at most.
+## The arc of twelve weeks
 
-### Adjusting the schedule
-
-Sessions are ordinal (`w3d2`), not tied to calendar dates, so the plan survives missed days.
-
-* Move the light day anywhere in the week; keep one per six core sessions.
-* If a session overruns, stop at the 2-hour mark, mark `review`, and use day 7. Do not borrow from the
-  next session's time: later units depend on deliverables, not on reading.
-* If the diagnostic shows a topic is already solid, the matching lesson is replaced by its independent
-  challenge only (30-45 min). The mapping is in `solutions/diagnostic/SCORING.md` and is applied only
-  after your submission has been reviewed.
-* To reorder or drop units, edit `tools/build_course.py` and rerun it. Respect the prerequisite column.
-
-## Prerequisite structure
-
-<img src="../assets/diagrams/mmd-guides-program-design-01.svg" alt="Diagram 1 of this page" style="max-width:100%">
-
-*Prerequisite structure. Labelled edges are the hard dependencies.*
-
-<img src="../assets/diagrams/mmd-guides-program-design-02.svg" alt="Diagram 2 of this page" style="max-width:100%">
-
-*Sessions are ordinal, not calendar dates: "Day 27" is the 27th session you complete.*
-
-Hard dependencies: nothing in Week 3 is meaningful before the split manifest of w2d4; nothing in
-Week 5 before a chosen model (w4d5); Week 6 needs the API of Week 5; Week 7 needs a running service.
-
-Assumed and not taught from scratch (verified by the diagnostic and challenges instead): Python
-fluency, NumPy, PyTorch training loops, signal-processing basics, the mathematics of standard
-classifiers. If the diagnostic contradicts an assumption, a targeted primer is added.
-
-## The main project and the transfer exercise
-
-One project runs through the course: **`flowguard`**, fault detection on the SKAB water-circulation
-testbed recordings. The brief, provenance, licence, data dictionary and measured dataset facts are in
-[docs/guides/project.md](project.md). By analogy with a clinical study: the *experiment* plays the role of the
-*patient* (the independent unit across which generalisation is evaluated), the anomalous segment is an
-*event* as a seizure in an EEG recording is, and point-level versus event-level scoring is the same
-distinction such detection studies make. What is new for most students is everything around the model.
-
-Transfer is probed on tabular business data: in the diagnostic (synthetic), in w2d6 and in w3d6.
-
-## Chosen stack, and what is deliberately left out
-
-| Concern | Choice | Reason | Deferred / optional |
-|---|---|---|---|
-| Language, numerics | Python >= 3.11, NumPy, pandas | already yours | - |
-| Classical ML | scikit-learn | pipelines make leakage prevention structural | - |
-| Neural models | PyTorch on CPU, only in w4d3 | used where a comparison justifies it | GPU optional |
-| SQL | SQLite via the standard library | zero installation, full window-function support | DuckDB as an optional extension |
-| Tests | pytest | one tool for unit, API and integration tests | hypothesis as an optional extension |
-| Config, logging | `tomllib`, dataclasses, `logging` | concepts before frameworks | Hydra, structlog |
-| Tracking | run directories + a results table | you can see every moving part | MLflow as an optional extension in w4d4 |
-| API | FastAPI + pydantic | validation and schema are first-class | - |
-| Container | Docker | industry default | - |
-| CI | GitHub Actions | the repository already lives on GitHub | - |
-| Cloud | AWS, one container route | you named AWS as a development need | exact service chosen when Week 6 is authored |
-
-Version-sensitive details (AWS service choice and commands, GitHub Actions versions, Docker base images,
-FastAPI lifecycle APIs) are **not fixed yet**. They are checked against current official documentation
-when the corresponding week is authored, and the sources opened are recorded in each handbook section.
-
-## Cloud and cost policy
-
-Every lab has a local path that costs nothing. The AWS session (w6d5) is authorisation-gated: nothing
-is created and nothing is exposed publicly unless you explicitly approve it after reading that
-session's cost and credential briefing. Credentials never enter the repository (`.gitignore` blocks
-the common filenames; the lesson uses environment variables and short-lived credentials).
-
-## Distinctions the course keeps returning to
-
-| Do not confuse | With | First treated |
+| Weeks | Theme | Why in this order |
 |---|---|---|
-| Research experimentation | Production inference | w5d1 |
-| Data validation (is the input well-formed?) | Model evaluation (is the model good?) | w2d3, w3d1 |
-| Unit tests (code is correct) | Statistical performance checks (model is useful) | w1d5 |
-| Data drift (inputs changed) | Measured performance degradation | w7d3 |
-| A working demonstration | An operationally mature service | w6d6, w7d5 |
+| 1 | Workbench: Colab, Python, terminal, Git | Every later week uses them |
+| 2-3 | SQL, then pandas and data quality | Data comes before models; SQL is the most-asked skill and the most unfamiliar |
+| 4 | Exploratory analysis, features, pipelines | Turning tables into model inputs, without leakage, by construction |
+| 5-6 | Framing, baselines, metrics; validation and leakage | The theory the student knows, applied to a business problem where it is easy to fool yourself |
+| 7 | Model comparison with uncertainty, error analysis; project starts | Choosing a model on evidence, then a real dataset |
+| 8 | Packages, tests, configuration, logging | Code someone else can run and trust |
+| 9 | Saved models, FastAPI, API tests; project milestone 2 | A model becomes a service |
+| 10 | VS Code, Docker, GitHub Actions | The move to a local, reproducible setup |
+| 11 | Cloud deployment (prepared, not run), monitoring, drift; project milestone 3 | Operating a model, safely and without spending money |
+| 12 | Capstone, communication, interviews, final assessment | Finishing, explaining, and checking what has landed |
 
-## What "complete" means for a unit
+Two running threads tie the weeks together: an **online-shop dataset** (synthetic, in `data/course/shop.db`) used
+for SQL, pandas and a churn model in Weeks 2-6, and the **SKAB fault-detection project** on real sensor data in
+notebooks 28, 36, 44 and 45 ([project guide](project.html)).
 
-A unit is listed as *Execution verified* only when its example ran, its reference solution ran, and
-`tools/verify_checks.py` showed that the checks accept the reference and reject every plausible wrong
-submission kept in `solutions/.../mutants`. The current state of every unit is in [STATUS.md](status.md).
+## The teaching pattern
+
+Every lesson is one notebook of 75-120 minutes, built from 4-6 short sections. Each section goes **Why** (the
+problem on the job) → **Idea** (one concept, plain language, a diagram where it helps, at most about 350 words
+before the student types) → **See it** (a worked example that runs) → **Try it** (a small edit, predicting the
+result first) → **Exercise** (graded). Lessons end with a quiz, a recap, an "on the job" paragraph and links to
+the tool guide, the handbook and the advanced track.
+
+The pattern follows a few well-established ideas about learning a practical skill alone: short explanations
+before practice, worked examples before independent problems, immediate feedback, and retrieval (quizzes and
+labs) rather than re-reading.
+
+Each week ends with a **lab**: 5-8 graded exercises that combine the week on one realistic task, with no new
+concepts. A **tool guide** accompanies every tool, as a self-contained reference to return to later.
+
+## Grading inside the notebook
+
+Exercises are graded by the cell under them (`grade("w02.cheap_products", query)`), with tests in
+`src/mlcourse/graders/`. The rules:
+
+* Graders check **behaviour on several inputs**, including edge cases (empty input, missing values, ties), never one
+  exact implementation or query text. SQL answers are compared with an independently computed result.
+* Failure messages explain **what** is wrong ("you included products that cost exactly 15"), never the answer.
+* When students write tests, the grader runs those tests against correct code (they must pass) and against
+  several planted bugs (they must fail).
+* Everything runs offline in a second or two, so Colab is enough.
+
+Solved copies of every notebook are generated from the same source and kept in `solutions/notebooks/`.
+
+## How the material is checked
+
+`tools/verify_notebooks.py` executes both copies of each notebook: the solved copy must pass every grader with
+no cell errors, and the student copy must fail every grader, raising nothing but `NotImplementedError`. That
+proves each exercise is gradable and that the starter does not already pass. What it cannot prove is that a
+lesson teaches well; see the [status page](status.html).
+
+## Relation to the advanced track
+
+The [advanced track](../advanced/) is the earlier, denser 48-session program written for people who already train
+models and want research-grade evaluation and full engineering on the same SKAB project. It assumes much more
+(comfortable Python, a terminal, independent work against file-based lab checks), so it now follows this course
+instead of replacing it. Its design is described in [How the advanced track is designed](../advanced/design.html).

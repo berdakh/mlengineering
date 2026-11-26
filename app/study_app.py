@@ -1,4 +1,6 @@
-"""Local study app for the eight-week ML engineering program.
+"""Local study app for the advanced track (the earlier eight-week, 56-session program).
+
+The main 12-week course is notebook-based (notebooks/, graded inside each notebook) and does not need this app.
 
     pip install -r requirements-app.txt
     streamlit run app/study_app.py          # opens http://localhost:8501
@@ -32,7 +34,7 @@ WEEK_THEMES = {
     8: "Finish, document, explain",
 }
 
-st.set_page_config(page_title="ML Engineering Program", page_icon=":material/school:", layout="wide")
+st.set_page_config(page_title="Advanced track study app", page_icon=":material/school:", layout="wide")
 
 
 # --------------------------------------------------------------------------- helpers
@@ -108,8 +110,9 @@ def status_badge(unit: dict, progress: dict) -> str:
 
 # --------------------------------------------------------------------------- pages
 def page_today(units: list[dict], progress: dict) -> None:
-    st.title("ML Engineering Program")
-    st.caption("Eight weeks, six core days and one review day per week. Progress is stored in progress/.")
+    st.title("Advanced track study app")
+    st.caption("The advanced track: eight weeks, six core days and one review day per week. "
+               "The 12-week course lives in the notebooks. Progress is stored in progress/.")
     nxt = cd.next_unit(units, progress)
     done = progress.get("units", {})
     counts = Counter(f for u in done.values() for f in cd.FLAGS if u.get(f))
@@ -249,7 +252,7 @@ def main() -> None:
     params = st.query_params
 
     with st.sidebar:
-        st.header("ML Engineering")
+        st.header("Advanced track")
         for label, page in [("Today", "today"), ("Schedule", "schedule"), ("Handbook", "handbook"),
                             ("Progress", "progress"), ("Project brief", "project"), ("Status", "status")]:
             if st.button(label, width="stretch", key=f"nav-{page}"):
