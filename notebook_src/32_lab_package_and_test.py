@@ -73,9 +73,11 @@ show_tree(LAB)
 # - `[tool.pytest.ini_options]` with `testpaths = ["tests"]`: this table makes `LAB` the root folder for pytest and
 #   tells it where the tests are;
 # - `__init__.py`: a docstring and `__version__` equal to the version above.
+#
+# As in notebook 29, the TOML goes between the triple quotes of a Python string.
 
 # %%
-%%writefile {LAB}/pyproject.toml
+_ = (LAB / "pyproject.toml").write_text("""\
 ### BEGIN SOLUTION
 [build-system]
 requires = ["setuptools>=61"]
@@ -96,6 +98,7 @@ testpaths = ["tests"]
 ### STARTER
 # YOUR CODE HERE
 ### END SOLUTION
+""")
 
 # %%
 %%writefile {LAB}/src/churnkit/__init__.py
@@ -556,15 +559,16 @@ log_file: churnkit.log
 # %%
 import shutil
 
+from mlcourse.graders.w08 import install_project
+
 shutil.rmtree(LAB / "runs", ignore_errors=True)       # start from an empty runs/ folder
-if "YOUR CODE HERE" in (LAB / "pyproject.toml").read_text():
-    print("Finish Exercise 1 first.")
-else:
-    %pip install -q -e "{LAB}"
-    !cd "{LAB}" && churnkit --config config.yaml
-    !cd "{LAB}" && churnkit --config config.yaml --set seed=3
-    !cd "{LAB}" && python -m pytest -q
-    !tail -n 6 "{LAB}/churnkit.log"
+install_project(LAB)                                  # = %pip install -q -e "{LAB}", once pyproject.toml is done
+
+# %%
+!cd "{LAB}" && churnkit --config config.yaml
+!cd "{LAB}" && churnkit --config config.yaml --set seed=3
+!cd "{LAB}" && python -m pytest -q
+!tail -n 6 "{LAB}/churnkit.log"
 
 # %%
 ### BEGIN SOLUTION

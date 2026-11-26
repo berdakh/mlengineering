@@ -494,12 +494,14 @@ print((DEMO / "pyproject.toml").read_text())
 # %% [markdown]
 # ### Exercise 7 · `pyproject.toml` for shopfeat
 #
-# Write `pyproject.toml` in the project folder (`PROJECT`, not inside `src/`): the same `[build-system]`, and a
+# Write `pyproject.toml` in the project folder (`PROJECT`, not inside `src/`), by typing the TOML between the
+# triple quotes in the next cell (a TOML file is not Python, so it is written from a Python string, like the
+# demo's). It needs the same `[build-system]`, and a
 # `[project]` table with `name = "shopfeat"`, the **same version as `__init__.py`**, `requires-python`, and
 # `dependencies` listing pandas (for example `"pandas>=2.0"`).
 
 # %%
-(PROJECT / "pyproject.toml").write_text("""\
+_ = (PROJECT / "pyproject.toml").write_text("""\
 ### BEGIN SOLUTION
 [build-system]
 requires = ["setuptools>=61"]
@@ -666,7 +668,7 @@ grade("w08.cli_main", PROJECT)
 # ### Exercise 10 · install the command
 #
 # Append a `[project.scripts]` table to shopfeat's `pyproject.toml` that creates the command `shopfeat-summary`,
-# running `main` from `shopfeat/cli.py`.
+# running `main` from `shopfeat/cli.py`. Type it between the triple quotes; the cell appends it to the file.
 
 # %%
 with open(PROJECT / "pyproject.toml", "a") as fh:

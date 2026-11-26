@@ -83,7 +83,7 @@ def show_tree(path, prefix: str = "") -> None:
             show_tree(p, prefix + ("    " if last else "│   "))
 
 
-def install_project(project) -> bool:
+def install_project(project) -> None:
     """`pip install -q -e project` with the notebook's own Python, once pyproject.toml is finished.
 
     This is what `%pip install -q -e "<folder>"` does; the helper only adds the check that you finished the file,
@@ -93,14 +93,16 @@ def install_project(project) -> bool:
     toml = project / "pyproject.toml"
     if not toml.is_file() or "YOUR CODE HERE" in toml.read_text():
         print(f"Not installed: finish {toml} first.")
-        return False
+        return
     proc = subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-e", str(project)],
                           capture_output=True, text=True)
     noise = ("Running pip as the 'root' user", "[notice]")
-    lines = [ln for ln in (proc.stdout + proc.stderr).splitlines() if ln.strip() and not any(n in ln for n in noise)]
-    print("\n".join(lines) if lines else f"installed {project.name} in editable mode")
+    text = re.sub(r"\x1b\[[0-9;]*m", "", proc.stdout + proc.stderr)
+    lines = [ln for ln in text.splitlines() if ln.strip() and not any(n in ln for n in noise)]
+    if proc.returncode == 0:
+        print(f"installed {project.name} in editable mode")
+    print("\n".join(lines[-15:]))
     importlib.invalidate_caches()
-    return proc.returncode == 0
 
 
 def _project(answer) -> Path:
