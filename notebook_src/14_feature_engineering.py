@@ -554,7 +554,7 @@ quiz("w04.14_q5", answer)
 # ## Going further
 #
 # - Tool guide: [scikit-learn](../docs/tools/scikit-learn.md) (scaling, imputation and encoding done for you).
-# - Week 6 goes deep on leakage: [22 · Leakage](22_leakage.ipynb).
+# - Week 6 goes deep on leakage: notebook 22 · Leakage.
 # - Next: [15 · scikit-learn pipelines](15_sklearn_pipelines.ipynb).
 
 # %% [markdown]

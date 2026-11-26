@@ -551,7 +551,7 @@ quiz("w04.15_q5", answer)
 # ## Going further
 #
 # - Tool guide: [scikit-learn](../docs/tools/scikit-learn.md).
-# - Week 6 goes deeper: [21 · Validation done right](21_validation_done_right.ipynb).
+# - Week 6 goes deeper: notebook 21 · Validation done right.
 # - Next: [16 · Lab: a feature pipeline for churn](16_lab_feature_pipeline.ipynb).
 
 # %% [markdown]

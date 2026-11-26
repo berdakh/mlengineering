@@ -368,7 +368,7 @@ quiz("w04.16_q4", answer)
 # ## Going further
 #
 # - Tool guides: [scikit-learn](../docs/tools/scikit-learn.md), [Plotting with matplotlib](../docs/tools/matplotlib.md).
-# - Next week turns this pipeline into a model you can defend: [17 · Framing](17_theory_to_practice_framing.ipynb).
+# - Next week turns this pipeline into a model you can defend: notebook 17 · From Learning from Data to real problems: framing.
 
 # %% [markdown]
 # ## Record your progress
