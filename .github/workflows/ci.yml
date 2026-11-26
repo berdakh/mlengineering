@@ -26,7 +26,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - run: python -m pip install pytest
+      - run: python -m pip install -r requirements.txt   # course tests import the graders
       - name: Schedule is in sync with tools/build_course.py
         run: |
           python tools/build_course.py
