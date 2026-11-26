@@ -1,0 +1,7 @@
+flowchart TD
+  Q1{"Will the model predict<br/>a later period?"} -- yes --> T["Forward in time:<br/>TimeSeriesSplit<br/>(gap if labels mature late)"]
+  Q1 -- no --> Q2{"Do rows share an entity<br/>that will be NEW when<br/>the model is used?"}
+  Q2 -- yes --> G["GroupKFold<br/>groups = entity id"]
+  Q2 -- no --> Q3{"Classification?"}
+  Q3 -- yes --> S["StratifiedKFold<br/>shuffle=True"]
+  Q3 -- no --> K["KFold<br/>shuffle=True"]

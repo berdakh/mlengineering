@@ -21,7 +21,7 @@ def _sigmoid(z):
 
 
 # ============================================================================== machines (grouped rows)
-def make_machines(n_machines: int = 40, days: int = 30, seed: int = 0) -> pd.DataFrame:
+def make_machines(n_machines: int = 60, days: int = 20, seed: int = 0) -> pd.DataFrame:
     """Daily sensor summaries of factory machines; label: did the machine report a fault the next day?
 
     Each machine has its own typical readings (an offset per sensor) and its own fault tendency that the sensors
@@ -143,7 +143,7 @@ def _lab_companies(rng, n_companies: int, months: np.ndarray) -> list[tuple]:
         size = int(rng.integers(3, 13))
         out.append(dict(plan=plan, industry=rng.choice(industries), size=size,
                         price=round(base_price * rng.uniform(0.85, 1.15), 2), month=int(months[c]),
-                        hidden=rng.normal(0, 1.5), engagement=rng.normal(0, 1.0)))
+                        hidden=rng.normal(0, 1.1), engagement=rng.normal(0, 1.0)))
     return out
 
 
@@ -152,8 +152,8 @@ def _lab_rows(rng, companies: list[dict], first_company: int) -> pd.DataFrame:
     seat = 0
     for i, co in enumerate(companies):
         m = co["month"]
-        drift = 0.05 * (m - 6)        # the world changes slowly: churn gets a little likelier month by month
-        price_effect = 0.6 * (np.log(co["price"]) - 4.0) * (1.0 if m <= 8 else 1.6)   # a price rise after month 8
+        drift = 0.03 * (m - 6)        # the world changes slowly: churn gets a little likelier month by month
+        price_effect = 0.6 * (np.log(co["price"]) - 4.0) * (1.0 if m <= 8 else 1.3)   # a price rise after month 8
         seats = []
         for _ in range(co["size"]):
             logins = max(0, int(rng.normal(14 + 6 * co["engagement"], 5)))
@@ -162,13 +162,13 @@ def _lab_rows(rng, companies: list[dict], first_company: int) -> pd.DataFrame:
             events = rng.poisson(4.0, size=N_EVENTS)
             seats.append((logins, reports, tickets, events))
         mean_logins = np.mean([s[0] for s in seats])
-        z = (-1.2 + drift + price_effect - 0.09 * (mean_logins - 14) - 0.6 * co["engagement"] + co["hidden"]
+        z = (-1.2 + drift + price_effect - 0.15 * (mean_logins - 14) - 0.8 * co["engagement"] + co["hidden"]
              + 0.2 * np.mean([s[2] for s in seats]))
         churned = int(rng.random() < _sigmoid(z))
         offer = int(rng.random() < (0.9 if churned else 0.02))
         for logins, reports, tickets, events in seats:
             seat += 1
-            last_login = (rng.integers(40, 150) if churned else rng.integers(0, 12)) + int(rng.integers(0, 5))
+            last_login = rng.integers(20, 150) if churned else rng.geometric(0.12)
             industry = co["industry"] if rng.random() > 0.08 else None
             rows.append(dict(seat_id=first_company * 100 + seat, company_id=f"C{first_company + i:04d}", month=m,
                              plan=co["plan"], industry=industry, company_size=co["size"], monthly_price=co["price"],

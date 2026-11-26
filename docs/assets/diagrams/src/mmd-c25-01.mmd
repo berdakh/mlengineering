@@ -1,0 +1,7 @@
+flowchart TD
+  A["all 3,574 training rows<br/>late rate 0.25"] -->|"distance_km <= 12.05"| B["2,678 rows<br/>late rate 0.16"]
+  A -->|"distance_km > 12.05"| C["896 rows<br/>late rate 0.51"]
+  B -->|"hour <= 17.5"| D["leaf: 1,915 rows<br/>predict 0.10"]
+  B -->|"hour > 17.5"| E["leaf: 763 rows<br/>predict 0.30"]
+  C -->|"hour <= 17.5"| F["leaf: 669 rows<br/>predict 0.46"]
+  C -->|"hour > 17.5"| G["leaf: 227 rows<br/>predict 0.67"]

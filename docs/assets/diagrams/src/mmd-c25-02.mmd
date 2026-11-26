@@ -1,0 +1,16 @@
+flowchart LR
+  subgraph RF["Random forest: many trees side by side"]
+    direction TB
+    D1["bootstrap sample 1"] --> T1["deep tree 1"]
+    D2["bootstrap sample 2"] --> T2["deep tree 2"]
+    D3["bootstrap sample ..."] --> T3["deep tree ..."]
+    T1 --> AVG["average the<br/>predictions"]
+    T2 --> AVG
+    T3 --> AVG
+  end
+  subgraph GB["Gradient boosting: small trees one after another"]
+    direction TB
+    S0["start: base rate"] --> S1["small tree 1<br/>fits what is still wrong"]
+    S1 --> S2["small tree 2<br/>fits what is still wrong"]
+    S2 --> S3["... stop when the<br/>validation score stops improving"]
+  end

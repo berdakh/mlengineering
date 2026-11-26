@@ -1,0 +1,11 @@
+flowchart TB
+  subgraph Rows["Row bootstrap: pretends every row is independent"]
+    direction LR
+    r1["row of courier 7"] ~~~ r2["row of courier 7"] ~~~ r3["row of courier 12"] ~~~ r4["row of courier 7"]
+  end
+  subgraph Groups["Group bootstrap: draws whole couriers"]
+    direction LR
+    g1["courier 7<br/>all its rows"] ~~~ g2["courier 12<br/>all its rows"] ~~~ g3["courier 7 again<br/>all its rows"]
+  end
+  Rows --> N1["interval too narrow:<br/>hides how much couriers differ"]
+  Groups --> N2["honest interval for<br/>new, unseen couriers"]

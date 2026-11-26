@@ -1,0 +1,9 @@
+flowchart TB
+  C["candidate models"] --> M["metric with 95% interval<br/>(same test rows)"]
+  C --> L["latency per prediction"]
+  C --> S["simplicity: what must be<br/>maintained and explained"]
+  C --> W["worst-slice behaviour"]
+  M --> R["decision memo:<br/>choice, evidence, risks"]
+  L --> R
+  S --> R
+  W --> R

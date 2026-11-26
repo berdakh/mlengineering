@@ -1,0 +1,10 @@
+flowchart LR
+  T["your test set<br/>n rows"] --> R1["resample n rows<br/>with replacement"]
+  T --> R2["resample n rows<br/>with replacement"]
+  T --> R3["... 1,000 times"]
+  R1 --> M1["metric 0.79"]
+  R2 --> M2["metric 0.81"]
+  R3 --> M3["metric ..."]
+  M1 --> H["spread of the 1,000 metrics<br/>middle 95% = the interval"]
+  M2 --> H
+  M3 --> H

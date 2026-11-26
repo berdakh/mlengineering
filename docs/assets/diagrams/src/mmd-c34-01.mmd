@@ -1,0 +1,9 @@
+flowchart LR
+  C["client<br/>(app, website,<br/>TestClient)"] -- "POST /predict<br/>JSON body" --> F["FastAPI"]
+  F --> V{"pydantic:<br/>CustomerFeatures<br/>valid?"}
+  V -- "no" --> E["422 + list of problems"]
+  V -- "yes" --> EP["predict(features)"]
+  EP --> M["model.predict_proba"]
+  M --> R["200 + PredictionOut<br/>probability, decision, version"]
+  E --> C
+  R --> C

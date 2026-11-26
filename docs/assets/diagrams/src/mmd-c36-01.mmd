@@ -1,0 +1,8 @@
+flowchart LR
+  C["client"] -- "POST /score<br/>readings, burn_in,<br/>threshold, min_run" --> V{"ScoreRequest<br/>valid?"}
+  V -- "no" --> E["422"]
+  V -- "yes" --> S["burn-in mean and std<br/>(first burn_in readings)"]
+  S -- "std = 0" --> E
+  S --> Z["|z| for every reading"]
+  Z --> A["alarm at t if the last<br/>min_run readings after the<br/>burn-in have |z| > threshold"]
+  A --> R["200: n, n_alarms,<br/>first_alarm, max_z"]

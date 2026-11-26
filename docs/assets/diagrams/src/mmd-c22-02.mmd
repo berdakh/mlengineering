@@ -1,0 +1,6 @@
+flowchart LR
+  H["History<br/>orders, tickets, tenure<br/>known BEFORE prediction time"] --> P(("prediction<br/>time"))
+  P --> W["Label window<br/>did the customer churn<br/>in the next 90 days?"]
+  W --> A["Recorded during or after<br/>the label window:<br/>retention call, refund,<br/>last login at export"]
+  H -. "safe features" .-> M["model"]
+  A -. "target leakage" .-> M

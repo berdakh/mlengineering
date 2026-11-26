@@ -1,0 +1,8 @@
+flowchart LR
+  L(["Leakage: information the model<br/>will NOT have at prediction time"]) --> F["Leaky features"]
+  L --> E["Leaky evaluation"]
+  F --> F1["Target leakage<br/>feature recorded after the outcome<br/><i>test:</i> probe AUC, known_at<br/><i>fix:</i> drop it"]
+  E --> E1["Preprocessing on all rows<br/><i>fix:</i> Pipeline"]
+  E --> E2["Duplicates across splits<br/><i>fix:</i> de-duplicate, then split"]
+  E --> E3["Same group on both sides<br/><i>fix:</i> GroupKFold"]
+  E --> E4["Training on the future<br/><i>fix:</i> forward-in-time split"]

@@ -1,0 +1,5 @@
+flowchart LR
+  subgraph EXP["one experiment, about 1,100 rows"]
+    direction LR
+    BI["rows 0-99<br/>burn-in: learn the normal level<br/>not scored"] --> N["normal rows<br/>scored"] --> AN["anomalous segment<br/>(one per experiment)"] --> N2["normal again"]
+  end

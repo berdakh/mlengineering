@@ -1,0 +1,9 @@
+flowchart LR
+  T["training notebook<br/>fitted pipeline"] --> B[("bundle folder<br/>model.joblib<br/>metadata.json")]
+  B --> L{"load_bundle:<br/>checksum OK?<br/>same sklearn?"}
+  L -- "no" --> X["refuse to load"]
+  L -- "yes" --> P["predict_batch"]
+  I["tonight's CSV"] --> V{"required columns<br/>present?"}
+  V -- "no" --> S["stop: name the columns"]
+  V -- "yes" --> P
+  P --> O["scores.csv<br/>probability + status<br/>(ok or reason)"]

@@ -1,0 +1,10 @@
+flowchart LR
+  S["one resample of the<br/>test couriers"] --> A["metric of model A"]
+  S --> B["metric of model B"]
+  A --> D["difference B - A"]
+  B --> D
+  D --> REP["repeat 1,000 times"]
+  REP --> I{"95% interval<br/>of the difference"}
+  I -->|"entirely above 0"| BB["B is better"]
+  I -->|"entirely below 0"| AA["A is better"]
+  I -->|"contains 0"| ND["no detectable difference:<br/>pick on other grounds"]

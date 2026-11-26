@@ -1,0 +1,10 @@
+flowchart LR
+  A["one overall metric"] --> B["slice by segment<br/>region, distance band, time"]
+  B --> C["find the worst slice<br/>with enough rows"]
+  C --> D["read the worst mistakes<br/>in that slice"]
+  D --> E{"why?"}
+  E -->|"missing feature"| F["add or fix a feature"]
+  E -->|"label problem"| G["fix labels or data"]
+  E -->|"too few examples"| H["collect data,<br/>or say so in the report"]
+  F --> A
+  G --> A

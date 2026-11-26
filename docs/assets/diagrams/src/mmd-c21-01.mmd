@@ -1,0 +1,13 @@
+flowchart LR
+  subgraph R["Random k-fold"]
+    direction TB
+    RA["machine M001<br/>days 1-20"] --> RT["train: 16 of its days"]
+    RA --> RV["validate: 4 of its days"]
+    RV --> RO["model has seen this machine:<br/>score too high"]
+  end
+  subgraph G["GroupKFold (group = machine)"]
+    direction TB
+    GA["machines M001-M048<br/>all their days"] --> GT["train"]
+    GB["machines M049-M060<br/>all their days"] --> GV["validate"]
+    GV --> GO["validation machines are new:<br/>score matches new machines"]
+  end

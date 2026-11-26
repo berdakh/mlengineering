@@ -1,0 +1,10 @@
+flowchart LR
+  A["get_skab.py<br/>34 experiments"] --> B["load and tidy<br/>one row per second"]
+  B --> C["frozen split v2<br/>27 dev, 7 test experiments"]
+  C --> D["burn-in z-score<br/>first 100 rows of each experiment"]
+  D --> E["detector: |z| of flow rate"]
+  D --> F["model: logistic regression<br/>on |z| of all sensors"]
+  E --> G["point level: PR-AUC<br/>event level: detected, false alarms"]
+  F --> G
+  G --> H["bootstrap over experiments<br/>intervals and a paired difference"]
+  H --> I["findings summary"]
